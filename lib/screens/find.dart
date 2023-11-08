@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:hiring_roof/util/card.dart';
+import 'package:hiring_roof/util/constant/color.dart';
 
 class Find extends StatelessWidget {
   const Find({super.key});
   static const TextStyle inputtextStyle = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w400,
-    color: Colors.white,
+    color: white,
   );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: black,
       body: DecoratedBox(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -38,7 +39,7 @@ class Find extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: white,
                         ),
                       ),
                       TextSpan(
@@ -53,7 +54,7 @@ class Find extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: white,
                         ),
                       ),
                     ],
@@ -61,7 +62,7 @@ class Find extends StatelessWidget {
                 ),
                 Text(
                   "Get the fastest application so that your name is above other application",
-                  style: TextStyle(fontSize: 10.5, color: Colors.white70),
+                  style: TextStyle(fontSize: 10.5, color: white70),
                 ),
               ],
             ),
@@ -80,7 +81,7 @@ class Find extends StatelessWidget {
                 width: double.infinity,
                 height: 40,
                 color: const Color.fromARGB(240, 0, 0, 0),
-                //    color: Colors.white,
+                //    color: white,
                 child: Center(
                   child: TextField(
                       style: inputtextStyle,

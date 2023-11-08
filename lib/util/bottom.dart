@@ -8,8 +8,9 @@ import 'package:hiring_roof/screens/postjob.dart';
 import 'package:hiring_roof/screens/home.dart';
 import 'package:hiring_roof/screens/myjobs.dart';
 
-import '../controller/navCon.dart';
+import '../controller/navcon.dart';
 import '../screens/Profile/profile.dart';
+import 'constant/color.dart';
 
 class Nav extends StatelessWidget {
   const Nav({super.key});
@@ -35,12 +36,12 @@ class Nav extends StatelessWidget {
       builder: (controller) {
         debugPrint("real - shit");
         return Scaffold(
-          backgroundColor: Colors.black,
+          backgroundColor: black,
           body: screens[controller.page],
           bottomNavigationBar: NavigationBar(
             elevation: 10,
             height: 60,
-            backgroundColor: Colors.black,
+            backgroundColor: black,
             selectedIndex: controller.page,
             labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
             onDestinationSelected: (int newIndex) {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:hiring_roof/util/card.dart';
+import 'package:hiring_roof/util/constant/color.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -28,7 +27,7 @@ class Home extends StatelessWidget {
     final bool phone = screenSize.shortestSide < 600 ? true : false;
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: black,
       body: DecoratedBox(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -40,7 +39,7 @@ class Home extends StatelessWidget {
             slivers: [
               SliverAppBar(
                 toolbarHeight: phone ? 45 : 60,
-                surfaceTintColor: Colors.black,
+                surfaceTintColor: black,
                 stretch: true,
                 // forceMaterialTransparency: true,
                 scrolledUnderElevation: 50,
@@ -48,7 +47,7 @@ class Home extends StatelessWidget {
                 pinned: true,
                 //   snap: true,
                 //  floating: true,
-                shadowColor: Colors.black,
+                shadowColor: black,
                 backgroundColor: Colors.black87,
                 expandedHeight:
                     phone ? screenSize.width / 2 : screenSize.height / 1.75,
@@ -100,7 +99,7 @@ class Home extends StatelessWidget {
                             ),
                             child: const Text(
                               "join us",
-                              style: TextStyle(color: Colors.white70),
+                              style: TextStyle(color: white70),
                             ),
                           ),
                           Container(
@@ -116,7 +115,7 @@ class Home extends StatelessWidget {
                             ),
                             child: const Text(
                               "Contact Us",
-                              style: TextStyle(color: Colors.white70),
+                              style: TextStyle(color: white70),
                             ),
                           ),
                         ],
@@ -136,7 +135,7 @@ class Home extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                                color: white,
                               ),
                             ),
                             TextSpan(
@@ -151,7 +150,7 @@ class Home extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                                color: white,
                               ),
                             ),
                           ],
@@ -159,7 +158,7 @@ class Home extends StatelessWidget {
                       ),
                       Text(
                         "Get the fastest application so that your name is above other application",
-                        style: TextStyle(fontSize: 10.5, color: Colors.white70),
+                        style: TextStyle(fontSize: 10.5, color: white70),
                       ),
                     ],
                   ),
@@ -170,7 +169,7 @@ class Home extends StatelessWidget {
             ]),
       ),
       // bottomNavigationBar: NavigationBar(
-      //   backgroundColor: Colors.black12,
+      //   backgroundColor: black12,
       //   selectedIndex: currentIndex,
       //   onDestinationSelected: (int newIndex) {
       //     // setState(() {

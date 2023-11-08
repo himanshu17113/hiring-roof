@@ -1,8 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:flutter/material.dart';
-
-import 'package:hiring_roof/screens/Profile/deskbody.dart';
-import 'package:hiring_roof/screens/Profile/mobilebody.dart';
+ import 'package:flutter/material.dart';
+import 'package:hiring_roof/util/constant/color.dart';
 
 class Profile extends StatelessWidget {
   final Widget profileMobileBody;
@@ -15,11 +12,11 @@ class Profile extends StatelessWidget {
 
   static const TextStyle headertextStyle = TextStyle(
     fontSize: 13,
-    color: Colors.white,
+    color: white,
   );
   static const TextStyle inputtextStyle = TextStyle(
     fontSize: 15,
-    color: Colors.white,
+    color: white,
   );
   @override
   Widget build(BuildContext context) {
@@ -45,7 +42,7 @@ class Profile extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: white,
                 ),
               ),
             ],
@@ -87,7 +84,7 @@ class Profile extends StatelessWidget {
       //     ),
       //     child: const Text(
       //       "Upload",
-      //       style: TextStyle(color: Colors.white70),
+      //       style: TextStyle(color: white70),
       //     ),
       //   ),
       // ),

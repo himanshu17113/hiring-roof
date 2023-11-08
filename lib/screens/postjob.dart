@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:hiring_roof/util/constant/color.dart';
 
 class PostJob extends StatelessWidget {
   const PostJob({super.key});
   static const TextStyle headertextStyle = TextStyle(
     fontSize: 13,
-    color: Colors.white,
+    color: white,
   );
   static const TextStyle inputtextStyle = TextStyle(
     fontSize: 15,
-    color: Colors.white,
+    color: white,
   );
+  static const InputDecoration inputDecoration = InputDecoration(
+      contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 4),
+      border: OutlineInputBorder());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,16 +31,12 @@ class PostJob extends StatelessWidget {
             Text(
               "Post a job",
               style: TextStyle(
-                  color: Color(0xFFFFFFFF),
-                  fontSize: 20,
-                  fontWeight: FontWeight.w800),
+                  color: white, fontSize: 20, fontWeight: FontWeight.w800),
             ),
             Text(
               "Mollit in laborum tempor Lorem incididunt irure. Aute eu ex ad sunt.",
               style: TextStyle(
-                  color: Color(0xFFFFFFFF),
-                  fontSize: 11,
-                  fontWeight: FontWeight.w400),
+                  color: white, fontSize: 11, fontWeight: FontWeight.w400),
             )
           ],
         ),
@@ -47,7 +48,8 @@ class PostJob extends StatelessWidget {
           child: DecoratedBox(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage("assets/png/botomElipse.png"), fit: BoxFit.fill),
+                  image: AssetImage("assets/png/botomElipse.png"),
+                  fit: BoxFit.fill),
             ),
             child: Column(
               children: [
@@ -73,10 +75,7 @@ class PostJob extends StatelessWidget {
 
                                     textAlignVertical: TextAlignVertical.top,
                                     style: inputtextStyle,
-                                    decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.symmetric(
-                                            vertical: 5, horizontal: 4),
-                                        border: OutlineInputBorder())),
+                                    decoration: inputDecoration),
                               ),
                             ],
                           )),
@@ -104,13 +103,7 @@ class PostJob extends StatelessWidget {
                                     // strutStyle: StrutStyle(height: 1
                                     //     //    , fontSize: 28
                                     //     ),
-                                    decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.symmetric(
-                                            vertical: 5, horizontal: 4),
-                                        // hintText: "💾 upload cover image",
-                                        // focusedBorder: InputBorder.none,
-                                        //enabledBorder: InputBorder.none,
-                                        border: OutlineInputBorder())),
+                                    decoration: inputDecoration),
                               ),
                             ],
                           )),
@@ -140,10 +133,7 @@ class PostJob extends StatelessWidget {
 
                                     textAlignVertical: TextAlignVertical.top,
                                     style: inputtextStyle,
-                                    decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.symmetric(
-                                            vertical: 5, horizontal: 4),
-                                        border: OutlineInputBorder())),
+                                    decoration: inputDecoration),
                               ),
                             ],
                           )),
@@ -171,13 +161,7 @@ class PostJob extends StatelessWidget {
                                     // strutStyle: StrutStyle(height: 1
                                     //     //    , fontSize: 28
                                     //     ),
-                                    decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.symmetric(
-                                            vertical: 5, horizontal: 4),
-                                        // hintText: "💾 upload cover image",
-                                        // focusedBorder: InputBorder.none,
-                                        //enabledBorder: InputBorder.none,
-                                        border: OutlineInputBorder())),
+                                    decoration: inputDecoration),
                               ),
                             ],
                           )),
@@ -208,10 +192,7 @@ class PostJob extends StatelessWidget {
 
                                     textAlignVertical: TextAlignVertical.top,
                                     style: inputtextStyle,
-                                    decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.symmetric(
-                                            vertical: 5, horizontal: 4),
-                                        border: OutlineInputBorder())),
+                                    decoration: inputDecoration),
                               ),
                             ],
                           )),
@@ -238,13 +219,7 @@ class PostJob extends StatelessWidget {
                                     // strutStyle: StrutStyle(height: 1
                                     //     //    , fontSize: 28
                                     //     ),
-                                    decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.symmetric(
-                                            vertical: 5, horizontal: 4),
-                                        // hintText: "💾 upload cover image",
-                                        // focusedBorder: InputBorder.none,
-                                        //enabledBorder: InputBorder.none,
-                                        border: OutlineInputBorder())),
+                                    decoration: inputDecoration),
                               ),
                             ],
                           )),
@@ -274,10 +249,7 @@ class PostJob extends StatelessWidget {
 
                                     textAlignVertical: TextAlignVertical.top,
                                     style: inputtextStyle,
-                                    decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.symmetric(
-                                            vertical: 5, horizontal: 4),
-                                        border: OutlineInputBorder())),
+                                    decoration: inputDecoration),
                               ),
                             ],
                           )),
@@ -305,13 +277,7 @@ class PostJob extends StatelessWidget {
                                     // strutStyle: StrutStyle(height: 1
                                     //     //    , fontSize: 28
                                     //     ),
-                                    decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.symmetric(
-                                            vertical: 5, horizontal: 4),
-                                        // hintText: "💾 upload cover image",
-                                        // focusedBorder: InputBorder.none,
-                                        //enabledBorder: InputBorder.none,
-                                        border: OutlineInputBorder())),
+                                    decoration: inputDecoration),
                               ),
                             ],
                           )),
@@ -341,10 +307,7 @@ class PostJob extends StatelessWidget {
 
                                     textAlignVertical: TextAlignVertical.top,
                                     style: inputtextStyle,
-                                    decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.symmetric(
-                                            vertical: 5, horizontal: 4),
-                                        border: OutlineInputBorder())),
+                                    decoration: inputDecoration),
                               ),
                             ],
                           )),
@@ -372,13 +335,7 @@ class PostJob extends StatelessWidget {
                                     // strutStyle: StrutStyle(height: 1
                                     //     //    , fontSize: 28
                                     //     ),
-                                    decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.symmetric(
-                                            vertical: 5, horizontal: 4),
-                                        // hintText: "💾 upload cover image",
-                                        // focusedBorder: InputBorder.none,
-                                        //enabledBorder: InputBorder.none,
-                                        border: OutlineInputBorder())),
+                                    decoration: inputDecoration),
                               ),
                             ],
                           )),
@@ -429,7 +386,7 @@ class PostJob extends StatelessWidget {
                               child: Text(
                                 "Mollit in laborum tempor Lorem incididunt irure. Aute eu ex ad sunt. Pariatur sint culpa do incididunt ",
                                 style: TextStyle(
-                                    color: Color(0xFFFFFFFF),
+                                    color: white,
                                     fontSize: 12.5,
                                     fontWeight: FontWeight.w300),
                               ),
@@ -468,7 +425,7 @@ class PostJob extends StatelessWidget {
                   ),
                   child: const Text(
                     "Upload",
-                    style: TextStyle(color: Colors.white70),
+                    style: TextStyle(color: white70),
                   ),
                 ),
               ],
@@ -504,7 +461,7 @@ class PostJob extends StatelessWidget {
       //     ),
       //     child: const Text(
       //       "Upload",
-      //       style: TextStyle(color: Colors.white70),
+      //       style: TextStyle(color: white70),
       //     ),
       //   ),
       // ),

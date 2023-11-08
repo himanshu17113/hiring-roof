@@ -1,17 +1,21 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:hiring_roof/util/constant/color.dart';
 
 class ProfileMobileBody extends StatelessWidget {
   const ProfileMobileBody({super.key});
   static const TextStyle headertextStyle = TextStyle(
     fontSize: 13,
-    color: Colors.white,
+    color: white,
   );
   static const TextStyle inputtextStyle = TextStyle(
     fontSize: 15,
-    color: Colors.white,
+    color: white,
   );
+  static const InputDecoration inputDecoration = InputDecoration(
+      contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 4),
+      border: OutlineInputBorder());
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -46,7 +50,7 @@ class ProfileMobileBody extends StatelessWidget {
                                   left: 60,
                                   child: CircleAvatar(
                                     radius: 12,
-                                    backgroundColor: Colors.black,
+                                    backgroundColor: black,
                                     child: IconButton(
                                       alignment: Alignment.center,
                                       onPressed: () {},
@@ -92,13 +96,7 @@ class ProfileMobileBody extends StatelessWidget {
                                   // strutStyle: StrutStyle(height: 1
                                   //     //    , fontSize: 28
                                   //     ),
-                                  decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.symmetric(
-                                          vertical: 5, horizontal: 4),
-                                      // hintText: "💾 upload cover image",
-                                      // focusedBorder: InputBorder.none,
-                                      //enabledBorder: InputBorder.none,
-                                      border: OutlineInputBorder())),
+                                  decoration: inputDecoration),
                             ),
                           ],
                         )),
@@ -128,10 +126,7 @@ class ProfileMobileBody extends StatelessWidget {
 
                                   textAlignVertical: TextAlignVertical.top,
                                   style: inputtextStyle,
-                                  decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.symmetric(
-                                          vertical: 5, horizontal: 4),
-                                      border: OutlineInputBorder())),
+                                  decoration: inputDecoration),
                             ),
                           ],
                         )),
@@ -159,13 +154,7 @@ class ProfileMobileBody extends StatelessWidget {
                                   // strutStyle: StrutStyle(height: 1
                                   //     //    , fontSize: 28
                                   //     ),
-                                  decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.symmetric(
-                                          vertical: 5, horizontal: 4),
-                                      // hintText: "💾 upload cover image",
-                                      // focusedBorder: InputBorder.none,
-                                      //enabledBorder: InputBorder.none,
-                                      border: OutlineInputBorder())),
+                                  decoration: inputDecoration),
                             ),
                           ],
                         )),
@@ -196,10 +185,7 @@ class ProfileMobileBody extends StatelessWidget {
 
                                   textAlignVertical: TextAlignVertical.top,
                                   style: inputtextStyle,
-                                  decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.symmetric(
-                                          vertical: 5, horizontal: 4),
-                                      border: OutlineInputBorder())),
+                                  decoration: inputDecoration),
                             ),
                           ],
                         )),
@@ -225,13 +211,7 @@ class ProfileMobileBody extends StatelessWidget {
                                   // strutStyle: StrutStyle(height: 1
                                   //     //    , fontSize: 28
                                   //     ),
-                                  decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.symmetric(
-                                          vertical: 5, horizontal: 4),
-                                      // hintText: "💾 upload cover image",
-                                      // focusedBorder: InputBorder.none,
-                                      //enabledBorder: InputBorder.none,
-                                      border: OutlineInputBorder())),
+                                  decoration: inputDecoration),
                             ),
                           ],
                         )),
@@ -261,10 +241,7 @@ class ProfileMobileBody extends StatelessWidget {
 
                                   textAlignVertical: TextAlignVertical.top,
                                   style: inputtextStyle,
-                                  decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.symmetric(
-                                          vertical: 5, horizontal: 4),
-                                      border: OutlineInputBorder())),
+                                  decoration: inputDecoration),
                             ),
                           ],
                         )),
@@ -292,13 +269,7 @@ class ProfileMobileBody extends StatelessWidget {
                                   // strutStyle: StrutStyle(height: 1
                                   //     //    , fontSize: 28
                                   //     ),
-                                  decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.symmetric(
-                                          vertical: 5, horizontal: 4),
-                                      // hintText: "💾 upload cover image",
-                                      // focusedBorder: InputBorder.none,
-                                      //enabledBorder: InputBorder.none,
-                                      border: OutlineInputBorder())),
+                                  decoration: inputDecoration),
                             ),
                           ],
                         )),
@@ -328,10 +299,7 @@ class ProfileMobileBody extends StatelessWidget {
 
                                   textAlignVertical: TextAlignVertical.top,
                                   style: inputtextStyle,
-                                  decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.symmetric(
-                                          vertical: 5, horizontal: 4),
-                                      border: OutlineInputBorder())),
+                                  decoration: inputDecoration),
                             ),
                           ],
                         )),
@@ -393,7 +361,7 @@ class ProfileMobileBody extends StatelessWidget {
                             child: Text(
                               "Mollit in laborum tempor Lorem incididunt irure. Aute eu ex ad sunt. Pariatur sint culpa do incididunt ",
                               style: TextStyle(
-                                  color: Color(0xFFFFFFFF),
+                                  color: white,
                                   fontSize: 12.5,
                                   fontWeight: FontWeight.w300),
                             ),
@@ -432,7 +400,7 @@ class ProfileMobileBody extends StatelessWidget {
                 ),
                 child: const Text(
                   "Upload",
-                  style: TextStyle(color: Colors.white70),
+                  style: TextStyle(color: white70),
                 ),
               ),
             ],

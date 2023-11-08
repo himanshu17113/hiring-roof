@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hiring_roof/util/constant/color.dart';
 
 import '../util/card.dart';
 
@@ -14,14 +15,14 @@ class MyJobs extends StatelessWidget {
     return DefaultTabController(
         length: 6,
         child: Scaffold(
-          backgroundColor: Colors.black,
+          backgroundColor: black,
           appBar: AppBar(
             systemOverlayStyle: SystemUiOverlayStyle.dark,
             shadowColor: Colors.purple.withOpacity(0.15),
-            backgroundColor: Colors.black12,
+            backgroundColor: black.withOpacity(12),
             automaticallyImplyLeading: true,
-            //  shadowColor: Colors.black,
-            surfaceTintColor: Colors.black12,
+            //  shadowColor: black,
+            surfaceTintColor: black.withOpacity(12),
             // leading: GestureDetector(
             //   onTap: () {
             //     Navigator.pop(context);
@@ -43,7 +44,7 @@ class MyJobs extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: white,
                     ),
                   ),
                   TextSpan(
@@ -62,9 +63,9 @@ class MyJobs extends StatelessWidget {
             elevation: 20,
             bottom: const TabBar(
               splashBorderRadius: BorderRadius.all(Radius.circular(33)),
-              dividerColor: Colors.black,
+              dividerColor: black,
               //  unselectedLabelColor
-              labelColor: Colors.white,
+              labelColor: white,
               isScrollable: true,
               padding: EdgeInsets.symmetric(horizontal: 20),
               //  labelPadding: EdgeInsets.only(right: 10),

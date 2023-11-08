@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'constant/color.dart';
+
 class JCard extends StatelessWidget {
   const JCard({super.key});
 
@@ -7,8 +9,6 @@ class JCard extends StatelessWidget {
   Widget build(BuildContext context) => Card(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
       color: const Color.fromRGBO(55, 61, 63, 0.1),
-      //const Color.fromRGBO(20, 20, 20, 0.5),
-
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,15 +34,14 @@ class JCard extends StatelessWidget {
                       children: [
                         Text(
                           "Spline studio",
-                          style: TextStyle(fontSize: 15, color: Colors.white70),
+                          style: TextStyle(fontSize: 15, color: white70),
                         ),
                         Text(
                           "Technical Support Engineer",
-                          style: TextStyle(fontSize: 20, color: Colors.white),
+                          style: TextStyle(fontSize: 20, color: white),
                         ),
                       ],
                     ),
-                    //   Spacer(),
                     Padding(
                       padding: EdgeInsets.only(left: (double.minPositive)),
                       child: Align(
@@ -247,59 +246,6 @@ class JCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                // ElevatedButton(
-                //     style: ButtonStyle(
-                //       elevation: MaterialStateProperty.all(8.0),
-                //       padding: MaterialStateProperty.all(
-                //           const EdgeInsets.all(16.0)),
-                //       shape: MaterialStateProperty.all<
-                //           RoundedRectangleBorder>(
-                //         RoundedRectangleBorder(
-                //           borderRadius: BorderRadius.circular(18.0),
-                //         ),
-                //       ),
-                //       backgroundColor: MaterialStateProperty.all(
-                //           Colors.transparent),
-                //       overlayColor: MaterialStateProperty.all(
-                //           Colors.transparent),
-                //       foregroundColor:
-                //           MaterialStateProperty.all(Colors.white),
-                //       shadowColor:
-                //           MaterialStateProperty.all(Colors.black),
-                //       // // Use the InkDecoration property for the gradient
-                //       // overlayShape: MaterialStateProperty.all<
-                //       //     RoundedRectangleBorder>(
-                //       //   RoundedRectangleBorder(
-                //       //     borderRadius: BorderRadius.circular(18.0),
-                //       //   ),
-                //       // ),
-                //       // overlayColor: MaterialStateProperty.all(
-                //       //     Colors.transparent),
-                //       // backgroundColor: MaterialStateProperty.all(
-                //       //     Colors.transparent),
-                //       // overlayColor: MaterialStateProperty.all(
-                //       //     Colors.transparent),
-                //       // // Define the gradient
-                //       // overlayShape: MaterialStateProperty.all<
-                //       //     RoundedRectangleBorder>(
-                //       //   RoundedRectangleBorder(
-                //       //     borderRadius: BorderRadius.circular(18.0),
-                //       //     side: BorderSide(color: Colors.blue),
-                //       //   ),
-                //       // ),
-                //       // // Define the gradient
-                //       // overlayColor: MaterialStateProperty.all(
-                //       //     Colors.blueAccent),
-                //       // // Define the gradient
-                //       // backgroundColor: MaterialStateProperty.all(
-                //       //     Colors.transparent),
-                //       // foregroundColor:
-                //       //     MaterialStateProperty.all(Colors.white),
-                //       // padding: MaterialStateProperty.all(
-                //       //     EdgeInsets.all(12.0)),
-                //     ),
-                //     onPressed: () {},
-                //     child: const Text("Apply"))
                 Align(
                   alignment: Alignment.bottomRight,
                   child: Container(
@@ -315,10 +261,6 @@ class JCard extends StatelessWidget {
                           colors: [
                             Color.fromRGBO(144, 2, 255, 1),
                             Color.fromRGBO(186, 98, 255, 1),
-
-                            // Color.fromRGBO(143, 0, 255, .6),
-                            // Color.fromRGBO(143, 0, 255, .4),
-                            // Color.fromRGBO(143, 0, 255, .2),
                           ],
                           tileMode: TileMode.decal,
                           end: Alignment.bottomRight,
@@ -326,7 +268,7 @@ class JCard extends StatelessWidget {
                     ),
                     child: const Text(
                       "Apply",
-                      style: TextStyle(color: Colors.white70),
+                      style: TextStyle(color: white70),
                     ),
                   ),
                 )
