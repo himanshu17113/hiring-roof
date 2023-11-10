@@ -19,7 +19,7 @@ class UserProvider extends GetConnect {
 //    // Login.fromJson(response.body);
 //     return response;
 //   }
-  Future<Response<Login>> signIn(String phoneno) =>
+   Future<Response<Login>> signIn(String phoneno) =>
       connect.post<Login>(signin, {"phone": phoneno},
           decoder: (obj) => Login.fromMap(obj));
 }

@@ -9,7 +9,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 /// this import allows us to use that varibale
 
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+      FlutterLocalNotificationsPlugin();
 /// Notificaition Service class handles everything regarding notifications
 class NotificationService {
   /// the method is static, for making it easier to use. You can follow the object

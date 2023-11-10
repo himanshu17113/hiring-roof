@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:hiring_roof/util/bottom.dart';
 
 const Color primaryColor = Color(0xFF121212);
 const Color accentPurpleColor = Color(0xFF6A53A1);
@@ -9,7 +10,8 @@ const Color accentYellowColor = Color(0xFFFFB612);
 const Color accentOrangeColor = Color(0xFFEA7A3B);
 
 class VerificationScreen extends StatefulWidget {
-  const VerificationScreen({super.key});
+  final String otp;
+  const VerificationScreen({super.key, required this.otp});
 
   @override
   State<VerificationScreen> createState() => _VerificationScreenState();
@@ -20,6 +22,11 @@ class _VerificationScreenState extends State<VerificationScreen> {
   late List<TextEditingController?> controls;
   int numberOfFields = 5;
   bool clearText = false;
+  @override
+  void initState() {
+    numberOfFields = widget.otp.length;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,19 +69,33 @@ class _VerificationScreenState extends State<VerificationScreen> {
               },
               onSubmit: (String verificationCode) {
                 //set clear text to clear text from all fields
-                setState(() {
-                  clearText = true;
-                });
+
+                if (widget.otp == verificationCode) {
+                  while (Navigator.canPop(context)) {
+                    Navigator.pop(context);
+                  }
+                  Navigator.pop(context);
+                  Navigator.popUntil(context, (route) => false);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Nav(),
+                      ));
+
+                  //   setState(() {
+                  //   clearText = true;
+                  // });
+                }
                 //navigate to different screen code goes here
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: const Text("Verification Code"),
-                      content: Text('Code entered is $verificationCode'),
-                    );
-                  },
-                );
+                // showDialog(
+                //   context: context,
+                //   builder: (context) {
+                //     return AlertDialog(
+                //       title: const Text("Verification Code"),
+                //       content: Text('Code entered is $verificationCode'),
+                //     );
+                //   },
+                // );
               }, // end onSubmit
             ),
             const Spacer(),

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hiring_roof/screens/sign/sigin.dart';
 
-import 'screens/sign/start.dart';
 import 'services/notification_service.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
-  NotificationService.init();
+
+  await NotificationService.init();
 
   runApp(const MyApp());
 }
@@ -27,7 +26,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: CandidateSigin()
+        home: const CandidateSigin()
         // const Nav(),
         );
   }
