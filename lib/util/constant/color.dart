@@ -7,7 +7,7 @@ const Color black = Color(0xFF000000);
 Color vsdark = const Color.fromRGBO(35, 39, 46, 1);
 
 Color vsheaderdark = const Color.fromARGB(255, 30, 34, 39);
-Color errorColor = const Color.fromRGBO(207, 102, 121, 1);
+const Color errorColor = Color.fromRGBO(207, 102, 121, 1);
 
 Color purple = const Color.fromRGBO(199, 156, 252, 1);
 
@@ -30,3 +30,5 @@ Color bluedarkGrey = const Color.fromRGBO(67, 71, 84, 1);
 Color scaffoldBackgroundColor = const Color(0xFF343541);
 
 Color cardColor = const Color(0xFF444654);
+Color orchidColor = const Color(0xFFDA70D6);
+Color mediumPurpel = const Color(0xFF9370DB);

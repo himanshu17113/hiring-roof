@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'constant/color.dart';
+import '../constant/color.dart';
 
 class JCard extends StatelessWidget {
   const JCard({super.key});

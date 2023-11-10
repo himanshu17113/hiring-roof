@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
-import 'package:hiring_roof/util/bottom.dart';
+import 'package:hiring_roof/util/widgets/bottom.dart';
 
 const Color primaryColor = Color(0xFF121212);
 const Color accentPurpleColor = Color(0xFF6A53A1);

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hiring_roof/util/card.dart';
+import 'package:hiring_roof/util/widgets/card.dart';
 import 'package:hiring_roof/util/constant/color.dart';
 
 class Home extends StatelessWidget {
