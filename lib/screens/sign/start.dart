@@ -42,8 +42,8 @@ class _StartState extends State<Start> {
       theme: CupertinoThemeData(
         brightness: _brightness,
       ),
-      home: CupertinoPageScaffold(
-        navigationBar: const CupertinoNavigationBar(
+      home: const CupertinoPageScaffold(
+        navigationBar: CupertinoNavigationBar(
           middle: Text('Flutter Forward 2023'),
         ),
         child: CandidateSigin(),
