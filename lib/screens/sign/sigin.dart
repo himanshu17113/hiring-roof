@@ -1,8 +1,10 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dart:math' as math;
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
+import 'package:hiring_roof/screens/sign/verify.dart';
+import 'package:hiring_roof/util/platformdata.dart';
 import 'package:vector_graphics/vector_graphics.dart';
 import 'package:hiring_roof/controller/connect/authconnect.dart';
 import 'package:hiring_roof/util/constant/color.dart';
@@ -20,7 +22,7 @@ class CandidateSigin extends StatefulWidget {
 class _CandidateSiginState extends State<CandidateSigin> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   final ValueNotifier<bool> loading = ValueNotifier(false);
-//  bool loading = false;
+
   @override
   void initState() {
     super.initState();
@@ -68,6 +70,7 @@ class _CandidateSiginState extends State<CandidateSigin> with SingleTickerProvid
 
   Brightness brightness = Brightness.light;
   final UserProvider userProvider = UserProvider();
+
   String? phoneno;
   @override
   Widget build(BuildContext context) {
@@ -104,13 +107,8 @@ class _CandidateSiginState extends State<CandidateSigin> with SingleTickerProvid
                           return ClipPath(
                             clipper: DrawClip(_controller.value),
                             child: Container(
-                              height: size.height * 0.07,
-                              decoration: const BoxDecoration(
-                                gradient: LinearGradient(begin: Alignment.bottomLeft, end: Alignment.topRight, colors: [
-                                  Color.fromRGBO(111, 22, 190, 1),
-                                  Color.fromRGBO(186, 98, 255, 1),
-                                ]),
-                              ),
+                              height: PlatformInfo().isAppOS() ? size.height * 0.07 : 200,
+                              decoration: const BoxDecoration(gradient: linearGradient),
                             ),
                           );
                         },
@@ -161,7 +159,6 @@ class _CandidateSiginState extends State<CandidateSigin> with SingleTickerProvid
                                         title: "Hiring Roof Otp",
                                         body: data?.otp.toString() ?? "bnfkjn",
                                       );
-                                      // Handle the response data
                                     } else {
                                       throw Exception('Failed to load data');
                                     }
@@ -171,43 +168,55 @@ class _CandidateSiginState extends State<CandidateSigin> with SingleTickerProvid
                           : ScaffoldMessenger.of(context).showSnackBar(notCorrect),
                       onInputChanged: (PhoneNumber value) {
                         phoneno = value.phoneNumber;
+                        debugPrint(phoneno!.length.toString());
                       },
                     ),
                     InkWell(
                         onTap: () {
                           if (!loading.value) {
-                            //   setState(() {
-                            loading.value = false;
-                            //   });
+                            loading.value = true;
                           }
-
+                          userProvider.phoneno = phoneno!;
                           (phoneno != null)
                               ? phoneno!.isNotEmpty
-                                  ? phoneno!.isPhoneNumber
+                                  ? phoneno!.length == 13
                                       ? userProvider.signIn(phoneno!).then(
                                           (response) {
                                             if (response.status.isOk) {
                                               final data = response.body;
                                               debugPrint(data?.otp.toString() ?? "didnot get");
- 
-                                              NotificationService.showNotification(
-                                                title: "Hiring Roof Otp",
-                                                body: data?.otp.toString() ?? "bnfkjn",
-                                              );
-                                              // Handle the response data
+                                              PlatformInfo().isDesktopOS()
+                                                  ? ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                                      duration: const Duration(seconds: 10),
+                                                      behavior: SnackBarBehavior.floating,
+                                                      action: SnackBarAction(
+                                                          label: "Copy OTP",
+                                                          onPressed: () => Clipboard.setData(ClipboardData(text: data?.otp?.toString() ?? ""))),
+                                                      content: Text(data?.otp.toString() ?? "Did not get the Otp try again")))
+                                                  : NotificationService.showNotification(
+                                                      title: "Hiring Roof Otp",
+                                                      body: data?.otp.toString() ?? "bnfkjn",
+                                                    );
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) => VerificationScreen(
+                                                            isDark: brightness.name == "dark",
+                                                            isFirstTime: data!.firstTime!,
+                                                            otp: data.otp!,
+                                                            phoneNo: phoneno!,
+                                                            isJobseeker: true,
+                                                          )));
                                             } else {
                                               if (loading.value) {
-                                                //   setState(() {
                                                 loading.value = false;
-                                                //   });
                                               }
                                               throw Exception('Failed to load data');
                                             }
 
                                             if (loading.value) {
-                                              //   setState(() {
                                               loading.value = false;
-                                              //   });
                                             }
                                           },
                                         )
@@ -215,9 +224,7 @@ class _CandidateSiginState extends State<CandidateSigin> with SingleTickerProvid
                                   : ScaffoldMessenger.of(context).showSnackBar(empty)
                               : ScaffoldMessenger.of(context).showSnackBar(notCorrect);
                           if (loading.value) {
-                            //   setState(() {
                             loading.value = false;
-                            //   });
                           }
                         },
                         child: Container(
@@ -225,27 +232,17 @@ class _CandidateSiginState extends State<CandidateSigin> with SingleTickerProvid
                           alignment: Alignment.center,
                           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 35),
                           margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 30),
-                          decoration: BoxDecoration(
-                            color: const Color.fromRGBO(255, 255, 255, 1),
-                            borderRadius: BorderRadius.circular(8),
-                            gradient: const LinearGradient(
-                                transform: GradientRotation(7),
-                                colors: [
-                                  Color.fromRGBO(144, 2, 255, 1),
-                                  Color.fromRGBO(186, 98, 255, 1),
-                                ],
-                                tileMode: TileMode.decal,
-                                end: Alignment.bottomRight,
-                                begin: Alignment.topLeft),
-                          ),
+                          decoration:
+                              BoxDecoration(color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
                           child: ValueListenableBuilder<bool>(
                               valueListenable: loading,
                               builder: (context, val, child) {
-                                return loading.value
+                                //a          debugPrint(val.toString());
+                                return val
                                     ? const CircularProgressIndicator.adaptive()
-                                    : const Text(
-                                        "join us",
-                                        style: TextStyle(color: white),
+                                    : Text(
+                                        val.toString(),
+                                        style: const TextStyle(color: white),
                                       );
                               }),
                         )),

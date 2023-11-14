@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 const Color white = Color(0xFFFFFFFF);
 const Color white70 = Color.fromRGBO(255, 255, 255, 0.702);
 const Color black = Color(0xFF000000);
-
+const Color black12 = Color(0x30000000);
 Color vsdark = const Color.fromRGBO(35, 39, 46, 1);
 
 Color vsheaderdark = const Color.fromARGB(255, 30, 34, 39);
@@ -32,3 +32,20 @@ Color scaffoldBackgroundColor = const Color(0xFF343541);
 Color cardColor = const Color(0xFF444654);
 Color orchidColor = const Color(0xFFDA70D6);
 Color mediumPurpel = const Color(0xFF9370DB);
+const LinearGradient linearGradient = LinearGradient(begin: Alignment.bottomLeft, end: Alignment.topRight, colors: [
+  Color.fromRGBO(111, 22, 190, 1),
+  Color.fromRGBO(186, 98, 255, 1),
+]);
+const LinearGradient linearGradienst = LinearGradient(
+    transform: GradientRotation(7),
+    colors: [
+      Color.fromRGBO(144, 2, 255, 1),
+      Color.fromRGBO(186, 98, 255, 1),
+
+      // Color.fromRGBO(143, 0, 255, .6),
+      // Color.fromRGBO(143, 0, 255, .4),
+      // Color.fromRGBO(143, 0, 255, .2),
+    ],
+    tileMode: TileMode.decal,
+    end: Alignment.bottomRight,
+    begin: Alignment.topLeft);

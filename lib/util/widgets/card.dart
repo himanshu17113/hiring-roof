@@ -162,18 +162,14 @@ class JCard extends StatelessWidget {
                 const Row(
                   children: [
                     Card(
-                        margin:
-                            EdgeInsets.symmetric(vertical: 15, horizontal: 5),
+                        margin: EdgeInsets.symmetric(vertical: 15, horizontal: 5),
                         shape: StadiumBorder(),
                         color: Color.fromRGBO(64, 64, 64, 0.4),
                         child: Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                           child: Text(
                             "Short term",
-                            style: TextStyle(
-                                fontSize: 12.5,
-                                color: Color.fromRGBO(102, 102, 102, 1)),
+                            style: TextStyle(fontSize: 12.5, color: Color.fromRGBO(102, 102, 102, 1)),
                             maxLines: 1,
                           ),
                         )),
@@ -187,18 +183,14 @@ class JCard extends StatelessWidget {
                       ),
                     ),
                     Card(
-                        margin:
-                            EdgeInsets.symmetric(vertical: 15, horizontal: 5),
+                        margin: EdgeInsets.symmetric(vertical: 15, horizontal: 5),
                         shape: StadiumBorder(),
                         color: Color.fromRGBO(64, 64, 64, 0.4),
                         child: Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                           child: Text(
                             "Immediate",
-                            style: TextStyle(
-                                fontSize: 12.5,
-                                color: Color.fromRGBO(102, 102, 102, 1)),
+                            style: TextStyle(fontSize: 12.5, color: Color.fromRGBO(102, 102, 102, 1)),
                             maxLines: 1,
                           ),
                         )),
@@ -236,8 +228,7 @@ class JCard extends StatelessWidget {
                         ),
                       ),
                       TextSpan(
-                        text:
-                            'Java + html + node , figma  , laborum, tempor ,Lorem incididunt.',
+                        text: 'Java + html + node , figma  , laborum, tempor ,Lorem incididunt.',
                         style: TextStyle(
                           fontSize: 11.5,
                           color: Color.fromRGBO(90, 90, 90, 1),
@@ -249,23 +240,9 @@ class JCard extends StatelessWidget {
                 Align(
                   alignment: Alignment.bottomRight,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 7.5, horizontal: 50),
-                    margin: const EdgeInsets.symmetric(
-                        vertical: 25, horizontal: 35),
-                    decoration: BoxDecoration(
-                      color: const Color.fromRGBO(255, 255, 255, 1),
-                      borderRadius: BorderRadius.circular(8),
-                      gradient: const LinearGradient(
-                          transform: GradientRotation(7),
-                          colors: [
-                            Color.fromRGBO(144, 2, 255, 1),
-                            Color.fromRGBO(186, 98, 255, 1),
-                          ],
-                          tileMode: TileMode.decal,
-                          end: Alignment.bottomRight,
-                          begin: Alignment.topLeft),
-                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 50),
+                    margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 35),
+                    decoration: BoxDecoration(color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
                     child: const Text(
                       "Apply",
                       style: TextStyle(color: white70),

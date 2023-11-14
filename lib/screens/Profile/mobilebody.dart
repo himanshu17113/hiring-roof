@@ -384,19 +384,7 @@ class ProfileMobileBody extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: const Color.fromRGBO(255, 255, 255, 1),
                   borderRadius: BorderRadius.circular(8),
-                  gradient: const LinearGradient(
-                      transform: GradientRotation(7),
-                      colors: [
-                        Color.fromRGBO(144, 2, 255, 1),
-                        Color.fromRGBO(186, 98, 255, 1),
-
-                        // Color.fromRGBO(143, 0, 255, .6),
-                        // Color.fromRGBO(143, 0, 255, .4),
-                        // Color.fromRGBO(143, 0, 255, .2),
-                      ],
-                      tileMode: TileMode.decal,
-                      end: Alignment.bottomRight,
-                      begin: Alignment.topLeft),
+                  gradient: linearGradient
                 ),
                 child: const Text(
                   "Upload",

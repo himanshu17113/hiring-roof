@@ -19,10 +19,10 @@ class MyJobs extends StatelessWidget {
           appBar: AppBar(
             systemOverlayStyle: SystemUiOverlayStyle.dark,
             shadowColor: Colors.purple.withOpacity(0.15),
-            backgroundColor: black.withOpacity(12),
+            backgroundColor: black12,
             automaticallyImplyLeading: true,
             //  shadowColor: black,
-            surfaceTintColor: black.withOpacity(12),
+            surfaceTintColor: black12,
             // leading: GestureDetector(
             //   onTap: () {
             //     Navigator.pop(context);
@@ -49,16 +49,12 @@ class MyJobs extends StatelessWidget {
                   ),
                   TextSpan(
                     text: 'Jobs',
-                    style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromRGBO(157, 33, 255, 1)),
+                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Color.fromRGBO(157, 33, 255, 1)),
                   ),
                 ],
               ),
             ),
-            titleTextStyle:
-                const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+            titleTextStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
 
             elevation: 20,
             bottom: const TabBar(
@@ -69,25 +65,12 @@ class MyJobs extends StatelessWidget {
               isScrollable: true,
               padding: EdgeInsets.symmetric(horizontal: 20),
               //  labelPadding: EdgeInsets.only(right: 10),
-              indicatorPadding:
-                  EdgeInsets.symmetric(horizontal: -20, vertical: 5),
+              indicatorPadding: EdgeInsets.symmetric(horizontal: -20, vertical: 5),
               indicatorColor: Colors.orange,
               indicatorWeight: 3,
               indicator: ShapeDecoration(
                 shape: StadiumBorder(),
-                gradient: LinearGradient(
-                    transform: GradientRotation(7),
-                    colors: [
-                      Color.fromRGBO(144, 2, 255, 1),
-                      Color.fromRGBO(186, 98, 255, 1),
-
-                      // Color.fromRGBO(143, 0, 255, .6),
-                      // Color.fromRGBO(143, 0, 255, .4),
-                      // Color.fromRGBO(143, 0, 255, .2),
-                    ],
-                    tileMode: TileMode.decal,
-                    end: Alignment.bottomRight,
-                    begin: Alignment.topLeft),
+                gradient: linearGradient
               ),
               tabs: [
                 Tab(
@@ -106,9 +89,7 @@ class MyJobs extends StatelessWidget {
           ),
           body: DecoratedBox(
             decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("assets/png/botomElipse.png"),
-                  fit: BoxFit.fill),
+              image: DecorationImage(image: AssetImage("assets/png/botomElipse.png"), fit: BoxFit.fill),
             ),
             child: TabBarView(
               children: [
@@ -116,8 +97,7 @@ class MyJobs extends StatelessWidget {
                     primary: true,
                     //shrinkWrap: true,
                     itemCount: 12,
-                    itemBuilder: (BuildContext context, int index) =>
-                        const JCard()
+                    itemBuilder: (BuildContext context, int index) => const JCard()
 
                     // 3, (index) => const DashVendorDetails()
                     ),
@@ -125,36 +105,31 @@ class MyJobs extends StatelessWidget {
                     primary: true,
                     //shrinkWrap: true,
                     itemCount: 9,
-                    itemBuilder: (BuildContext context, int index) =>
-                        const JCard()
+                    itemBuilder: (BuildContext context, int index) => const JCard()
                     // 3, (index) => const DashVendorDetails()
                     ),
                 ListView.builder(
                     primary: true,
                     //shrinkWrap: true,
                     itemCount: 9,
-                    itemBuilder: (BuildContext context, int index) =>
-                        const JCard()),
+                    itemBuilder: (BuildContext context, int index) => const JCard()),
                 ListView.builder(
                     primary: true,
                     //shrinkWrap: true,
                     itemCount: 12,
-                    itemBuilder: (BuildContext context, int index) =>
-                        const JCard()),
+                    itemBuilder: (BuildContext context, int index) => const JCard()),
                 ListView.builder(
                     primary: true,
                     //shrinkWrap: true,
                     itemCount: 9,
-                    itemBuilder: (BuildContext context, int index) =>
-                        const JCard()
+                    itemBuilder: (BuildContext context, int index) => const JCard()
                     // 3, (index) => const DashVendorDetails()
                     ),
                 ListView.builder(
                     primary: true,
                     //shrinkWrap: true,
                     itemCount: 9,
-                    itemBuilder: (BuildContext context, int index) =>
-                        const JCard()
+                    itemBuilder: (BuildContext context, int index) => const JCard()
                     // 3, (index) => const DashVendorDetails()
                     ),
               ],
