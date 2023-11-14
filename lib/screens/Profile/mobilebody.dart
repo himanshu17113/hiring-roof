@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:hiring_roof/util/constant/color.dart';
+import 'package:hiring_roof/util/constant/text.dart';
 
 class ProfileMobileBody extends StatelessWidget {
   const ProfileMobileBody({super.key});
@@ -13,9 +14,8 @@ class ProfileMobileBody extends StatelessWidget {
     fontSize: 15,
     color: white,
   );
-  static const InputDecoration inputDecoration = InputDecoration(
-      contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 4),
-      border: OutlineInputBorder());
+  static const InputDecoration inputDecoration =
+      InputDecoration(contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 4), border: OutlineInputBorder());
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -24,9 +24,7 @@ class ProfileMobileBody extends StatelessWidget {
         //  dragStartBehavior: DragStartBehavior.down,
         child: DecoratedBox(
           decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/png/botomElipse.png"),
-                fit: BoxFit.fill),
+            image: DecorationImage(image: AssetImage("assets/png/botomElipse.png"), fit: BoxFit.fill),
           ),
           child: Column(
             children: [
@@ -42,7 +40,7 @@ class ProfileMobileBody extends StatelessWidget {
                           Stack(
                             children: [
                               const CircleAvatar(
-                                backgroundImage: CachedNetworkImageProvider(""),
+                                backgroundImage: CachedNetworkImageProvider(url),
                                 maxRadius: 45,
                               ),
                               Positioned(
@@ -65,9 +63,7 @@ class ProfileMobileBody extends StatelessWidget {
                           ),
                           const Padding(
                             padding: EdgeInsets.only(top: 8.0),
-                            child: Text("Profile Picture",
-                                style: TextStyle(
-                                    color: Colors.grey, fontSize: 12)),
+                            child: Text("Profile Picture", style: TextStyle(color: Colors.grey, fontSize: 12)),
                           )
                         ],
                       ),
@@ -317,14 +313,10 @@ class ProfileMobileBody extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text("Add your Resume ",
-                              style: headertextStyle),
+                          const Text("Add your Resume ", style: headertextStyle),
                           const Padding(
                             padding: EdgeInsets.only(top: 8.0),
-                            child: Text(
-                                "Note : please Upload Your Resume without Contacts Detials",
-                                style: TextStyle(
-                                    color: Colors.grey, fontSize: 12)),
+                            child: Text("Note : please Upload Your Resume without Contacts Detials", style: TextStyle(color: Colors.grey, fontSize: 12)),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 10, bottom: 20),
@@ -345,11 +337,7 @@ class ProfileMobileBody extends StatelessWidget {
                                         Icons.upload_rounded,
                                         color: Color.fromRGBO(122, 25, 200, 1),
                                       ),
-                                      Text(" Upload Cour Cv",
-                                          style: TextStyle(
-                                              color: Color.fromRGBO(
-                                                  122, 25, 200, 1),
-                                              fontSize: 16)),
+                                      Text(" Upload Cour Cv", style: TextStyle(color: Color.fromRGBO(122, 25, 200, 1), fontSize: 16)),
                                     ],
                                   ),
                                 ),
@@ -360,10 +348,7 @@ class ProfileMobileBody extends StatelessWidget {
                             padding: EdgeInsets.only(top: 7, bottom: 20),
                             child: Text(
                               "Mollit in laborum tempor Lorem incididunt irure. Aute eu ex ad sunt. Pariatur sint culpa do incididunt ",
-                              style: TextStyle(
-                                  color: white,
-                                  fontSize: 12.5,
-                                  fontWeight: FontWeight.w300),
+                              style: TextStyle(color: white, fontSize: 12.5, fontWeight: FontWeight.w300),
                             ),
                           ),
                         ],
@@ -377,15 +362,9 @@ class ProfileMobileBody extends StatelessWidget {
                 height: 45,
                 alignment: Alignment.center,
                 width: double.maxFinite,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 7.5, horizontal: 50),
-                margin:
-                    const EdgeInsets.symmetric(vertical: 00, horizontal: 35),
-                decoration: BoxDecoration(
-                  color: const Color.fromRGBO(255, 255, 255, 1),
-                  borderRadius: BorderRadius.circular(8),
-                  gradient: linearGradient
-                ),
+                padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 50),
+                margin: const EdgeInsets.symmetric(vertical: 00, horizontal: 35),
+                decoration: BoxDecoration(color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
                 child: const Text(
                   "Upload",
                   style: TextStyle(color: white70),

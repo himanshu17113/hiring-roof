@@ -22,7 +22,7 @@ class CandidateSigin extends StatefulWidget {
 class _CandidateSiginState extends State<CandidateSigin> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   final ValueNotifier<bool> loading = ValueNotifier(false);
-
+  bool isloading = false;
   @override
   void initState() {
     super.initState();
@@ -38,6 +38,7 @@ class _CandidateSiginState extends State<CandidateSigin> with SingleTickerProvid
   @override
   void dispose() {
     _controller.dispose();
+    loading.dispose();
     super.dispose();
   }
 
@@ -173,15 +174,23 @@ class _CandidateSiginState extends State<CandidateSigin> with SingleTickerProvid
                     ),
                     InkWell(
                         onTap: () {
-                          if (!loading.value) {
-                            loading.value = true;
-                          }
-                          userProvider.phoneno = phoneno!;
+                          // if (!loading.value) {
+
+                          // loading.value = true;
+                          // //if (!isloading) {
+                          // setState(() {
+                          //   isloading = true;
+                          // });
+                          // }
+
+                          //   }
+
                           (phoneno != null)
                               ? phoneno!.isNotEmpty
                                   ? phoneno!.length == 13
                                       ? userProvider.signIn(phoneno!).then(
                                           (response) {
+                                            userProvider.phoneno = phoneno!;
                                             if (response.status.isOk) {
                                               final data = response.body;
                                               debugPrint(data?.otp.toString() ?? "didnot get");
@@ -223,29 +232,41 @@ class _CandidateSiginState extends State<CandidateSigin> with SingleTickerProvid
                                       : ScaffoldMessenger.of(context).showSnackBar(phonenotvalid)
                                   : ScaffoldMessenger.of(context).showSnackBar(empty)
                               : ScaffoldMessenger.of(context).showSnackBar(notCorrect);
-                          if (loading.value) {
-                            loading.value = false;
-                          }
+                          // if (loading.value) {
+                          //   loading.value = false;
+                          // }
+                          // if (isloading) {
+                          //   setState(() {
+                          //     isloading = false;
+                          //   });
+                          //    }
                         },
                         child: Container(
-                          width: double.maxFinite,
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 35),
-                          margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 30),
-                          decoration:
-                              BoxDecoration(color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
-                          child: ValueListenableBuilder<bool>(
-                              valueListenable: loading,
-                              builder: (context, val, child) {
-                                //a          debugPrint(val.toString());
-                                return val
-                                    ? const CircularProgressIndicator.adaptive()
-                                    : Text(
-                                        val.toString(),
-                                        style: const TextStyle(color: white),
-                                      );
-                              }),
-                        )),
+                            width: double.maxFinite,
+                            alignment: Alignment.center,
+                            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 35),
+                            margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 30),
+                            decoration:
+                                BoxDecoration(color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
+                            child: isloading
+                                ? const CircularProgressIndicator.adaptive()
+                                : const Text(
+                                    "Join us",
+                                    style: TextStyle(color: white),
+                                  )
+                            // ValueListenableBuilder<bool>(
+                            //     valueListenable: loading,
+                            //     builder: (context, val, child) {
+                            //       //a          debugPrint(val.toString());
+                            //       return val
+                            //           ? const CircularProgressIndicator.adaptive()
+                            //           : const Text(
+                            //               "Join us",
+                            //               style: TextStyle(color: white),
+                            //             );
+                            //     }),
+
+                            )),
                     const Spacer(),
                     const Padding(
                       padding: EdgeInsets.all(8.0),

@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:hiring_roof/data/shared_pref.dart';
 import 'package:hiring_roof/screens/sign/sigin.dart';
- 
+import 'package:hiring_roof/util/widgets/bottom.dart';
 import 'services/notification_service.dart';
+import 'util/constant/const.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -12,11 +14,13 @@ class MyHttpOverrides extends HttpOverrides {
   }
 }
 
-void main() {
+void main() async {
   HttpOverrides.global = MyHttpOverrides();
- 
-  WidgetsFlutterBinding.ensureInitialized();
 
+  WidgetsFlutterBinding.ensureInitialized();
+  final SharedPref sharedPref = SharedPref();
+  await sharedPref.init();
+  sharedPref.getUser();
   NotificationService.init();
 
   runApp(const MyApp());
@@ -27,18 +31,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Brightness brightness = Brightness.light;
+     // Brightness brightness = Brightness.light;
     // brightness = View.of(context).platformDispatcher.platformBrightness;
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          //    brightness: brightness,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home: const CandidateSigin()
-        // const Nav(),
-        );
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        //    brightness: brightness,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      home: userModal.userId == null ? const CandidateSigin() : const Nav(),
+    );
   }
 }

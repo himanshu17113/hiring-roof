@@ -30,8 +30,7 @@ class Home extends StatelessWidget {
       backgroundColor: black,
       body: DecoratedBox(
         decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage("assets/png/Elipse.png"), fit: BoxFit.cover),
+          image: DecorationImage(image: AssetImage("assets/png/Elipse.png"), fit: BoxFit.cover),
         ),
         child: CustomScrollView(
             //    floatHeaderSlivers: true,
@@ -49,26 +48,19 @@ class Home extends StatelessWidget {
                 //  floating: true,
                 shadowColor: black,
                 backgroundColor: Colors.black87,
-                expandedHeight:
-                    phone ? screenSize.width / 2 : screenSize.height / 1.75,
+                expandedHeight: phone ? screenSize.width / 2 : screenSize.height / 1.75,
                 flexibleSpace: FlexibleSpaceBar(
                   collapseMode: CollapseMode.pin,
-                  titlePadding:
-                      const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                  titlePadding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
                   expandedTitleScale: 1.2,
                   // collapseMode: CollapseMode.pin,
                   centerTitle: true,
                   background: Container(
                     alignment: Alignment.bottomCenter,
-                    decoration: const BoxDecoration(
-                        image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage("assets/png/home.png"))),
+                    decoration: const BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: AssetImage("assets/png/home.png"))),
                     child: Padding(
                       padding: EdgeInsets.only(
-                        bottom: phone
-                            ? screenSize.width / 10
-                            : screenSize.height / 5,
+                        bottom: phone ? screenSize.width / 10 : screenSize.height / 5,
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -76,15 +68,10 @@ class Home extends StatelessWidget {
                           Container(
                             // height: 10,
                             // width: 70,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 35),
-                            margin: const EdgeInsets.symmetric(
-                                vertical: 25, horizontal: 10),
-                            decoration: BoxDecoration(
-                              color: const Color.fromRGBO(255, 255, 255, 1),
-                              borderRadius: BorderRadius.circular(8),
-                              gradient: linearGradient
-                            ),
+                            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 35),
+                            margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 10),
+                            decoration:
+                                BoxDecoration(color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
                             child: const Text(
                               "join us",
                               style: TextStyle(color: white70),
@@ -93,10 +80,8 @@ class Home extends StatelessWidget {
                           Container(
                             // height: 10,
                             // width: 70,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 30),
-                            margin: const EdgeInsets.symmetric(
-                                vertical: 25, horizontal: 10),
+                            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 30),
+                            margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 10),
                             decoration: BoxDecoration(
                               color: const Color.fromRGBO(30, 30, 30, 1),
                               borderRadius: BorderRadius.circular(8),
@@ -128,10 +113,7 @@ class Home extends StatelessWidget {
                             ),
                             TextSpan(
                               text: 'Jobs',
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color.fromRGBO(157, 33, 255, 1)),
+                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromRGBO(157, 33, 255, 1)),
                             ),
                             TextSpan(
                               text: ' For you ',
@@ -152,8 +134,7 @@ class Home extends StatelessWidget {
                   ),
                 ),
               ),
-              SliverList.builder(
-                  itemCount: 25, itemBuilder: (context, index) => const JCard())
+              SliverList.builder(itemCount: 25, itemBuilder: (context, index) => const JCard())
             ]),
       ),
       // bottomNavigationBar: NavigationBar(

@@ -17,8 +17,7 @@ class Nav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-        overlays: [SystemUiOverlay.top]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
     debugPrint("shit");
     const screens = [
       Home(),
@@ -39,6 +38,7 @@ class Nav extends StatelessWidget {
           backgroundColor: black,
           body: screens[controller.page],
           bottomNavigationBar: NavigationBar(
+            animationDuration: const Duration(milliseconds: 250),
             elevation: 10,
             height: 60,
             backgroundColor: black,

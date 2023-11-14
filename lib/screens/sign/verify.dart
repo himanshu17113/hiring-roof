@@ -1,7 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:hiring_roof/controller/connect/authconnect.dart';
+import 'package:hiring_roof/data/shared_pref.dart';
+import 'package:hiring_roof/model/verify.dart';
+import 'package:hiring_roof/util/constant/const.dart';
 import 'package:hiring_roof/util/widgets/bottom.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../util/constant/color.dart';
 
@@ -30,6 +36,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
   int numberOfFields = 5;
   String? verification;
   bool clearText = false;
+  final SharedPref sharedPref = SharedPref();
+
   final UserProvider userProvider = UserProvider();
   @override
   void initState() {
@@ -109,7 +117,26 @@ class _VerificationScreenState extends State<VerificationScreen> {
               ),
               Center(
                 child: GestureDetector(
-                  onTap: () => userProvider.verifey(widget.phoneNo, widget.otp, true, widget.isJobseeker).then((response) {}),
+                  onTap: () {
+                    if (widget.otp.toString() == verification) {
+                      userProvider.verifey(widget.phoneNo, widget.otp, widget.isFirstTime, widget.isJobseeker).then((response) {
+                        debugPrint(response.statusCode.toString());
+                        if (response.statusCode == 200) {
+                          sharedPref.saveModel(response.body!);
+                          while (Navigator.canPop(context)) {
+                            Navigator.pop(context);
+                          }
+                          Navigator.pop(context);
+                          Navigator.popUntil(context, (route) => false);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const Nav(),
+                              ));
+                        }
+                      });
+                    }
+                  },
                   child: Text(
                     "Didn't get code?",
                     style: theme.textTheme.titleMedium,
@@ -119,7 +146,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
               const Spacer(flex: 3),
               CustomButton(
                 onPressed: () {
-                        if (widget.otp.toString() == verification) {
+                  if (widget.otp.toString() == verification) {
                     userProvider.verifey(widget.phoneNo, widget.otp, widget.isFirstTime, widget.isJobseeker).then((response) {
                       debugPrint(response.statusCode.toString());
                       if (response.statusCode == 200) {

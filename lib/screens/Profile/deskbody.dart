@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:hiring_roof/util/constant/color.dart';
+import 'package:hiring_roof/util/constant/text.dart';
 
 class ProfileDesk extends StatelessWidget {
   const ProfileDesk({super.key});
@@ -13,17 +14,14 @@ class ProfileDesk extends StatelessWidget {
     fontSize: 15,
     color: white,
   );
-  static const InputDecoration inputDecoration = InputDecoration(
-      contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 4),
-      border: OutlineInputBorder());
+  static const InputDecoration inputDecoration =
+      InputDecoration(contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 4), border: OutlineInputBorder());
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: DecoratedBox(
           decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/png/botomElipse.png"),
-                fit: BoxFit.fill),
+            image: DecorationImage(image: AssetImage("assets/png/botomElipse.png"), fit: BoxFit.fill),
           ),
           child: Align(
             alignment: Alignment.center,
@@ -43,8 +41,8 @@ class ProfileDesk extends StatelessWidget {
                             child: Stack(
                               children: [
                                 const CircleAvatar(
-                                  backgroundImage:
-                                      CachedNetworkImageProvider(""),
+                                  backgroundImage: CachedNetworkImageProvider(
+                   url),
                                   maxRadius: 45,
                                 ),
                                 Positioned(
@@ -68,9 +66,7 @@ class ProfileDesk extends StatelessWidget {
                           ),
                           const Padding(
                             padding: EdgeInsets.only(top: 8.0),
-                            child: Text("Profile Picture",
-                                style: TextStyle(
-                                    color: Colors.grey, fontSize: 12)),
+                            child: Text("Profile Picture", style: TextStyle(color: Colors.grey, fontSize: 12)),
                           ),
                         ],
                       ),
@@ -124,19 +120,15 @@ class ProfileDesk extends StatelessWidget {
                                 flex: 15,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text("Current Pay", style: headertextStyle),
                                     Padding(
-                                      padding:
-                                          EdgeInsets.only(top: 10, bottom: 40),
+                                      padding: EdgeInsets.only(top: 10, bottom: 40),
                                       child: TextField(
-                                          scrollPhysics:
-                                              ClampingScrollPhysics(),
+                                          scrollPhysics: ClampingScrollPhysics(),
                                           scrollPadding: EdgeInsets.zero,
-                                          textAlignVertical:
-                                              TextAlignVertical.top,
+                                          textAlignVertical: TextAlignVertical.top,
                                           style: inputtextStyle,
                                           decoration: inputDecoration),
                                     ),
@@ -149,21 +141,16 @@ class ProfileDesk extends StatelessWidget {
                                 flex: 15,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text("Expectation pay",
-                                        style: headertextStyle),
+                                    Text("Expectation pay", style: headertextStyle),
                                     Padding(
-                                      padding:
-                                          EdgeInsets.only(top: 10, bottom: 40),
+                                      padding: EdgeInsets.only(top: 10, bottom: 40),
                                       child: TextField(
-                                          scrollPhysics:
-                                              ClampingScrollPhysics(),
+                                          scrollPhysics: ClampingScrollPhysics(),
                                           scrollPadding: EdgeInsets.zero,
                                           textAlign: TextAlign.center,
-                                          textAlignVertical:
-                                              TextAlignVertical.top,
+                                          textAlignVertical: TextAlignVertical.top,
                                           style: inputtextStyle,
                                           decoration: inputDecoration),
                                     ),
@@ -203,22 +190,16 @@ class ProfileDesk extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text("Add your Resume ",
-                                style: headertextStyle),
+                            const Text("Add your Resume ", style: headertextStyle),
                             const Padding(
                               padding: EdgeInsets.only(top: 8.0),
-                              child: Text(
-                                  "Note : please Upload Your Resume without Contacts Detials",
-                                  style: TextStyle(
-                                      color: Colors.grey, fontSize: 12)),
+                              child: Text("Note : please Upload Your Resume without Contacts Detials", style: TextStyle(color: Colors.grey, fontSize: 12)),
                             ),
                             Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 10, bottom: 20),
+                              padding: const EdgeInsets.only(top: 10, bottom: 20),
                               child: InkWell(
                                 child: ColoredBox(
-                                  color:
-                                      const Color.fromRGBO(175, 73, 255, 0.08),
+                                  color: const Color.fromRGBO(175, 73, 255, 0.08),
                                   child: DottedBorder(
                                     padding: const EdgeInsets.all(22),
                                     color: Colors.grey,
@@ -226,19 +207,13 @@ class ProfileDesk extends StatelessWidget {
                                     dashPattern: const [8, 8],
                                     child: const Row(
                                       mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Icon(
                                           Icons.upload_rounded,
-                                          color:
-                                              Color.fromRGBO(122, 25, 200, 1),
+                                          color: Color.fromRGBO(122, 25, 200, 1),
                                         ),
-                                        Text(" Upload Cour Cv",
-                                            style: TextStyle(
-                                                color: Color.fromRGBO(
-                                                    122, 25, 200, 1),
-                                                fontSize: 16)),
+                                        Text(" Upload Cour Cv", style: TextStyle(color: Color.fromRGBO(122, 25, 200, 1), fontSize: 16)),
                                       ],
                                     ),
                                   ),
@@ -249,10 +224,7 @@ class ProfileDesk extends StatelessWidget {
                               padding: EdgeInsets.only(top: 10, bottom: 40),
                               child: Text(
                                 "Mollit in laborum tempor Lorem incididunt irure. Aute eu ex ad sunt. Pariatur sint culpa do incididunt ",
-                                style: TextStyle(
-                                    color: white,
-                                    fontSize: 12.5,
-                                    fontWeight: FontWeight.w300),
+                                style: TextStyle(color: white, fontSize: 12.5, fontWeight: FontWeight.w300),
                               ),
                             ),
                             const Text("Your Location", style: headertextStyle),
@@ -269,15 +241,10 @@ class ProfileDesk extends StatelessWidget {
                               height: 45,
                               alignment: Alignment.center,
                               width: double.maxFinite,
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 7.5, horizontal: 50),
-                              margin: const EdgeInsets.symmetric(
-                                  vertical: 00, horizontal: 35),
+                              padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 50),
+                              margin: const EdgeInsets.symmetric(vertical: 00, horizontal: 35),
                               decoration: BoxDecoration(
-                                color: const Color.fromRGBO(255, 255, 255, 1),
-                                borderRadius: BorderRadius.circular(8),
-                                gradient: linearGradient
-                              ),
+                                  color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
                               child: const Text(
                                 "Update",
                                 style: TextStyle(color: white70),
