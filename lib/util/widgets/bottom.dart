@@ -19,15 +19,15 @@ class Nav extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
     debugPrint("shit");
-    const screens = [
+    final  screens = [
       Home(),
-      Find(),
-      PostJob(),
-      Profile(
+      const Find(),
+      const PostJob(),
+      const Profile(
         profileMobileBody: ProfileMobileBody(),
         profileDeskBody: ProfileDesk(),
       ),
-      MyJobs()
+      const MyJobs()
     ];
 
     return GetBuilder<Controller>(

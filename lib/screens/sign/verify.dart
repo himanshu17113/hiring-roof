@@ -1,14 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:hiring_roof/controller/connect/authconnect.dart';
 import 'package:hiring_roof/data/shared_pref.dart';
-import 'package:hiring_roof/model/verify.dart';
-import 'package:hiring_roof/util/constant/const.dart';
 import 'package:hiring_roof/util/widgets/bottom.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../util/constant/color.dart';
 
 const Color primaryColor = Color(0xFF121212);

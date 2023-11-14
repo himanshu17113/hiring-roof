@@ -1,9 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_connect.dart';
+import 'package:hiring_roof/controller/connect/jobconnect.dart';
+import 'package:hiring_roof/model/job.dart';
 import 'package:hiring_roof/util/widgets/card.dart';
 import 'package:hiring_roof/util/constant/color.dart';
+import 'sign/sigin.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  late Future<Response<JobModal>> myjob;
+  final JobProvider jobProvider = JobProvider();
+  @override
+  void initState() {
+    super.initState();
+    myjob = jobProvider.getMyJobs();
+  }
+
+  Future<JobModal?> fetchData() async {
+    debugPrint("getting my job");
+    final JobProvider jobProvider = JobProvider();
+    // Simulate a network request
+    final value = await jobProvider.getMyJobs();
+    // return value;
+    if (value.statusCode == 200) {
+      print(value.body?.msg);
+      return value.body;
+    } else {
+      return null;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,16 +96,19 @@ class Home extends StatelessWidget {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Container(
-                            // height: 10,
-                            // width: 70,
-                            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 35),
-                            margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 10),
-                            decoration:
-                                BoxDecoration(color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
-                            child: const Text(
-                              "join us",
-                              style: TextStyle(color: white70),
+                          GestureDetector(
+                            onTap: () => const CandidateSigin(),
+                            child: Container(
+                              // height: 10,
+                              // width: 70,
+                              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 35),
+                              margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 10),
+                              decoration: BoxDecoration(
+                                  color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
+                              child: const Text(
+                                "join us",
+                                style: TextStyle(color: white70),
+                              ),
                             ),
                           ),
                           Container(
@@ -134,7 +168,10 @@ class Home extends StatelessWidget {
                   ),
                 ),
               ),
-              SliverList.builder(itemCount: 25, itemBuilder: (context, index) => const JCard())
+              FutureBuilder(
+                  future: myjob,
+                  builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) =>
+                      SliverList.builder(itemCount: 25, itemBuilder: (context, index) => const JCard()))
             ]),
       ),
       // bottomNavigationBar: NavigationBar(

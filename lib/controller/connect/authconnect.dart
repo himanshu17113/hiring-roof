@@ -1,15 +1,12 @@
-import 'dart:convert';
-
 import 'package:get/get_connect/connect.dart';
 import 'package:hiring_roof/data/shared_pref.dart';
 import 'package:hiring_roof/model/login.dart';
 import 'package:hiring_roof/model/verify.dart';
 import 'package:hiring_roof/util/constant/text.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
+ 
 class UserProvider extends GetConnect {
-  Login login = Login();
-  Verify verify = Verify();
+  // Login login = Login();
+  // Verify verify = Verify();
   final SharedPref sharedPref = SharedPref();
 
   String? phoneno;
@@ -31,11 +28,11 @@ class UserProvider extends GetConnect {
   // Future<Response<Login>> signIn(String phoneno) =>
   //     post<Login>(signin, {"phone": phoneno},
   //         decoder: (obj) => Login.fromMap(obj));
-  Future<Response<Login>> signIn(String phoneno) => post<Login>(signin, {"phone": phoneno}, decoder: (obj) => login = Login.fromMap(obj));
+  Future<Response<Login>> signIn(String phoneno) => post<Login>(signin, {"phone": phoneno}, decoder: (obj) =>  Login.fromMap(obj));
 
   Future<Response<Verify>> verifey(String phoneno, int otp, bool isFirstTime, bool isjobseeker) =>
       put<Verify>(verifyApi, {"phone": phoneno, "otp": otp, "userType": isjobseeker ? "jobSeeker" : "company", "firstTime": isFirstTime}, decoder: (obj) {
-        verify = Verify.fromMap(obj);
+      final  verify = Verify.fromMap(obj);
         sharedPref.saveModel(verify);
         return verify;
       });
