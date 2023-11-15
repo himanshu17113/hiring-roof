@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:get/get.dart';
 import 'package:hiring_roof/controller/connect/authconnect.dart';
+import 'package:hiring_roof/controller/get/jobcontroller.dart';
+import 'package:hiring_roof/controller/get/startcontroller.dart';
 import 'package:hiring_roof/data/shared_pref.dart';
-import 'package:hiring_roof/util/widgets/bottom.dart';
+import 'package:hiring_roof/util/constant/const.dart';
+import 'package:hiring_roof/util/widgets/bottom/bottom.dart';
+import 'package:hiring_roof/util/widgets/bottom/ubottom.dart';
 import '../../util/constant/color.dart';
 
 const Color primaryColor = Color(0xFF121212);
@@ -83,6 +88,9 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     userProvider.verifey(widget.phoneNo, widget.otp, widget.isFirstTime, widget.isJobseeker).then((response) {
                       debugPrint(response.statusCode.toString());
                       if (response.statusCode == 200) {
+                        userModal = response.body!;
+                        Get.delete<StartxController>(tag: "start", force: true);
+                        Get.put<JobxController>(JobxController(), tag: "job", permanent: true);
                         while (Navigator.canPop(context)) {
                           Navigator.pop(context);
                         }
@@ -91,7 +99,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const Nav(),
+                              builder: (context) => const UNav(),
                             ));
                       }
                     });

@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:math' as math;
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:hiring_roof/controller/get/startcontroller.dart';
+import 'package:hiring_roof/screens/sign/siginrequter.dart';
 import 'package:hiring_roof/screens/sign/verify.dart';
 import 'package:hiring_roof/util/platformdata.dart';
+import 'package:hiring_roof/util/widgets/bottom/userprebottom.dart';
 import 'package:vector_graphics/vector_graphics.dart';
 import 'package:hiring_roof/controller/connect/authconnect.dart';
 import 'package:hiring_roof/util/constant/color.dart';
@@ -23,9 +27,13 @@ class _CandidateSiginState extends State<CandidateSigin> with SingleTickerProvid
   late AnimationController _controller;
   final ValueNotifier<bool> loading = ValueNotifier(false);
   bool isloading = false;
+
   @override
   void initState() {
     super.initState();
+    Get.put<StartxController>(StartxController(),
+    tag: "start",
+    permanent: true);
     _controller = AnimationController(
       value: 0.0,
       duration: const Duration(seconds: 25),
@@ -117,15 +125,22 @@ class _CandidateSiginState extends State<CandidateSigin> with SingleTickerProvid
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: EdgeInsets.only(top: 10, right: 12, bottom: size.height * 0.07),
-                      child: const Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Icon(Icons.business),
-                          InkWell(child: Text("Switch to the employer")),
-                        ],
+                    GestureDetector(
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const RecruiterSigin(),
+                          )),
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 10, right: 12, bottom: size.height * 0.07),
+                        child: const Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Icon(Icons.business),
+                            InkWell(child: Text("Switch to the employer")),
+                          ],
+                        ),
                       ),
                     ),
                     const Text(
@@ -267,6 +282,30 @@ class _CandidateSiginState extends State<CandidateSigin> with SingleTickerProvid
                             //     }),
 
                             )),
+                    InkWell(
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const PreuserNav(),
+                          )),
+                      child: Container(
+                          width: double.maxFinite,
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 35),
+                          margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 30),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: purple),
+                            //  color: const Color.fromRGBO(255, 255, 255, 1),
+                            borderRadius: BorderRadius.circular(8),
+                            //  gradient: linearGradient
+                          ),
+                          child: isloading
+                              ? const CircularProgressIndicator.adaptive()
+                              : const Text(
+                                  " Skip ",
+                                  style: TextStyle(color: white),
+                                )),
+                    ),
                     const Spacer(),
                     const Padding(
                       padding: EdgeInsets.all(8.0),

@@ -4,13 +4,17 @@ class JobModal {
   bool? status;
   String? msg;
   int? jobCount;
-  List<Job>? data;
+  int? pageCount;
+  int? currentPage;
+  List<Job>? jobs;
 
   JobModal({
     this.status,
     this.msg,
     this.jobCount,
-    this.data,
+    this.pageCount,
+    this.currentPage,
+    this.jobs,
   });
 
   factory JobModal.fromRawJson(String str) => JobModal.fromJson(json.decode(str));
@@ -21,14 +25,18 @@ class JobModal {
         status: json["status"],
         msg: json["msg"],
         jobCount: json["jobCount"],
-        data: json["data"] == null ? [] : List<Job>.from(json["data"]!.map((x) => Job.fromJson(x))),
+        pageCount: json["pageCount"],
+        currentPage: json["currentPage"],
+        jobs: json["jobs"] == null ? [] : List<Job>.from(json["jobs"]!.map((x) => Job.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "status": status,
         "msg": msg,
         "jobCount": jobCount,
-        "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
+        "pageCount": pageCount,
+        "currentPage": currentPage,
+        "jobs": jobs == null ? [] : List<dynamic>.from(jobs!.map((x) => x.toJson())),
       };
 }
 
@@ -123,6 +131,7 @@ class Job {
 class UserId {
   String? id;
   String? phone;
+  String? userType;
   String? name;
   String? email;
   String? profileImage;
@@ -130,6 +139,7 @@ class UserId {
   UserId({
     this.id,
     this.phone,
+    this.userType,
     this.name,
     this.email,
     this.profileImage,
@@ -142,6 +152,7 @@ class UserId {
   factory UserId.fromJson(Map<String, dynamic> json) => UserId(
         id: json["_id"],
         phone: json["phone"],
+        userType: json["userType"],
         name: json["name"],
         email: json["email"],
         profileImage: json["profileImage"],
@@ -150,6 +161,7 @@ class UserId {
   Map<String, dynamic> toJson() => {
         "_id": id,
         "phone": phone,
+        "userType": userType,
         "name": name,
         "email": email,
         "profileImage": profileImage,

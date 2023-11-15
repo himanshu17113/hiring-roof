@@ -1,12 +1,12 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:hiring_roof/util/apistring.dart';
-import 'package:hiring_roof/util/constant/const.dart';
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
+
 import '../../model/job.dart';
 
-class JobxController extends GetxController {
+class StartxController extends GetxController {
   var client = http.Client();
   JobModal jobModal = JobModal();
   List<Job> myjobs = [];
@@ -30,15 +30,10 @@ class JobxController extends GetxController {
   getMyJobs() async {
     debugPrint(" job length ${myjobs.length}");
     debugPrint("api hit");
-    debugPrint(userModal.token!);
-    debugPrint("${ApiString.getJobs}?page=$page&limit=4}");
     http.Response response = await http.get(
-      Uri.parse("${ApiString.getJobs}?page=$page&limit=4"),
-      headers: {"Authorization": userModal.token!,"Content-Type": "application/json"},
+      Uri.parse("${ApiString.allJobs}?page=$page"),
+      headers: {"Content-Type": "application/json"},
     );
-    debugPrint(response.request.toString());
-        debugPrint(response.headers.toString());
-            debugPrint(response.body.toString());
     debugPrint(response.statusCode.toString());
     if (response.statusCode == 200) {
       page++;

@@ -1,34 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:hiring_roof/screens/Profile/deskbody.dart';
-import 'package:hiring_roof/screens/Profile/mobilebody.dart';
 import 'package:hiring_roof/screens/find.dart';
-import 'package:hiring_roof/screens/postjob.dart';
 import 'package:hiring_roof/screens/home.dart';
 import 'package:hiring_roof/screens/myjobs.dart';
+import 'package:hiring_roof/screens/sign/sigin.dart';
+import '../../../controller/navigation/navcon.dart';
+import '../../constant/color.dart';
 
-import '../../controller/navcon.dart';
-import '../../screens/Profile/profile.dart';
-import '../constant/color.dart';
-
-class Nav extends StatelessWidget {
-  const Nav({super.key});
+class PreuserNav extends StatelessWidget {
+  const PreuserNav({super.key});
 
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
-    debugPrint("shit");
-    final  screens = [
-      Home(),
-      const Find(),
-      const PostJob(),
-      const Profile(
-        profileMobileBody: ProfileMobileBody(),
-        profileDeskBody: ProfileDesk(),
-      ),
-      const MyJobs()
-    ];
+
+    final screens = [const Home(), const Find(), const CandidateSigin()];
 
     return GetBuilder<Controller>(
       init: Controller(),
@@ -45,10 +32,7 @@ class Nav extends StatelessWidget {
             selectedIndex: controller.page,
             labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
             onDestinationSelected: (int newIndex) {
-              // setState(() {
               controller.pageUpdate(newIndex);
-
-              // });
             },
             destinations: const [
               NavigationDestination(
@@ -62,19 +46,9 @@ class Nav extends StatelessWidget {
                 label: 'Search',
               ),
               NavigationDestination(
-                selectedIcon: Icon(Icons.add_circle),
-                icon: Icon(Icons.add_circle_outline_outlined),
-                label: 'Post',
-              ),
-              NavigationDestination(
-                selectedIcon: Icon(Icons.person),
-                icon: Icon(Icons.person_outlined),
-                label: 'person',
-              ),
-              NavigationDestination(
                 selectedIcon: Icon(Icons.bookmark),
                 icon: Icon(Icons.bookmark_border),
-                label: 'video',
+                label: 'Saved',
               ),
             ],
           ),
