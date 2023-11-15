@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:hiring_roof/model/job.dart';
 import 'package:hiring_roof/util/constant/text.dart';
 
+import '../../controller/http/httpjob.dart';
 import '../constant/color.dart';
 
 class JCard extends StatelessWidget {
   final Job? job;
-  const JCard({super.key, this.job});
+  JCard({super.key, this.job});
+  final Cardconnect cardconnect = Cardconnect();
   time(DateTime dateTime) {
     DateTime now = DateTime.now();
     Duration difference = now.difference(dateTime);
@@ -22,8 +24,6 @@ class JCard extends StatelessWidget {
       return ' yesterday';
     } else {
       return ' ${difference.inDays} days ago';
-      // final format = DateFormat('yyyy-MM-dd HH:mm');
-      // return format.format(dateTime);
     }
   }
 
@@ -68,21 +68,34 @@ class JCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: (double.minPositive)),
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: (job!.isSaved ?? false)
-                            ? const Icon(
-                                Icons.bookmark,
-                                color: Color.fromRGBO(153, 153, 153, 1),
-                              )
-                            : const Icon(
-                                Icons.bookmark_outline,
-                                color: Color.fromRGBO(153, 153, 153, 1),
-                              ),
-                      ),
-                    )
+                    StatefulBuilder(
+                      builder: (BuildContext context, setState) {
+                        return Padding(
+                          padding: const EdgeInsets.only(left: (double.minPositive)),
+                          child: GestureDetector(
+                            onTap: () => cardconnect
+                                .saveJob(job!.id!)
+                                .then((value) => value ? setState(() => job!.isSaved = !job!.isSaved!) : debugPrint("issue in save job")),
+                            onDoubleTap: () => cardconnect
+                                .saveJob(job!.id!)
+                                .then((value) => value ? setState(() => job!.isSaved = !job!.isSaved!) : debugPrint("issue in save job")),
+                            onSecondaryTap: () {},
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: (job!.isSaved ?? false)
+                                  ? const Icon(
+                                      Icons.bookmark,
+                                      color: Color.fromRGBO(153, 153, 153, 1),
+                                    )
+                                  : const Icon(
+                                      Icons.bookmark_outline,
+                                      color: Color.fromRGBO(153, 153, 153, 1),
+                                    ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ],
                 ),
                 Row(
@@ -295,18 +308,30 @@ class JCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 50),
-                    margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 35),
-                    decoration: BoxDecoration(color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
-                    child: const Text(
-                      "Apply",
-                      style: TextStyle(color: white70),
+                StatefulBuilder(builder: (context, setState) {
+                  return Align(
+                    alignment: Alignment.bottomRight,
+                    child: GestureDetector(
+                      onTap: () => cardconnect
+                          .applyJob(job!.id!)
+                          .then((value) => value ? setState(() => job!.applied = !job!.applied) : debugPrint("issue in save job")),
+                      onDoubleTap: () => cardconnect
+                          .applyJob(job!.id!)
+                          .then((value) => value ? setState(() => job!.applied = !job!.applied) : debugPrint("issue in save job")),
+                      onSecondaryTap: () {},
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 50),
+                        margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 35),
+                        decoration:
+                            BoxDecoration(color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
+                        child: Text(
+                          job!.applied ? "applied" : "Apply",
+                          style: const TextStyle(color: white70),
+                        ),
+                      ),
                     ),
-                  ),
-                )
+                  );
+                })
               ],
             ),
           )

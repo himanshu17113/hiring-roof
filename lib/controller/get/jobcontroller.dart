@@ -13,6 +13,8 @@ class JobxController extends GetxController {
   List<Job> myjobs = [];
   bool reachedTheEndofMyjob = false;
   bool reachedTheEndofsearch = false;
+  bool isSearching = false;
+  final int searchlimit = 5;
   List<Job> searchjobs = [];
   String? location;
   String? jobTittle;
@@ -35,7 +37,8 @@ class JobxController extends GetxController {
     });
     searchscrollController.addListener(() {
       //  position = scrollController.position.pixels;
-      if (searchscrollController.position.pixels == searchscrollController.position.maxScrollExtent && !reachedTheEndofsearch) getmoreSearchedjob();
+      if (searchscrollController.position.pixels == searchscrollController.position.maxScrollExtent && !reachedTheEndofsearch && !isSearching)
+        getmoreSearchedjob();
     });
     super.onInit();
   }
@@ -44,7 +47,7 @@ class JobxController extends GetxController {
 //  Future<JobModal?>
   getMyJobs() async {
     debugPrint(" job length ${myjobs.length}");
-    debugPrint("api hit");
+
     debugPrint(userModal.token!);
     debugPrint("${ApiString.getJobs}?page=$page&limit=4}");
     http.Response response = await http.get(
@@ -70,15 +73,16 @@ class JobxController extends GetxController {
   }
 
   jobSearch(String? locationx, String? jobTittlex) async {
+    isSearching = true;
     if (locationx == location && jobTittlex == jobTittle) {
     } else {
       spage = 0;
     }
     location = locationx;
     jobTittle = jobTittlex;
-    debugPrint("${ApiString.search}?page=$spage&limit=4&location=$location&jobTittle=$jobTittle");
+    debugPrint("${ApiString.search}?page=$spage&limit=$searchlimit&location=$location&jobTittle=$jobTittle");
     http.Response response = await http.get(
-      Uri.parse("${ApiString.search}?page=$spage&limit=4&location=$location&jobTittle=$jobTittle"),
+      Uri.parse("${ApiString.search}?page=$spage&limit=$searchlimit&location=$location&jobTittle=$jobTittle"),
       headers: {"Authorization": userModal.token!, "Content-Type": "application/json"},
     );
 
@@ -86,37 +90,57 @@ class JobxController extends GetxController {
     if (response.statusCode == 200) {
       jobModal = JobModal.fromRawJson(response.body);
       if (jobModal.jobs!.isNotEmpty) {
-        searchjobs.addAll(jobModal.jobs!);
-        spage++;
+        searchjobs = jobModal.jobs!;
+       if (jobModal.jobs!.length < searchlimit) {
+          reachedTheEndofsearch = true;
+        } else {
+          spage++;
+        }
         update();
       } else {
         reachedTheEndofsearch = true;
         update();
       }
     } else {
-      return null;
+      debugPrint("issue in jobSearch statuscode ${response.statusCode.toString()} msg ${response.body.toString()}");
     }
+    isSearching = false;
   }
 
   getmoreSearchedjob() async {
-    debugPrint("${ApiString.search}?page=$spage&limit=4&location=$location&jobTittle=$jobTittle");
+    isSearching = true;
+    debugPrint("${ApiString.search}?page=$spage&limit=$searchlimit&location=$location&jobTittle=$jobTittle");
     http.Response response = await http.get(
-      Uri.parse("${ApiString.search}?page=$spage&limit=4&location=$location&jobTittle=$jobTittle"),
+      Uri.parse("${ApiString.search}?page=$spage&limit=$searchlimit&location=$location&jobTittle=$jobTittle"),
       headers: {"Authorization": userModal.token!, "Content-Type": "application/json"},
     );
 
     if (response.statusCode == 200) {
       jobModal = JobModal.fromRawJson(response.body);
       if (jobModal.jobs!.isNotEmpty) {
-        searchjobs = jobModal.jobs!;
-        spage++;
+        searchjobs.addAll(jobModal.jobs!);
+        if (jobModal.jobs!.length < searchlimit) {
+          reachedTheEndofsearch = true;
+        } else {
+          spage++;
+        }
+
         update();
       } else {
         reachedTheEndofsearch = true;
+
         update();
       }
     } else {
-      return null;
+      debugPrint("issue in getmoreSearchedjob statuscode ${response.statusCode.toString()} msg ${response.body.toString()}");
     }
+    isSearching = false;
+  }
+
+  saveJob(String id) async {
+    http.Response response = await http.get(
+      Uri.parse("${ApiString.save}$id"),
+      headers: {"Authorization": userModal.token!, "Content-Type": "application/json"},
+    );
   }
 }

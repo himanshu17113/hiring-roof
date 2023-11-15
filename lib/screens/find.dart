@@ -140,7 +140,7 @@ class Find extends StatelessWidget {
                     return const Center(child: Text("Search new jobs"));
                   } else {
                     if (index == jobxController.searchjobs.length) {
-                      if (jobxController.reachedTheEndofMyjob) {
+                      if (jobxController.reachedTheEndofsearch) {
                         return const Center(child: Text("sorry No more jobs :("));
                       } else {
                         return const Padding(

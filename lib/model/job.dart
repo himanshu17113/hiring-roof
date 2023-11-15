@@ -59,6 +59,7 @@ class Job {
   DateTime? createdAt;
   DateTime? updatedAt;
   int? v;
+  bool applied;
 
   Job({
     this.id,
@@ -79,6 +80,7 @@ class Job {
     this.createdAt,
     this.updatedAt,
     this.v,
+    this.applied = false
   });
 
   factory Job.fromRawJson(String str) => Job.fromJson(json.decode(str));

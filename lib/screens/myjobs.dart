@@ -68,22 +68,18 @@ class MyJobs extends StatelessWidget {
               indicatorPadding: EdgeInsets.symmetric(horizontal: -20, vertical: 5),
               indicatorColor: Colors.orange,
               indicatorWeight: 3,
-              indicator: ShapeDecoration(
-                shape: StadiumBorder(),
-                gradient: linearGradient
-              ),
+              indicator: ShapeDecoration(shape: StadiumBorder(), gradient: linearGradient),
               tabs: [
                 Tab(
-                  text: "All Rides",
+                  text: "Saved",
                 ),
-                Tab(text: "Vehical"),
-                Tab(text: "Vehical"),
+                Tab(text: "Applied"),
+                Tab(text: "Shortlist"),
                 Tab(
-                  text: "All Rides",
+                  text: "Interviews",
                 ),
-                Tab(text: "Vehical"),
-                Tab(text: "Vehical"),
-                //   Tab(icon: Icon(Icons.directions_car)),
+                Tab(text: "Interviews 2"),
+                Tab(text: "Results"),
               ],
             ),
           ),
@@ -97,7 +93,7 @@ class MyJobs extends StatelessWidget {
                     primary: true,
                     //shrinkWrap: true,
                     itemCount: 12,
-                    itemBuilder: (BuildContext context, int index) => const JCard()
+                    itemBuilder: (BuildContext context, int index) => JCard()
 
                     // 3, (index) => const DashVendorDetails()
                     ),
@@ -105,31 +101,31 @@ class MyJobs extends StatelessWidget {
                     primary: true,
                     //shrinkWrap: true,
                     itemCount: 9,
-                    itemBuilder: (BuildContext context, int index) => const JCard()
+                    itemBuilder: (BuildContext context, int index) => JCard()
                     // 3, (index) => const DashVendorDetails()
                     ),
                 ListView.builder(
                     primary: true,
                     //shrinkWrap: true,
                     itemCount: 9,
-                    itemBuilder: (BuildContext context, int index) => const JCard()),
+                    itemBuilder: (BuildContext context, int index) => JCard()),
                 ListView.builder(
                     primary: true,
                     //shrinkWrap: true,
                     itemCount: 12,
-                    itemBuilder: (BuildContext context, int index) => const JCard()),
+                    itemBuilder: (BuildContext context, int index) => JCard()),
                 ListView.builder(
                     primary: true,
                     //shrinkWrap: true,
                     itemCount: 9,
-                    itemBuilder: (BuildContext context, int index) => const JCard()
+                    itemBuilder: (BuildContext context, int index) => JCard()
                     // 3, (index) => const DashVendorDetails()
                     ),
                 ListView.builder(
                     primary: true,
                     //shrinkWrap: true,
                     itemCount: 9,
-                    itemBuilder: (BuildContext context, int index) => const JCard()
+                    itemBuilder: (BuildContext context, int index) => JCard()
                     // 3, (index) => const DashVendorDetails()
                     ),
               ],

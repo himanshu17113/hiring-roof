@@ -158,7 +158,7 @@ class Home extends StatelessWidget {
                                   ),
                                 );
                               } else {
-                                return const JCard();
+                                return   JCard();
                               }
                             })
                       ]))),
