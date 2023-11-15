@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:hiring_roof/screens/Profile/deskbody.dart';
-import 'package:hiring_roof/screens/Profile/mobilebody.dart';
 import 'package:hiring_roof/screens/find.dart';
 import 'package:hiring_roof/screens/myhome.dart';
-import 'package:hiring_roof/screens/postjob.dart';
-import 'package:hiring_roof/screens/home.dart';
 import 'package:hiring_roof/screens/myjobs.dart';
-
 import '../../../controller/navigation/navcon.dart';
-import '../../../screens/Profile/profile.dart';
-import '../../constant/color.dart';
+ import '../../constant/color.dart';
 
 class UNav extends StatelessWidget {
   const UNav({super.key});

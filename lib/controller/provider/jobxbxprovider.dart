@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hiring_roof/model/job.dart';
-import 'package:provider/provider.dart';
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
 
@@ -30,11 +29,8 @@ class StartProvidr extends ChangeNotifier {
     );
     debugPrint(response.statusCode.toString());
     if (response.statusCode == 200) {
-      print(response.body.toString());
       jobModal = JobModal.fromRawJson(response.body);
-      print(jobModal.msg);
       myjobs.addAll(jobModal.jobs!);
-      print(myjobs.toString());
       notifyListeners();
       //     return JobModal.fromRawJson(response.body);
     } else {
