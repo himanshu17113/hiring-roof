@@ -21,7 +21,7 @@ class Find extends StatelessWidget {
           image: DecorationImage(image: AssetImage("assets/png/botomElipse.png"), fit: BoxFit.fill),
         ),
         child: GetBuilder<JobxController>(
-          autoRemove: false,
+          autoRemove: true,
           tag: "job",
           init: JobxController(),
           initState: (state) {
@@ -111,8 +111,7 @@ class Find extends StatelessWidget {
                                   //     vertical: 7.5, horizontal: 50),
                                   // margin: const EdgeInsets.symmetric(
                                   //     vertical: 25, horizontal: 35),
-                                  decoration: BoxDecoration(
-                                      color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
+                                  decoration: BoxDecoration(color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
                                   child: const Text(
                                     "Apply",
                                     style: inputtextStyle,

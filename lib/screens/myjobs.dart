@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hiring_roof/util/constant/color.dart';
+import 'package:hiring_roof/util/widgets/jcard.dart';
 
-import '../util/widgets/card.dart';
-
+ 
 class MyJobs extends StatelessWidget {
   const MyJobs({super.key});
 
@@ -93,7 +93,7 @@ class MyJobs extends StatelessWidget {
                     primary: true,
                     //shrinkWrap: true,
                     itemCount: 12,
-                    itemBuilder: (BuildContext context, int index) => JCard()
+                    itemBuilder: (BuildContext context, int index) => const CJCard()
 
                     // 3, (index) => const DashVendorDetails()
                     ),
@@ -101,31 +101,31 @@ class MyJobs extends StatelessWidget {
                     primary: true,
                     //shrinkWrap: true,
                     itemCount: 9,
-                    itemBuilder: (BuildContext context, int index) => JCard()
+                    itemBuilder: (BuildContext context, int index) => const CJCard()
                     // 3, (index) => const DashVendorDetails()
                     ),
                 ListView.builder(
                     primary: true,
                     //shrinkWrap: true,
                     itemCount: 9,
-                    itemBuilder: (BuildContext context, int index) => JCard()),
+                    itemBuilder: (BuildContext context, int index) => const CJCard()),
                 ListView.builder(
                     primary: true,
                     //shrinkWrap: true,
                     itemCount: 12,
-                    itemBuilder: (BuildContext context, int index) => JCard()),
+                    itemBuilder: (BuildContext context, int index) => const CJCard()),
                 ListView.builder(
                     primary: true,
                     //shrinkWrap: true,
                     itemCount: 9,
-                    itemBuilder: (BuildContext context, int index) => JCard()
+                    itemBuilder: (BuildContext context, int index) => const CJCard()
                     // 3, (index) => const DashVendorDetails()
                     ),
                 ListView.builder(
                     primary: true,
                     //shrinkWrap: true,
                     itemCount: 9,
-                    itemBuilder: (BuildContext context, int index) => JCard()
+                    itemBuilder: (BuildContext context, int index) => const CJCard()
                     // 3, (index) => const DashVendorDetails()
                     ),
               ],

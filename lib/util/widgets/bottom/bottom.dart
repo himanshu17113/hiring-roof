@@ -31,6 +31,7 @@ class Nav extends StatelessWidget {
     ];
 
     return GetBuilder<Controller>(
+      autoRemove: false,
       init: Controller(),
       builder: (controller) {
         debugPrint("real - shit");

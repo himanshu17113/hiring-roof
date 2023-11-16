@@ -61,14 +61,18 @@ class Home extends StatelessWidget {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     GestureDetector(
-                                      onTap: () => const CandidateSigin(),
+                                      onTap: () => Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute<void>(
+                                          builder: (BuildContext context) => const CandidateSigin(),
+                                        ),
+                                      ),
                                       child: Container(
                                         // height: 10,
                                         // width: 70,
                                         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 35),
                                         margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 10),
-                                        decoration: BoxDecoration(
-                                            color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
+                                        decoration: BoxDecoration(color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
                                         child: const Text(
                                           "join us",
                                           style: TextStyle(color: white70),
@@ -158,7 +162,9 @@ class Home extends StatelessWidget {
                                   ),
                                 );
                               } else {
-                                return   JCard();
+                                return JCard(
+                                  job: startxController.myjobs[index],
+                                );
                               }
                             })
                       ]))),

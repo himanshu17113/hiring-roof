@@ -37,9 +37,10 @@ class StartxController extends GetxController {
     debugPrint(response.statusCode.toString());
     if (response.statusCode == 200) {
       page++;
-       jobModal = JobModal.fromRawJson(response.body);
-       myjobs.addAll(jobModal.jobs!);
-       update();
+      jobModal = JobModal.fromRawJson(response.body);
+      debugPrint(jobModal.jobs!.length.toString());
+      myjobs.addAll(jobModal.jobs!);
+      update();
       //     return JobModal.fromRawJson(response.body);
     } else {
       return null;

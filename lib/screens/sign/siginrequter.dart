@@ -119,11 +119,13 @@ class _RecruiterSiginState extends State<RecruiterSigin> with SingleTickerProvid
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     GestureDetector(
-                      onTap: () => Navigator.push(
+                         onTap: () => Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
                             builder: (context) => const CandidateSigin(),
-                          )),
+                          ),
+                          ((route) => false)),
+                    
                       child: Padding(
                         padding: EdgeInsets.only(top: 10, right: 12, bottom: size.height * 0.07),
                         child: const Row(

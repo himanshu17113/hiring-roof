@@ -69,7 +69,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 "We texted you a code",
                 style: theme.textTheme.titleLarge,
               ),
-              Text("Please enter it below", style: theme.textTheme.titleLarge),
+              Text("Please enter it below", style: theme.textTheme.labelLarge),
               const Spacer(flex: 2),
               OtpTextField(
                 numberOfFields: numberOfFields,
@@ -91,16 +91,22 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         userModal = response.body!;
                         Get.delete<StartxController>(tag: "start", force: true);
                         Get.put<JobxController>(JobxController(), tag: "job", permanent: true);
-                        while (Navigator.canPop(context)) {
-                          Navigator.pop(context);
-                        }
-                        Navigator.pop(context);
-                        Navigator.popUntil(context, (route) => false);
-                        Navigator.push(
+                        Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
                               builder: (context) => const UNav(),
-                            ));
+                            ),
+                            ((route) => false));
+                        //   while (Navigator.canPop(context)) {
+                        //     Navigator.pop(context);
+                        //   }
+                        //   Navigator.pop(context);
+                        //   Navigator.popUntil(context, (route) => false);
+                        //   Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //         builder: (context) => const UNav(),
+                        //       ));
                       }
                     });
                   }

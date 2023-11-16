@@ -27,7 +27,7 @@ class JobxController extends GetxController {
   @override
   void onInit() {
     debugPrint(" job length ${myjobs.length}");
-    if (myjobs.isEmpty) {
+    if (myjobs.isEmpty && userModal.token != null) {
       getMyJobs();
     }
 
@@ -37,8 +37,9 @@ class JobxController extends GetxController {
     });
     searchscrollController.addListener(() {
       //  position = scrollController.position.pixels;
-      if (searchscrollController.position.pixels == searchscrollController.position.maxScrollExtent && !reachedTheEndofsearch && !isSearching)
+      if (searchscrollController.position.pixels == searchscrollController.position.maxScrollExtent && !reachedTheEndofsearch && !isSearching) {
         getmoreSearchedjob();
+      }
     });
     super.onInit();
   }
@@ -48,11 +49,11 @@ class JobxController extends GetxController {
   getMyJobs() async {
     debugPrint(" job length ${myjobs.length}");
 
-    debugPrint(userModal.token!);
+    debugPrint(userModal.token ?? token);
     debugPrint("${ApiString.getJobs}?page=$page&limit=4}");
     http.Response response = await http.get(
       Uri.parse("${ApiString.getJobs}?page=$page&limit=4"),
-      headers: {"Authorization": userModal.token!, "Content-Type": "application/json"},
+      headers: {"Authorization": userModal.token ?? token, "Content-Type": "application/json"},
     );
 
     debugPrint(response.statusCode.toString());
@@ -83,7 +84,7 @@ class JobxController extends GetxController {
     debugPrint("${ApiString.search}?page=$spage&limit=$searchlimit&location=$location&jobTittle=$jobTittle");
     http.Response response = await http.get(
       Uri.parse("${ApiString.search}?page=$spage&limit=$searchlimit&location=$location&jobTittle=$jobTittle"),
-      headers: {"Authorization": userModal.token!, "Content-Type": "application/json"},
+      headers: {"Authorization": userModal.token ?? token, "Content-Type": "application/json"},
     );
 
     debugPrint(response.statusCode.toString());
@@ -91,7 +92,7 @@ class JobxController extends GetxController {
       jobModal = JobModal.fromRawJson(response.body);
       if (jobModal.jobs!.isNotEmpty) {
         searchjobs = jobModal.jobs!;
-       if (jobModal.jobs!.length < searchlimit) {
+        if (jobModal.jobs!.length < searchlimit) {
           reachedTheEndofsearch = true;
         } else {
           spage++;
@@ -112,7 +113,7 @@ class JobxController extends GetxController {
     debugPrint("${ApiString.search}?page=$spage&limit=$searchlimit&location=$location&jobTittle=$jobTittle");
     http.Response response = await http.get(
       Uri.parse("${ApiString.search}?page=$spage&limit=$searchlimit&location=$location&jobTittle=$jobTittle"),
-      headers: {"Authorization": userModal.token!, "Content-Type": "application/json"},
+      headers: {"Authorization": userModal.token ?? token, "Content-Type": "application/json"},
     );
 
     if (response.statusCode == 200) {
