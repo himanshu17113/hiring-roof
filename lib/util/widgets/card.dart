@@ -27,6 +27,15 @@ class JCard extends StatelessWidget {
     }
   }
 
+  money(int number) {
+    if (number >= 1000) {
+      double result = number / 1000.0;
+      return '${result.toStringAsFixed(result.truncateToDouble() == result ? 0 : 1)}k';
+    } else {
+      return number.toString();
+    }
+  }
+
   @override
   Widget build(BuildContext context) => Card(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
@@ -73,12 +82,8 @@ class JCard extends StatelessWidget {
                         return Padding(
                           padding: const EdgeInsets.only(left: (double.minPositive)),
                           child: GestureDetector(
-                            onTap: () => cardconnect
-                                .saveJob(job!.id!)
-                                .then((value) => value ? setState(() => job!.isSaved = !job!.isSaved!) : debugPrint("issue in save job")),
-                            onDoubleTap: () => cardconnect
-                                .saveJob(job!.id!)
-                                .then((value) => value ? setState(() => job!.isSaved = !job!.isSaved!) : debugPrint("issue in save job")),
+                            onTap: () => cardconnect.saveJob(job!.id!).then((value) => value ? setState(() => job!.isSaved = !job!.isSaved!) : debugPrint("issue in save job")),
+                            onDoubleTap: () => cardconnect.saveJob(job!.id!).then((value) => value ? setState(() => job!.isSaved = !job!.isSaved!) : debugPrint("issue in save job")),
                             onSecondaryTap: () {},
                             child: Align(
                               alignment: Alignment.topLeft,
@@ -98,112 +103,115 @@ class JCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.pin_drop_outlined,
-                      size: 12,
-                      color: Color.fromRGBO(153, 153, 153, 1),
-                      semanticLabel: "loaction",
-                    ),
-                    Text(
-                      job!.location ?? " Brussels",
-                      style: const TextStyle(
-                        fontSize: 10.5,
-                        color: Color.fromRGBO(153, 153, 153, 1),
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.all(4.0),
-                      child: Icon(
-                        Icons.radio_button_checked,
-                        size: 2,
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.pin_drop_outlined,
+                        size: 12,
                         color: Color.fromRGBO(153, 153, 153, 1),
                         semanticLabel: "loaction",
                       ),
-                    ),
-                    const Icon(
-                      Icons.schedule,
-                      size: 12,
-                      color: Color.fromRGBO(153, 153, 153, 1),
-                      semanticLabel: "loaction",
-                    ),
-                    Text(
-                      " ${job!.timePeriod}",
-                      // ?? " Full time",
-                      style: const TextStyle(
-                        fontSize: 10.5,
-                        color: Color.fromRGBO(153, 153, 153, 1),
+                      Text(
+                        job!.location ?? " Brussels",
+                        style: const TextStyle(
+                          fontSize: 10.5,
+                          color: Color.fromRGBO(153, 153, 153, 1),
+                        ),
                       ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.all(4.0),
-                      child: Icon(
-                        Icons.radio_button_checked,
-                        size: 2,
-                        color: Color.fromRGBO(153, 153, 153, 1),
-                        semanticLabel: "loaction",
+                      const Padding(
+                        padding: EdgeInsets.all(3),
+                        child: Icon(
+                          Icons.radio_button_checked,
+                          size: 2,
+                          color: Color.fromRGBO(153, 153, 153, 1),
+                          semanticLabel: "loaction",
+                        ),
                       ),
-                    ),
-                    const Icon(
-                      Icons.attach_money,
-                      size: 12,
-                      color: Color.fromRGBO(153, 153, 153, 1),
-                      semanticLabel: "loaction",
-                    ),
-                    Text(
-                      job!.pay?.toString() ?? "50-55k",
-                      style: const TextStyle(
-                        fontSize: 10.5,
-                        color: Color.fromRGBO(153, 153, 153, 1),
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.all(4.0),
-                      child: Icon(
-                        Icons.radio_button_checked,
-                        size: 2,
+                      const Icon(
+                        Icons.schedule,
+                        size: 12,
                         color: Color.fromRGBO(153, 153, 153, 1),
                         semanticLabel: "loaction",
                       ),
-                    ),
-                    const Icon(
-                      Icons.work,
-                      size: 12,
-                      color: Color.fromRGBO(153, 153, 153, 1),
-                      semanticLabel: "loaction",
-                    ),
-                    Text(
-                      " ${job!.workType}",
-                      //?? " Remote",
-                      style: const TextStyle(
-                        fontSize: 10.5,
-                        color: Color.fromRGBO(153, 153, 153, 1),
+                      Text(
+                        "${job!.timePeriod}",
+                        // ?? " Full time",
+                        style: const TextStyle(
+                          fontSize: 10.5,
+                          color: Color.fromRGBO(153, 153, 153, 1),
+                        ),
                       ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.all(4.0),
-                      child: Icon(
-                        Icons.radio_button_checked,
-                        size: 2,
+                      const Padding(
+                        padding: EdgeInsets.all(3),
+                        child: Icon(
+                          Icons.radio_button_checked,
+                          size: 2,
+                          color: Color.fromRGBO(153, 153, 153, 1),
+                          semanticLabel: "loaction",
+                        ),
+                      ),
+                      const Icon(
+                        Icons.attach_money,
+                        size: 12,
                         color: Color.fromRGBO(153, 153, 153, 1),
                         semanticLabel: "loaction",
                       ),
-                    ),
-                    const Icon(
-                      Icons.calendar_today_outlined,
-                      size: 12,
-                      color: Color.fromRGBO(153, 153, 153, 1),
-                      semanticLabel: "loaction",
-                    ),
-                    Text(
-                      job!.createdAt != null ? time(job!.createdAt!) : " 29 min ago",
-                      style: const TextStyle(
-                        fontSize: 10.5,
-                        color: Color.fromRGBO(153, 153, 153, 1),
+                      Text(
+                        money(job!.pay ?? 30000),
+                        style: const TextStyle(
+                          fontSize: 10.5,
+                          color: Color.fromRGBO(153, 153, 153, 1),
+                        ),
                       ),
-                    ),
-                  ],
+                      const Padding(
+                        padding: EdgeInsets.all(3),
+                        child: Icon(
+                          Icons.radio_button_checked,
+                          size: 2,
+                          color: Color.fromRGBO(153, 153, 153, 1),
+                          semanticLabel: "loaction",
+                        ),
+                      ),
+                      const Icon(
+                        Icons.work,
+                        size: 12,
+                        color: Color.fromRGBO(153, 153, 153, 1),
+                        semanticLabel: "loaction",
+                      ),
+                      Text(
+                        " ${job!.workType}",
+                        //?? " Remote",
+                        style: const TextStyle(
+                          fontSize: 10.5,
+                          color: Color.fromRGBO(153, 153, 153, 1),
+                        ),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.all(3),
+                        child: Icon(
+                          Icons.radio_button_checked,
+                          size: 2,
+                          color: Color.fromRGBO(153, 153, 153, 1),
+                          semanticLabel: "loaction",
+                        ),
+                      ),
+                      const Icon(
+                        Icons.calendar_today_outlined,
+                        size: 12,
+                        color: Color.fromRGBO(153, 153, 153, 1),
+                        semanticLabel: "loaction",
+                      ),
+                      Text(
+                        job!.createdAt != null ? time(job!.createdAt!) : " 29 min ago",
+                        style: const TextStyle(
+                          fontSize: 10.5,
+                          color: Color.fromRGBO(153, 153, 153, 1),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Row(
                   children: [
@@ -220,7 +228,7 @@ class JCard extends StatelessWidget {
                           ),
                         )),
                     const Padding(
-                      padding: EdgeInsets.all(4.0),
+                      padding: EdgeInsets.all(3),
                       child: Icon(
                         Icons.radio_button_checked,
                         size: 2,
@@ -243,7 +251,7 @@ class JCard extends StatelessWidget {
                           )),
                     ],
                     const Padding(
-                      padding: EdgeInsets.all(4.0),
+                      padding: EdgeInsets.all(3),
                       child: Icon(
                         Icons.radio_button_checked,
                         size: 2,
@@ -312,18 +320,13 @@ class JCard extends StatelessWidget {
                   return Align(
                     alignment: Alignment.bottomRight,
                     child: GestureDetector(
-                      onTap: () => cardconnect
-                          .applyJob(job!.id!)
-                          .then((value) => value ? setState(() => job!.applied = !job!.applied) : debugPrint("issue in save job")),
-                      onDoubleTap: () => cardconnect
-                          .applyJob(job!.id!)
-                          .then((value) => value ? setState(() => job!.applied = !job!.applied) : debugPrint("issue in save job")),
+                      onTap: () => cardconnect.applyJob(job!.id!).then((value) => value ? setState(() => job!.applied = !job!.applied) : debugPrint("issue in save job")),
+                      onDoubleTap: () => cardconnect.applyJob(job!.id!).then((value) => value ? setState(() => job!.applied = !job!.applied) : debugPrint("issue in save job")),
                       onSecondaryTap: () {},
                       child: Container(
                         padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 50),
                         margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 35),
-                        decoration:
-                            BoxDecoration(color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
+                        decoration: BoxDecoration(color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
                         child: Text(
                           job!.applied ? "applied" : "Apply",
                           style: const TextStyle(color: white70),

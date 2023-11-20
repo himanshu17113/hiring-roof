@@ -71,7 +71,7 @@ class CJCard extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(4.0),
+                      padding: EdgeInsets.all(3),
                       child: Icon(
                         Icons.radio_button_checked,
                         size: 2,
@@ -93,7 +93,7 @@ class CJCard extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(4.0),
+                      padding: EdgeInsets.all(3),
                       child: Icon(
                         Icons.radio_button_checked,
                         size: 2,
@@ -115,7 +115,7 @@ class CJCard extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(4.0),
+                      padding: EdgeInsets.all(3),
                       child: Icon(
                         Icons.radio_button_checked,
                         size: 2,
@@ -137,7 +137,7 @@ class CJCard extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(4.0),
+                      padding: EdgeInsets.all(3),
                       child: Icon(
                         Icons.radio_button_checked,
                         size: 2,
@@ -175,7 +175,7 @@ class CJCard extends StatelessWidget {
                           ),
                         )),
                     Padding(
-                      padding: EdgeInsets.all(4.0),
+                      padding: EdgeInsets.all(3),
                       child: Icon(
                         Icons.radio_button_checked,
                         size: 2,
@@ -239,7 +239,7 @@ class CJCard extends StatelessWidget {
                   ),
                 ),
                 GestureDetector(
-                      onTap: () {
+                  onTap: () {
                     SharedPref sharedPref = SharedPref();
                     sharedPref.removeUser();
                   },
