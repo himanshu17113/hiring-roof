@@ -141,7 +141,7 @@ class JobxController extends GetxController {
   }
 
   saveJob(String id) async {
-    http.Response response = await http.get(
+      await http.get(
       Uri.parse("${ApiString.save}$id"),
       headers: {"Authorization": userModal.token!, "Content-Type": "application/json"},
     );

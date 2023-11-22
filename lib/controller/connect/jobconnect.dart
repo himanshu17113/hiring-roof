@@ -4,7 +4,6 @@ import 'package:hiring_roof/util/apistring.dart';
 import 'package:hiring_roof/util/constant/const.dart';
 
 import '../../model/job.dart';
-import '../../util/constant/text.dart';
 
 class JobProvider extends GetConnect {
   

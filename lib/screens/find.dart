@@ -30,6 +30,7 @@ class Find extends StatelessWidget {
           //initState: (startxController) {},
           builder: (jobxController) => CustomScrollView(controller: jobxController.searchscrollController, physics: const BouncingScrollPhysics(), slivers: [
             SliverAppBar(
+              leading: const SizedBox(),
               backgroundColor: const Color.fromARGB(240, 0, 0, 0),
               floating: true,
               pinned: true,
@@ -80,6 +81,7 @@ class Find extends StatelessWidget {
               // ],
 
               bottom: AppBar(
+                leading: const SizedBox.shrink(),
                 forceMaterialTransparency: true,
                 backgroundColor: const Color.fromARGB(240, 0, 0, 0),
                 title: Container(

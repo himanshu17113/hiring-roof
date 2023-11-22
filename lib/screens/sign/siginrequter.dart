@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:hiring_roof/screens/sign/siginuser.dart';
 import 'package:hiring_roof/screens/sign/verify.dart';
 import 'package:hiring_roof/util/platformdata.dart';
+// ignore: depend_on_referenced_packages
 import 'package:vector_graphics/vector_graphics.dart';
 import 'package:hiring_roof/controller/connect/authconnect.dart';
 import 'package:hiring_roof/util/constant/color.dart';

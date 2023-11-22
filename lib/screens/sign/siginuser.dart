@@ -5,7 +5,6 @@ import 'dart:math' as math;
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:hiring_roof/controller/get/startcontroller.dart';
-import 'package:hiring_roof/screens/sign/siginrequter.dart';
 import 'package:hiring_roof/screens/sign/verify.dart';
 import 'package:hiring_roof/util/platformdata.dart';
 import 'package:hiring_roof/util/widgets/bottom/reqprebottom.dart';

@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hiring_roof/screens/find.dart';
 import 'package:hiring_roof/screens/home.dart';
-import 'package:hiring_roof/screens/myjobs/myjobs.dart';
 import 'package:hiring_roof/screens/postjob.dart';
 import '../../../controller/navigation/navcon.dart';
 import '../../constant/color.dart';
@@ -34,10 +33,7 @@ class PreReqNav extends StatelessWidget {
             selectedIndex: controller.page,
             labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
             onDestinationSelected: (int newIndex) {
-              // setState(() {
               controller.pageUpdate(newIndex);
-
-              // });
             },
             destinations: const [
               NavigationDestination(
@@ -46,20 +42,15 @@ class PreReqNav extends StatelessWidget {
                 label: 'home',
               ),
               NavigationDestination(
-                selectedIcon: Icon(Icons.search),
-                icon: Icon(Icons.search_outlined),
-                label: 'Search',
-              ),
-              NavigationDestination(
                 selectedIcon: Icon(Icons.add_circle),
                 icon: Icon(Icons.add_circle_outline_outlined),
                 label: 'Post',
               ),
-              // NavigationDestination(
-              //   selectedIcon: Icon(Icons.bookmark),
-              //   icon: Icon(Icons.bookmark_border),
-              //   label: 'Saved',
-              // ),
+              NavigationDestination(
+                selectedIcon: Icon(Icons.search),
+                icon: Icon(Icons.search_outlined),
+                label: 'Search',
+              ),
             ],
           ),
         );
