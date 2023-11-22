@@ -6,7 +6,7 @@ import 'package:hiring_roof/screens/Profile/mobilebody.dart';
 import 'package:hiring_roof/screens/find.dart';
 import 'package:hiring_roof/screens/postjob.dart';
 import 'package:hiring_roof/screens/home.dart';
-import 'package:hiring_roof/screens/myjobs.dart';
+import 'package:hiring_roof/screens/myjobs/myjobs.dart';
 
 import '../../../controller/navigation/navcon.dart';
 import '../../../screens/Profile/profile.dart';

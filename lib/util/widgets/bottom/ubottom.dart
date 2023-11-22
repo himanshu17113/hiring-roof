@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hiring_roof/screens/find.dart';
 import 'package:hiring_roof/screens/myhome.dart';
-import 'package:hiring_roof/screens/myjobs.dart';
+import 'package:hiring_roof/screens/myjobs/myjobs.dart';
 import '../../../controller/navigation/navcon.dart';
  import '../../constant/color.dart';
 

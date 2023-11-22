@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:math' as math;
 import 'package:flutter_svg/svg.dart';
-import 'package:hiring_roof/screens/sign/siginuser.dart';
+import 'package:get/get.dart';
+import 'package:hiring_roof/controller/get/startcontroller.dart';
+import 'package:hiring_roof/screens/sign/siginrequter.dart';
 import 'package:hiring_roof/screens/sign/verify.dart';
 import 'package:hiring_roof/util/platformdata.dart';
+import 'package:hiring_roof/util/widgets/bottom/reqprebottom.dart';
+import 'package:hiring_roof/util/widgets/bottom/userprebottom.dart';
 import 'package:vector_graphics/vector_graphics.dart';
 import 'package:hiring_roof/controller/connect/authconnect.dart';
 import 'package:hiring_roof/util/constant/color.dart';
@@ -13,20 +17,22 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 import '../../services/notification_service.dart';
 
-class RecruiterSigin extends StatefulWidget {
-  const RecruiterSigin({super.key});
+class CandidateSigin extends StatefulWidget {
+  const CandidateSigin({super.key});
 
   @override
-  State<RecruiterSigin> createState() => _RecruiterSiginState();
+  State<CandidateSigin> createState() => _CandidateSiginState();
 }
 
-class _RecruiterSiginState extends State<RecruiterSigin> with SingleTickerProviderStateMixin {
+class _CandidateSiginState extends State<CandidateSigin> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   final ValueNotifier<bool> loading = ValueNotifier(false);
   bool isloading = false;
+  bool isCandidate = false;
   @override
   void initState() {
     super.initState();
+    Get.put<StartxController>(StartxController(), tag: "start", permanent: true);
     _controller = AnimationController(
       value: 0.0,
       duration: const Duration(seconds: 25),
@@ -119,28 +125,28 @@ class _RecruiterSiginState extends State<RecruiterSigin> with SingleTickerProvid
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     GestureDetector(
-                         onTap: () => Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const CandidateSigin(),
-                          ),
-                          ((route) => false)),
-                    
+                      onTap: () => setState(() => isCandidate = !isCandidate),
+                      //  Navigator.pushAndRemoveUntil(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //       builder: (context) => const RecruiterSigin(),
+                      //     ),
+                      //     ((route) => false)),
                       child: Padding(
-                        padding: EdgeInsets.only(top: 10, right: 12, bottom: size.height * 0.07),
-                        child: const Row(
+                        padding: EdgeInsets.only(top: 5, right: 12, bottom: size.height * 0.065),
+                        child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Icon(Icons.business),
-                            InkWell(child: Text("Switch to the candidate")),
+                            const Icon(Icons.business),
+                            InkWell(child: Text(isCandidate ? "Switch to the employer" : "Switch to the candidate")),
                           ],
                         ),
                       ),
                     ),
-                    const Text(
-                      "  Recruiter \n  Sign-in/Signup",
-                      style: TextStyle(fontSize: 28.5, fontWeight: FontWeight.bold),
+                    Text(
+                      isCandidate ? "  Candidate \n  Sign-in/Signup" : "  Recruiter \n  Sign-in/Signup",
+                      style: const TextStyle(fontSize: 28.5, fontWeight: FontWeight.bold),
                     ),
                     const Padding(
                       padding: EdgeInsets.all(8.0),
@@ -156,7 +162,8 @@ class _RecruiterSiginState extends State<RecruiterSigin> with SingleTickerProvid
                       ),
                     ),
                     InternationalPhoneNumberInput(
-                      selectorConfig: const SelectorConfig(),
+                      inputBorder: InputBorder.none,
+                      selectorConfig: const SelectorConfig(trailingSpace: false),
                       initialValue: PhoneNumber(dialCode: "+91", isoCode: "IN"),
                       onFieldSubmitted: (value) => (phoneno != null)
                           ? phoneno!.isNotEmpty
@@ -209,9 +216,7 @@ class _RecruiterSiginState extends State<RecruiterSigin> with SingleTickerProvid
                                                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                                                       duration: const Duration(seconds: 10),
                                                       behavior: SnackBarBehavior.floating,
-                                                      action: SnackBarAction(
-                                                          label: "Copy OTP",
-                                                          onPressed: () => Clipboard.setData(ClipboardData(text: data?.otp?.toString() ?? ""))),
+                                                      action: SnackBarAction(label: "Copy OTP", onPressed: () => Clipboard.setData(ClipboardData(text: data?.otp?.toString() ?? ""))),
                                                       content: Text(data?.otp.toString() ?? "Did not get the Otp try again")))
                                                   : NotificationService.showNotification(
                                                       title: "Hiring Roof Otp",
@@ -225,7 +230,7 @@ class _RecruiterSiginState extends State<RecruiterSigin> with SingleTickerProvid
                                                             isFirstTime: data!.firstTime!,
                                                             otp: data.otp!,
                                                             phoneNo: phoneno!,
-                                                            isJobseeker: false,
+                                                            isJobseeker: isCandidate,
                                                           )));
                                             } else {
                                               if (loading.value) {
@@ -256,8 +261,7 @@ class _RecruiterSiginState extends State<RecruiterSigin> with SingleTickerProvid
                             alignment: Alignment.center,
                             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 35),
                             margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 30),
-                            decoration:
-                                BoxDecoration(color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
+                            decoration: BoxDecoration(color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
                             child: isloading
                                 ? const CircularProgressIndicator.adaptive()
                                 : const Text(
@@ -277,6 +281,35 @@ class _RecruiterSiginState extends State<RecruiterSigin> with SingleTickerProvid
                             //     }),
 
                             )),
+                    InkWell(
+                      onTap: () => isCandidate
+                          ? Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const PreuserNav(),
+                              ))
+                          : Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const PreReqNav(),
+                              )),
+                      child: Container(
+                          width: double.maxFinite,
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 35),
+                          margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 30),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: purple),
+                            //  color: const Color.fromRGBO(255, 255, 255, 1),
+                            borderRadius: BorderRadius.circular(8),
+                            //  gradient: linearGradient
+                          ),
+                          child: isloading
+                              ? const CircularProgressIndicator.adaptive()
+                              : const Text(
+                                  " Skip ",
+                                )),
+                    ),
                     const Spacer(),
                     const Padding(
                       padding: EdgeInsets.all(8.0),

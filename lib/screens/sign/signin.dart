@@ -5,9 +5,9 @@ import 'dart:math' as math;
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:hiring_roof/controller/get/startcontroller.dart';
-import 'package:hiring_roof/screens/sign/siginrequter.dart';
 import 'package:hiring_roof/screens/sign/verify.dart';
 import 'package:hiring_roof/util/platformdata.dart';
+import 'package:hiring_roof/util/widgets/bottom/reqprebottom.dart';
 import 'package:hiring_roof/util/widgets/bottom/userprebottom.dart';
 import 'package:vector_graphics/vector_graphics.dart';
 import 'package:hiring_roof/controller/connect/authconnect.dart';
@@ -16,18 +16,18 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 import '../../services/notification_service.dart';
 
-class CandidateSigin extends StatefulWidget {
-  const CandidateSigin({super.key});
+class Sigin extends StatefulWidget {
+  const Sigin({super.key});
 
   @override
-  State<CandidateSigin> createState() => _CandidateSiginState();
+  State<Sigin> createState() => _SiginState();
 }
 
-class _CandidateSiginState extends State<CandidateSigin> with SingleTickerProviderStateMixin {
+class _SiginState extends State<Sigin> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   final ValueNotifier<bool> loading = ValueNotifier(false);
   bool isloading = false;
-
+  bool isCandidate = false;
   @override
   void initState() {
     super.initState();
@@ -124,27 +124,22 @@ class _CandidateSiginState extends State<CandidateSigin> with SingleTickerProvid
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     GestureDetector(
-                      onTap: () => Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const RecruiterSigin(),
-                          ),
-                          ((route) => false)),
+                      onTap: () => setState(() => isCandidate = !isCandidate),
                       child: Padding(
-                        padding: EdgeInsets.only(top: 10, right: 12, bottom: size.height * 0.07),
-                        child: const Row(
+                        padding: EdgeInsets.only(top: 5, right: 12, bottom: size.height * 0.065),
+                        child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Icon(Icons.business),
-                            InkWell(child: Text("Switch to the employer")),
+                            const Icon(Icons.business),
+                            InkWell(child: Text(isCandidate ? "Switch to the employer" : "Switch to the candidate")),
                           ],
                         ),
                       ),
                     ),
-                    const Text(
-                      "  Candidate \n  Sign-in/Signup",
-                      style: TextStyle(fontSize: 28.5, fontWeight: FontWeight.bold),
+                    Text(
+                      isCandidate ? "  Candidate \n  Sign-in/Signup" : "  Recruiter \n  Sign-in/Signup",
+                      style: const TextStyle(fontSize: 28.5, fontWeight: FontWeight.bold),
                     ),
                     const Padding(
                       padding: EdgeInsets.all(8.0),
@@ -160,7 +155,8 @@ class _CandidateSiginState extends State<CandidateSigin> with SingleTickerProvid
                       ),
                     ),
                     InternationalPhoneNumberInput(
-                      selectorConfig: const SelectorConfig(),
+                      inputBorder: InputBorder.none,
+                      selectorConfig: const SelectorConfig(trailingSpace: false),
                       initialValue: PhoneNumber(dialCode: "+91", isoCode: "IN"),
                       onFieldSubmitted: (value) => (phoneno != null)
                           ? phoneno!.isNotEmpty
@@ -188,17 +184,6 @@ class _CandidateSiginState extends State<CandidateSigin> with SingleTickerProvid
                     ),
                     InkWell(
                         onTap: () {
-                          // if (!loading.value) {
-
-                          // loading.value = true;
-                          // //if (!isloading) {
-                          // setState(() {
-                          //   isloading = true;
-                          // });
-                          // }
-
-                          //   }
-
                           (phoneno != null)
                               ? phoneno!.isNotEmpty
                                   ? phoneno!.length == 13
@@ -227,7 +212,7 @@ class _CandidateSiginState extends State<CandidateSigin> with SingleTickerProvid
                                                             isFirstTime: data!.firstTime!,
                                                             otp: data.otp!,
                                                             phoneNo: phoneno!,
-                                                            isJobseeker: true,
+                                                            isJobseeker: isCandidate,
                                                           )));
                                             } else {
                                               if (loading.value) {
@@ -244,14 +229,6 @@ class _CandidateSiginState extends State<CandidateSigin> with SingleTickerProvid
                                       : ScaffoldMessenger.of(context).showSnackBar(phonenotvalid)
                                   : ScaffoldMessenger.of(context).showSnackBar(empty)
                               : ScaffoldMessenger.of(context).showSnackBar(notCorrect);
-                          // if (loading.value) {
-                          //   loading.value = false;
-                          // }
-                          // if (isloading) {
-                          //   setState(() {
-                          //     isloading = false;
-                          //   });
-                          //    }
                         },
                         child: Container(
                             width: double.maxFinite,
@@ -264,26 +241,19 @@ class _CandidateSiginState extends State<CandidateSigin> with SingleTickerProvid
                                 : const Text(
                                     "Join us",
                                     style: TextStyle(color: white),
-                                  )
-                            // ValueListenableBuilder<bool>(
-                            //     valueListenable: loading,
-                            //     builder: (context, val, child) {
-                            //       //a          debugPrint(val.toString());
-                            //       return val
-                            //           ? const CircularProgressIndicator.adaptive()
-                            //           : const Text(
-                            //               "Join us",
-                            //               style: TextStyle(color: white),
-                            //             );
-                            //     }),
-
-                            )),
+                                  ))),
                     InkWell(
-                      onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const PreuserNav(),
-                          )),
+                      onTap: () => isCandidate
+                          ? Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const PreuserNav(),
+                              ))
+                          : Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const PreReqNav(),
+                              )),
                       child: Container(
                           width: double.maxFinite,
                           alignment: Alignment.center,
@@ -291,9 +261,7 @@ class _CandidateSiginState extends State<CandidateSigin> with SingleTickerProvid
                           margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 30),
                           decoration: BoxDecoration(
                             border: Border.all(color: purple),
-                            //  color: const Color.fromRGBO(255, 255, 255, 1),
                             borderRadius: BorderRadius.circular(8),
-                            //  gradient: linearGradient
                           ),
                           child: isloading
                               ? const CircularProgressIndicator.adaptive()

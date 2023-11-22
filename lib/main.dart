@@ -1,9 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hiring_roof/data/shared_pref.dart';
-import 'package:hiring_roof/screens/sign/sigin.dart';
- import 'package:hiring_roof/util/widgets/bottom/ubottom.dart';
-import 'services/notification_service.dart';
+ import 'package:hiring_roof/screens/sign/signin.dart';
+import 'package:hiring_roof/util/widgets/bottom/rbottom.dart';
+import 'package:hiring_roof/util/widgets/bottom/ubottom.dart';
+ import 'services/notification_service.dart';
 import 'util/constant/const.dart';
 
 class MyHttpOverrides extends HttpOverrides {
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     // Brightness brightness = Brightness.light;
+    // Brightness brightness = Brightness.light;
     // brightness = View.of(context).platformDispatcher.platformBrightness;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -39,7 +40,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: userModal.userId == null ? const CandidateSigin() : const UNav(),
+      home:
+          // const Aboutus()
+          userModal.userId == null
+              ? const Sigin()
+              : userModal.userType == "jobSeeker"
+                  ? const UNav()
+                  : const ReqNav(),
     );
   }
 }

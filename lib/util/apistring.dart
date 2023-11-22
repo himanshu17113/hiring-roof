@@ -6,5 +6,6 @@ class ApiString {
   static String getJobs = "$baseUrl/api/job/all-after-login";
   static String search = "$baseUrl/api/job/search";
   static String save = "$baseUrl/api/save/";
+    static String getsave = "$baseUrl/api/save/get";
   static String  apply = "$baseUrl/api/jobApplication/apply/";
 }

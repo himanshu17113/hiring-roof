@@ -18,6 +18,7 @@ class JobxController extends GetxController {
   List<Job> searchjobs = [];
   String? location;
   String? jobTittle;
+  List<Job> savedjobs = [];
   ScrollController scrollController = ScrollController(
       // onAttach: (position) => ,
       );
@@ -143,5 +144,27 @@ class JobxController extends GetxController {
       Uri.parse("${ApiString.save}$id"),
       headers: {"Authorization": userModal.token!, "Content-Type": "application/json"},
     );
+  }
+
+  getSaveJobs() async {
+    http.Response response = await http.get(
+      Uri.parse(ApiString.getsave),
+      headers: {"Authorization": userModal.token!, "Content-Type": "application/json"},
+    );
+    debugPrint(response.statusCode.toString());
+    if (response.statusCode == 200) {
+      jobModal = JobModal.fromRawJson(response.body);
+      if (jobModal.jobs!.isEmpty) {
+        savedjobs = jobModal.jobs!;
+
+        update();
+      }
+      // else {
+
+      //   update();
+      // }
+    } else {
+      return null;
+    }
   }
 }

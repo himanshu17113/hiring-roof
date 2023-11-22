@@ -3,15 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:hiring_roof/util/constant/color.dart';
 import 'package:hiring_roof/util/widgets/jcard.dart';
 
- 
 class MyJobs extends StatelessWidget {
   const MyJobs({super.key});
 
   @override
   Widget build(BuildContext context) {
     debugPrint("MyJobs -- page created");
-    // double width = MediaQuery.of(context).size.width;
-    //double height = MediaQuery.of(context).size.height;
+
     return DefaultTabController(
         length: 6,
         child: Scaffold(
@@ -21,18 +19,7 @@ class MyJobs extends StatelessWidget {
             shadowColor: Colors.purple.withOpacity(0.15),
             backgroundColor: black12,
             automaticallyImplyLeading: true,
-            //  shadowColor: black,
             surfaceTintColor: black12,
-            // leading: GestureDetector(
-            //   onTap: () {
-            //     Navigator.pop(context);
-            //   },
-            //   child: const Icon(
-            //     Icons.arrow_back_ios_new_sharp,
-            //     size: 16,
-            //     weight: 51,
-            //   ),
-            // ),
             toolbarOpacity: 0.1,
             bottomOpacity: 1,
             centerTitle: false,
@@ -55,16 +42,13 @@ class MyJobs extends StatelessWidget {
               ),
             ),
             titleTextStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-
             elevation: 20,
             bottom: const TabBar(
               splashBorderRadius: BorderRadius.all(Radius.circular(33)),
               dividerColor: black,
-              //  unselectedLabelColor
               labelColor: white,
               isScrollable: true,
               padding: EdgeInsets.symmetric(horizontal: 20),
-              //  labelPadding: EdgeInsets.only(right: 10),
               indicatorPadding: EdgeInsets.symmetric(horizontal: -20, vertical: 5),
               indicatorColor: Colors.orange,
               indicatorWeight: 3,
@@ -89,50 +73,14 @@ class MyJobs extends StatelessWidget {
             ),
             child: TabBarView(
               children: [
-                ListView.builder(
-                    primary: true,
-                    //shrinkWrap: true,
-                    itemCount: 12,
-                    itemBuilder: (BuildContext context, int index) => const CJCard()
-
-                    // 3, (index) => const DashVendorDetails()
-                    ),
-                ListView.builder(
-                    primary: true,
-                    //shrinkWrap: true,
-                    itemCount: 9,
-                    itemBuilder: (BuildContext context, int index) => const CJCard()
-                    // 3, (index) => const DashVendorDetails()
-                    ),
-                ListView.builder(
-                    primary: true,
-                    //shrinkWrap: true,
-                    itemCount: 9,
-                    itemBuilder: (BuildContext context, int index) => const CJCard()),
-                ListView.builder(
-                    primary: true,
-                    //shrinkWrap: true,
-                    itemCount: 12,
-                    itemBuilder: (BuildContext context, int index) => const CJCard()),
-                ListView.builder(
-                    primary: true,
-                    //shrinkWrap: true,
-                    itemCount: 9,
-                    itemBuilder: (BuildContext context, int index) => const CJCard()
-                    // 3, (index) => const DashVendorDetails()
-                    ),
-                ListView.builder(
-                    primary: true,
-                    //shrinkWrap: true,
-                    itemCount: 9,
-                    itemBuilder: (BuildContext context, int index) => const CJCard()
-                    // 3, (index) => const DashVendorDetails()
-                    ),
+                ListView.builder(primary: true, itemCount: 9, itemBuilder: (BuildContext context, int index) => const CJCard()),
+                ListView.builder(primary: true, itemCount: 9, itemBuilder: (BuildContext context, int index) => const CJCard()),
+                ListView.builder(primary: true, itemCount: 12, itemBuilder: (BuildContext context, int index) => const CJCard()),
+                ListView.builder(primary: true, itemCount: 9, itemBuilder: (BuildContext context, int index) => const CJCard()),
+                ListView.builder(primary: true, itemCount: 9, itemBuilder: (BuildContext context, int index) => const CJCard()),
               ],
             ),
           ),
-
-          //   const Center(child: DashBottomNav())
         ));
   }
 }

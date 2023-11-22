@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hiring_roof/screens/find.dart';
+import 'package:hiring_roof/screens/myjobs/myjobs.dart';
 import 'package:hiring_roof/screens/postjob.dart';
 import '../../../controller/navigation/navcon.dart';
  import '../../constant/color.dart';
 
-class Nav extends StatelessWidget {
-  const Nav({super.key});
+class PreReqNav extends StatelessWidget {
+  const PreReqNav({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,13 +18,13 @@ class Nav extends StatelessWidget {
       const Find(),
       const PostJob(),
 
-      //    const MyJobs()
+       const MyJobs()
     ];
 
     return GetBuilder<Controller>(
       init: Controller(),
       builder: (controller) {
-        debugPrint("real - shit");
+        
         return Scaffold(
           backgroundColor: black,
           body: screens[controller.page],
