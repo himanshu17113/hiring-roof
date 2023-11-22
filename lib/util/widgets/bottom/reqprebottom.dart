@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hiring_roof/screens/find.dart';
+import 'package:hiring_roof/screens/home.dart';
 import 'package:hiring_roof/screens/myjobs/myjobs.dart';
 import 'package:hiring_roof/screens/postjob.dart';
 import '../../../controller/navigation/navcon.dart';
- import '../../constant/color.dart';
+import '../../constant/color.dart';
 
 class PreReqNav extends StatelessWidget {
   const PreReqNav({super.key});
@@ -13,18 +14,15 @@ class PreReqNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
-     final screens = [
-      //  const Home(),
-      const Find(),
+    final screens = [
+      const Home(),
       const PostJob(),
-
-       const MyJobs()
+      const Find(),
     ];
 
     return GetBuilder<Controller>(
       init: Controller(),
       builder: (controller) {
-        
         return Scaffold(
           backgroundColor: black,
           body: screens[controller.page],
@@ -57,11 +55,11 @@ class PreReqNav extends StatelessWidget {
                 icon: Icon(Icons.add_circle_outline_outlined),
                 label: 'Post',
               ),
-              NavigationDestination(
-                selectedIcon: Icon(Icons.bookmark),
-                icon: Icon(Icons.bookmark_border),
-                label: 'Saved',
-              ),
+              // NavigationDestination(
+              //   selectedIcon: Icon(Icons.bookmark),
+              //   icon: Icon(Icons.bookmark_border),
+              //   label: 'Saved',
+              // ),
             ],
           ),
         );

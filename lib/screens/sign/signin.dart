@@ -126,7 +126,7 @@ class _SiginState extends State<Sigin> with SingleTickerProviderStateMixin {
                     GestureDetector(
                       onTap: () => setState(() => isCandidate = !isCandidate),
                       child: Padding(
-                        padding: EdgeInsets.only(top: 5, right: 12, bottom: size.height * 0.065),
+                        padding: EdgeInsets.only(top: 5, right: 12, bottom: size.height * 0.062),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -148,12 +148,12 @@ class _SiginState extends State<Sigin> with SingleTickerProviderStateMixin {
                         style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.normal),
                       ),
                     ),
-                    const Center(
-                      child: Text(
-                        "                      Please Enter the Phone No.",
-                        style: TextStyle(fontSize: 16.5, fontWeight: FontWeight.normal),
-                      ),
-                    ),
+                    // const Center(
+                    //   child: Text(
+                    //     "                      Please Enter the Phone No.",
+                    //     style: TextStyle(fontSize: 16.5, fontWeight: FontWeight.normal),
+                    //   ),
+                    // ),
                     InternationalPhoneNumberInput(
                       inputBorder: InputBorder.none,
                       selectorConfig: const SelectorConfig(trailingSpace: false),
@@ -234,7 +234,7 @@ class _SiginState extends State<Sigin> with SingleTickerProviderStateMixin {
                             width: double.maxFinite,
                             alignment: Alignment.center,
                             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 35),
-                            margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 30),
+                            margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
                             decoration: BoxDecoration(color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
                             child: isloading
                                 ? const CircularProgressIndicator.adaptive()
@@ -258,7 +258,7 @@ class _SiginState extends State<Sigin> with SingleTickerProviderStateMixin {
                           width: double.maxFinite,
                           alignment: Alignment.center,
                           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 35),
-                          margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 30),
+                          margin: const EdgeInsets.only(top: 5, left: 35, right: 35),
                           decoration: BoxDecoration(
                             border: Border.all(color: purple),
                             borderRadius: BorderRadius.circular(8),

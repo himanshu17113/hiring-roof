@@ -8,6 +8,7 @@ import '../../model/job.dart';
 
 class JobxController extends GetxController {
   var client = http.Client();
+ // ApiString apiString = ApiString();
   double position = 0;
   JobModal jobModal = JobModal();
   List<Job> myjobs = [];
