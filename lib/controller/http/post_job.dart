@@ -1,9 +1,9 @@
-import 'dart:convert';
-import 'dart:io';
+ import 'dart:io';
 
 import 'package:get/get_connect/connect.dart';
 import 'package:hiring_roof/util/apistring.dart';
 import 'package:hiring_roof/util/constant/const.dart';
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
 
 class JobPost extends GetConnect {
@@ -27,13 +27,14 @@ class JobPost extends GetConnect {
     final String availability,
     final String payType,
     final String path,
+     final String fileName,
     //final File? file
   ) async {
     print(title.toString());
     Map<String, String> header = {"Authorization": userModal.token!};
 
     final FormData formData = FormData({
-      'companyLogo': MultipartFile(File(path), filename: 'kindacode.jpg'),
+      'companyLogo': MultipartFile(File(path), filename: fileName),
       'jobTittle': title,
       "skills": knowledge,
       "jobType": workingPlace,
@@ -60,10 +61,7 @@ class JobPost extends GetConnect {
     //   "companyName": companyName
     // };
 
-    var response = await put(ApiString.putJob, formData, headers: header, contentType: "multipart/form-data");
-    print(response.body.toString());
-    print(response.statusText.toString());
-    print(response.statusCode.toString());
+    var response = await put(ApiString.putJob, formData, headers: header, contentType: "multipart/form-data"); 
     //  var request = client.put('PUT', Uri.parse(ApiString.putJob));
     // request.headers.addAll(header);
     // request.fields.addAll(body);

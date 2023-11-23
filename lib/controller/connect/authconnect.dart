@@ -17,7 +17,7 @@ class UserProvider extends GetConnect {
   Future<Response<Verify>> verifey(String phoneno, int otp, bool isFirstTime, bool isjobseeker) =>
       put<Verify>(ApiString.verify, {"phone": phoneno, "otp": otp, "userType": isjobseeker ? "jobSeeker" : "company", "firstTime": isFirstTime}, decoder: (obj) {
         final verify = Verify.fromMap(obj);
-        print(verify.userType.toString());
+      //  print(verify.userType.toString());
         sharedPref.saveModel(verify);
         return verify;
       });

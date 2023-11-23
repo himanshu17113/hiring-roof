@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:get/state_manager.dart';
@@ -38,8 +36,8 @@ class PostJob extends StatelessWidget {
         );
         final List<String?> list = [image?.path.toString(), image?.name.toString()];
 
-         return list;
-      //  return image;
+        return list;
+        //  return image;
       } catch (e) {
         debugPrint(e.toString());
         return null;
@@ -77,6 +75,9 @@ class PostJob extends StatelessWidget {
   static final List<String> payTypes = ["yearly", "monthly"];
   @override
   Widget build(BuildContext context) {
+    final JobPost jobPost = JobPost();
+
+    int maxapihit = 3;
     String workingPlace = workingPlaces[0];
     String title = "";
     String location = "";
@@ -92,7 +93,7 @@ class PostJob extends StatelessWidget {
     String companyLogo = "";
     String availability = availabilities[0];
     String filename = "";
-    File file;
+
     return Scaffold(
       backgroundColor: const Color(0xFF080808),
       appBar: AppBar(
@@ -640,11 +641,22 @@ class PostJob extends StatelessWidget {
                   init: Controller(),
                   builder: (controller) => GestureDetector(
                     onTap: () async {
-                      final JobPost jobPost = JobPost();
-                      bool reult = await jobPost.postJob(title, location, companyName, pay, jobSummary, knowledge, timePeriod, job, workingPlace, jobType, companyLogo, availability, payType, path );
-                      if (reult) {
-                        controller.pageUpdate(2);
-                      } else {}
+                      while (maxapihit == 0) {
+                        bool reult =
+                            await jobPost.postJob(title, location, companyName, pay, jobSummary, knowledge, timePeriod, job, workingPlace, jobType, companyLogo, availability, payType, path, filename);
+                        if (reult) {
+                          maxapihit = -1;
+                          controller.pageUpdate(2);
+                          break;
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                              duration: const Duration(seconds: 10),
+                              behavior: SnackBarBehavior.floating,
+                              //  action: SnackBarAction(label: "Copy OTP", onPressed: () => Clipboard.setData(ClipboardData(text: data?.otp?.toString() ?? ""))),
+                              content: const Text("Please try again")));
+                        }
+                      }
                     },
                     child: Container(
                       height: 45,
