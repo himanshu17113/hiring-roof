@@ -9,6 +9,7 @@ import 'package:hiring_roof/util/constant/const.dart';
 import 'package:hiring_roof/util/widgets/bottom/bottom.dart';
 import 'package:hiring_roof/util/widgets/bottom/ubottom.dart';
 import '../../util/constant/color.dart';
+import '../../util/widgets/bottom/rbottom.dart';
 
 const Color primaryColor = Color(0xFF121212);
 const Color accentPurpleColor = Color(0xFF6A53A1);
@@ -53,23 +54,25 @@ class _VerificationScreenState extends State<VerificationScreen> {
       child: Scaffold(
         appBar: AppBar(
           elevation: 0,
-          //    backgroundColor: Colors.white,
         ),
         body: Container(
           padding: const EdgeInsets.only(left: 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 "Verification Code",
-                style: theme.textTheme.headlineMedium,
+                style: TextStyle(fontSize: 28),
               ),
               const SizedBox(height: 16),
-              Text(
+              const Text(
                 "We texted you a code",
-                style: theme.textTheme.titleLarge,
+                style: TextStyle(fontSize: 17),
               ),
-              Text("Please enter it below", style: theme.textTheme.labelLarge),
+              const Text(
+                "Please enter it below",
+                style: TextStyle(fontSize: 17),
+              ),
               const Spacer(flex: 2),
               OtpTextField(
                 numberOfFields: numberOfFields,
@@ -97,16 +100,6 @@ class _VerificationScreenState extends State<VerificationScreen> {
                               builder: (context) => const UNav(),
                             ),
                             ((route) => false));
-                        //   while (Navigator.canPop(context)) {
-                        //     Navigator.pop(context);
-                        //   }
-                        //   Navigator.pop(context);
-                        //   Navigator.popUntil(context, (route) => false);
-                        //   Navigator.push(
-                        //       context,
-                        //       MaterialPageRoute(
-                        //         builder: (context) => const UNav(),
-                        //       ));
                       }
                     });
                   }
@@ -158,15 +151,11 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     userProvider.verifey(widget.phoneNo, widget.otp, widget.isFirstTime, widget.isJobseeker).then((response) {
                       debugPrint(response.statusCode.toString());
                       if (response.statusCode == 200) {
-                        while (Navigator.canPop(context)) {
-                          Navigator.pop(context);
-                        }
-                        Navigator.pop(context);
                         Navigator.popUntil(context, (route) => false);
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const Nav(),
+                              builder: (context) => widget.isJobseeker ? const Nav() : const ReqNav(),
                             ));
                       }
                     });

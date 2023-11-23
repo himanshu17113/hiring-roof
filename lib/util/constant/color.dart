@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 
 const Color white = Color(0xFFFFFFFF);
+const Color white30 = Color.fromRGBO(255, 255, 255, 0.3);
+const Color white40 = Color.fromRGBO(255, 255, 255, 0.4);
+const Color white50 = Color.fromRGBO(255, 255, 255, 0.5);
+const Color white60 = Color.fromRGBO(255, 255, 255, 0.6);
 const Color white70 = Color.fromRGBO(255, 255, 255, 0.702);
+const Color white80 = Color.fromRGBO(255, 255, 255, 0.8);
+const Color white90 = Color.fromRGBO(255, 255, 255, 0.9);
 const Color black = Color(0xFF000000);
 const Color black12 = Color(0x30000000);
 Color vsdark = const Color.fromRGBO(35, 39, 46, 1);

@@ -2,25 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hiring_roof/screens/find.dart';
-import 'package:hiring_roof/screens/home.dart';
-import 'package:hiring_roof/screens/myjobs/myjobs.dart';
+import 'package:hiring_roof/screens/myjobs/myapplication.dart';
 import 'package:hiring_roof/screens/postjob.dart';
 import '../../../controller/navigation/navcon.dart';
 import '../../constant/color.dart';
 
-class  ReqNav extends StatelessWidget {
-  const  ReqNav({super.key});
+class ReqNav extends StatelessWidget {
+  const ReqNav({super.key});
 
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
-    final screens = [
-       const Home(),
-      const Find(),
-      const PostJob(),
-
-      const MyJobs()
-    ];
+    final screens = [const Find(), const PostJob(), const MyJobAppl()];
 
     return GetBuilder<Controller>(
       init: Controller(),
@@ -42,11 +35,6 @@ class  ReqNav extends StatelessWidget {
               // });
             },
             destinations: const [
-              NavigationDestination(
-                selectedIcon: Icon(Icons.home),
-                icon: Icon(Icons.home_outlined),
-                label: 'home',
-              ),
               NavigationDestination(
                 selectedIcon: Icon(Icons.search),
                 icon: Icon(Icons.search_outlined),

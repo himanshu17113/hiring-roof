@@ -25,6 +25,9 @@ class ApiString {
   static String interviewselect = "$baseUrl/api/jobApplication/interview-select/";
   static String interview2select = "$baseUrl/api/jobApplication/interview-2-select/";
   static String selected = "$baseUrl/api/jobApplication/selected/";
+  // job post and update
+  static String putJob = "$baseUrl/api/job/createUpdate";
+
   // candidate
   static String getShortlisted = "$baseUrl/api/jobApplication/job-seeker/get-shortlist/";
   static String getCandidateinterviewslist = "$baseUrl/api/jobApplication/job-seeker/get-interviews-list/";

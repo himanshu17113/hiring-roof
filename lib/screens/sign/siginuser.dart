@@ -114,7 +114,7 @@ class _CandidateSiginState extends State<CandidateSigin> with SingleTickerProvid
                           return ClipPath(
                             clipper: DrawClip(_controller.value),
                             child: Container(
-                              height: PlatformInfo().isAppOS() ? size.height * 0.07 : 200,
+                              height: PlatformInfo.isAppOS() ? size.height * 0.07 : 200,
                               decoration: const BoxDecoration(gradient: linearGradient),
                             ),
                           );
@@ -210,7 +210,7 @@ class _CandidateSiginState extends State<CandidateSigin> with SingleTickerProvid
                                             if (response.status.isOk) {
                                               final data = response.body;
                                               debugPrint(data?.otp.toString() ?? "didnot get");
-                                              PlatformInfo().isDesktopOS()
+                                              PlatformInfo.isDesktopOS()
                                                   ? ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                                                       duration: const Duration(seconds: 10),

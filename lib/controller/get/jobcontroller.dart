@@ -8,7 +8,7 @@ import '../../model/job.dart';
 
 class JobxController extends GetxController {
   var client = http.Client();
- // ApiString apiString = ApiString();
+  // ApiString apiString = ApiString();
   double position = 0;
   JobModal jobModal = JobModal();
   List<Job> myjobs = [];
@@ -29,13 +29,13 @@ class JobxController extends GetxController {
   @override
   void onInit() {
     debugPrint(" job length ${myjobs.length}");
-    if (myjobs.isEmpty && userModal.token != null) {
+    if (myjobs.isEmpty && userModal.token != null && userModal.userType == "jobSeeker") {
       getMyJobs();
     }
 
     scrollController.addListener(() {
       position = scrollController.position.pixels;
-      if (scrollController.position.pixels == scrollController.position.maxScrollExtent && !reachedTheEndofMyjob) getMyJobs();
+      if (scrollController.position.pixels == scrollController.position.maxScrollExtent && !reachedTheEndofMyjob && userModal.userType == "jobSeeker") getMyJobs();
     });
     searchscrollController.addListener(() {
       //  position = scrollController.position.pixels;
@@ -141,7 +141,7 @@ class JobxController extends GetxController {
   }
 
   saveJob(String id) async {
-      await http.get(
+    await http.get(
       Uri.parse("${ApiString.save}$id"),
       headers: {"Authorization": userModal.token!, "Content-Type": "application/json"},
     );

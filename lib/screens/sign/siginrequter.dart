@@ -110,7 +110,7 @@ class _RecruiterSiginState extends State<RecruiterSigin> with SingleTickerProvid
                           return ClipPath(
                             clipper: DrawClip(_controller.value),
                             child: Container(
-                              height: PlatformInfo().isAppOS() ? size.height * 0.07 : 200,
+                              height: PlatformInfo.isAppOS() ? size.height * 0.07 : 200,
                               decoration: const BoxDecoration(gradient: linearGradient),
                             ),
                           );
@@ -120,13 +120,12 @@ class _RecruiterSiginState extends State<RecruiterSigin> with SingleTickerProvid
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     GestureDetector(
-                         onTap: () => Navigator.pushAndRemoveUntil(
+                      onTap: () => Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
                             builder: (context) => const CandidateSigin(),
                           ),
                           ((route) => false)),
-                    
                       child: Padding(
                         padding: EdgeInsets.only(top: 10, right: 12, bottom: size.height * 0.07),
                         child: const Row(
@@ -205,14 +204,12 @@ class _RecruiterSiginState extends State<RecruiterSigin> with SingleTickerProvid
                                             if (response.status.isOk) {
                                               final data = response.body;
                                               debugPrint(data?.otp.toString() ?? "didnot get");
-                                              PlatformInfo().isDesktopOS()
+                                              PlatformInfo.isDesktopOS()
                                                   ? ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                                                       duration: const Duration(seconds: 10),
                                                       behavior: SnackBarBehavior.floating,
-                                                      action: SnackBarAction(
-                                                          label: "Copy OTP",
-                                                          onPressed: () => Clipboard.setData(ClipboardData(text: data?.otp?.toString() ?? ""))),
+                                                      action: SnackBarAction(label: "Copy OTP", onPressed: () => Clipboard.setData(ClipboardData(text: data?.otp?.toString() ?? ""))),
                                                       content: Text(data?.otp.toString() ?? "Did not get the Otp try again")))
                                                   : NotificationService.showNotification(
                                                       title: "Hiring Roof Otp",
@@ -257,8 +254,7 @@ class _RecruiterSiginState extends State<RecruiterSigin> with SingleTickerProvid
                             alignment: Alignment.center,
                             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 35),
                             margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 30),
-                            decoration:
-                                BoxDecoration(color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
+                            decoration: BoxDecoration(color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
                             child: isloading
                                 ? const CircularProgressIndicator.adaptive()
                                 : const Text(

@@ -27,10 +27,10 @@ class Find extends StatelessWidget {
           initState: (state) {
             state.controller?.scroll();
           },
-          //initState: (startxController) {},
           builder: (jobxController) => CustomScrollView(controller: jobxController.searchscrollController, physics: const BouncingScrollPhysics(), slivers: [
             SliverAppBar(
-              leading: const SizedBox(),
+              leadingWidth: 0,
+              leading: const SizedBox.shrink(),
               backgroundColor: const Color.fromARGB(240, 0, 0, 0),
               floating: true,
               pinned: true,
@@ -72,15 +72,8 @@ class Find extends StatelessWidget {
                   ),
                 ],
               ),
-
-              // actions: [
-              //   IconButton(
-              //     icon: const Icon(Icons.shopping_cart),
-              //     onPressed: () {},
-              //   ),
-              // ],
-
               bottom: AppBar(
+                leadingWidth: 0,
                 leading: const SizedBox.shrink(),
                 forceMaterialTransparency: true,
                 backgroundColor: const Color.fromARGB(240, 0, 0, 0),
@@ -88,7 +81,6 @@ class Find extends StatelessWidget {
                   width: double.infinity,
                   height: 40,
                   color: const Color.fromARGB(240, 0, 0, 0),
-                  //    color: white,
                   child: Center(
                     child: TextField(
                         controller: textEditingController,
@@ -109,10 +101,6 @@ class Find extends StatelessWidget {
                                   width: 100,
                                   height: 40,
                                   alignment: Alignment.center,
-                                  // padding: const EdgeInsets.symmetric(
-                                  //     vertical: 7.5, horizontal: 50),
-                                  // margin: const EdgeInsets.symmetric(
-                                  //     vertical: 25, horizontal: 35),
                                   decoration: BoxDecoration(color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
                                   child: const Text(
                                     "Apply",
@@ -122,18 +110,11 @@ class Find extends StatelessWidget {
                               ),
                             ),
                             contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 4),
-                            // hintText: "💾 upload cover image",
-                            // focusedBorder: InputBorder.none,
-                            //enabledBorder: InputBorder.none,
-                            border: InputBorder.none
-                            // strutStyle: StrutStyle(height: 1
-                            //     //    , fontSize: 28
-                            //     ),
-                            )),
+                            border: InputBorder.none)),
                   ),
                 ),
               ),
-            ), // Other Sliver Widgets
+            ),
             SliverList.builder(
                 itemCount: jobxController.searchjobs.length + 1,
                 itemBuilder: (context, index) {
