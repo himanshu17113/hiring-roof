@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:hiring_roof/controller/get/applicationController.dart';
 import 'package:hiring_roof/util/widgets/cards/card.dart';
-import 'package:hiring_roof/util/widgets/cards/jcard.dart';
 
 class MyPostedJobs extends StatelessWidget {
   const MyPostedJobs({super.key});

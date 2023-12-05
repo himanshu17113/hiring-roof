@@ -59,8 +59,21 @@ class JCard extends StatelessWidget {
                       radius: 32,
                       backgroundImage: CachedNetworkImageProvider(
                         application == null
-                            ? (job!.companyLogo ?? url)
-                            : (application?.applicantId?.profileImage ?? url),
+                            ? (job?.companyLogo == null ||
+                                    job!.companyLogo!.isEmpty)
+                                ? url
+                                : (Uri.parse(job!.companyLogo!).isAbsolute
+                                    ? job!.companyLogo!
+                                    : url)
+                            : (application!.applicantId?.profileImage == null ||
+                                    application!
+                                        .applicantId!.profileImage!.isEmpty)
+                                ? url
+                                : ((Uri.parse(application!
+                                            .applicantId!.profileImage!)
+                                        .isAbsolute
+                                    ? application!.applicantId!.profileImage!
+                                    : url)),
                       ),
                     ),
                   ),
@@ -584,7 +597,15 @@ class JCard extends StatelessWidget {
                         children: [
                           Expanded(
                             child: CachedNetworkImage(
-                              imageUrl: application!.jobId!.companyLogo!,
+                              imageUrl: application?.jobId?.companyLogo == null
+                                  ? url
+                                  : application!.jobId!.companyLogo!.isNotEmpty
+                                      ? (Uri.parse(application!
+                                                  .jobId!.companyLogo!)
+                                              .isAbsolute)
+                                          ? application!.jobId!.companyLogo!
+                                          : url
+                                      : url,
                               placeholder: (context, url) =>
                                   const CircularProgressIndicator(),
                               // cacheManager: CacheManager(

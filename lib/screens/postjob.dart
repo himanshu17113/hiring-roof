@@ -3,7 +3,6 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:get/state_manager.dart';
 import 'package:hiring_roof/controller/navigation/navcon.dart';
 import 'package:hiring_roof/util/constant/color.dart';
-import 'package:hiring_roof/util/constant/const.dart';
 import 'package:hiring_roof/util/platformdata.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_picker_platform_interface/image_picker_platform_interface.dart';
