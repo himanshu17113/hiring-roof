@@ -20,6 +20,7 @@ class ApiString {
   static String getinterviewslist = "$baseUrl/api/jobApplication/get-interviews-list/";
   static String getinterviews2list = "$baseUrl/api/jobApplication//get-interviews-2-list/";
   static String getselectedcandidates = "$baseUrl/api/jobApplication/get-selected-candidates/";
+  //put
   static String doShortlist = "$baseUrl/api/jobApplication/shortlist/";
   static String doNotSelect = "$baseUrl/api/jobApplication/not-selected/";
   static String interviewselect = "$baseUrl/api/jobApplication/interview-select/";

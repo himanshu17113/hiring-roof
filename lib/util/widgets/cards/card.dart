@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:hiring_roof/controller/http/putcompany.dart';
 import 'package:hiring_roof/model/application.dart';
 import 'package:hiring_roof/model/job.dart';
 import 'package:hiring_roof/util/constant/text.dart';
@@ -10,8 +11,10 @@ import '../../constant/color.dart';
 class JCard extends StatelessWidget {
   final Job? job;
   final Application? application;
-  JCard({super.key, this.job, this.application});
-  final Cardconnect cardconnect = Cardconnect();
+  final GestureTapCallback? callback;
+  const JCard({super.key, this.job, this.application, this.callback});
+  static Cardconnect cardconnect = Cardconnect();
+  static DoUpdate doUpdate = DoUpdate();
   time(DateTime dateTime) {
     DateTime now = DateTime.now();
     Duration difference = now.difference(dateTime);
@@ -674,6 +677,13 @@ class JCard extends StatelessWidget {
                                         MainAxisAlignment.spaceAround,
                                     children: [
                                       GestureDetector(
+                                        onTap: () {
+                                          // final bool = await
+                                          DoUpdate.doShortlist(application!.id!)
+                                              .whenComplete(() {
+                                            application!.shortlist = true;
+                                          });
+                                        },
                                         child: Container(
                                           alignment: Alignment.center,
                                           padding: const EdgeInsets.symmetric(

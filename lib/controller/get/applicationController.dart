@@ -41,20 +41,19 @@ class ApplicationxController extends GetxController {
   final ScrollController selectedCandidatesScroll = ScrollController();
 
   @override
-  void onInit() async {
-    await getMyapplication();
+  void onInit() {
+    getMyapplication();
     // getMyShortlist();
     // getInterveiws();
     // getInterveiws2();
     // getCandidates();
     jobApplicationScroll.addListener(() {
-       // if (jobApplicationScroll.) getMyapplication();
+      // if (jobApplicationScroll.) getMyapplication();
       if (jobApplicationScroll.position.pixels ==
               jobApplicationScroll.position.maxScrollExtent &&
-          ((jobApplications!.isEmpty)) &&
-           !endOfjobApplications &&
+          !endOfjobApplications &&
           userModal.userType != "jobSeeker") {
-         getMyapplication();
+        getMyapplication();
       }
     });
 
@@ -89,11 +88,14 @@ class ApplicationxController extends GetxController {
   //     }
   //   }
   // }
+  addToShortlist(Application application) {
+    shortList?.add(application);
+    update();
+  }
 
   Future<void> getMyapplication() async {
     debugPrint(userModal.token!);
     if (!endOfjobApplications) {
-      debugPrint(userModal.token!);
       debugPrint(("${ApiString.getApplication}$indexOfjobApplications"));
       http.Response response = await client.get(
           Uri.parse("${ApiString.getApplication}$indexOfjobApplications"),
@@ -105,7 +107,28 @@ class ApplicationxController extends GetxController {
         applicationModal = ApplicationModal.fromJson(response.body);
         if (applicationModal?.data != null) {
           if (applicationModal!.data!.isNotEmpty) {
-            jobApplications = applicationModal?.data;
+            // if (jobApplications!.isEmpty) {
+            //   jobApplications = applicationModal!.data!;
+            // } else {
+            jobApplications?.addAll(applicationModal!.data!);
+            //   }
+            for (Application application in jobApplications!) {
+              if (application.selectedCandidates ?? false) {
+                shortList!.add(application);
+                interveiw2List!.add(application);
+                interveiwsList!.add(application);
+                selectedCandidatesList!.add(application);
+              } else if (application.interviews2 ?? false) {
+                interveiw2List!.add(application);
+                interveiwsList!.add(application);
+                shortList!.add(application);
+              } else if (application.interviews ?? false) {
+                interveiwsList!.add(application);
+                shortList!.add(application);
+              } else if (application.shortlist ?? false) {
+                shortList!.add(application);
+              }
+            }
             debugPrint(applicationModal?.data?.length.toString() ?? "empty");
             indexOfjobApplications++;
           } else {

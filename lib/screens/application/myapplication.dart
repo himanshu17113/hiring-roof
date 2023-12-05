@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
- import 'package:hiring_roof/util/constant/color.dart';
+import 'package:hiring_roof/util/constant/color.dart';
 import 'package:hiring_roof/util/widgets/cards/card.dart';
- 
 import '../../controller/get/applicationController.dart';
 
 class MyJobAppl extends StatelessWidget {
@@ -121,32 +120,40 @@ class MyJobAppl extends StatelessWidget {
                                 index ==
                                         applicationxController
                                             .jobApplications!.length
-                                    ? const Padding(
-                                        padding: EdgeInsets.all(20),
-                                        child: Center(
-                                          heightFactor: 1,
-                                          widthFactor: 1,
-                                          child: SizedBox(
-                                            height: 35,
-                                            width: 35,
-                                            child: CircularProgressIndicator(
-                                              color: Colors.white,
-                                              strokeWidth: 1.5,
+                                    ? !applicationxController
+                                            .endOfjobApplications
+                                        ? const Padding(
+                                            padding: EdgeInsets.all(20),
+                                            child: Center(
+                                              heightFactor: 1,
+                                              widthFactor: 1,
+                                              child: SizedBox(
+                                                height: 35,
+                                                width: 35,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  color: Colors.white,
+                                                  strokeWidth: 1.5,
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                        ),
-                                      )
+                                          )
+                                        : const SizedBox()
                                     : JCard(
                                         application: applicationxController
                                             .jobApplications?[index],
+                                        callback:()=> applicationxController
+                                            .addToShortlist(
+                                                applicationxController
+                                                    .jobApplications![index]),
                                       )),
                         ListView.builder(
                             itemCount: applicationxController.shortList!.length,
                             controller: applicationxController.shortListScroll,
                             itemBuilder: (BuildContext context, int index) =>
                                 JCard(
-                                  job: applicationxController
-                                      .shortList?[index].jobId,
+                                  application:
+                                      applicationxController.shortList?[index],
                                 )),
                         ListView.builder(
                             itemCount:
