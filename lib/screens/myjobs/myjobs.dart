@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hiring_roof/util/constant/color.dart';
-import 'package:hiring_roof/util/widgets/jcard.dart';
+import 'package:hiring_roof/util/widgets/cards/jcard.dart';
 
 class MyJobs extends StatelessWidget {
   const MyJobs({super.key});

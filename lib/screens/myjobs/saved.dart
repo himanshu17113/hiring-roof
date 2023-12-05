@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:hiring_roof/util/widgets/jcard.dart';
+import 'package:hiring_roof/util/widgets/cards/jcard.dart';
 
 class SavedJobs extends StatelessWidget {
   const SavedJobs({super.key});

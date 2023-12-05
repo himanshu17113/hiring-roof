@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hiring_roof/controller/get/startcontroller.dart';
 import 'package:hiring_roof/data/shared_pref.dart';
-import 'package:hiring_roof/util/widgets/card.dart';
+import 'package:hiring_roof/util/widgets/cards/card.dart';
 import 'package:hiring_roof/util/constant/color.dart';
 import 'sign/siginuser.dart';
 

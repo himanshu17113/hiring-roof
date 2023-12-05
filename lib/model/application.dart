@@ -85,7 +85,7 @@ class Application {
         id: json["_id"],
         applicantId: json["applicantId"] == null ? null : ApplicantId.fromMap(json["applicantId"]),
         applierId: json["applierId"] == null ? null : ApplierId.fromMap(json["applierId"]),
-        jobId: json["jobId"] == null ? null : Job.fromJson(json["jobId"]),
+        jobId: json["jobId"] == null ? null : Job.fromJsonbyappli(json["jobId"]),
         shortlist: json["shortlist"],
         interviews: json["interviews"],
         interviews2: json["interviews2"],
@@ -129,9 +129,9 @@ class ApplicantId {
   String? expectationPay;
   String? skills;
   String? experience;
-  String? companyName;
-  String? aboutCompany;
-  int? v;
+  // String? companyName;
+  // String? aboutCompany;
+  // int? v;
   DateTime? updatedAt;
 
   ApplicantId({
@@ -145,9 +145,9 @@ class ApplicantId {
     this.expectationPay,
     this.skills,
     this.experience,
-    this.companyName,
-    this.aboutCompany,
-    this.v,
+    // this.companyName,
+    // this.aboutCompany,
+    // this.v,
     this.updatedAt,
   });
 
@@ -166,9 +166,9 @@ class ApplicantId {
         expectationPay: json["expectationPay"],
         skills: json["skills"],
         experience: json["experience"],
-        companyName: json["companyName"],
-        aboutCompany: json["aboutCompany"],
-        v: json["__v"],
+        // companyName: json["companyName"],
+        // aboutCompany: json["aboutCompany"],
+        // v: json["__v"],
         updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
       );
 
@@ -183,9 +183,9 @@ class ApplicantId {
         "expectationPay": expectationPay,
         "skills": skills,
         "experience": experience,
-        "companyName": companyName,
-        "aboutCompany": aboutCompany,
-        "__v": v,
+        // "companyName": companyName,
+        // "aboutCompany": aboutCompany,
+        // "__v": v,
         "updatedAt": updatedAt?.toIso8601String(),
       };
 }

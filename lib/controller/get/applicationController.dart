@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:hiring_roof/model/application.dart';
@@ -23,32 +25,192 @@ class ApplicationxController extends GetxController {
   bool endOfInterview = false;
   bool endOfshortlist = false;
   bool endOfjobApplications = false;
+  //int
+  int indexOfMyPostedJobs = 1;
+  int indexOfSelected = 1;
+  int indexOfInterview2 = 1;
+  int indexOfInterview = 1;
+  int indexOfshortlist = 1;
+  int indexOfjobApplications = 1;
   //scroll
- final ScrollController jobApplicationScroll = ScrollController();
- final ScrollController myPostedJobsScroll = ScrollController();
- final ScrollController shortListScroll = ScrollController();
- final ScrollController interveiwScroll = ScrollController();
- final ScrollController interveiw2Scroll = ScrollController();
- final ScrollController selectedCandidatesScroll = ScrollController();
+  ScrollController jobApplicationScroll = ScrollController();
+  ScrollController myPostedJobsScroll = ScrollController();
+  final ScrollController shortListScroll = ScrollController();
+  final ScrollController interveiwScroll = ScrollController();
+  final ScrollController interveiw2Scroll = ScrollController();
+  final ScrollController selectedCandidatesScroll = ScrollController();
 
   @override
-  void onInit() {
+  void onInit() async {
+    await getMyapplication();
+    // getMyShortlist();
+    // getInterveiws();
+    // getInterveiws2();
+    // getCandidates();
     jobApplicationScroll.addListener(() {
-      if (jobApplicationScroll.position.pixels == jobApplicationScroll.position.maxScrollExtent && !endOfMyPostedJobs && userModal.userType != "jobSeeker") getMyPostedJobs();
+       // if (jobApplicationScroll.) getMyapplication();
+      if (jobApplicationScroll.position.pixels ==
+              jobApplicationScroll.position.maxScrollExtent &&
+          ((jobApplications!.isEmpty)) &&
+           !endOfjobApplications &&
+          userModal.userType != "jobSeeker") {
+         getMyapplication();
+      }
     });
+
+    // jobApplicationScroll.addListener(() {
+    //   if (jobApplicationScroll.position.pixels == jobApplicationScroll.position.maxScrollExtent && !endOfMyPostedJobs && userModal.userType != "jobSeeker") getMyPostedJobs();
+    // });
+    // jobApplicationScroll.addListener(() {
+    //   if (jobApplicationScroll.position.pixels == jobApplicationScroll.position.maxScrollExtent && !endOfMyPostedJobs && userModal.userType != "jobSeeker" && myPostedJobs!.isEmpty) getMyPostedJobs();
+    // });
+    // jobApplicationScroll.addListener(() {
+    //   if (jobApplicationScroll.position.pixels == jobApplicationScroll.position.maxScrollExtent && !endOfMyPostedJobs && userModal.userType != "jobSeeker") getMyPostedJobs();
+    // });
     super.onInit();
   }
 
-  Future<void> getMyPostedJobs() async {
-    if (!endOfMyPostedJobs) {
-      http.Response response = await client.post(Uri.parse(ApiString.getApplication), headers: {"Authorization": userModal.token!, "Content-Type": "application/json"});
-      applicationModal = ApplicationModal.fromJson(response.body);
-      if (applicationModal?.data != null && applicationModal!.data!.isNotEmpty) {
-        myPostedJobs = applicationModal?.data;
-      } else {
-        endOfMyPostedJobs = true;
+  // Future<void> getMyPostedJobs() async {
+  //   log(userModal.token!);
+  //   if (!endOfMyPostedJobs) {
+  //     log(("${ApiString.getApplication}$indexOfMyPostedJobs"));
+  //     http.Response response = await client.get(Uri.parse("${ApiString.getApplication}$indexOfMyPostedJobs"), headers: {"Authorization": userModal.token!, "Content-Type": "application/json"});
+  //     log(response.statusCode.toString());
+  //     applicationModal = ApplicationModal.fromJson(response.body);
+  //     log(applicationModal?.data?.length.toString() ?? "");
+  //     if (applicationModal?.data != null) {
+  //       if (applicationModal!.data!.isNotEmpty) {
+  //         myPostedJobs = applicationModal?.data;
+  //         log(applicationModal?.data?.length.toString() ?? "empty");
+  //       } else {
+  //         endOfMyPostedJobs = true;
+  //       }
+  //       update();
+  //     }
+  //   }
+  // }
+
+  Future<void> getMyapplication() async {
+    debugPrint(userModal.token!);
+    if (!endOfjobApplications) {
+      debugPrint(userModal.token!);
+      debugPrint(("${ApiString.getApplication}$indexOfjobApplications"));
+      http.Response response = await client.get(
+          Uri.parse("${ApiString.getApplication}$indexOfjobApplications"),
+          headers: {
+            "Authorization": userModal.token!,
+            "Content-Type": "application/json"
+          });
+      if (response.statusCode == 200) {
+        applicationModal = ApplicationModal.fromJson(response.body);
+        if (applicationModal?.data != null) {
+          if (applicationModal!.data!.isNotEmpty) {
+            jobApplications = applicationModal?.data;
+            debugPrint(applicationModal?.data?.length.toString() ?? "empty");
+            indexOfjobApplications++;
+          } else {
+            endOfjobApplications = true;
+          }
+          update();
+        }
       }
-      update();
+    }
+  }
+
+  Future<void> getMyShortlist() async {
+    log(userModal.token!);
+    if (!endOfshortlist) {
+      log(("${ApiString.getShortlisted}$indexOfshortlist"));
+      http.Response response = await client.get(
+          Uri.parse("${ApiString.getShortlisted}$indexOfshortlist"),
+          headers: {
+            "Authorization": userModal.token!,
+            "Content-Type": "application/json"
+          });
+      if (response.statusCode == 200) {
+        applicationModal = ApplicationModal.fromJson(response.body);
+        if (applicationModal?.data != null) {
+          if (applicationModal!.data!.isNotEmpty) {
+            shortList = applicationModal?.data;
+            log(applicationModal?.data?.length.toString() ?? "empty");
+          } else {
+            endOfshortlist = true;
+          }
+          update();
+        }
+      }
+    }
+  }
+
+  Future<void> getInterveiws() async {
+    log(userModal.token!);
+    if (!endOfInterview) {
+      log(("${ApiString.getShortlisted}$indexOfshortlist"));
+      http.Response response = await client.get(
+          Uri.parse("${ApiString.getinterviewslist}$indexOfInterview"),
+          headers: {
+            "Authorization": userModal.token!,
+            "Content-Type": "application/json"
+          });
+      if (response.statusCode == 200) {
+        applicationModal = ApplicationModal.fromJson(response.body);
+        if (applicationModal?.data != null) {
+          if (applicationModal!.data!.isNotEmpty) {
+            interveiwsList = applicationModal?.data;
+            log(applicationModal?.data?.length.toString() ?? "empty");
+          } else {
+            endOfInterview = true;
+          }
+          update();
+        }
+      }
+    }
+  }
+
+  Future<void> getInterveiws2() async {
+    log(userModal.token!);
+    if (!endOfInterview2) {
+      http.Response response = await client.get(
+          Uri.parse("${ApiString.getinterviews2list}$indexOfInterview2"),
+          headers: {
+            "Authorization": userModal.token!,
+            "Content-Type": "application/json"
+          });
+      if (response.statusCode == 200) {
+        applicationModal = ApplicationModal.fromJson(response.body);
+        if (applicationModal?.data != null) {
+          if (applicationModal!.data!.isNotEmpty) {
+            interveiw2List = applicationModal?.data;
+            log(applicationModal?.data?.length.toString() ?? "empty");
+          } else {
+            endOfInterview2 = true;
+          }
+          update();
+        }
+      }
+    }
+  }
+
+  Future<void> getCandidates() async {
+    if (!endOfSelected) {
+      http.Response response = await client.get(
+          Uri.parse("${ApiString.getCandidateinterviewslist}$indexOfSelected"),
+          headers: {
+            "Authorization": userModal.token!,
+            "Content-Type": "application/json"
+          });
+      if (response.statusCode == 200) {
+        applicationModal = ApplicationModal.fromJson(response.body);
+        if (applicationModal?.data != null) {
+          if (applicationModal!.data!.isNotEmpty) {
+            selectedCandidatesList = applicationModal?.data;
+            log(applicationModal?.data?.length.toString() ?? "empty");
+          } else {
+            endOfSelected = true;
+          }
+          update();
+        }
+      }
     }
   }
 }

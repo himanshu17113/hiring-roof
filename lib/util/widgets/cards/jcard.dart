@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hiring_roof/data/shared_pref.dart';
 
-import '../constant/color.dart';
+import '../../constant/color.dart';
 
 class CJCard extends StatelessWidget {
   const CJCard({super.key});

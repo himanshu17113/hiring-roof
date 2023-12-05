@@ -61,27 +61,26 @@ class Job {
   int? v;
   bool applied;
 
-  Job({
-    this.id,
-    this.userId,
-    this.jobTittle,
-    this.skills,
-    this.jobType,
-    this.workType,
-    this.availability,
-    this.timePeriod,
-    this.note,
-    this.pay,
-    this.payType,
-    this.location,
-    this.companyName,
-    this.companyLogo,
-    this.isSaved,
-    this.createdAt,
-    this.updatedAt,
-    this.v,
-    this.applied = false
-  });
+  Job(
+      {this.id,
+      this.userId,
+      this.jobTittle,
+      this.skills,
+      this.jobType,
+      this.workType,
+      this.availability,
+      this.timePeriod,
+      this.note,
+      this.pay,
+      this.payType,
+      this.location,
+      this.companyName,
+      this.companyLogo,
+      this.isSaved,
+      this.createdAt,
+      this.updatedAt,
+      this.v,
+      this.applied = false});
 
   factory Job.fromRawJson(String str) => Job.fromJson(json.decode(str));
 
@@ -107,7 +106,24 @@ class Job {
         updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
         v: json["__v"],
       );
-
+  factory Job.fromJsonbyappli(Map<String, dynamic> json) => Job(
+        id: json["_id"],
+        userId: json["userId"] == null ? null : UserId(id: json["userId"]),
+        jobTittle: json["jobTittle"],
+        skills: json["skills"],
+        jobType: json["jobType"],
+        workType: json["workType"],
+        availability: json["availability"],
+        timePeriod: json["timePeriod"],
+        note: json["note"],
+        pay: json["pay"],
+        payType: json["payType"],
+        location: json["location"],
+        companyName: json["companyName"],
+        companyLogo: json["companyLogo"],
+        isSaved: json["isSaved"],
+        createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
+      );
   Map<String, dynamic> toJson() => {
         "_id": id,
         "userId": userId?.toJson(),
@@ -128,8 +144,6 @@ class Job {
         "updatedAt": updatedAt?.toIso8601String(),
         "__v": v,
       };
-
-   
 }
 
 class UserId {

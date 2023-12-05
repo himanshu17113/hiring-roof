@@ -38,10 +38,13 @@ Color scaffoldBackgroundColor = const Color(0xFF343541);
 Color cardColor = const Color(0xFF444654);
 Color orchidColor = const Color(0xFFDA70D6);
 Color mediumPurpel = const Color(0xFF9370DB);
-const LinearGradient linearGradient = LinearGradient(begin: Alignment.bottomLeft, end: Alignment.topRight, colors: [
-  Color.fromRGBO(111, 22, 190, 1),
-  Color.fromRGBO(186, 98, 255, 1),
-]);
+const LinearGradient linearGradient = LinearGradient(
+    begin: Alignment.bottomLeft,
+    end: Alignment.topRight,
+    colors: [
+      Color.fromRGBO(111, 22, 190, 1),
+      Color.fromRGBO(186, 98, 255, 1),
+    ]);
 const LinearGradient linearGradienst = LinearGradient(
     transform: GradientRotation(7),
     colors: [
@@ -55,3 +58,14 @@ const LinearGradient linearGradienst = LinearGradient(
     tileMode: TileMode.decal,
     end: Alignment.bottomRight,
     begin: Alignment.topLeft);
+const LinearGradient greenGradient = LinearGradient(
+  // begin: Alignment.bottomLeft,
+  // end: Alignment.topRight,
+  colors: [Color.fromRGBO(94, 215, 0, .2), Color.fromRGBO(94, 215, 0, .15)],
+);
+
+const LinearGradient redGradient = LinearGradient(
+  // begin: Alignment.bottomLeft,
+  // end: Alignment.topRight,
+  colors: [Color.fromRGBO(226, 53, 53, 0.2), Color.fromRGBO(226, 53, 53, 0.15)],
+);
