@@ -198,7 +198,9 @@ class _SiginState extends State<Sigin> with SingleTickerProviderStateMixin {
                                                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                                                       duration: const Duration(seconds: 10),
                                                       behavior: SnackBarBehavior.floating,
-                                                      action: SnackBarAction(label: "Copy OTP", onPressed: () => Clipboard.setData(ClipboardData(text: data?.otp?.toString() ?? ""))),
+                                                      action: SnackBarAction(
+                                                          label: "Copy OTP",
+                                                          onPressed: () => Clipboard.setData(ClipboardData(text: data?.otp?.toString() ?? ""))),
                                                       content: Text(data?.otp.toString() ?? "Did not get the Otp try again")))
                                                   : NotificationService.showNotification(
                                                       title: "Hiring Roof Otp",
@@ -235,7 +237,8 @@ class _SiginState extends State<Sigin> with SingleTickerProviderStateMixin {
                             alignment: Alignment.center,
                             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 35),
                             margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-                            decoration: BoxDecoration(color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
+                            decoration:
+                                BoxDecoration(color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
                             child: isloading
                                 ? const CircularProgressIndicator.adaptive()
                                 : const Text(

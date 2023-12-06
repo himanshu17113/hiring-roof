@@ -97,7 +97,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const UNav(),
+                              builder: (context) => widget.isJobseeker ? const UNav() : const ReqNav(),
                             ),
                             ((route) => false));
                       }

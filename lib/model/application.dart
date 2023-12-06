@@ -57,25 +57,26 @@ class Application {
   String? interviews2Time;
   DateTime? createdAt;
   DateTime? updatedAt;
-  int? v;
+  bool rejected;
+  bool interveiwselect;
 
-  Application({
-    this.id,
-    this.applicantId,
-    this.applierId,
-    this.jobId,
-    this.shortlist,
-    this.interviews,
-    this.interviews2,
-    this.selectedCandidates,
-    this.interviewsDate,
-    this.interviewsTime,
-    this.interviews2Date,
-    this.interviews2Time,
-    this.createdAt,
-    this.updatedAt,
-    this.v,
-  });
+  Application(
+      {this.id,
+      this.applicantId,
+      this.applierId,
+      this.jobId,
+      this.shortlist,
+      this.interviews,
+      this.interviews2,
+      this.selectedCandidates,
+      this.interviewsDate,
+      this.interviewsTime,
+      this.interviews2Date,
+      this.interviews2Time,
+      this.createdAt,
+      this.updatedAt,
+      this.rejected = false,
+      this.interveiwselect = false});
 
   factory Application.fromJson(String str) => Application.fromMap(json.decode(str));
 
@@ -96,7 +97,6 @@ class Application {
         interviews2Time: json["interviews2Time"],
         createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
         updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
-        v: json["__v"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -114,7 +114,6 @@ class Application {
         "interviews2Time": interviews2Time,
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
-        "__v": v,
       };
 }
 

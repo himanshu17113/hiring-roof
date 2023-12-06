@@ -36,10 +36,7 @@ class MyJobAppl extends StatelessWidget {
                   ),
                   TextSpan(
                     text: 'Jobs',
-                    style: TextStyle(
-                        fontSize: 20.5,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromRGBO(157, 33, 255, 1)),
+                    style: TextStyle(fontSize: 20.5, fontWeight: FontWeight.bold, color: Color.fromRGBO(157, 33, 255, 1)),
                   ),
                   TextSpan(
                     text: ' Applications',
@@ -52,8 +49,7 @@ class MyJobAppl extends StatelessWidget {
                 ],
               ),
             ),
-            titleTextStyle:
-                const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+            titleTextStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
             elevation: 20,
             bottom: const TabBar(
               splashBorderRadius: BorderRadius.all(Radius.circular(33)),
@@ -61,12 +57,10 @@ class MyJobAppl extends StatelessWidget {
               labelColor: white,
               isScrollable: true,
               padding: EdgeInsets.symmetric(horizontal: 20),
-              indicatorPadding:
-                  EdgeInsets.symmetric(horizontal: -20, vertical: 5),
+              indicatorPadding: EdgeInsets.symmetric(horizontal: -20, vertical: 5),
               indicatorColor: Colors.orange,
               indicatorWeight: 3,
-              indicator: ShapeDecoration(
-                  shape: StadiumBorder(), gradient: linearGradient),
+              indicator: ShapeDecoration(shape: StadiumBorder(), gradient: linearGradient),
               tabs: [
                 Tab(
                   text: "job Applications",
@@ -97,9 +91,7 @@ class MyJobAppl extends StatelessWidget {
           ),
           body: DecoratedBox(
               decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/png/botomElipse.png"),
-                    fit: BoxFit.fill),
+                image: DecorationImage(image: AssetImage("assets/png/botomElipse.png"), fit: BoxFit.fill),
               ),
               child: GetBuilder<ApplicationxController>(
                   autoRemove: false,
@@ -111,87 +103,73 @@ class MyJobAppl extends StatelessWidget {
                     return TabBarView(
                       children: [
                         ListView.builder(
-                            itemCount:
-                                applicationxController.jobApplications!.length +
-                                    1,
-                            controller:
-                                applicationxController.jobApplicationScroll,
-                            itemBuilder: (BuildContext context, int index) =>
-                                index ==
-                                        applicationxController
-                                            .jobApplications!.length
-                                    ? !applicationxController
-                                            .endOfjobApplications
-                                        ? const Padding(
-                                            padding: EdgeInsets.all(20),
-                                            child: Center(
-                                              heightFactor: 1,
-                                              widthFactor: 1,
-                                              child: SizedBox(
-                                                height: 35,
-                                                width: 35,
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  color: Colors.white,
-                                                  strokeWidth: 1.5,
-                                                ),
-                                              ),
+                            itemCount: applicationxController.jobApplications!.length + 1,
+                            controller: applicationxController.jobApplicationScroll,
+                            itemBuilder: (BuildContext context, int index) => index == applicationxController.jobApplications!.length
+                                ? !applicationxController.endOfjobApplications
+                                    ? const Padding(
+                                        padding: EdgeInsets.all(20),
+                                        child: Center(
+                                          heightFactor: 1,
+                                          widthFactor: 1,
+                                          child: SizedBox(
+                                            height: 35,
+                                            width: 35,
+                                            child: CircularProgressIndicator(
+                                              color: Colors.white,
+                                              strokeWidth: 1.5,
                                             ),
-                                          )
-                                        : const SizedBox()
-                                    : JCard(
-                                        application: applicationxController
-                                            .jobApplications?[index],
-                                        callback:()=> applicationxController
-                                            .addToShortlist(
-                                                applicationxController
-                                                    .jobApplications![index]),
-                                      )),
+                                          ),
+                                        ),
+                                      )
+                                    : const SizedBox()
+                                : JCard(
+                                    application: applicationxController.jobApplications?[index],
+                                    // callback: (applicaton, s) {
+                                    //   switch (s) {
+                                    //     case "shortlist":
+                                    //       applicationxController.addToShortlist(applicaton);
+                                    //       break;
+                                    //     case "interveiw":
+                                    //       applicationxController.addToInterviewList(applicaton);
+                                    //       break;
+                                    //     default:
+                                    //   }
+                                    // },
+                                    // callback2: (applicaton) {},
+                                    // call: (val) {
+                                    //   applicationxController.addToInterviewList(val);
+                                   // }
+                                    )),
                         ListView.builder(
                             itemCount: applicationxController.shortList!.length,
                             controller: applicationxController.shortListScroll,
-                            itemBuilder: (BuildContext context, int index) =>
-                                JCard(
-                                  application:
-                                      applicationxController.shortList?[index],
+                            itemBuilder: (BuildContext context, int index) => JCard(
+                                  application: applicationxController.shortList?[index],
                                 )),
                         ListView.builder(
-                            itemCount:
-                                applicationxController.interveiwsList!.length,
+                            itemCount: applicationxController.interveiwsList!.length,
                             controller: applicationxController.interveiwScroll,
-                            itemBuilder: (BuildContext context, int index) =>
-                                JCard(
-                                  job: applicationxController
-                                      .interveiwsList?[index].jobId,
+                            itemBuilder: (BuildContext context, int index) => JCard(
+                                  application: applicationxController.interveiwsList?[index],
                                 )),
                         ListView.builder(
-                            itemCount:
-                                applicationxController.interveiw2List!.length,
+                            itemCount: applicationxController.interveiw2List!.length,
                             controller: applicationxController.interveiw2Scroll,
-                            itemBuilder: (BuildContext context, int index) =>
-                                JCard(
-                                  job: applicationxController
-                                      .interveiw2List?[index].jobId,
+                            itemBuilder: (BuildContext context, int index) => JCard(
+                                  job: applicationxController.interveiw2List?[index].jobId,
                                 )),
                         ListView.builder(
-                            itemCount: applicationxController
-                                .selectedCandidatesList!.length,
-                            controller:
-                                applicationxController.selectedCandidatesScroll,
-                            itemBuilder: (BuildContext context, int index) =>
-                                JCard(
-                                  job: applicationxController
-                                      .selectedCandidatesList?[index].jobId,
+                            itemCount: applicationxController.selectedCandidatesList!.length,
+                            controller: applicationxController.selectedCandidatesScroll,
+                            itemBuilder: (BuildContext context, int index) => JCard(
+                                  job: applicationxController.selectedCandidatesList?[index].jobId,
                                 )),
                         ListView.builder(
-                            itemCount:
-                                applicationxController.myPostedJobs?.length,
-                            controller:
-                                applicationxController.myPostedJobsScroll,
-                            itemBuilder: (BuildContext context, int index) =>
-                                JCard(
-                                  job: applicationxController
-                                      .myPostedJobs?[index].jobId,
+                            itemCount: applicationxController.myPostedJobs?.length,
+                            controller: applicationxController.myPostedJobsScroll,
+                            itemBuilder: (BuildContext context, int index) => JCard(
+                                  job: applicationxController.myPostedJobs?[index].jobId,
                                 )),
                       ],
                     );
