@@ -58,6 +58,9 @@ class Application {
   DateTime? createdAt;
   DateTime? updatedAt;
   bool rejected;
+  bool shortlistsubmit;
+    bool interveiwlistsubmit;
+      
   bool interveiwselect;
 
   Application(
@@ -75,6 +78,8 @@ class Application {
       this.interviews2Time,
       this.createdAt,
       this.updatedAt,
+     this.shortlistsubmit = false,
+     this.interveiwlistsubmit = false,
       this.rejected = false,
       this.interveiwselect = false});
 

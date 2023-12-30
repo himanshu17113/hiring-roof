@@ -125,7 +125,7 @@ class MyJobAppl extends StatelessWidget {
                                     : const SizedBox()
                                 : JCard(
                                     application: applicationxController.jobApplications?[index],
-                                    // callback: (applicaton, s) {
+                                     callback: (applicaton) => applicationxController.addToShortlist(applicaton)
                                     //   switch (s) {
                                     //     case "shortlist":
                                     //       applicationxController.addToShortlist(applicaton);
@@ -146,6 +146,8 @@ class MyJobAppl extends StatelessWidget {
                             controller: applicationxController.shortListScroll,
                             itemBuilder: (BuildContext context, int index) => JCard(
                                   application: applicationxController.shortList?[index],
+                                                                       callback: (applicaton) => applicationxController.addToInterviewList(applicaton)
+
                                 )),
                         ListView.builder(
                             itemCount: applicationxController.interveiwsList!.length,

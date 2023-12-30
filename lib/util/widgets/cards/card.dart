@@ -11,12 +11,16 @@ import '../../constant/color.dart';
 class JCard extends StatelessWidget {
   final Job? job;
   final Application? application;
-  final Function(Application applicaton )? callback;
+  final Function(Application applicaton)? callback;
   //final void Function(Application? applicaton)? callback2;
   //final Function(Application) onButtonPressed;
-  const JCard({super.key, this.job, this.application, this.callback,
-  // this.callback2, this.call, required this.onButtonPressed
-   });
+  const JCard({
+    super.key,
+    this.job,
+    this.application,
+    this.callback,
+    // this.callback2, this.call, required this.onButtonPressed
+  });
   static Cardconnect cardconnect = Cardconnect();
   static DoUpdate doUpdate = DoUpdate();
   static const TextStyle headertextStyle = TextStyle(
@@ -61,7 +65,6 @@ class JCard extends StatelessWidget {
     final TextEditingController dateinput = TextEditingController();
     TimeOfDay? initialTime = TimeOfDay.now();
     TimeOfDay? timex;
-    bool submit = false;
     return Card(
         margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
         color: const Color.fromRGBO(55, 61, 63, 0.1),
@@ -514,7 +517,7 @@ class JCard extends StatelessWidget {
                                                   flex: 5,
                                                   child: Container(
                                                     alignment: Alignment.center,
-                                                    padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 50),
+                                                    padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 5),
                                                     margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 35),
                                                     decoration: BoxDecoration(
                                                         color: const Color.fromRGBO(255, 255, 255, 1),
@@ -595,7 +598,7 @@ class JCard extends StatelessWidget {
                                                                 DoUpdate.doShortlist(application!.id!).whenComplete(() {
                                                                   setState(() => application!.shortlist = true);
                                                                 });
-                                                                callback!(application!, "shortlist");
+                                                                callback!(application!);
                                                               },
                                                               child: Container(
                                                                 alignment: Alignment.center,
@@ -767,151 +770,162 @@ class JCard extends StatelessWidget {
             ],
           ],
           if (application != null) ...[
-            if (((((application!.shortlist ?? false) && ((application!.interviewsDate!.isEmpty) && (application!.interviewsTime!.isEmpty)))) ||
-                    (application!.interviews ?? false) && ((application!.interviews2Date!.isEmpty) || (application!.interviews2Time!.isEmpty))) &&
-                !submit) ...[
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: StatefulBuilder(builder: (BuildContext context, setState) {
-                  return Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Spacer(),
-                      Expanded(
-                          flex: 15,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              const Text(
-                                "Schedule an interview",
-                                style: bigText,
-                              ),
-                              const Text("Date",
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    color: white70,
-                                  )),
-                              Padding(
-                                  padding: const EdgeInsets.only(top: 7, bottom: 20),
-                                  child: TextField(
-                                      scrollPhysics: const ClampingScrollPhysics(),
-                                      scrollPadding: EdgeInsets.zero,
-                                      controller: dateinput,
-                                      readOnly: true,
-                                      onTap: () async {
-                                        DateTime? pickedDate = await showDatePicker(
-                                            context: context, initialDate: DateTime.now(), firstDate: DateTime(2000), lastDate: DateTime(2101));
-
-                                        if (pickedDate != null) {
-                                          if (application!.interviews2 ?? false) {
-                                            application!.interviews2Date = DateFormat('yyyy-MM-dd').format(pickedDate);
-
-                                            setState(() => dateinput.text = application!.interviews2Date!);
-                                          } else {
-                                            application!.interviewsDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-
-                                            setState(() => dateinput.text = application!.interviewsDate!);
-                                          }
-                                        }
-                                      },
-                                      textAlignVertical: TextAlignVertical.center,
-                                      style: inputtextStyle,
-                                      decoration: inputDecoration.copyWith(
-                                          suffixIcon: const Icon(Icons.calendar_today),
-                                          labelStyle: const TextStyle(
-                                            fontSize: 14.2,
-                                            color: white30,
-                                          ),
-                                          labelText: "  Enter Date"))),
-                            ],
-                          )),
-                      const Spacer(
-                        flex: 1,
+            if ((((application!.shortlist ?? false) && ((application!.interviewsDate!.isEmpty) && (application!.interviewsTime!.isEmpty)))) ||
+                (application!.interviews ?? false) && ((application!.interviews2Date!.isEmpty) || (application!.interviews2Time!.isEmpty))) ...[
+              (((application!.shortlist ?? false) && application!.shortlistsubmit && !(application!.interviews ?? true)) ||
+                      (application!.interviews ?? false) && application!.interveiwlistsubmit)
+                  ? Container(
+                      padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 35),
+                      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 50),
+                      decoration:
+                          BoxDecoration(color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
+                      child: const Text(
+                        "Submited",
+                        style: TextStyle(color: white70),
                       ),
-                      Expanded(
-                          flex: 15,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                "",
-                                style: bigText,
-                              ),
-                              const Text("Time",
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    color: white70,
-                                  )),
-                              Padding(
-                                  padding: const EdgeInsets.only(top: 7, bottom: 20),
-                                  child: GestureDetector(
-                                    onTap: () async {
-                                      timex = await showTimePicker(context: context, initialTime: initialTime, initialEntryMode: TimePickerEntryMode.dial)
-                                          .whenComplete(() => setState(() {
-                                                if (application!.interviews2 ?? false) {
-                                                  application!.interviews2Time = timex.toString();
-                                                } else {
-                                                  application!.interviewsTime = timex.toString();
-                                                }
-                                              }));
-                                    },
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 2),
-                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), border: Border.all(color: white30, width: 1.4)),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                        children: [
-                                          const Icon(
-                                            Icons.access_time,
-                                            color: white30,
-                                          ),
-                                          Text(
-                                            timex == null ? "Time of interview" : timex!.format(context).toString(),
-                                            style: const TextStyle(color: white30),
-                                          ),
-                                          // const Icon(
-                                          //   Icons.expand_more_sharp,
-                                          //   color: white30,
-                                          // )
-                                        ],
-                                      ),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: StatefulBuilder(builder: (BuildContext context, setState) {
+                        return Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Spacer(),
+                            Expanded(
+                                flex: 15,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      "Schedule an interview",
+                                      style: bigText,
                                     ),
-                                  )),
-                              Align(
-                                alignment: Alignment.bottomRight,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    DoUpdate.interveiwSelect(application!.id!, dateinput.text, timex.toString()).whenComplete(() {
-                                      setState(() {
-                                        submit = true;
-                                        application!.interviews = true;
-                                      });
-                                    }); //.then((value) => callback2!(application));
+                                    const Text("Date",
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          color: white70,
+                                        )),
+                                    Padding(
+                                        padding: const EdgeInsets.only(top: 7, bottom: 20),
+                                        child: TextField(
+                                            scrollPhysics: const ClampingScrollPhysics(),
+                                            scrollPadding: EdgeInsets.zero,
+                                            controller: dateinput,
+                                            readOnly: true,
+                                            onTap: () async {
+                                              DateTime? pickedDate = await showDatePicker(
+                                                  context: context, initialDate: DateTime.now(), firstDate: DateTime(2000), lastDate: DateTime(2101));
 
-                                    call!(application);
-                                  },
-                                  onSecondaryTap: () {},
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 35),
-                                    margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                                    decoration: BoxDecoration(
-                                        color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
-                                    child: const Text(
-                                      "Submit",
-                                      style: TextStyle(color: white70),
+                                              if (pickedDate != null) {
+                                                if (application!.interviews2 ?? false) {
+                                                  application!.interviews2Date = DateFormat('yyyy-MM-dd').format(pickedDate);
+
+                                                  setState(() => dateinput.text = application!.interviews2Date!);
+                                                } else {
+                                                  application!.interviewsDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+
+                                                  setState(() => dateinput.text = application!.interviewsDate!);
+                                                }
+                                              }
+                                            },
+                                            textAlignVertical: TextAlignVertical.center,
+                                            style: inputtextStyle,
+                                            decoration: inputDecoration.copyWith(
+                                                suffixIcon: const Icon(Icons.calendar_today),
+                                                labelStyle: const TextStyle(
+                                                  fontSize: 14.2,
+                                                  color: white30,
+                                                ),
+                                                labelText: "  Enter Date"))),
+                                  ],
+                                )),
+                            const Spacer(
+                              flex: 1,
+                            ),
+                            Expanded(
+                                flex: 15,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text(
+                                      "",
+                                      style: bigText,
                                     ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          )),
-                      const Spacer(),
-                    ],
-                  );
-                }),
-              ),
+                                    const Text("Time",
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          color: white70,
+                                        )),
+                                    Padding(
+                                        padding: const EdgeInsets.only(top: 7, bottom: 20),
+                                        child: GestureDetector(
+                                          onTap: () async {
+                                            timex = await showTimePicker(context: context, initialTime: initialTime, initialEntryMode: TimePickerEntryMode.dial)
+                                                .whenComplete(() => setState(() {
+                                                      if (application!.interviews2 ?? false) {
+                                                        application!.interviews2Time = timex.toString();
+                                                      } else {
+                                                        application!.interviewsTime = timex.toString();
+                                                      }
+                                                    }));
+                                          },
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 2),
+                                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), border: Border.all(color: white30, width: 1.4)),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                              children: [
+                                                const Icon(
+                                                  Icons.access_time,
+                                                  color: white30,
+                                                ),
+                                                Text(
+                                                  timex == null ? "Time of interview" : timex!.format(context).toString(),
+                                                  style: const TextStyle(color: white30),
+                                                ),
+                                                // const Icon(
+                                                //   Icons.expand_more_sharp,
+                                                //   color: white30,
+                                                // )
+                                              ],
+                                            ),
+                                          ),
+                                        )),
+                                    Align(
+                                      alignment: Alignment.bottomRight,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          DoUpdate.doShortlist(application!.id!).whenComplete(() {
+                                            setState(() {
+                                              // application!.shortlist = false;
+                                              callback!(application!);
+                                              application!.shortlistsubmit = true;
+                                              application!.interviews = true;
+                                            });
+                                          });
+                                        },
+                                        onSecondaryTap: () {},
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 35),
+                                          margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                                          decoration: BoxDecoration(
+                                              color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
+                                          child: const Text(
+                                            "Submit",
+                                            style: TextStyle(color: white70),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                )),
+                            const Spacer(),
+                          ],
+                        );
+                      }),
+                    ),
             ]
           ],
         ]));

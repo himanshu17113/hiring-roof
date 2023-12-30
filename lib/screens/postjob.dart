@@ -64,7 +64,8 @@ class PostJob extends StatelessWidget {
     fontSize: 15,
     color: white,
   );
-  static const InputDecoration inputDecoration = InputDecoration(contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 8), border: OutlineInputBorder());
+  static const InputDecoration inputDecoration =
+      InputDecoration(contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 8), border: OutlineInputBorder());
   static final List<String> workingPlaces = ["wfh", "wfo"];
   //["Remote", "In Office", "Hybrid"];
   static final List<String> jobTypes = ["contractual", "part time", "full time", "internship"];
@@ -93,7 +94,7 @@ class PostJob extends StatelessWidget {
     String companyLogo = "";
     String availability = availabilities[0];
     String filename = "";
-  //  debugPrint(userModal.token);
+    //  debugPrint(userModal.token);
     return Scaffold(
       backgroundColor: const Color(0xFF080808),
       appBar: AppBar(
@@ -641,11 +642,11 @@ class PostJob extends StatelessWidget {
                   init: Controller(),
                   builder: (controller) => GestureDetector(
                     onTap: () async {
-                      while (maxapihit == 0) {
-                        bool reult =
-                            await jobPost.postJob(title, location, companyName, pay, jobSummary, knowledge, timePeriod, job, workingPlace, jobType, companyLogo, availability, payType, path, filename);
+                      while (maxapihit > 1) {
+                        bool reult = await jobPost.postJob(title, location, companyName, pay, jobSummary, knowledge, timePeriod, job, workingPlace, jobType,
+                            companyLogo, availability, payType, path, filename);
                         if (reult) {
-                          maxapihit = -1;
+                          maxapihit--;
                           controller.pageUpdate(2);
                           break;
                         } else {
@@ -664,7 +665,8 @@ class PostJob extends StatelessWidget {
                       width: double.maxFinite,
                       padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 50),
                       margin: const EdgeInsets.symmetric(vertical: 00, horizontal: 35),
-                      decoration: BoxDecoration(color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
+                      decoration:
+                          BoxDecoration(color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
                       child: const Text(
                         "Upload",
                         style: TextStyle(color: white90),

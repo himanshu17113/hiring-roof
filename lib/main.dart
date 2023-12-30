@@ -30,9 +30,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    userModal.token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTVlZWE0NDgxMGExMjk4YjM1NzQ0ZGYiLCJpYXQiOjE3MDA3MTkxODIsImV4cCI6MTcwNTkwMzE4Mn0.5_UD0SVmVGTPgKLxPPqJWInPI1wm7vzmvn0cJnaJzZ8";
-    // Brightness brightness = Brightness.light;
+    // userModal.token =
+    //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTVlZWE0NDgxMGExMjk4YjM1NzQ0ZGYiLCJpYXQiOjE3MDA3MTkxODIsImV4cCI6MTcwNTkwMzE4Mn0.5_UD0SVmVGTPgKLxPPqJWInPI1wm7vzmvn0cJnaJzZ8";
+    // // Brightness brightness = Brightness.light;
     // brightness = View.of(context).platformDispatcher.platformBrightness;
     return MaterialApp(
       debugShowCheckedModeBanner: false,

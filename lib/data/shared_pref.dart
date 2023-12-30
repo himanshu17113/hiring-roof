@@ -30,7 +30,7 @@ class SharedPref {
      String jsonString = jsonEncode(model.toJson());
      prefs.setString('userRecord', jsonString);
   }
-    removeUser()  async {
+  removeUser()  async {
     prefs = await SharedPreferences.getInstance();
    
     prefs.remove('userRecord' );
