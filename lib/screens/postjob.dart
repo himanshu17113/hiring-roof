@@ -46,7 +46,7 @@ class PostJob extends StatelessWidget {
     return null;
   }
 
-  Future<List<String?>> pickwindowsImage() async {
+ static Future<List<String?>> pickwindowsImage() async {
     final ImagePickerPlatform wpicker = ImagePickerPlatform.instance;
 
     List<XFile>? images = await wpicker.getMedia(options: const MediaOptions(allowMultiple: false));

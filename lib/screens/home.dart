@@ -43,7 +43,7 @@ class Home extends StatelessWidget {
                           //  floating: true,
                           shadowColor: black,
                           backgroundColor: Colors.black87,
-                          expandedHeight: phone ? screenSize.width / 2 : screenSize.height / 1.75,
+                          expandedHeight: phone ? screenSize.width / 1.5 : screenSize.height / 1.75,
                           flexibleSpace: FlexibleSpaceBar(
                             collapseMode: CollapseMode.pin,
                             titlePadding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
@@ -55,7 +55,7 @@ class Home extends StatelessWidget {
                               decoration: const BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: AssetImage("assets/png/home.png"))),
                               child: Padding(
                                 padding: EdgeInsets.only(
-                                  bottom: phone ? screenSize.width / 10 : screenSize.height / 5,
+                                  bottom: phone ? screenSize.width / 7 : screenSize.height / 5,
                                 ),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
@@ -72,7 +72,8 @@ class Home extends StatelessWidget {
                                         // width: 70,
                                         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 35),
                                         margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 10),
-                                        decoration: BoxDecoration(color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
+                                        decoration: BoxDecoration(
+                                            color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
                                         child: const Text(
                                           "join us",
                                           style: TextStyle(color: white70),
@@ -81,7 +82,7 @@ class Home extends StatelessWidget {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        SharedPref sharedPref = SharedPref();
+                                        final SharedPref sharedPref = SharedPref();
                                         sharedPref.removeUser();
                                       },
                                       child: Container(
@@ -136,6 +137,7 @@ class Home extends StatelessWidget {
                                 ),
                                 Text(
                                   "Get the fastest application so that your name is above other application",
+                                  textAlign: TextAlign.center,
                                   style: TextStyle(fontSize: 10.5, color: white70),
                                 ),
                               ],

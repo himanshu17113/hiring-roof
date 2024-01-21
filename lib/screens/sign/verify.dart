@@ -19,12 +19,12 @@ const Color accentYellowColor = Color(0xFFFFB612);
 const Color accentOrangeColor = Color(0xFFEA7A3B);
 
 class VerificationScreen extends StatefulWidget {
-  final bool isDark;
   final bool isJobseeker;
   final bool isFirstTime;
   final int otp;
   final String phoneNo;
-  const VerificationScreen({super.key, required this.otp, required this.isDark, required this.phoneNo, required this.isJobseeker, required this.isFirstTime});
+  const VerificationScreen(
+      {super.key, required this.otp, required this.phoneNo, required this.isJobseeker, required this.isFirstTime});
 
   @override
   State<VerificationScreen> createState() => _VerificationScreenState();
@@ -47,129 +47,131 @@ class _VerificationScreenState extends State<VerificationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = widget.isDark ? ThemeData.dark() : ThemeData.light();
-
-    return Theme(
-      data: widget.isDark ? ThemeData.dark() : ThemeData.light(),
-      child: Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-        ),
-        body: Container(
-          padding: const EdgeInsets.only(left: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "Verification Code",
-                style: TextStyle(fontSize: 28),
-              ),
-              const SizedBox(height: 16),
-              const Text(
-                "We texted you a code",
-                style: TextStyle(fontSize: 17),
-              ),
-              const Text(
-                "Please enter it below",
-                style: TextStyle(fontSize: 17),
-              ),
-              const Spacer(flex: 2),
-              OtpTextField(
-                numberOfFields: numberOfFields,
-                borderColor: const Color(0xFF512DA8),
-                focusedBorderColor: primaryColor,
-                clearText: clearText,
-                showFieldAsBox: true,
-                textStyle: theme.textTheme.titleMedium,
-                onCodeChanged: (String value) {},
-                handleControllers: (controllers) {
-                  controls = controllers;
-                },
-                onSubmit: (String verificationCode) {
-                  verification = verificationCode;
-                  if (widget.otp.toString() == verificationCode) {
-                    userProvider.verifey(widget.phoneNo, widget.otp, widget.isFirstTime, widget.isJobseeker).then((response) {
-                      debugPrint(response.statusCode.toString());
-                      if (response.statusCode == 200) {
-                        userModal = response.body!;
-                        Get.delete<StartxController>(tag: "start", force: true);
-                        Get.put<JobxController>(JobxController(), tag: "job", permanent: true);
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => widget.isJobseeker ? const UNav() : const ReqNav(),
-                            ),
-                            ((route) => false));
-                      }
-                    });
-                  }
-                },
-              ),
-              const Spacer(),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "This helps us verify every user in our market place",
-                    textAlign: TextAlign.center,
-                    style: theme.textTheme.bodyLarge,
-                  ),
-                ),
-              ),
-              Center(
-                child: GestureDetector(
-                  onTap: () {
-                    if (widget.otp.toString() == verification) {
-                      userProvider.verifey(widget.phoneNo, widget.otp, widget.isFirstTime, widget.isJobseeker).then((response) {
-                        debugPrint(response.statusCode.toString());
-                        if (response.statusCode == 200) {
-                          sharedPref.saveModel(response.body!);
-                          while (Navigator.canPop(context)) {
-                            Navigator.pop(context);
-                          }
-                          Navigator.pop(context);
-                          Navigator.popUntil(context, (route) => false);
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const Nav(),
-                              ));
-                        }
-                      });
+    final textTheme = Theme.of(context).textTheme.apply(displayColor: Theme.of(context).colorScheme.onSurface);
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+      ),
+      body: Container(
+        padding: const EdgeInsets.only(left: 24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              "Verification Code",
+              style: TextStyle(fontSize: 28),
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              "We texted you a code",
+              style: TextStyle(fontSize: 17),
+            ),
+            const Text(
+              "Please enter it below",
+              style: TextStyle(fontSize: 17),
+            ),
+            const Spacer(flex: 2),
+            OtpTextField(
+              numberOfFields: numberOfFields,
+              borderColor: const Color(0xFF512DA8),
+              focusedBorderColor: primaryColor,
+              clearText: clearText,
+              showFieldAsBox: true,
+              textStyle: textTheme.titleMedium,
+              onCodeChanged: (String value) {},
+              handleControllers: (controllers) {
+                controls = controllers;
+              },
+              onSubmit: (String verificationCode) {
+                verification = verificationCode;
+                if (widget.otp.toString() == verificationCode) {
+                  userProvider
+                      .verifey(widget.phoneNo, widget.otp, widget.isFirstTime, widget.isJobseeker)
+                      .then((response) {
+                    debugPrint(response.statusCode.toString());
+                    if (response.statusCode == 200) {
+                      userModal = response.body!;
+                      Get.delete<StartxController>(tag: "start", force: true);
+                      Get.put<JobxController>(JobxController(), tag: "job", permanent: true);
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => widget.isJobseeker ? const UNav() : const ReqNav(),
+                          ),
+                          ((route) => false));
                     }
-                  },
-                  child: Text(
-                    "Didn't get code?",
-                    style: theme.textTheme.titleMedium,
-                  ),
+                  });
+                }
+              },
+            ),
+            const Spacer(),
+            const Center(
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  "This helps us verify every user in our market place",
+                  textAlign: TextAlign.center,
+                  //z  style:  textTheme.bodyLarge,
                 ),
               ),
-              const Spacer(flex: 3),
-              CustomButton(
-                onPressed: () {
+            ),
+            Center(
+              child: GestureDetector(
+                onTap: () {
                   if (widget.otp.toString() == verification) {
-                    userProvider.verifey(widget.phoneNo, widget.otp, widget.isFirstTime, widget.isJobseeker).then((response) {
+                    userProvider
+                        .verifey(widget.phoneNo, widget.otp, widget.isFirstTime, widget.isJobseeker)
+                        .then((response) {
                       debugPrint(response.statusCode.toString());
                       if (response.statusCode == 200) {
+                        sharedPref.saveModel(response.body!);
+                        while (Navigator.canPop(context)) {
+                          Navigator.pop(context);
+                        }
+                        Navigator.pop(context);
                         Navigator.popUntil(context, (route) => false);
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => widget.isJobseeker ? const Nav() : const ReqNav(),
+                              builder: (context) => const Nav(),
                             ));
                       }
                     });
                   }
                 },
-                title: "Confirm",
-                color: primaryColor,
-                textStyle: theme.textTheme.titleMedium?.copyWith(
-                  color: Colors.white,
+                child: Text(
+                  "Didn't get code?",
+                  style: textTheme.titleMedium,
                 ),
               ),
-              const Spacer(flex: 2),
-            ],
-          ),
+            ),
+            const Spacer(flex: 3),
+            CustomButton(
+              onPressed: () {
+                if (widget.otp.toString() == verification) {
+                  userProvider
+                      .verifey(widget.phoneNo, widget.otp, widget.isFirstTime, widget.isJobseeker)
+                      .then((response) {
+                    debugPrint(response.statusCode.toString());
+                    if (response.statusCode == 200) {
+                      Navigator.popUntil(context, (route) => false);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => widget.isJobseeker ? const Nav() : const ReqNav(),
+                          ));
+                    }
+                  });
+                }
+              },
+              title: "Confirm",
+              color: primaryColor,
+              textStyle: textTheme.titleMedium?.copyWith(
+                color: Colors.white,
+              ),
+            ),
+            const Spacer(flex: 2),
+          ],
         ),
       ),
     );

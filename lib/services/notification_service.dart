@@ -1,19 +1,19 @@
- /// Importing this for showing log
+/// Importing this for showing log
 import 'dart:developer';
+
+import 'package:flutter/services.dart';
 
 /// Dependency import for local notifications
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
- 
 /// Remember the global varibales I have created in main.dart
 /// this import allows us to use that varibale
 
-FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
 /// Notificaition Service class handles everything regarding notifications
 class NotificationService {
   /// the method is static, for making it easier to use. You can follow the object
   /// instance method as well
+  static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   static Future<void> init() async {
     /// This is where start the initialization
@@ -28,25 +28,39 @@ class NotificationService {
 
 // ****** IOS Initialization ******
 
-    DarwinInitializationSettings darwinInitializationSettings =
-        const DarwinInitializationSettings(
+    DarwinInitializationSettings darwinInitializationSettings = const DarwinInitializationSettings(
 
 // this will ask permissions to display alert and others are clean with the name
-            requestAlertPermission: true,
-            requestBadgePermission: true,
-            defaultPresentSound: true);
+        requestAlertPermission: true,
+        requestBadgePermission: true,
+        defaultPresentSound: true);
 
 // ****** Combining  Initializations ******
 
-    InitializationSettings initializationSettings = InitializationSettings(
-        iOS: darwinInitializationSettings,
-        android: androidInitializationSettings);
+    InitializationSettings initializationSettings =
+        InitializationSettings(iOS: darwinInitializationSettings, android: androidInitializationSettings);
 
     /// now using the global instance of FlutterLocalNotificationsPlugin()
     /// Let's Initialize the  notification
-    bool? init = await flutterLocalNotificationsPlugin
-        .initialize(initializationSettings);
+    bool? init = await flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      onDidReceiveNotificationResponse: (NotificationResponse notificationResponse) {
+        switch (notificationResponse.notificationResponseType) {
+          case NotificationResponseType.selectedNotification:
+            //  selectNotificationStream.add(notificationResponse.payload);
+            break;
+          case NotificationResponseType.selectedNotificationAction:
+            if (notificationResponse.actionId == 'ActionId') {
+              Clipboard.setData(ClipboardData(text: notificationResponse.payload ?? ""));
+            }
+            break;
+        }
+      },
+    );
     log('Noti $init');
+    flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        ?.requestNotificationsPermission();
   }
 
 /* 
@@ -59,9 +73,12 @@ provide id  for different notifications.
   static showNotification({
     int? id = 0,
     required String title,
-    required String body,
+      String? body,
     var payload,
   }) async {
+    flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        ?.requestNotificationsPermission();
 /* 
 
 In notifications, there are few things that we keep in mind.The sound, 
@@ -78,11 +95,10 @@ You can give whatever name you wish to give.
 
 // ****** Andriod Configuration ******
 
-    AndroidNotificationDetails androidNotificationDetails =
-        const AndroidNotificationDetails(
-      'flutter-tut', 'flutter tutorial',
+    AndroidNotificationDetails androidNotificationDetails = const AndroidNotificationDetails(
+      'channelId', 'channelName',
       playSound: true,
-
+      actions: [AndroidNotificationAction('ActionId', 'Copy', showsUserInterface: true)],
 // Higher the Priority and Importance,
 // will result in high visibility of notification
 
@@ -92,8 +108,7 @@ You can give whatever name you wish to give.
 
 // ****** iOS Configuration : with the necessary requirements ******
 
-    DarwinNotificationDetails darwinNotificationDetails =
-        const DarwinNotificationDetails(
+    DarwinNotificationDetails darwinNotificationDetails = const DarwinNotificationDetails(
       presentAlert: true,
       presentSound: true,
       presentBanner: true,
@@ -102,8 +117,7 @@ You can give whatever name you wish to give.
 
     /// let's combine both details.
 
-    NotificationDetails noti = NotificationDetails(
-        iOS: darwinNotificationDetails, android: androidNotificationDetails);
+    NotificationDetails noti = NotificationDetails(iOS: darwinNotificationDetails, android: androidNotificationDetails);
 
     /* 
 
@@ -115,7 +129,7 @@ become crutial.
 
 */
 
-    await flutterLocalNotificationsPlugin.show(0, title, body, noti,
-        payload: payload);
+    await flutterLocalNotificationsPlugin.show(0, title, body, noti, payload: payload);
+    // flutterLocalNotificationsPlugin.getActiveNotifications();
   }
 }

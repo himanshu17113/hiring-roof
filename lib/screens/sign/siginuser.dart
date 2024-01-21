@@ -225,7 +225,7 @@ class _CandidateSiginState extends State<CandidateSigin> with SingleTickerProvid
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) => VerificationScreen(
-                                                            isDark: brightness.name == "dark",
+                                                           // isDark: brightness.name == "dark",
                                                             isFirstTime: data!.firstTime!,
                                                             otp: data.otp!,
                                                             phoneNo: phoneno!,

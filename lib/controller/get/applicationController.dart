@@ -85,12 +85,14 @@ class ApplicationxController extends GetxController {
   //     }
   //   }
   // }
-  addToShortlist(Application application) {
+  addToShortlist(final Application application, final int x) {
+    jobApplications!.removeAt(x);
     shortList?.add(application);
     update();
   }
 
-  addToInterviewList(Application application) {
+  addToInterviewList(Application application, final int x) {
+    shortList!.removeAt(x);
     interveiwsList?.add(application);
     update();
   }

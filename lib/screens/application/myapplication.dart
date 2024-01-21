@@ -125,7 +125,9 @@ class MyJobAppl extends StatelessWidget {
                                     : const SizedBox()
                                 : JCard(
                                     application: applicationxController.jobApplications?[index],
-                                     callback: (applicaton) => applicationxController.addToShortlist(applicaton)
+                                    callback: (applicaton) {
+                                      applicationxController.addToShortlist(applicaton, index);
+                                    }
                                     //   switch (s) {
                                     //     case "shortlist":
                                     //       applicationxController.addToShortlist(applicaton);
@@ -139,16 +141,14 @@ class MyJobAppl extends StatelessWidget {
                                     // callback2: (applicaton) {},
                                     // call: (val) {
                                     //   applicationxController.addToInterviewList(val);
-                                   // }
+                                    // }
                                     )),
                         ListView.builder(
                             itemCount: applicationxController.shortList!.length,
                             controller: applicationxController.shortListScroll,
                             itemBuilder: (BuildContext context, int index) => JCard(
-                                  application: applicationxController.shortList?[index],
-                                                                       callback: (applicaton) => applicationxController.addToInterviewList(applicaton)
-
-                                )),
+                                application: applicationxController.shortList?[index],
+                                callback: (applicaton) => applicationxController.addToInterviewList(applicaton, index))),
                         ListView.builder(
                             itemCount: applicationxController.interveiwsList!.length,
                             controller: applicationxController.interveiwScroll,

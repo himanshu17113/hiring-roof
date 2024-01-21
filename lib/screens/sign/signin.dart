@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:math' as math;
@@ -6,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:hiring_roof/controller/get/startcontroller.dart';
 import 'package:hiring_roof/screens/sign/verify.dart';
+import 'package:hiring_roof/util/constant/const.dart';
 import 'package:hiring_roof/util/platformdata.dart';
 import 'package:hiring_roof/util/widgets/bottom/reqprebottom.dart';
 import 'package:hiring_roof/util/widgets/bottom/userprebottom.dart';
@@ -25,7 +25,7 @@ class Sigin extends StatefulWidget {
 
 class _SiginState extends State<Sigin> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  final ValueNotifier<bool> loading = ValueNotifier(false);
+  ValueNotifier<bool> loading = ValueNotifier(false);
   bool isloading = false;
   bool isCandidate = false;
   @override
@@ -70,224 +70,246 @@ class _SiginState extends State<Sigin> with SingleTickerProviderStateMixin {
     margin: EdgeInsets.all(5),
   );
 
-  static Widget svg = const SvgPicture(
-    AssetBytesLoader('assets/svg/welcome.svg.vec'),
-    fit: BoxFit.fitWidth,
-  );
+  // static Widget svg = const SvgPicture(
+  //   AssetBytesLoader('assets/svg/welcome.svg.vec'),
+  //   fit: BoxFit.fitWidth,
+  // );
 
-  Brightness brightness = Brightness.light;
+  // Brightness brightness = Brightness.light;
   final UserProvider userProvider = UserProvider();
 
   String? phoneno;
   @override
   Widget build(BuildContext context) {
-    debugPrint("sign in build called");
-    FlutterView flutterView = View.of(context);
-    brightness = flutterView.platformDispatcher.platformBrightness;
-    flutterView.platformDispatcher.onPlatformBrightnessChanged = () {
-      setState(() {
-        brightness = flutterView.platformDispatcher.platformBrightness;
-      });
-    };
-    final Size size = flutterView.display.size;
+    //  final query = MediaQuery.of(context);
+    final size = query!.size;
+    // debugPrint("sign in build called");
+    // FlutterView flutterView = View.of(context);
+    // brightness = flutterView.platformDispatcher.platformBrightness;
+    // flutterView.platformDispatcher.onPlatformBrightnessChanged = () {
+    //   setState(() {
+    //     brightness = flutterView.platformDispatcher.platformBrightness;
+    //   });
+    // };
+    // final Size size = flutterView.display.size;
 
-    return Theme(
-      data: brightness.name == "dark" ? ThemeData.dark() : ThemeData.light(),
-      child: Scaffold(
-        extendBody: true,
-        body: SafeArea(
-          child: DecoratedBox(
-            decoration: const BoxDecoration(
-              image: DecorationImage(image: AssetImage("assets/png/botomElipse.png"), fit: BoxFit.fill),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      extendBody: true,
+      body: DecoratedBox(
+        decoration: const BoxDecoration(
+          image: DecorationImage(image: AssetImage("assets/png/botomElipse.png"), fit: BoxFit.fill),
+        ),
+        child: Stack(
+          alignment: Alignment.topCenter,
+          children: [
+            // brightness.name != "dark"
+            //     ? Padding(
+            //         padding: EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top + 15),
+            //         child: SizedBox(width: size.width * .25, height: size.width * .15, child: svg),
+            //       )
+            //     :
+            AnimatedBuilder(
+              animation: _controller,
+              builder: (context, child) {
+                return ClipPath(
+                  clipper: DrawClip(_controller.value),
+                  child: Container(
+                    height: PlatformInfo.isAppOS() ? size.height * 0.2 : 200,
+                    decoration: const BoxDecoration(gradient: linearGradient),
+                  ),
+                );
+              },
             ),
-            child: Stack(
-              alignment: Alignment.topCenter,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                brightness.name != "dark"
-                    ? Padding(
-                        padding: const EdgeInsets.only(top: 30),
-                        child: SizedBox(width: size.width * .25, height: size.width * .15, child: svg),
-                      )
-                    : AnimatedBuilder(
-                        animation: _controller,
-                        builder: (context, child) {
-                          return ClipPath(
-                            clipper: DrawClip(_controller.value),
-                            child: Container(
-                              height: PlatformInfo.isAppOS() ? size.height * 0.07 : 200,
-                              decoration: const BoxDecoration(gradient: linearGradient),
-                            ),
-                          );
-                        },
-                      ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    GestureDetector(
-                      onTap: () => setState(() => isCandidate = !isCandidate),
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 5, right: 12, bottom: size.height * 0.062),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            const Icon(Icons.business),
-                            InkWell(child: Text(isCandidate ? "Switch to the employer" : "Switch to the candidate")),
-                          ],
-                        ),
-                      ),
+                GestureDetector(
+                  onTap: () => setState(() => isCandidate = !isCandidate),
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        top: 40, right: 12, bottom: MediaQuery.of(context).viewPadding.top + size.width * .15),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        const Icon(Icons.business),
+                        InkWell(child: Text(isCandidate ? "Switch to the employer" : "Switch to the candidate")),
+                      ],
                     ),
-                    Text(
-                      isCandidate ? "  Candidate \n  Sign-in/Signup" : "  Recruiter \n  Sign-in/Signup",
-                      style: const TextStyle(fontSize: 28.5, fontWeight: FontWeight.bold),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        "  you will log in after the verification if you are not registered.",
-                        style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.normal),
-                      ),
-                    ),
-                    // const Center(
-                    //   child: Text(
-                    //     "                      Please Enter the Phone No.",
-                    //     style: TextStyle(fontSize: 16.5, fontWeight: FontWeight.normal),
-                    //   ),
-                    // ),
-                    InternationalPhoneNumberInput(
-                      inputBorder: InputBorder.none,
-                      selectorConfig: const SelectorConfig(trailingSpace: false),
-                      initialValue: PhoneNumber(dialCode: "+91", isoCode: "IN"),
-                      onFieldSubmitted: (value) => (phoneno != null)
-                          ? phoneno!.isNotEmpty
-                              ? userProvider.signIn(phoneno!).then(
-                                  (response) {
-                                    if (response.status.isOk) {
-                                      final data = response.body;
-                                      debugPrint(data?.otp.toString() ?? "didnot get");
+                  ),
+                ),
+                Text(
+                  isCandidate ? "  Candidate \n  Sign-in/Signup" : "  Recruiter \n  Sign-in/Signup",
+                  style: const TextStyle(fontSize: 28.5, fontWeight: FontWeight.bold),
+                ),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    "  you will log in after the verification if you are not registered.",
+                    style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.normal),
+                  ),
+                ),
+                // const Center(
+                //   child: Text(
+                //     "                      Please Enter the Phone No.",
+                //     style: TextStyle(fontSize: 16.5, fontWeight: FontWeight.normal),
+                //   ),
+                // ),
+                InternationalPhoneNumberInput(
+                  inputBorder: InputBorder.none,
+                  selectorConfig: const SelectorConfig(trailingSpace: false),
+                  initialValue: PhoneNumber(dialCode: "+91", isoCode: "IN"),
+                  onFieldSubmitted: (value) => (phoneno != null)
+                      ? phoneno!.isNotEmpty
+                          ? userProvider.signIn(phoneno!).then(
+                              (response) {
+                                if (response.status.isOk) {
+                                  final data = response.body;
 
-                                      NotificationService.showNotification(
-                                        title: "Hiring Roof Otp",
-                                        body: data?.otp.toString() ?? "bnfkjn",
-                                      );
-                                    } else {
-                                      throw Exception('Failed to load data');
-                                    }
-                                  },
-                                )
-                              : ScaffoldMessenger.of(context).showSnackBar(empty)
-                          : ScaffoldMessenger.of(context).showSnackBar(notCorrect),
-                      onInputChanged: (PhoneNumber value) {
-                        phoneno = value.phoneNumber;
-                        debugPrint(phoneno!.length.toString());
-                      },
-                    ),
-                    InkWell(
-                        onTap: () {
-                          (phoneno != null)
-                              ? phoneno!.isNotEmpty
-                                  ? phoneno!.length == 13
-                                      ? userProvider.signIn(phoneno!).then(
-                                          (response) {
-                                            userProvider.phoneno = phoneno!;
-                                            if (response.status.isOk) {
-                                              final data = response.body;
-                                              debugPrint(data?.otp.toString() ?? "didnot get");
-                                              PlatformInfo.isDesktopOS()
-                                                  ? ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                                                      duration: const Duration(seconds: 10),
-                                                      behavior: SnackBarBehavior.floating,
-                                                      action: SnackBarAction(
-                                                          label: "Copy OTP",
-                                                          onPressed: () => Clipboard.setData(ClipboardData(text: data?.otp?.toString() ?? ""))),
-                                                      content: Text(data?.otp.toString() ?? "Did not get the Otp try again")))
-                                                  : NotificationService.showNotification(
-                                                      title: "Hiring Roof Otp",
-                                                      body: data?.otp.toString() ?? "bnfkjn",
-                                                    );
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) => VerificationScreen(
-                                                            isDark: brightness.name == "dark",
-                                                            isFirstTime: data!.firstTime!,
-                                                            otp: data.otp!,
-                                                            phoneNo: phoneno!,
-                                                            isJobseeker: isCandidate,
-                                                          )));
-                                            } else {
-                                              if (loading.value) {
-                                                loading.value = false;
-                                              }
-                                              throw Exception('Failed to load data');
-                                            }
+                                  debugPrint(data?.otp.toString() ?? "didnot get");
 
-                                            if (loading.value) {
-                                              loading.value = false;
-                                            }
-                                          },
-                                        )
-                                      : ScaffoldMessenger.of(context).showSnackBar(phonenotvalid)
-                                  : ScaffoldMessenger.of(context).showSnackBar(empty)
-                              : ScaffoldMessenger.of(context).showSnackBar(notCorrect);
-                        },
-                        child: Container(
-                            width: double.maxFinite,
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 35),
-                            margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-                            decoration:
-                                BoxDecoration(color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
-                            child: isloading
-                                ? const CircularProgressIndicator.adaptive()
-                                : const Text(
-                                    "Join us",
-                                    style: TextStyle(color: white),
-                                  ))),
-                    InkWell(
-                      onTap: () => isCandidate
-                          ? Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const PreuserNav(),
-                              ))
-                          : Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const PreReqNav(),
-                              )),
-                      child: Container(
-                          width: double.maxFinite,
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 35),
-                          margin: const EdgeInsets.only(top: 5, left: 35, right: 35),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: purple),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: isloading
-                              ? const CircularProgressIndicator.adaptive()
-                              : const Text(
-                                  " Skip ",
-                                )),
+                                  NotificationService.showNotification(
+                                    title: "Hiring Roof Otp",
+                                    body: data?.otp.toString() ?? "bnfkjn",
+                                  );
+                                } else {
+                                  throw Exception('Failed to load data');
+                                }
+                              },
+                            )
+                          : ScaffoldMessenger.of(context).showSnackBar(empty)
+                      : ScaffoldMessenger.of(context).showSnackBar(notCorrect),
+                  onInputChanged: (PhoneNumber value) {
+                    phoneno = value.phoneNumber;
+                    debugPrint(phoneno!.length.toString());
+                  },
+                ),
+                InkWell(
+                  onTap: () => signin(),
+                  child: CallbackShortcuts(
+                    bindings: <ShortcutActivator, VoidCallback>{
+                      const SingleActivator(LogicalKeyboardKey.arrowUp): () => signin(),
+                    },
+                    child: Focus(
+                      autofocus: true,
+                      child: ValueListenableBuilder(
+                          valueListenable: loading,
+                          builder: (BuildContext context, dynamic value, Widget? child) => Container(
+                              width: double.maxFinite,
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 35),
+                              margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+                              decoration: BoxDecoration(
+                                  color: const Color.fromRGBO(255, 255, 255, 1),
+                                  borderRadius: BorderRadius.circular(8),
+                                  gradient: linearGradient),
+                              child: value
+                                  ? const CircularProgressIndicator.adaptive()
+                                  : const Text(
+                                      "Join us",
+                                      style: TextStyle(color: white),
+                                    ))),
                     ),
-                    const Spacer(),
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        "  By continuing you agree to Hiring roof's Term & Condition and\n  confirm that you have read Hiring roof's Privacy policy.",
-                        style: TextStyle(fontSize: 14),
+                  ),
+                ),
+                InkWell(
+                  onTap: () => isCandidate
+                      ? Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const PreuserNav(),
+                          ))
+                      : Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const PreReqNav(),
+                          )),
+                  child: Container(
+                      width: double.maxFinite,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 35),
+                      margin: const EdgeInsets.only(left: 35, right: 35),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: purple),
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                    ),
-                  ],
+                      child:
+                          //  isloading
+                          //     ? const CircularProgressIndicator.adaptive():
+
+                          const Text(
+                        " Skip ",
+                      )),
+                ),
+                const Spacer(),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    "  By continuing you agree to Hiring roof's Term & Condition and\n  confirm that you have read Hiring roof's Privacy policy.",
+                    style: TextStyle(fontSize: 14),
+                  ),
                 ),
               ],
             ),
-          ),
+          ],
         ),
       ),
     );
+  }
+
+  void signin() {
+    loading.value = true;
+    (phoneno != null)
+        ? phoneno!.isNotEmpty
+            ? phoneno!.length == 13
+                ? userProvider.signIn(phoneno!).then(
+                    (response) {
+                      userProvider.phoneno = phoneno!;
+                      if (response.status.isOk) {
+                        final data = response.body;
+                        debugPrint(data?.otp.toString() ?? "didnot get");
+                        PlatformInfo.isDesktopOS()
+                            ? ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                duration: const Duration(seconds: 10),
+                                behavior: SnackBarBehavior.floating,
+                                action: SnackBarAction(
+                                    label: "Copy OTP",
+                                    onPressed: () =>
+                                        Clipboard.setData(ClipboardData(text: data?.otp?.toString() ?? ""))),
+                                content: Text(data?.otp.toString() ?? "Did not get the Otp try again")))
+                            : NotificationService.showNotification(
+                                title: "Hiring Roof Otp",
+                                payload: data?.otp.toString(),
+                                body: data?.otp.toString() ?? "",
+                              );
+                        isloading = false;
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => VerificationScreen(
+                                      //  isDark: systemOverlayStyle.name == "dark",
+                                      isFirstTime: data!.firstTime!,
+                                      otp: data.otp!,
+                                      phoneNo: phoneno!,
+                                      isJobseeker: isCandidate,
+                                    )));
+                      } else {
+                        if (loading.value) {
+                          loading.value = false;
+                        }
+                        throw Exception('Failed to load data');
+                      }
+
+                      if (loading.value) {
+                        loading.value = false;
+                      }
+                    },
+                  )
+                : ScaffoldMessenger.of(context).showSnackBar(phonenotvalid)
+            : ScaffoldMessenger.of(context).showSnackBar(empty)
+        : ScaffoldMessenger.of(context).showSnackBar(notCorrect);
   }
 }
 

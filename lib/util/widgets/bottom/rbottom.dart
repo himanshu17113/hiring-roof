@@ -13,7 +13,7 @@ class ReqNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
-    final screens = [const Find(), const PostJob(), const MyJobAppl()];
+    const screens = [Find(), PostJob(), MyJobAppl()];
 
     return GetBuilder<Controller>(
       init: Controller(),
