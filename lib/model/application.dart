@@ -43,10 +43,10 @@ class ApplicationModal {
 }
 
 class Application {
-  String? id;
-  ApplicantId? applicantId;
-  ApplierId? applierId;
-  Job? jobId;
+  final String? id;
+  final ApplicantId? applicantId;
+  final ApplierId? applierId;
+  final Job? jobId;
   bool? shortlist;
   bool? interviews;
   bool? interviews2;
@@ -55,12 +55,12 @@ class Application {
   String? interviewsTime;
   String? interviews2Date;
   String? interviews2Time;
-  DateTime? createdAt;
-  DateTime? updatedAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
   bool rejected;
   bool shortlistsubmit;
-    bool interveiwlistsubmit;
-      
+  bool interveiwlistsubmit;
+
   bool interveiwselect;
 
   Application(
@@ -78,8 +78,8 @@ class Application {
       this.interviews2Time,
       this.createdAt,
       this.updatedAt,
-     this.shortlistsubmit = false,
-     this.interveiwlistsubmit = false,
+      this.shortlistsubmit = false,
+      this.interveiwlistsubmit = false,
       this.rejected = false,
       this.interveiwselect = false});
 
@@ -123,20 +123,20 @@ class Application {
 }
 
 class ApplicantId {
-  String? id;
-  String? userType;
-  int? otp;
-  String? name;
-  String? profileImage;
-  String? location;
-  String? currentPay;
-  String? expectationPay;
-  String? skills;
-  String? experience;
+  final String? id;
+  final String? userType;
+  final int? otp;
+  final String? name;
+  final String? profileImage;
+  final String? location;
+  final String? currentPay;
+  final String? expectationPay;
+  final String? skills;
+  final String? experience;
   // String? companyName;
   // String? aboutCompany;
   // int? v;
-  DateTime? updatedAt;
+  final DateTime? updatedAt;
 
   ApplicantId({
     this.id,
@@ -195,10 +195,10 @@ class ApplicantId {
 }
 
 class ApplierId {
-  String? id;
-  String? userType;
-  String? name;
-  String? profileImage;
+  final String? id;
+  final String? userType;
+  final String? name;
+  final String? profileImage;
 
   ApplierId({
     this.id,

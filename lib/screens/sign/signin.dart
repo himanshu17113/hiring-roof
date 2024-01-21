@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:math' as math;
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:hiring_roof/controller/get/startcontroller.dart';
 import 'package:hiring_roof/screens/sign/verify.dart';
@@ -9,7 +8,6 @@ import 'package:hiring_roof/util/constant/const.dart';
 import 'package:hiring_roof/util/platformdata.dart';
 import 'package:hiring_roof/util/widgets/bottom/reqprebottom.dart';
 import 'package:hiring_roof/util/widgets/bottom/userprebottom.dart';
-import 'package:vector_graphics/vector_graphics.dart';
 import 'package:hiring_roof/controller/connect/authconnect.dart';
 import 'package:hiring_roof/util/constant/color.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';

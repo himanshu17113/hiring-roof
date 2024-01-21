@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:hiring_roof/controller/get/jobseeker_application_controller.dart';
 import 'package:hiring_roof/util/constant/color.dart';
+import 'package:hiring_roof/util/widgets/cards/card.dart';
 import 'package:hiring_roof/util/widgets/cards/jcard.dart';
 
 class MyJobs extends StatelessWidget {
@@ -71,14 +74,21 @@ class MyJobs extends StatelessWidget {
             decoration: const BoxDecoration(
               image: DecorationImage(image: AssetImage("assets/png/botomElipse.png"), fit: BoxFit.fill),
             ),
-            child: TabBarView(
-              children: [
-                ListView.builder(primary: true, itemCount: 9, itemBuilder: (BuildContext context, int index) => const CJCard()),
-                ListView.builder(primary: true, itemCount: 9, itemBuilder: (BuildContext context, int index) => const CJCard()),
-                ListView.builder(primary: true, itemCount: 12, itemBuilder: (BuildContext context, int index) => const CJCard()),
-                ListView.builder(primary: true, itemCount: 9, itemBuilder: (BuildContext context, int index) => const CJCard()),
-                ListView.builder(primary: true, itemCount: 9, itemBuilder: (BuildContext context, int index) => const CJCard()),
-              ],
+            child: GetBuilder<MyJobsxController>(
+              init: MyJobsxController(),
+              initState: (_) {},
+              builder: (control) => TabBarView(
+                children: [
+                  ListView.builder(
+                      itemCount: control.saved?.length,
+                      itemBuilder: (BuildContext context, int index) => const CJCard()),
+                  ListView.builder(itemCount: 9, itemBuilder: (BuildContext context, int index) => const CJCard()),
+                  ListView.builder(itemCount: 12, itemBuilder: (BuildContext context, int index) => const CJCard()),
+                  ListView.builder(itemCount: 9, itemBuilder: (BuildContext context, int index) => const CJCard()),
+                  ListView.builder(itemCount: 9, itemBuilder: (BuildContext context, int index) => const CJCard()),
+                  ListView.builder(itemCount: 9, itemBuilder: (BuildContext context, int index) => const CJCard()),
+                ],
+              ),
             ),
           ),
         ));

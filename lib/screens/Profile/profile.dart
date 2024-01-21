@@ -5,10 +5,10 @@ class Profile extends StatelessWidget {
   final Widget profileMobileBody;
   final Widget profileDeskBody;
   const Profile({
-    Key? key,
+    super.key,
     required this.profileMobileBody,
     required this.profileDeskBody,
-  }) : super(key: key);
+  });
 
   static const TextStyle headertextStyle = TextStyle(
     fontSize: 13,

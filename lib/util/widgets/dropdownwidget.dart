@@ -7,7 +7,7 @@ class CommonDropdownButton extends StatelessWidget {
   final List<String>? itemsList;
   final Function(dynamic value)? onChanged;
   final String? Function(String?)? validator;
-  CommonDropdownButton({Key? key, this.chosenValue, this.hintText, this.itemsList, this.onChanged, this.validator}) : super(key: key);
+  CommonDropdownButton({super.key, this.chosenValue, this.hintText, this.itemsList, this.onChanged, this.validator});
 
   @override
   Widget build(BuildContext context) {

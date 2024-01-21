@@ -30,7 +30,7 @@ class JobPost extends GetConnect {
      final String fileName,
     //final File? file
   ) async {
-    print(title.toString());
+    //debugPrint(statement);(title.toString());
     Map<String, String> header = {"Authorization": userModal.token!};
 
     final FormData formData = FormData({
@@ -67,7 +67,7 @@ class JobPost extends GetConnect {
     // request.fields.addAll(body);
     // http.Response response = await client.put(Uri.parse(ApiString.putJob), headers: , body: jsonEncode(body));
     if (response.statusCode == 200) {
-      print(response.body.toString());
+  //    print(response.body.toString());
       return true;
     } else {
       return false;

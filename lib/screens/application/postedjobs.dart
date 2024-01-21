@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hiring_roof/controller/get/applicationController.dart';
+import 'package:hiring_roof/controller/get/application_controller.dart';
 import 'package:hiring_roof/util/widgets/cards/card.dart';
 
 class MyPostedJobs extends StatelessWidget {

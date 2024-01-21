@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hiring_roof/util/constant/color.dart';
 import 'package:hiring_roof/util/widgets/cards/card.dart';
-import '../../controller/get/applicationController.dart';
+import '../../controller/get/application_controller.dart';
 
 class MyJobAppl extends StatelessWidget {
   const MyJobAppl({super.key});

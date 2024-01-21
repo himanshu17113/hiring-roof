@@ -4,7 +4,7 @@ import 'package:hiring_roof/controller/get/startcontroller.dart';
 import 'package:hiring_roof/data/shared_pref.dart';
 import 'package:hiring_roof/util/widgets/cards/card.dart';
 import 'package:hiring_roof/util/constant/color.dart';
-import 'sign/siginuser.dart';
+import '../sign/siginuser.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});

@@ -359,7 +359,12 @@ class MaterialTheme {
         useMaterial3: true,
         brightness: colorScheme.brightness,
         colorScheme: colorScheme,
-
+        inputDecorationTheme: InputDecorationTheme(
+            fillColor: isLight
+                ? lightScheme().surfaceContainerHighest.withOpacity(0.8)
+                : darkScheme().surfaceContainerHighest.withOpacity(0.8),
+            filled: true),
+        //   searchBarTheme:   SearchBarThemeData(backgroundColor: Colors.amber),
         textTheme: const TextTheme().apply(
           bodyColor: colorScheme.onSurface,
           displayColor: colorScheme.onSurface,

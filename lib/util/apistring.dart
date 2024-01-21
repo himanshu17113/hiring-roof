@@ -30,8 +30,11 @@ class ApiString {
   static String putJob = "$baseUrl/api/job/createUpdate";
 
   // candidate
+
+  static String getSaved = "$baseUrl/api/save/get";
+  static String getApplications = "$baseUrl/api/jobApplication/job-seeker/get-applications-list/";
   static String getShortlisted = "$baseUrl/api/jobApplication/job-seeker/get-shortlist/";
-  static String getCandidateinterviewslist = "$baseUrl/api/jobApplication/job-seeker/get-interviews-list/";
-  static String get2Candidateinterviewslist = "$baseUrl/api/jobApplication/job-seeker/get-interviews-2-list/";
+  static String getCandidateinterviews  = "$baseUrl/api/jobApplication/job-seeker/get-interviews-list/";
+  static String get2Candidateinterviews  = "$baseUrl/api/jobApplication/job-seeker/get-interviews-2-list/";
   static String getselectedCompany = "$baseUrl/api/jobApplication/job-seeker/get-selected-candidates/";
 }

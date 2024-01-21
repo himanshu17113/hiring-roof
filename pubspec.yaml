@@ -51,6 +51,9 @@ dependencies:
   expandable: ^5.0.1
   flutter_adaptive_scaffold: ^0.1.7+2
 
+  http: any
+  image_picker_platform_interface: any
+  vector_graphics: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

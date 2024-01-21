@@ -16,7 +16,7 @@ class JCard extends StatelessWidget {
   final Function(Application applicaton)? callback;
   //final void Function(Application? applicaton)? callback2;
   //final Function(Application) onButtonPressed;
-  const JCard({
+  JCard({
     super.key,
     this.job,
     this.application,
@@ -65,12 +65,12 @@ class JCard extends StatelessWidget {
     }
   }
 
+  final TextEditingController dateinput = TextEditingController();
+  //  TimeOfDay? initialTime = TimeOfDay.now();
+
   @override
   Widget build(BuildContext context) {
-    final TextEditingController dateinput = TextEditingController();
-    TimeOfDay? initialTime = TimeOfDay.now();
-    TimeOfDay? timex;
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    // final ColorScheme colorScheme = Theme.of(context).colorScheme;
     return Card(
         elevation: 0,
         margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
@@ -134,41 +134,7 @@ class JCard extends StatelessWidget {
                     ),
                   ),
                   job != null
-                      ? StatefulBuilder(
-                          builder: (BuildContext context, setState) {
-                            return Padding(
-                              padding: const EdgeInsets.only(left: (double.minPositive)),
-                              child: GestureDetector(
-                                onTap: () => userModal.userId == null
-                                    ? Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute<void>(
-                                          builder: (BuildContext context) => const CandidateSigin(),
-                                        ),
-                                      )
-                                    : Cardconnect.saveJob(job!.id!).then((value) => value
-                                        ? setState(() => job!.isSaved = !job!.isSaved!)
-                                        : debugPrint("issue in save job")),
-                                onDoubleTap: () => Cardconnect.saveJob(job!.id!).then((value) => value
-                                    ? setState(() => job!.isSaved = !job!.isSaved!)
-                                    : debugPrint("issue in save job")),
-                                onSecondaryTap: () {},
-                                child: Align(
-                                  alignment: Alignment.topLeft,
-                                  child: (job!.isSaved ?? false)
-                                      ? const Icon(
-                                          Icons.bookmark,
-                                          color: Color.fromRGBO(153, 153, 153, 1),
-                                        )
-                                      : const Icon(
-                                          Icons.bookmark_outline,
-                                          color: Color.fromRGBO(153, 153, 153, 1),
-                                        ),
-                                ),
-                              ),
-                            );
-                          },
-                        )
+                      ? bookMark()
                       : (application!.selectedCandidates ?? false)
                           ? Container(
                               alignment: Alignment.center,
@@ -215,110 +181,7 @@ class JCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          const Icon(
-                            Icons.pin_drop_outlined,
-                            size: iconSize,
-                            color: Color.fromRGBO(153, 153, 153, 1),
-                            semanticLabel: "loaction",
-                          ),
-                          Text(
-                              application == null
-                                  ? (job!.location ?? " Brussels")
-                                  : (application?.applicantId?.location ?? "Loading..."),
-                              style: smallText),
-                          const Padding(
-                            padding: EdgeInsets.all(3),
-                            child: Icon(
-                              Icons.radio_button_checked,
-                              size: 2,
-                              color: Color.fromRGBO(153, 153, 153, 1),
-                              semanticLabel: "loaction",
-                            ),
-                          ),
-                          const Icon(
-                            Icons.schedule,
-                            size: iconSize,
-                            color: Color.fromRGBO(153, 153, 153, 1),
-                            semanticLabel: "loaction",
-                          ),
-                          Text(
-                              application == null
-                                  ? (job?.timePeriod ?? "Loading...")
-                                  : (application?.jobId?.timePeriod ?? "Loading..."),
-                              style: smallText),
-                          const Padding(
-                            padding: EdgeInsets.all(3),
-                            child: Icon(
-                              Icons.radio_button_checked,
-                              size: 2,
-                              color: Color.fromRGBO(153, 153, 153, 1),
-                              semanticLabel: "loaction",
-                            ),
-                          ),
-                          const Icon(
-                            Icons.attach_money,
-                            size: iconSize,
-                            color: Color.fromRGBO(153, 153, 153, 1),
-                            semanticLabel: "loaction",
-                          ),
-                          Text(
-                              money(
-                                application == null ? (job!.pay ?? 30000) : (application?.jobId?.pay ?? 1000),
-                              ),
-                              style: smallText),
-                          const Padding(
-                            padding: EdgeInsets.all(3),
-                            child: Icon(
-                              Icons.radio_button_checked,
-                              size: 2,
-                              color: Color.fromRGBO(153, 153, 153, 1),
-                              semanticLabel: "loaction",
-                            ),
-                          ),
-                          const Icon(
-                            Icons.work,
-                            size: iconSize,
-                            color: Color.fromRGBO(153, 153, 153, 1),
-                            semanticLabel: "loaction",
-                          ),
-                          Text(
-                              application == null
-                                  ? (job?.workType ?? "Loading...")
-                                  : (application?.jobId?.workType ?? "Loading..."),
-                              style: smallText),
-                          const Padding(
-                            padding: EdgeInsets.all(3),
-                            child: Icon(
-                              Icons.radio_button_checked,
-                              size: 2,
-                              color: Color.fromRGBO(153, 153, 153, 1),
-                              semanticLabel: "loaction",
-                            ),
-                          ),
-                          const Icon(
-                            Icons.calendar_today_outlined,
-                            size: iconSize,
-                            color: Color.fromRGBO(153, 153, 153, 1),
-                            semanticLabel: "loaction",
-                          ),
-                          Text(
-                              application == null
-                                  ? job!.createdAt != null
-                                      ? time(job!.createdAt!)
-                                      : " 29 min ago"
-                                  : application?.jobId?.createdAt != null
-                                      ? time(application!.jobId!.createdAt!)
-                                      : ("Loading..."),
-                              style: smallText),
-                        ],
-                      ),
-                    ),
+                    highlights(),
                     Row(
                       children: [
                         Card(
@@ -388,293 +251,15 @@ class JCard extends StatelessWidget {
                         ]
                       ],
                     ),
-                    if (job != null) ...[
-                      Text.rich(
-                        TextSpan(
-                          children: [
-                            const TextSpan(
-                              text: 'Job Detail : ',
-                              style: TextStyle(
-                                fontSize: 12.5,
-                                color: Color.fromRGBO(153, 153, 153, 1),
-                              ),
-                            ),
-                            TextSpan(
-                              text: application == null
-                                  ? (job?.note ??
-                                      'laborum tempor Lorem incididunt irure. Aute eu ex ad sunt. Pariatur sint culpa do incididunt eiusmod eiusmod culpa. laborum tempor Loreincididunt. Mollit in laborum tempor Lorem incididunt irure. Aute eu ex ad sunt. Pariatur sint culpa do incididunt eiusmod eiusmod culpa. laborum tempor Lorem incididunt.')
-                                  : (application?.jobId?.note ?? "Loading..."),
-                              style: const TextStyle(
-                                fontSize: 11.5,
-                                color: Color.fromRGBO(102, 102, 102, 1),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                    Text.rich(
-                      TextSpan(
-                        children: [
-                          const TextSpan(
-                            text: 'Skills : ',
-                            style: TextStyle(
-                              fontSize: 12.5,
-                              color: Color.fromRGBO(153, 153, 153, 1),
-                            ),
-                          ),
-                          TextSpan(
-                            text: application == null
-                                ? (job?.skills ?? 'Java + html + node , figma  , laborum, tempor ,Lorem incididunt.')
-                                : (application?.applicantId?.skills),
-                            style: const TextStyle(
-                              fontSize: 11.5,
-                              color: Color.fromRGBO(90, 90, 90, 1),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    if (job != null) ...[jobDetail()],
+                    applicantDetail(),
                     application == null
-                        ? StatefulBuilder(builder: (context, setState) {
-                            return Align(
-                              alignment: Alignment.bottomRight,
-                              child: GestureDetector(
-                                onTap: () => Cardconnect.applyJob(job!.id!).then((value) => value
-                                    ? setState(() => job!.applied = !job!.applied)
-                                    : debugPrint("issue in save job")),
-                                onDoubleTap: () => Cardconnect.applyJob(job!.id!).then((value) => value
-                                    ? setState(() => job!.applied = !job!.applied)
-                                    : debugPrint("issue in save job")),
-                                onSecondaryTap: () {},
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 50),
-                                  margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 35),
-                                  decoration: BoxDecoration(
-                                      color: const Color.fromRGBO(255, 255, 255, 1),
-                                      borderRadius: BorderRadius.circular(8),
-                                      gradient: linearGradient),
-                                  child: Text(
-                                    job!.applied ? "applied" : "Apply",
-                                    style: const TextStyle(color: white70),
-                                  ),
-                                ),
-                              ),
-                            );
-                          })
+                        ? apply()
                         : const Text(
                             "Apply For",
                             style: textStyle,
                           ),
-                    if (application != null) ...[
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: CachedNetworkImage(
-                                imageUrl: application?.jobId?.companyLogo == null
-                                    ? url
-                                    : application!.jobId!.companyLogo!.isNotEmpty
-                                        ? (Uri.parse(application!.jobId!.companyLogo!).isAbsolute)
-                                            ? application!.jobId!.companyLogo!
-                                            : url
-                                        : url,
-                                placeholder: (context, url) => const CircularProgressIndicator(),
-                                errorWidget: (context, url, error) => const Icon(
-                                  Icons.error,
-                                  size: 16,
-                                  color: Colors.red,
-                                ),
-                                imageBuilder: (context, imageProvider) => Container(
-                                  width: 25,
-                                  height: 25,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: imageProvider,
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 3,
-                              child: Column(
-                                children: [
-                                  Text(
-                                    application?.jobId?.companyName ?? "Loading...",
-                                    style: smallText,
-                                  ),
-                                  Text(
-                                    application?.jobId?.jobTittle ?? "Loading...",
-                                    style: bigText,
-                                  )
-                                ],
-                              ),
-                            ),
-                            if (application != null) ...[
-                              !(application?.shortlist ?? false)
-                                  ? StatefulBuilder(
-                                      builder: (BuildContext context, setState) => application!.rejected
-                                          ? Expanded(
-                                              flex: 6,
-                                              child: Container(
-                                                alignment: Alignment.center,
-                                                padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 50),
-                                                margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 35),
-                                                decoration: BoxDecoration(
-                                                    color: const Color.fromRGBO(255, 255, 255, 1),
-                                                    borderRadius: BorderRadius.circular(8),
-                                                    gradient: redGradient),
-                                                child: const Text(
-                                                  "Not Selected",
-                                                  style: TextStyle(color: Colors.red),
-                                                ),
-                                              ),
-                                            )
-                                          : (application!.shortlist ?? false)
-                                              ? Expanded(
-                                                  flex: 5,
-                                                  child: Container(
-                                                    alignment: Alignment.center,
-                                                    padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 5),
-                                                    margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 35),
-                                                    decoration: BoxDecoration(
-                                                        color: const Color.fromRGBO(255, 255, 255, 1),
-                                                        borderRadius: BorderRadius.circular(8),
-                                                        gradient: greenGradient),
-                                                    child: const Text(
-                                                      "Shortlisted",
-                                                      style: TextStyle(color: Colors.green),
-                                                    ),
-                                                  ),
-                                                )
-                                              : application!.interveiwselect
-                                                  ? Expanded(
-                                                      flex: 6,
-                                                      child: Row(
-                                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                        children: [
-                                                          const Spacer(),
-                                                          Expanded(
-                                                            flex: 8,
-                                                            child: GestureDetector(
-                                                              onTap: () {
-                                                                setState(() => application!.interveiwselect = true);
-                                                              },
-                                                              child: Container(
-                                                                alignment: Alignment.center,
-                                                                padding: const EdgeInsets.symmetric(
-                                                                  vertical: 7.5,
-                                                                ),
-                                                                decoration: BoxDecoration(
-                                                                    color: const Color.fromRGBO(255, 255, 255, 1),
-                                                                    borderRadius: BorderRadius.circular(8),
-                                                                    gradient: greenGradient),
-                                                                child: const Text(
-                                                                  "Select",
-                                                                  style: TextStyle(color: Colors.green),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          const Spacer(),
-                                                          Expanded(
-                                                            flex: 8,
-                                                            child: GestureDetector(
-                                                              onTap: () {
-                                                                setState(() => application!.rejected = true);
-                                                              },
-                                                              child: Container(
-                                                                alignment: Alignment.center,
-                                                                padding: const EdgeInsets.symmetric(
-                                                                  vertical: 7.5,
-                                                                ),
-                                                                decoration: BoxDecoration(
-                                                                    color: const Color.fromRGBO(255, 255, 255, 1),
-                                                                    borderRadius: BorderRadius.circular(8),
-                                                                    gradient: redGradient),
-                                                                child: const Text(
-                                                                  "Not Select",
-                                                                  style: TextStyle(color: Colors.redAccent),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          const Spacer(),
-                                                        ],
-                                                      ),
-                                                    )
-                                                  : Expanded(
-                                                      flex: 6,
-                                                      child: Row(
-                                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                        children: [
-                                                          const Spacer(),
-                                                          Expanded(
-                                                            flex: 8,
-                                                            child: GestureDetector(
-                                                              onTap: () {
-                                                                DoUpdate.doShortlist(application!.id!).whenComplete(() {
-                                                                  setState(() => application!.shortlist = true);
-                                                                });
-                                                                callback!(application!);
-                                                              },
-                                                              child: Container(
-                                                                alignment: Alignment.center,
-                                                                padding: const EdgeInsets.symmetric(
-                                                                  vertical: 7.5,
-                                                                ),
-                                                                decoration: BoxDecoration(
-                                                                    color: const Color.fromRGBO(255, 255, 255, 1),
-                                                                    borderRadius: BorderRadius.circular(8),
-                                                                    gradient: greenGradient),
-                                                                child: const Text(
-                                                                  "Short-list",
-                                                                  style: TextStyle(color: Colors.green),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          const Spacer(),
-                                                          Expanded(
-                                                            flex: 8,
-                                                            child: GestureDetector(
-                                                              onTap: () {
-                                                                DoUpdate.doNotShortlist(application!.id!)
-                                                                    .whenComplete(() {
-                                                                  setState(() => application!.rejected = true);
-                                                                });
-                                                              },
-                                                              child: Container(
-                                                                alignment: Alignment.center,
-                                                                padding: const EdgeInsets.symmetric(
-                                                                  vertical: 7.5,
-                                                                ),
-                                                                decoration: BoxDecoration(
-                                                                    color: const Color.fromRGBO(255, 255, 255, 1),
-                                                                    borderRadius: BorderRadius.circular(8),
-                                                                    gradient: redGradient),
-                                                                child: const Text(
-                                                                  "Not Select",
-                                                                  style: TextStyle(color: Colors.redAccent),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          const Spacer(),
-                                                        ],
-                                                      ),
-                                                    ))
-                                  : const Spacer(
-                                      flex: 6,
-                                    )
-                            ]
-                          ],
-                        ),
-                      ),
-                    ]
+                    if (application != null) ...[applicationData()]
                   ],
                 ),
               )
@@ -683,128 +268,7 @@ class JCard extends StatelessWidget {
           if (application != null) ...[
             if ((application!.shortlist ?? false) ||
                 (application!.interviews ?? false) ||
-                (application!.interviews2 ?? false)) ...[
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Spacer(),
-                    Flexible(
-                      flex: 2,
-                      child: CircleAvatar(
-                        backgroundColor: ((application!.shortlist ?? false) || (application!.interviews ?? false))
-                            ? const Color.fromRGBO(143, 0, 255, 0.15)
-                            : const Color.fromRGBO(25, 25, 25, 0.15),
-                        radius: 22,
-                        child: CircleAvatar(
-                          radius: 12.5,
-                          backgroundColor: ((application!.shortlist ?? false) || (application!.interviews ?? false))
-                              ? const Color.fromRGBO(143, 0, 255, 0.5)
-                              : const Color.fromRGBO(33, 33, 33, 0.5),
-                          child: const Icon(
-                            Icons.check,
-                            size: 16,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Flexible(
-                        flex: 3,
-                        child: Text(
-                          "----------------------------",
-                          maxLines: 1,
-                          selectionColor: Colors.pink,
-                          style: TextStyle(
-                              color:
-                                  (application!.interviews ?? false) ? const Color.fromRGBO(143, 0, 255, 0.5) : null),
-                        )),
-                    Flexible(
-                      flex: 2,
-                      child: CircleAvatar(
-                        backgroundColor: (application!.interviews ?? false)
-                            ? const Color.fromRGBO(143, 0, 255, 0.15)
-                            : const Color.fromRGBO(126, 126, 126, 0.15),
-                        radius: 23.5,
-                        child: CircleAvatar(
-                          radius: 12.5,
-                          backgroundColor: (application!.interviews ?? false)
-                              ? const Color.fromRGBO(143, 0, 255, 0.5)
-                              : const Color.fromRGBO(126, 126, 126, 0.3),
-                          child: const Icon(
-                            Icons.check,
-                            color: Colors.black,
-                            size: 16,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Flexible(
-                        flex: 3,
-                        child: Text(
-                          "----------------------------",
-                          maxLines: 1,
-                          selectionColor: Colors.pink,
-                          style: TextStyle(
-                              color:
-                                  (application!.interviews2 ?? false) ? const Color.fromRGBO(143, 0, 255, 0.5) : null),
-                        )),
-                    Flexible(
-                      flex: 2,
-                      child: CircleAvatar(
-                        backgroundColor: (application!.interviews2 ?? false)
-                            ? const Color.fromRGBO(143, 0, 255, 0.15)
-                            : const Color.fromRGBO(126, 126, 126, 0.15),
-                        radius: 23.5,
-                        child: CircleAvatar(
-                          radius: 12.5,
-                          backgroundColor: (application!.interviews2 ?? false)
-                              ? const Color.fromRGBO(143, 0, 255, 0.5)
-                              : const Color.fromRGBO(126, 126, 126, 0.3),
-                          child: const Icon(
-                            Icons.check,
-                            color: Colors.black,
-                            size: 16,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Flexible(
-                        flex: 3,
-                        child: Text(
-                          "----------------------------",
-                          maxLines: 1,
-                          selectionColor: Colors.pink,
-                          style: TextStyle(
-                              color: (application!.selectedCandidates ?? false)
-                                  ? const Color.fromRGBO(143, 0, 255, 0.5)
-                                  : null),
-                        )),
-                    Flexible(
-                      flex: 2,
-                      child: CircleAvatar(
-                        backgroundColor: (application!.selectedCandidates ?? false)
-                            ? const Color.fromRGBO(143, 0, 255, 0.15)
-                            : const Color.fromRGBO(126, 126, 126, 0.15),
-                        radius: 23.5,
-                        child: CircleAvatar(
-                          radius: 12.5,
-                          backgroundColor: (application!.selectedCandidates ?? false)
-                              ? const Color.fromRGBO(143, 0, 255, 0.5)
-                              : const Color.fromRGBO(126, 126, 126, 0.3),
-                          child: const Icon(
-                            Icons.check,
-                            color: Colors.black,
-                            size: 16,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const Spacer()
-                  ],
-                ),
-              ),
-            ],
+                (application!.interviews2 ?? false)) ...[progress()],
           ],
           if (application != null) ...[
             if ((((application!.shortlist ?? false) &&
@@ -827,164 +291,696 @@ class JCard extends StatelessWidget {
                         style: TextStyle(color: white70),
                       ),
                     )
-                  : Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: StatefulBuilder(builder: (BuildContext context, setState) {
-                        return Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Spacer(),
-                            Expanded(
-                                flex: 15,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    const Text(
-                                      "Schedule an interview",
-                                      style: bigText,
-                                    ),
-                                    const Text("Date",
-                                        style: TextStyle(
-                                          fontSize: 13,
-                                          color: white70,
-                                        )),
-                                    Padding(
-                                        padding: const EdgeInsets.only(top: 7, bottom: 20),
-                                        child: TextField(
-                                            scrollPhysics: const ClampingScrollPhysics(),
-                                            scrollPadding: EdgeInsets.zero,
-                                            controller: dateinput,
-                                            readOnly: true,
-                                            onTap: () async {
-                                              DateTime? pickedDate = await showDatePicker(
-                                                  context: context,
-                                                  initialDate: DateTime.now(),
-                                                  firstDate: DateTime(2000),
-                                                  lastDate: DateTime(2101));
-
-                                              if (pickedDate != null) {
-                                                if (application!.interviews2 ?? false) {
-                                                  application!.interviews2Date =
-                                                      DateFormat('yyyy-MM-dd').format(pickedDate);
-
-                                                  setState(() => dateinput.text = application!.interviews2Date!);
-                                                } else {
-                                                  application!.interviewsDate =
-                                                      DateFormat('yyyy-MM-dd').format(pickedDate);
-
-                                                  setState(() => dateinput.text = application!.interviewsDate!);
-                                                }
-                                              }
-                                            },
-                                            textAlignVertical: TextAlignVertical.center,
-                                            style: inputtextStyle,
-                                            decoration: inputDecoration.copyWith(
-                                                suffixIcon: const Icon(Icons.calendar_today),
-                                                labelStyle: const TextStyle(
-                                                  fontSize: 14.2,
-                                                  color: white30,
-                                                ),
-                                                labelText: "  Enter Date"))),
-                                  ],
-                                )),
-                            const Spacer(
-                              flex: 1,
-                            ),
-                            Expanded(
-                                flex: 15,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Text(
-                                      "",
-                                      style: bigText,
-                                    ),
-                                    const Text("Time",
-                                        style: TextStyle(
-                                          fontSize: 13,
-                                          color: white70,
-                                        )),
-                                    Padding(
-                                        padding: const EdgeInsets.only(top: 7, bottom: 20),
-                                        child: GestureDetector(
-                                          onTap: () async {
-                                            timex = await showTimePicker(
-                                                    context: context,
-                                                    initialTime: initialTime,
-                                                    initialEntryMode: TimePickerEntryMode.dial)
-                                                .whenComplete(() => setState(() {
-                                                      if (application!.interviews2 ?? false) {
-                                                        application!.interviews2Time = timex.toString();
-                                                      } else {
-                                                        application!.interviewsTime = timex.toString();
-                                                      }
-                                                    }));
-                                          },
-                                          child: Container(
-                                            padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 2),
-                                            decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(5),
-                                                border: Border.all(color: white30, width: 1.4)),
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                              children: [
-                                                const Icon(
-                                                  Icons.access_time,
-                                                  color: white30,
-                                                ),
-                                                Text(
-                                                  timex == null
-                                                      ? "Time of interview"
-                                                      : timex!.format(context).toString(),
-                                                  style: const TextStyle(color: white30),
-                                                ),
-                                                // const Icon(
-                                                //   Icons.expand_more_sharp,
-                                                //   color: white30,
-                                                // )
-                                              ],
-                                            ),
-                                          ),
-                                        )),
-                                    Align(
-                                      alignment: Alignment.bottomRight,
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          DoUpdate.doShortlist(application!.id!).whenComplete(() {
-                                            setState(() {
-                                              // application!.shortlist = false;
-                                              callback!(application!);
-                                              application!.shortlistsubmit = true;
-                                              application!.interviews = true;
-                                            });
-                                          });
-                                        },
-                                        onSecondaryTap: () {},
-                                        child: Container(
-                                          padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 35),
-                                          margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                                          decoration: BoxDecoration(
-                                              color: const Color.fromRGBO(255, 255, 255, 1),
-                                              borderRadius: BorderRadius.circular(8),
-                                              gradient: linearGradient),
-                                          child: const Text(
-                                            "Submit",
-                                            style: TextStyle(color: white70),
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                )),
-                            const Spacer(),
-                          ],
-                        );
-                      }),
-                    ),
+                  : scheduleInterveiw()
             ]
           ],
         ]));
+  }
+
+  Widget bookMark() => StatefulBuilder(
+        builder: (BuildContext context, setState) {
+          return Padding(
+            padding: const EdgeInsets.only(left: (double.minPositive)),
+            child: GestureDetector(
+              onTap: () => userModal.userId == null
+                  ? Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) => const CandidateSigin(),
+                      ),
+                    )
+                  : Cardconnect.saveJob(job!.id!).then((value) =>
+                      value ? setState(() => job!.isSaved = !job!.isSaved!) : debugPrint("issue in save job")),
+              onDoubleTap: () => Cardconnect.saveJob(job!.id!).then(
+                  (value) => value ? setState(() => job!.isSaved = !job!.isSaved!) : debugPrint("issue in save job")),
+              onSecondaryTap: () {},
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: (job!.isSaved ?? false)
+                    ? const Icon(
+                        Icons.bookmark,
+                        color: Color.fromRGBO(153, 153, 153, 1),
+                      )
+                    : const Icon(
+                        Icons.bookmark_outline,
+                        color: Color.fromRGBO(153, 153, 153, 1),
+                      ),
+              ),
+            ),
+          );
+        },
+      );
+
+  Widget highlights() => SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            const Icon(
+              Icons.pin_drop_outlined,
+              size: iconSize,
+              color: Color.fromRGBO(153, 153, 153, 1),
+              semanticLabel: "loaction",
+            ),
+            Text(
+                application == null
+                    ? (job!.location ?? " Brussels")
+                    : (application?.applicantId?.location ?? "Loading..."),
+                style: smallText),
+            const Padding(
+              padding: EdgeInsets.all(3),
+              child: Icon(
+                Icons.radio_button_checked,
+                size: 2,
+                color: Color.fromRGBO(153, 153, 153, 1),
+                semanticLabel: "loaction",
+              ),
+            ),
+            const Icon(
+              Icons.schedule,
+              size: iconSize,
+              color: Color.fromRGBO(153, 153, 153, 1),
+              semanticLabel: "loaction",
+            ),
+            Text(
+                application == null
+                    ? (job?.timePeriod ?? "Loading...")
+                    : (application?.jobId?.timePeriod ?? "Loading..."),
+                style: smallText),
+            const Padding(
+              padding: EdgeInsets.all(3),
+              child: Icon(
+                Icons.radio_button_checked,
+                size: 2,
+                color: Color.fromRGBO(153, 153, 153, 1),
+                semanticLabel: "loaction",
+              ),
+            ),
+            const Icon(
+              Icons.attach_money,
+              size: iconSize,
+              color: Color.fromRGBO(153, 153, 153, 1),
+              semanticLabel: "loaction",
+            ),
+            Text(
+                money(
+                  application == null ? (job!.pay ?? 30000) : (application?.jobId?.pay ?? 1000),
+                ),
+                style: smallText),
+            const Padding(
+              padding: EdgeInsets.all(3),
+              child: Icon(
+                Icons.radio_button_checked,
+                size: 2,
+                color: Color.fromRGBO(153, 153, 153, 1),
+                semanticLabel: "loaction",
+              ),
+            ),
+            const Icon(
+              Icons.work,
+              size: iconSize,
+              color: Color.fromRGBO(153, 153, 153, 1),
+              semanticLabel: "loaction",
+            ),
+            Text(application == null ? (job?.workType ?? "Loading...") : (application?.jobId?.workType ?? "Loading..."),
+                style: smallText),
+            const Padding(
+              padding: EdgeInsets.all(3),
+              child: Icon(
+                Icons.radio_button_checked,
+                size: 2,
+                color: Color.fromRGBO(153, 153, 153, 1),
+                semanticLabel: "loaction",
+              ),
+            ),
+            const Icon(
+              Icons.calendar_today_outlined,
+              size: iconSize,
+              color: Color.fromRGBO(153, 153, 153, 1),
+              semanticLabel: "loaction",
+            ),
+            Text(
+                application == null
+                    ? job!.createdAt != null
+                        ? time(job!.createdAt!)
+                        : " 29 min ago"
+                    : application?.jobId?.createdAt != null
+                        ? time(application!.jobId!.createdAt!)
+                        : ("Loading..."),
+                style: smallText),
+          ],
+        ),
+      );
+
+  Widget jobDetail() => Text.rich(
+        TextSpan(
+          children: [
+            const TextSpan(
+              text: 'Job Detail : ',
+              style: TextStyle(
+                fontSize: 12.5,
+                color: Color.fromRGBO(153, 153, 153, 1),
+              ),
+            ),
+            TextSpan(
+              text: application == null
+                  ? (job?.note ??
+                      'laborum tempor Lorem incididunt irure. Aute eu ex ad sunt. Pariatur sint culpa do incididunt eiusmod eiusmod culpa. laborum tempor Loreincididunt. Mollit in laborum tempor Lorem incididunt irure. Aute eu ex ad sunt. Pariatur sint culpa do incididunt eiusmod eiusmod culpa. laborum tempor Lorem incididunt.')
+                  : (application?.jobId?.note ?? "Loading..."),
+              style: const TextStyle(
+                fontSize: 11.5,
+                color: Color.fromRGBO(102, 102, 102, 1),
+              ),
+            ),
+          ],
+        ),
+      );
+  Widget applicantDetail() => Text.rich(
+        TextSpan(
+          children: [
+            const TextSpan(
+              text: 'Skills : ',
+              style: TextStyle(
+                fontSize: 12.5,
+                color: Color.fromRGBO(153, 153, 153, 1),
+              ),
+            ),
+            TextSpan(
+              text: application == null
+                  ? (job?.skills ?? 'Java + html + node , figma  , laborum, tempor ,Lorem incididunt.')
+                  : (application?.applicantId?.skills),
+              style: const TextStyle(
+                fontSize: 11.5,
+                color: Color.fromRGBO(90, 90, 90, 1),
+              ),
+            ),
+          ],
+        ),
+      );
+
+  Widget apply() => StatefulBuilder(builder: (context, setState) {
+        return Align(
+          alignment: Alignment.bottomRight,
+          child: GestureDetector(
+            onTap: () => Cardconnect.applyJob(job!.id!).then(
+                (value) => value ? setState(() => job!.applied = !job!.applied) : debugPrint("issue in save job")),
+            onDoubleTap: () => Cardconnect.applyJob(job!.id!).then(
+                (value) => value ? setState(() => job!.applied = !job!.applied) : debugPrint("issue in save job")),
+            onSecondaryTap: () {},
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 50),
+              margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 35),
+              decoration: BoxDecoration(
+                  color: const Color.fromRGBO(255, 255, 255, 1),
+                  borderRadius: BorderRadius.circular(8),
+                  gradient: linearGradient),
+              child: Text(
+                job!.applied ? "applied" : "Apply",
+                style: const TextStyle(color: white70),
+              ),
+            ),
+          ),
+        );
+      });
+
+  Widget applicationData() => Padding(
+        padding: const EdgeInsets.only(bottom: 10),
+        child: Row(
+          children: [
+            Expanded(
+              child: CachedNetworkImage(
+                imageUrl: application?.jobId?.companyLogo == null
+                    ? url
+                    : application!.jobId!.companyLogo!.isNotEmpty
+                        ? (Uri.parse(application!.jobId!.companyLogo!).isAbsolute)
+                            ? application!.jobId!.companyLogo!
+                            : url
+                        : url,
+                placeholder: (context, url) => const CircularProgressIndicator(),
+                errorWidget: (context, url, error) => const Icon(
+                  Icons.error,
+                  size: 16,
+                  color: Colors.red,
+                ),
+                imageBuilder: (context, imageProvider) => Container(
+                  width: 25,
+                  height: 25,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 3,
+              child: Column(
+                children: [
+                  Text(
+                    application?.jobId?.companyName ?? "Loading...",
+                    style: smallText,
+                  ),
+                  Text(
+                    application?.jobId?.jobTittle ?? "Loading...",
+                    style: bigText,
+                  )
+                ],
+              ),
+            ),
+            if (application != null) ...[
+              !(application?.shortlist ?? false)
+                  ? StatefulBuilder(
+                      builder: (BuildContext context, setState) => application!.rejected
+                          ? Expanded(
+                              flex: 6,
+                              child: Container(
+                                alignment: Alignment.center,
+                                padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 50),
+                                margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 35),
+                                decoration: BoxDecoration(
+                                    color: const Color.fromRGBO(255, 255, 255, 1),
+                                    borderRadius: BorderRadius.circular(8),
+                                    gradient: redGradient),
+                                child: const Text(
+                                  "Not Selected",
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                              ),
+                            )
+                          : (application!.shortlist ?? false)
+                              ? Expanded(
+                                  flex: 5,
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 5),
+                                    margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 35),
+                                    decoration: BoxDecoration(
+                                        color: const Color.fromRGBO(255, 255, 255, 1),
+                                        borderRadius: BorderRadius.circular(8),
+                                        gradient: greenGradient),
+                                    child: const Text(
+                                      "Shortlisted",
+                                      style: TextStyle(color: Colors.green),
+                                    ),
+                                  ),
+                                )
+                              : application!.interveiwselect
+                                  ? Expanded(
+                                      flex: 6,
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                        children: [
+                                          const Spacer(),
+                                          Expanded(
+                                            flex: 8,
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                setState(() => application!.interveiwselect = true);
+                                              },
+                                              child: Container(
+                                                alignment: Alignment.center,
+                                                padding: const EdgeInsets.symmetric(
+                                                  vertical: 7.5,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                    color: const Color.fromRGBO(255, 255, 255, 1),
+                                                    borderRadius: BorderRadius.circular(8),
+                                                    gradient: greenGradient),
+                                                child: const Text(
+                                                  "Select",
+                                                  style: TextStyle(color: Colors.green),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          const Spacer(),
+                                          Expanded(
+                                            flex: 8,
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                setState(() => application!.rejected = true);
+                                              },
+                                              child: Container(
+                                                alignment: Alignment.center,
+                                                padding: const EdgeInsets.symmetric(
+                                                  vertical: 7.5,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                    color: const Color.fromRGBO(255, 255, 255, 1),
+                                                    borderRadius: BorderRadius.circular(8),
+                                                    gradient: redGradient),
+                                                child: const Text(
+                                                  "Not Select",
+                                                  style: TextStyle(color: Colors.redAccent),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          const Spacer(),
+                                        ],
+                                      ),
+                                    )
+                                  : Expanded(
+                                      flex: 6,
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                        children: [
+                                          const Spacer(),
+                                          Expanded(
+                                            flex: 8,
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                DoUpdate.doShortlist(application!.id!).whenComplete(() {
+                                                  setState(() => application!.shortlist = true);
+                                                });
+                                                callback!(application!);
+                                              },
+                                              child: Container(
+                                                alignment: Alignment.center,
+                                                padding: const EdgeInsets.symmetric(
+                                                  vertical: 7.5,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                    color: const Color.fromRGBO(255, 255, 255, 1),
+                                                    borderRadius: BorderRadius.circular(8),
+                                                    gradient: greenGradient),
+                                                child: const Text(
+                                                  "Short-list",
+                                                  style: TextStyle(color: Colors.green),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          const Spacer(),
+                                          Expanded(
+                                            flex: 8,
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                DoUpdate.doNotShortlist(application!.id!).whenComplete(() {
+                                                  setState(() => application!.rejected = true);
+                                                });
+                                              },
+                                              child: Container(
+                                                alignment: Alignment.center,
+                                                padding: const EdgeInsets.symmetric(
+                                                  vertical: 7.5,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                    color: const Color.fromRGBO(255, 255, 255, 1),
+                                                    borderRadius: BorderRadius.circular(8),
+                                                    gradient: redGradient),
+                                                child: const Text(
+                                                  "Not Select",
+                                                  style: TextStyle(color: Colors.redAccent),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          const Spacer(),
+                                        ],
+                                      ),
+                                    ))
+                  : const Spacer(
+                      flex: 6,
+                    )
+            ]
+          ],
+        ),
+      );
+
+  Widget progress() => Padding(
+        padding: const EdgeInsets.all(10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Spacer(),
+            Flexible(
+              flex: 2,
+              child: CircleAvatar(
+                backgroundColor: ((application!.shortlist ?? false) || (application!.interviews ?? false))
+                    ? const Color.fromRGBO(143, 0, 255, 0.15)
+                    : const Color.fromRGBO(25, 25, 25, 0.15),
+                radius: 22,
+                child: CircleAvatar(
+                  radius: 12.5,
+                  backgroundColor: ((application!.shortlist ?? false) || (application!.interviews ?? false))
+                      ? const Color.fromRGBO(143, 0, 255, 0.5)
+                      : const Color.fromRGBO(33, 33, 33, 0.5),
+                  child: const Icon(
+                    Icons.check,
+                    size: 16,
+                  ),
+                ),
+              ),
+            ),
+            Flexible(
+                flex: 3,
+                child: Text(
+                  "----------------------------",
+                  maxLines: 1,
+                  selectionColor: Colors.pink,
+                  style: TextStyle(
+                      color: (application!.interviews ?? false) ? const Color.fromRGBO(143, 0, 255, 0.5) : null),
+                )),
+            Flexible(
+              flex: 2,
+              child: CircleAvatar(
+                backgroundColor: (application!.interviews ?? false)
+                    ? const Color.fromRGBO(143, 0, 255, 0.15)
+                    : const Color.fromRGBO(126, 126, 126, 0.15),
+                radius: 23.5,
+                child: CircleAvatar(
+                  radius: 12.5,
+                  backgroundColor: (application!.interviews ?? false)
+                      ? const Color.fromRGBO(143, 0, 255, 0.5)
+                      : const Color.fromRGBO(126, 126, 126, 0.3),
+                  child: const Icon(
+                    Icons.check,
+                    color: Colors.black,
+                    size: 16,
+                  ),
+                ),
+              ),
+            ),
+            Flexible(
+                flex: 3,
+                child: Text(
+                  "----------------------------",
+                  maxLines: 1,
+                  selectionColor: Colors.pink,
+                  style: TextStyle(
+                      color: (application!.interviews2 ?? false) ? const Color.fromRGBO(143, 0, 255, 0.5) : null),
+                )),
+            Flexible(
+              flex: 2,
+              child: CircleAvatar(
+                backgroundColor: (application!.interviews2 ?? false)
+                    ? const Color.fromRGBO(143, 0, 255, 0.15)
+                    : const Color.fromRGBO(126, 126, 126, 0.15),
+                radius: 23.5,
+                child: CircleAvatar(
+                  radius: 12.5,
+                  backgroundColor: (application!.interviews2 ?? false)
+                      ? const Color.fromRGBO(143, 0, 255, 0.5)
+                      : const Color.fromRGBO(126, 126, 126, 0.3),
+                  child: const Icon(
+                    Icons.check,
+                    color: Colors.black,
+                    size: 16,
+                  ),
+                ),
+              ),
+            ),
+            Flexible(
+                flex: 3,
+                child: Text(
+                  "----------------------------",
+                  maxLines: 1,
+                  selectionColor: Colors.pink,
+                  style: TextStyle(
+                      color:
+                          (application!.selectedCandidates ?? false) ? const Color.fromRGBO(143, 0, 255, 0.5) : null),
+                )),
+            Flexible(
+              flex: 2,
+              child: CircleAvatar(
+                backgroundColor: (application!.selectedCandidates ?? false)
+                    ? const Color.fromRGBO(143, 0, 255, 0.15)
+                    : const Color.fromRGBO(126, 126, 126, 0.15),
+                radius: 23.5,
+                child: CircleAvatar(
+                  radius: 12.5,
+                  backgroundColor: (application!.selectedCandidates ?? false)
+                      ? const Color.fromRGBO(143, 0, 255, 0.5)
+                      : const Color.fromRGBO(126, 126, 126, 0.3),
+                  child: const Icon(
+                    Icons.check,
+                    color: Colors.black,
+                    size: 16,
+                  ),
+                ),
+              ),
+            ),
+            const Spacer()
+          ],
+        ),
+      );
+
+  Widget scheduleInterveiw() {
+    TimeOfDay? timex;
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: StatefulBuilder(builder: (BuildContext context, setState) {
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Spacer(),
+            Expanded(
+                flex: 15,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Schedule an interview",
+                      style: bigText,
+                    ),
+                    const Text("Date",
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: white70,
+                        )),
+                    Padding(
+                        padding: const EdgeInsets.only(top: 7, bottom: 20),
+                        child: TextField(
+                            scrollPhysics: const ClampingScrollPhysics(),
+                            scrollPadding: EdgeInsets.zero,
+                            controller: dateinput,
+                            readOnly: true,
+                            onTap: () async {
+                              DateTime? pickedDate = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(2000),
+                                  lastDate: DateTime(2101));
+
+                              if (pickedDate != null) {
+                                if (application!.interviews2 ?? false) {
+                                  application!.interviews2Date = DateFormat('yyyy-MM-dd').format(pickedDate);
+
+                                  setState(() => dateinput.text = application!.interviews2Date!);
+                                } else {
+                                  application!.interviewsDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+
+                                  setState(() => dateinput.text = application!.interviewsDate!);
+                                }
+                              }
+                            },
+                            textAlignVertical: TextAlignVertical.center,
+                            style: inputtextStyle,
+                            decoration: inputDecoration.copyWith(
+                                suffixIcon: const Icon(Icons.calendar_today),
+                                labelStyle: const TextStyle(
+                                  fontSize: 14.2,
+                                  color: white30,
+                                ),
+                                labelText: "  Enter Date"))),
+                  ],
+                )),
+            const Spacer(
+              flex: 1,
+            ),
+            Expanded(
+                flex: 15,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "",
+                      style: bigText,
+                    ),
+                    const Text("Time",
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: white70,
+                        )),
+                    Padding(
+                        padding: const EdgeInsets.only(top: 7, bottom: 20),
+                        child: GestureDetector(
+                          onTap: () async {
+                            timex = await showTimePicker(
+                                    context: context,
+                                    initialTime: TimeOfDay.now(),
+                                    initialEntryMode: TimePickerEntryMode.dial)
+                                .whenComplete(() => setState(() {
+                                      if (application!.interviews2 ?? false) {
+                                        application!.interviews2Time = timex.toString();
+                                      } else {
+                                        application!.interviewsTime = timex.toString();
+                                      }
+                                    }));
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 2),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5), border: Border.all(color: white30, width: 1.4)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                const Icon(
+                                  Icons.access_time,
+                                  color: white30,
+                                ),
+                                Text(
+                                  timex == null ? "Time of interview" : timex!.format(context).toString(),
+                                  style: const TextStyle(color: white30),
+                                ),
+                                // const Icon(
+                                //   Icons.expand_more_sharp,
+                                //   color: white30,
+                                // )
+                              ],
+                            ),
+                          ),
+                        )),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: GestureDetector(
+                        onTap: () {
+                          DoUpdate.doShortlist(application!.id!).whenComplete(() {
+                            setState(() {
+                              // application!.shortlist = false;
+                              callback!(application!);
+                              application!.shortlistsubmit = true;
+                              application!.interviews = true;
+                            });
+                          });
+                        },
+                        onSecondaryTap: () {},
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 35),
+                          margin: const EdgeInsets.symmetric(vertical: 3, horizontal: 5),
+                          decoration: BoxDecoration(
+                              color: const Color.fromRGBO(255, 255, 255, 1),
+                              borderRadius: BorderRadius.circular(8),
+                              gradient: linearGradient),
+                          child: const Text(
+                            "Submit",
+                            style: TextStyle(color: white70),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                )),
+            const Spacer(),
+          ],
+        );
+      }),
+    );
   }
 }

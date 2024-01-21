@@ -650,6 +650,8 @@ class PostJob extends StatelessWidget {
                           controller.pageUpdate(2);
                           break;
                         } else {
+                       
+                          // ignore: use_build_context_synchronously
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                               duration: const Duration(seconds: 10),

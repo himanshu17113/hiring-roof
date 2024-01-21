@@ -41,25 +41,25 @@ class JobModal {
 }
 
 class Job {
-  String? id;
-  UserId? userId;
-  String? jobTittle;
-  String? skills;
-  String? jobType;
-  String? workType;
-  String? availability;
-  String? timePeriod;
-  String? note;
-  int? pay;
-  String? payType;
-  String? location;
-  String? companyName;
-  String? companyLogo;
-  bool? isSaved;
-  DateTime? createdAt;
-  DateTime? updatedAt;
-  int? v;
-  bool applied;
+ final String? id;
+ final UserId? userId;
+ final String? jobTittle;
+ final String? skills;
+ final String? jobType;
+ final String? workType;
+ final String? availability;
+ final String? timePeriod;
+ final String? note;
+ final int? pay;
+ final String? payType;
+ final String? location;
+ final String? companyName;
+ final String? companyLogo;
+   bool? isSaved;
+ final DateTime? createdAt;
+ final DateTime? updatedAt;
+ final int? v;
+   bool applied;
 
   Job(
       {this.id,
@@ -147,12 +147,12 @@ class Job {
 }
 
 class UserId {
-  String? id;
-  String? phone;
-  String? userType;
-  String? name;
-  String? email;
-  String? profileImage;
+ final String? id;
+ final String? phone;
+ final String? userType;
+ final String? name;
+ final String? email;
+ final String? profileImage;
 
   UserId({
     this.id,
