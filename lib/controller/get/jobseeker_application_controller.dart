@@ -1,6 +1,10 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:hiring_roof/model/application.dart';
+import 'package:hiring_roof/model/job.dart';
 import 'package:hiring_roof/util/apistring.dart';
 import 'package:hiring_roof/util/constant/const.dart';
 import 'package:http/http.dart' as http;
@@ -11,7 +15,7 @@ class MyJobsxController extends GetxController {
 
   ApplicationModal? applicationModal;
   //List of data
-  List<Application>? saved = [];
+  List<Job>? saved = [];
   List<Application>? applied = [];
   List<Application>? shortList = [];
   List<Application>? interveiwsList = [];
@@ -40,7 +44,8 @@ class MyJobsxController extends GetxController {
   final ScrollController resultScroll = ScrollController();
 
   @override
-  void onInit() {
+  void onInit() async {
+    await getSaved();
     getApplied();
     getMyShortlist();
     getInterveiws();
@@ -69,15 +74,16 @@ class MyJobsxController extends GetxController {
 
   Future<void> getSaved() async {
     if (!endOfSaved) {
-      debugPrint((ApiString.getSaved));
-      final http.Response response = await client.get(Uri.parse(ApiString.getsave),
-          headers: {"Authorization": userModal.token!, "Content-Type": "application/json"});
+      debugPrint((ApiString.getsave));
+      final http.Response response = await client
+          .get(Uri.parse(ApiString.getsave), headers: {"Authorization": userModal.token!, "Content-Type": "application/json"});
       if (response.statusCode == 200) {
-        applicationModal = ApplicationModal.fromJson(response.body);
-        if (applicationModal?.data != null) {
-          if (applicationModal!.data!.isNotEmpty) {
-            saved?.addAll(applicationModal!.data!);
-            debugPrint(applicationModal?.data?.length.toString() ?? "empty");
+        log(response.body.toString());
+        final JobModal jobModal = JobModal.fromjsonwithuserId(jsonDecode(response.body));
+        if (jobModal.jobs != null) {
+          if (jobModal.jobs!.isNotEmpty) {
+            saved?.addAll(jobModal.jobs!);
+            debugPrint(jobModal.jobs!.length.toString());
             indexOfSaved++;
           } else {
             endOfSaved = true;
@@ -90,17 +96,18 @@ class MyJobsxController extends GetxController {
 
   Future<void> getApplied() async {
     if (!endOfApplied) {
-      debugPrint(("${ApiString.getApplication}$indexOfApplied"));
-      final http.Response response = await client.get(Uri.parse("${ApiString.getApplication}$indexOfApplied"),
+      debugPrint(("${ApiString.getApplications}$indexOfApplied"));
+      final http.Response response = await client.get(Uri.parse("${ApiString.getApplications}$indexOfApplied"),
           headers: {"Authorization": userModal.token!, "Content-Type": "application/json"});
       if (response.statusCode == 200) {
         applicationModal = ApplicationModal.fromJson(response.body);
         if (applicationModal?.data != null) {
           if (applicationModal!.data!.isNotEmpty) {
             applied?.addAll(applicationModal!.data!);
-            debugPrint(applicationModal?.data?.length.toString() ?? "empty");
             indexOfApplied++;
           } else {
+            debugPrint(applicationModal?.data?.length.toString() ?? "empty");
+
             endOfApplied = true;
           }
           update();
@@ -153,8 +160,7 @@ class MyJobsxController extends GetxController {
   Future<void> getInterveiws2() async {
     debugPrint(userModal.token!);
     if (!endOfInterview2) {
-      final http.Response response = await client.get(
-          Uri.parse("${ApiString.get2Candidateinterviews}$indexOfInterview2"),
+      final http.Response response = await client.get(Uri.parse("${ApiString.get2Candidateinterviews}$indexOfInterview2"),
           headers: {"Authorization": userModal.token!, "Content-Type": "application/json"});
       if (response.statusCode == 200) {
         applicationModal = ApplicationModal.fromJson(response.body);

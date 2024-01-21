@@ -29,6 +29,14 @@ class JobModal {
         currentPage: json["currentPage"],
         jobs: json["jobs"] == null ? [] : List<Job>.from(json["jobs"]!.map((x) => Job.fromJson(x))),
       );
+  factory JobModal.fromjsonwithuserId(Map<String, dynamic> json) => JobModal(
+        status: json["status"],
+        msg: json["msg"],
+        jobCount: json["jobCount"],
+        pageCount: json["pageCount"],
+        currentPage: json["currentPage"],
+        jobs: json["data"] == null ? [] : List<Job>.from(json["data"]!.map((x) => Job.fromJsonbyappli(x))),
+      );
 
   Map<String, dynamic> toJson() => {
         "status": status,
@@ -41,25 +49,25 @@ class JobModal {
 }
 
 class Job {
- final String? id;
- final UserId? userId;
- final String? jobTittle;
- final String? skills;
- final String? jobType;
- final String? workType;
- final String? availability;
- final String? timePeriod;
- final String? note;
- final int? pay;
- final String? payType;
- final String? location;
- final String? companyName;
- final String? companyLogo;
-   bool? isSaved;
- final DateTime? createdAt;
- final DateTime? updatedAt;
- final int? v;
-   bool applied;
+  final String? id;
+  final UserId? userId;
+  final String? jobTittle;
+  final String? skills;
+  final String? jobType;
+  final String? workType;
+  final String? availability;
+  final String? timePeriod;
+  final String? note;
+  final int? pay;
+  final String? payType;
+  final String? location;
+  final String? companyName;
+  final String? companyLogo;
+  bool? isSaved;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final int? v;
+  bool applied;
 
   Job(
       {this.id,
@@ -147,12 +155,12 @@ class Job {
 }
 
 class UserId {
- final String? id;
- final String? phone;
- final String? userType;
- final String? name;
- final String? email;
- final String? profileImage;
+  final String? id;
+  final String? phone;
+  final String? userType;
+  final String? name;
+  final String? email;
+  final String? profileImage;
 
   UserId({
     this.id,

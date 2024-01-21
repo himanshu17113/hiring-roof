@@ -19,7 +19,7 @@ class MyJobs extends StatelessWidget {
           backgroundColor: black,
           appBar: AppBar(
             systemOverlayStyle: SystemUiOverlayStyle.dark,
-            shadowColor: Colors.purple.withOpacity(0.15),
+            shadowColor: const Color.fromARGB(31, 155, 39, 176),
             backgroundColor: black12,
             automaticallyImplyLeading: true,
             surfaceTintColor: black12,
@@ -81,8 +81,17 @@ class MyJobs extends StatelessWidget {
                 children: [
                   ListView.builder(
                       itemCount: control.saved?.length,
-                      itemBuilder: (BuildContext context, int index) => const CJCard()),
-                  ListView.builder(itemCount: 9, itemBuilder: (BuildContext context, int index) => const CJCard()),
+                      itemBuilder: (BuildContext context, int index) => JCard(
+                            job: control.saved?[index],
+                            isEmployer: false,
+                          )),
+                  ListView.builder(
+                      itemCount: control.applied?.length,
+                      itemBuilder: (BuildContext context, int index) => JCard(
+                            job: control.applied?[index].jobId,
+                            application: control.applied?[index],
+                            isEmployer: false,
+                          )),
                   ListView.builder(itemCount: 12, itemBuilder: (BuildContext context, int index) => const CJCard()),
                   ListView.builder(itemCount: 9, itemBuilder: (BuildContext context, int index) => const CJCard()),
                   ListView.builder(itemCount: 9, itemBuilder: (BuildContext context, int index) => const CJCard()),

@@ -13,15 +13,14 @@ import '../../constant/color.dart';
 class JCard extends StatelessWidget {
   final Job? job;
   final Application? application;
+  final bool isEmployer;
   final Function(Application applicaton)? callback;
-  //final void Function(Application? applicaton)? callback2;
-  //final Function(Application) onButtonPressed;
   JCard({
     super.key,
     this.job,
     this.application,
     this.callback,
-    // this.callback2, this.call, required this.onButtonPressed
+    this.isEmployer = true,
   });
   static TextStyle smallText = const TextStyle(fontSize: 11.5, color: Color.fromRGBO(153, 153, 153, 1));
   static TextStyle mediumText = const TextStyle(fontSize: 12.5, color: Color.fromRGBO(102, 102, 102, 1));
@@ -67,7 +66,6 @@ class JCard extends StatelessWidget {
 
   final TextEditingController dateinput = TextEditingController();
   //  TimeOfDay? initialTime = TimeOfDay.now();
-
   @override
   Widget build(BuildContext context) {
     // final ColorScheme colorScheme = Theme.of(context).colorScheme;
@@ -77,102 +75,7 @@ class JCard extends StatelessWidget {
         //   color: Theme.of(context).colorScheme.secondaryContainer.withOpacity(0.3),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Column(children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              const Spacer(),
-              Expanded(
-                flex: 4,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10, right: 5),
-                  child: CircleAvatar(
-                    radius: 32,
-                    backgroundImage: CachedNetworkImageProvider(
-                      application == null
-                          ? (job?.companyLogo == null || job!.companyLogo!.isEmpty)
-                              ? url
-                              : (Uri.parse(job!.companyLogo!).isAbsolute ? job!.companyLogo! : url)
-                          : (application!.applicantId?.profileImage == null ||
-                                  application!.applicantId!.profileImage!.isEmpty)
-                              ? url
-                              : ((Uri.parse(application!.applicantId!.profileImage!).isAbsolute
-                                  ? application!.applicantId!.profileImage!
-                                  : url)),
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 24,
-                child:
-                    Row(mainAxisSize: MainAxisSize.max, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 5),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          application == null
-                              ? (job!.companyName ?? "Loading ...")
-                              : (application?.jobId?.jobTittle ?? "Loading ..."),
-                          style: const TextStyle(
-                            fontSize: 15,
-                          ),
-                        ),
-                        Text(
-                          application == null
-                              ? (job!.jobTittle ?? "Loading ...")
-                              : (application?.applicantId?.name ?? "Loading ..."),
-                          style: const TextStyle(
-                            fontSize: 18,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  job != null
-                      ? bookMark()
-                      : (application!.selectedCandidates ?? false)
-                          ? Container(
-                              alignment: Alignment.center,
-                              padding: const EdgeInsets.symmetric(vertical: 2.5, horizontal: 50),
-                              margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 35),
-                              decoration: BoxDecoration(
-                                  color: const Color.fromRGBO(255, 255, 255, 1),
-                                  borderRadius: BorderRadius.circular(8),
-                                  gradient: greenGradient),
-                              child: const Text(
-                                "selected",
-                                style: TextStyle(color: Colors.green),
-                              ),
-                            )
-                          : (application!.interviews2 ?? false)
-                              ? const SizedBox()
-                              : (application!.interviews ?? false)
-                                  ? const SizedBox()
-                                  : (application!.shortlist ?? false)
-                                      ? Container(
-                                          alignment: Alignment.center,
-                                          padding: const EdgeInsets.symmetric(vertical: 2.5, horizontal: 20),
-                                          margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                                          decoration: BoxDecoration(
-                                              color: const Color.fromRGBO(255, 255, 255, 1),
-                                              borderRadius: BorderRadius.circular(8),
-                                              gradient: greenGradient),
-                                          child: const Text(
-                                            "Shortlisted",
-                                            style: TextStyle(color: Colors.green),
-                                          ),
-                                        )
-                                      : const SizedBox.shrink()
-                ]),
-              ),
-              const Spacer(),
-            ],
-          ),
+          header(),
           Row(
             children: [
               const Spacer(),
@@ -182,78 +85,10 @@ class JCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     highlights(),
-                    Row(
-                      children: [
-                        Card(
-                            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                            shape: const StadiumBorder(),
-
-                            ///     color: const Color.fromRGBO(64, 64, 64, 0.4),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                              child: Text(
-                                application == null
-                                    ? (job!.timePeriod ?? "Short term")
-                                    : (application!.jobId?.timePeriod ?? "Short term"),
-                                style: mediumText,
-                                maxLines: 1,
-                              ),
-                            )),
-                        const Padding(
-                          padding: EdgeInsets.all(3),
-                          child: Icon(
-                            Icons.radio_button_checked,
-                            size: 2,
-                            color: Color.fromRGBO(153, 153, 153, 1),
-                            semanticLabel: "loaction",
-                          ),
-                        ),
-                        if (job?.availability != null || application?.jobId?.availability != null) ...[
-                          Card(
-                              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                              shape: const StadiumBorder(),
-                              color: const Color.fromRGBO(64, 64, 64, 0.4),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                                child: Text(
-                                  application == null
-                                      ? (job!.availability ?? "Immediate")
-                                      : (application?.jobId?.availability ?? "Immediate"),
-                                  style: mediumText,
-                                  maxLines: 1,
-                                ),
-                              )),
-                        ],
-                        const Padding(
-                          padding: EdgeInsets.all(3),
-                          child: Icon(
-                            Icons.radio_button_checked,
-                            size: 2,
-                            color: Color.fromRGBO(153, 153, 153, 1),
-                            semanticLabel: "loaction",
-                          ),
-                        ),
-                        if (job?.jobType != null || application?.jobId?.jobType != null) ...[
-                          Card(
-                              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                              shape: const StadiumBorder(),
-                              //   color:// const Color.fromRGBO(64, 64, 64, 0.4),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                                child: Text(
-                                  application == null
-                                      ? (job?.jobType ?? "Immediate")
-                                      : (application?.jobId?.jobType ?? "Immediate"),
-                                  style: mediumText,
-                                  maxLines: 1,
-                                ),
-                              )),
-                        ]
-                      ],
-                    ),
-                    if (job != null) ...[jobDetail()],
-                    applicantDetail(),
-                    application == null
+                    pops(),
+                    detail(),
+                    skills(),
+                    application == null || !isEmployer
                         ? apply()
                         : const Text(
                             "Apply For",
@@ -265,19 +100,17 @@ class JCard extends StatelessWidget {
               )
             ],
           ),
-          if (application != null) ...[
+          if (application != null && isEmployer) ...[
             if ((application!.shortlist ?? false) ||
                 (application!.interviews ?? false) ||
                 (application!.interviews2 ?? false)) ...[progress()],
           ],
-          if (application != null) ...[
+          if (application != null && isEmployer) ...[
             if ((((application!.shortlist ?? false) &&
                     ((application!.interviewsDate!.isEmpty) && (application!.interviewsTime!.isEmpty)))) ||
                 (application!.interviews ?? false) &&
                     ((application!.interviews2Date!.isEmpty) || (application!.interviews2Time!.isEmpty))) ...[
-              (((application!.shortlist ?? false) &&
-                          application!.shortlistsubmit &&
-                          !(application!.interviews ?? true)) ||
+              (((application!.shortlist ?? false) && application!.shortlistsubmit && !(application!.interviews ?? true)) ||
                       (application!.interviews ?? false) && application!.interveiwlistsubmit)
                   ? Container(
                       padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 35),
@@ -297,6 +130,99 @@ class JCard extends StatelessWidget {
         ]));
   }
 
+  Widget header() => Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          const Spacer(),
+          Expanded(
+            flex: 4,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 10, right: 5),
+              child: CircleAvatar(
+                radius: 32,
+                backgroundImage: CachedNetworkImageProvider(
+                  application == null
+                      ? (job?.companyLogo == null || job!.companyLogo!.isEmpty)
+                          ? url
+                          : (Uri.parse(job!.companyLogo!).isAbsolute ? job!.companyLogo! : url)
+                      : (application!.applicantId?.profileImage == null || application!.applicantId!.profileImage!.isEmpty)
+                          ? url
+                          : ((Uri.parse(application!.applicantId!.profileImage!).isAbsolute
+                              ? application!.applicantId!.profileImage!
+                              : url)),
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 24,
+            child: Row(mainAxisSize: MainAxisSize.max, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 10, left: 5),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      application == null
+                          ? (job!.companyName ?? "Loading ...")
+                          : (application?.jobId?.jobTittle ?? "Loading ..."),
+                      style: const TextStyle(
+                        fontSize: 15,
+                      ),
+                    ),
+                    Text(
+                      application == null ? (job!.jobTittle ?? "Loading ...") : (application?.applicantId?.name ?? "Loading ..."),
+                      style: const TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              job != null
+                  ? bookMark()
+                  : (application!.selectedCandidates ?? false)
+                      ? Container(
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.symmetric(vertical: 2.5, horizontal: 50),
+                          margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 35),
+                          decoration: BoxDecoration(
+                              color: const Color.fromRGBO(255, 255, 255, 1),
+                              borderRadius: BorderRadius.circular(8),
+                              gradient: greenGradient),
+                          child: const Text(
+                            "selected",
+                            style: TextStyle(color: Colors.green),
+                          ),
+                        )
+                      : (application!.interviews2 ?? false)
+                          ? const SizedBox()
+                          : (application!.interviews ?? false)
+                              ? const SizedBox()
+                              : (application!.shortlist ?? false)
+                                  ? Container(
+                                      alignment: Alignment.center,
+                                      padding: const EdgeInsets.symmetric(vertical: 2.5, horizontal: 20),
+                                      margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                                      decoration: BoxDecoration(
+                                          color: const Color.fromRGBO(255, 255, 255, 1),
+                                          borderRadius: BorderRadius.circular(8),
+                                          gradient: greenGradient),
+                                      child: const Text(
+                                        "Shortlisted",
+                                        style: TextStyle(color: Colors.green),
+                                      ),
+                                    )
+                                  : const SizedBox.shrink()
+            ]),
+          ),
+          const Spacer(),
+        ],
+      );
+
   Widget bookMark() => StatefulBuilder(
         builder: (BuildContext context, setState) {
           return Padding(
@@ -309,10 +235,10 @@ class JCard extends StatelessWidget {
                         builder: (BuildContext context) => const CandidateSigin(),
                       ),
                     )
-                  : Cardconnect.saveJob(job!.id!).then((value) =>
-                      value ? setState(() => job!.isSaved = !job!.isSaved!) : debugPrint("issue in save job")),
-              onDoubleTap: () => Cardconnect.saveJob(job!.id!).then(
-                  (value) => value ? setState(() => job!.isSaved = !job!.isSaved!) : debugPrint("issue in save job")),
+                  : Cardconnect.saveJob(job!.id!)
+                      .then((value) => value ? setState(() => job!.isSaved = !job!.isSaved!) : debugPrint("issue in save job")),
+              onDoubleTap: () => Cardconnect.saveJob(job!.id!)
+                  .then((value) => value ? setState(() => job!.isSaved = !job!.isSaved!) : debugPrint("issue in save job")),
               onSecondaryTap: () {},
               child: Align(
                 alignment: Alignment.topLeft,
@@ -343,10 +269,7 @@ class JCard extends StatelessWidget {
               color: Color.fromRGBO(153, 153, 153, 1),
               semanticLabel: "loaction",
             ),
-            Text(
-                application == null
-                    ? (job!.location ?? " Brussels")
-                    : (application?.applicantId?.location ?? "Loading..."),
+            Text(application == null ? (job!.location ?? " Brussels") : (application?.applicantId?.location ?? "Loading..."),
                 style: smallText),
             const Padding(
               padding: EdgeInsets.all(3),
@@ -363,10 +286,7 @@ class JCard extends StatelessWidget {
               color: Color.fromRGBO(153, 153, 153, 1),
               semanticLabel: "loaction",
             ),
-            Text(
-                application == null
-                    ? (job?.timePeriod ?? "Loading...")
-                    : (application?.jobId?.timePeriod ?? "Loading..."),
+            Text(application == null ? (job?.timePeriod ?? "Loading...") : (application?.jobId?.timePeriod ?? "Loading..."),
                 style: smallText),
             const Padding(
               padding: EdgeInsets.all(3),
@@ -433,7 +353,71 @@ class JCard extends StatelessWidget {
         ),
       );
 
-  Widget jobDetail() => Text.rich(
+  Widget pops() => Row(
+        children: [
+          Card(
+              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+              shape: const StadiumBorder(),
+
+              ///     color: const Color.fromRGBO(64, 64, 64, 0.4),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                child: Text(
+                  application == null ? (job!.timePeriod ?? "Short term") : (application!.jobId?.timePeriod ?? "Short term"),
+                  style: mediumText,
+                  maxLines: 1,
+                ),
+              )),
+          const Padding(
+            padding: EdgeInsets.all(3),
+            child: Icon(
+              Icons.radio_button_checked,
+              size: 2,
+              color: Color.fromRGBO(153, 153, 153, 1),
+              semanticLabel: "loaction",
+            ),
+          ),
+          if (job?.availability != null || application?.jobId?.availability != null) ...[
+            Card(
+                margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                shape: const StadiumBorder(),
+                color: const Color.fromRGBO(64, 64, 64, 0.4),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                  child: Text(
+                    application == null ? (job!.availability ?? "Immediate") : (application?.jobId?.availability ?? "Immediate"),
+                    style: mediumText,
+                    maxLines: 1,
+                  ),
+                )),
+          ],
+          const Padding(
+            padding: EdgeInsets.all(3),
+            child: Icon(
+              Icons.radio_button_checked,
+              size: 2,
+              color: Color.fromRGBO(153, 153, 153, 1),
+              semanticLabel: "loaction",
+            ),
+          ),
+          if (job?.jobType != null || application?.jobId?.jobType != null) ...[
+            Card(
+                margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                shape: const StadiumBorder(),
+                //   color:// const Color.fromRGBO(64, 64, 64, 0.4),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                  child: Text(
+                    application == null ? (job?.jobType ?? "Immediate") : (application?.jobId?.jobType ?? "Immediate"),
+                    style: mediumText,
+                    maxLines: 1,
+                  ),
+                )),
+          ]
+        ],
+      );
+
+  Widget detail() => Text.rich(
         TextSpan(
           children: [
             const TextSpan(
@@ -456,7 +440,7 @@ class JCard extends StatelessWidget {
           ],
         ),
       );
-  Widget applicantDetail() => Text.rich(
+  Widget skills() => Text.rich(
         TextSpan(
           children: [
             const TextSpan(
@@ -483,10 +467,10 @@ class JCard extends StatelessWidget {
         return Align(
           alignment: Alignment.bottomRight,
           child: GestureDetector(
-            onTap: () => Cardconnect.applyJob(job!.id!).then(
-                (value) => value ? setState(() => job!.applied = !job!.applied) : debugPrint("issue in save job")),
-            onDoubleTap: () => Cardconnect.applyJob(job!.id!).then(
-                (value) => value ? setState(() => job!.applied = !job!.applied) : debugPrint("issue in save job")),
+            onTap: () => Cardconnect.applyJob(job!.id!)
+                .then((value) => value ? setState(() => job!.applied = !job!.applied) : debugPrint("issue in save job")),
+            onDoubleTap: () => Cardconnect.applyJob(job!.id!)
+                .then((value) => value ? setState(() => job!.applied = !job!.applied) : debugPrint("issue in save job")),
             onSecondaryTap: () {},
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 50),
@@ -742,8 +726,7 @@ class JCard extends StatelessWidget {
                   "----------------------------",
                   maxLines: 1,
                   selectionColor: Colors.pink,
-                  style: TextStyle(
-                      color: (application!.interviews ?? false) ? const Color.fromRGBO(143, 0, 255, 0.5) : null),
+                  style: TextStyle(color: (application!.interviews ?? false) ? const Color.fromRGBO(143, 0, 255, 0.5) : null),
                 )),
             Flexible(
               flex: 2,
@@ -771,8 +754,7 @@ class JCard extends StatelessWidget {
                   "----------------------------",
                   maxLines: 1,
                   selectionColor: Colors.pink,
-                  style: TextStyle(
-                      color: (application!.interviews2 ?? false) ? const Color.fromRGBO(143, 0, 255, 0.5) : null),
+                  style: TextStyle(color: (application!.interviews2 ?? false) ? const Color.fromRGBO(143, 0, 255, 0.5) : null),
                 )),
             Flexible(
               flex: 2,
@@ -801,8 +783,7 @@ class JCard extends StatelessWidget {
                   maxLines: 1,
                   selectionColor: Colors.pink,
                   style: TextStyle(
-                      color:
-                          (application!.selectedCandidates ?? false) ? const Color.fromRGBO(143, 0, 255, 0.5) : null),
+                      color: (application!.selectedCandidates ?? false) ? const Color.fromRGBO(143, 0, 255, 0.5) : null),
                 )),
             Flexible(
               flex: 2,
@@ -913,9 +894,7 @@ class JCard extends StatelessWidget {
                         child: GestureDetector(
                           onTap: () async {
                             timex = await showTimePicker(
-                                    context: context,
-                                    initialTime: TimeOfDay.now(),
-                                    initialEntryMode: TimePickerEntryMode.dial)
+                                    context: context, initialTime: TimeOfDay.now(), initialEntryMode: TimePickerEntryMode.dial)
                                 .whenComplete(() => setState(() {
                                       if (application!.interviews2 ?? false) {
                                         application!.interviews2Time = timex.toString();
