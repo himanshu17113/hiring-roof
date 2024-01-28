@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hiring_roof/controller/get/startcontroller.dart';
 import 'package:hiring_roof/data/shared_pref.dart';
+import 'package:hiring_roof/util/constant/const.dart';
 import 'package:hiring_roof/util/widgets/cards/card.dart';
 import 'package:hiring_roof/util/constant/color.dart';
 import '../sign/siginuser.dart';
@@ -12,8 +13,8 @@ class Home extends StatelessWidget {
   // static StartxController startxController = Get.put(StartxController());
   @override
   Widget build(BuildContext context) {
-    final mediaQueryData = MediaQuery.of(context);
-    final screenSize = mediaQueryData.size;
+  
+    final screenSize = query!.size;
     final bool phone = screenSize.shortestSide < 600 ? true : false;
 
     return Scaffold(

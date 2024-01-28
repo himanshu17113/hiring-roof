@@ -3,6 +3,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:get/state_manager.dart';
 import 'package:hiring_roof/controller/navigation/navcon.dart';
 import 'package:hiring_roof/util/constant/color.dart';
+import 'package:hiring_roof/util/constant/const.dart';
 import 'package:hiring_roof/util/platformdata.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_picker_platform_interface/image_picker_platform_interface.dart';
@@ -28,11 +29,11 @@ class PostJob extends StatelessWidget {
       try {
         final XFile? image = await wpicker.getImageFromSource(
           source: source,
-          options: const ImagePickerOptions(
-              // maxWidth: maxWidth,
-              // maxHeight: maxHeight,
-              // imageQuality: quality,
-              ),
+          // options: const ImagePickerOptions(
+          //     // maxWidth: maxWidth,
+          //     // maxHeight: maxHeight,
+          //     // imageQuality: quality,
+          //     ),
         );
         final List<String?> list = [image?.path.toString(), image?.name.toString()];
 
@@ -46,7 +47,7 @@ class PostJob extends StatelessWidget {
     return null;
   }
 
- static Future<List<String?>> pickwindowsImage() async {
+  static Future<List<String?>> pickwindowsImage() async {
     final ImagePickerPlatform wpicker = ImagePickerPlatform.instance;
 
     List<XFile>? images = await wpicker.getMedia(options: const MediaOptions(allowMultiple: false));
@@ -81,7 +82,7 @@ class PostJob extends StatelessWidget {
     int maxapihit = 3;
     String workingPlace = workingPlaces[0];
     String title = "";
-    String location = "";
+    String location = userModal.userData?.location ?? "";
     String companyName = "";
     String pay = "";
     String payType = payTypes[1];
@@ -162,6 +163,7 @@ class PostJob extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.only(top: 7, bottom: 20),
                                 child: TextField(
+                                    controller: TextEditingController()..text = userModal.userData?.location ?? "",
                                     scribbleEnabled: true,
                                     enableSuggestions: true,
                                     enableInteractiveSelection: true,
@@ -203,6 +205,7 @@ class PostJob extends StatelessWidget {
                                 child: TextField(
                                     scrollPhysics: const ClampingScrollPhysics(),
                                     scrollPadding: EdgeInsets.zero,
+                                    controller: TextEditingController()..text = userModal.userData?.companyName ?? "",
                                     onChanged: (value) => companyName = value,
                                     textAlignVertical: TextAlignVertical.top,
                                     style: inputtextStyle,
@@ -591,36 +594,45 @@ class PostJob extends StatelessWidget {
                             const Text("Upload Company Logo", style: headertextStyle),
                             Padding(
                               padding: const EdgeInsets.only(top: 10, bottom: 20),
-                              child: InkWell(
-                                onTap: () async {
-                                  if (PlatformInfo.isDesktopOS()) {
-                                    List<String?>? l = await onImageButtonPressed(
-                                      ImageSource.gallery,
-                                      context: context,
-                                    );
-                                    path = l![0]!;
-                                    filename = l[1]!;
-                                  } else {
-                                    List<String?> l = await pickImage();
-                                    path = l[0]!;
-                                    filename = l[1]!;
-                                  }
-                                },
-                                child: DottedBorder(
-                                    padding: const EdgeInsets.all(22),
-                                    color: Colors.grey,
-                                    strokeWidth: 1,
-                                    dashPattern: const [8, 8],
-                                    child: const Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.upload,
-                                          color: Colors.grey,
-                                        ),
-                                        Text(" Upload Company Logo", style: TextStyle(color: Colors.grey, fontSize: 16)),
-                                      ],
-                                    )),
+                              child: StatefulBuilder(
+                                builder: (BuildContext context, setState) => InkWell(
+                                  onTap: () async {
+                                    if (PlatformInfo.isDesktopOS()) {
+                                      List<String?>? l = await onImageButtonPressed(
+                                        ImageSource.gallery,
+                                        context: context,
+                                      );
+                                      setState(() {
+                                        path = l![0]!;
+                                        filename = l[1]!;
+                                      });
+                                    } else {
+                                      List<String?> l = await pickImage();
+                                      setState(() {
+                                        path = l[0]!;
+                                        filename = l[1]!;
+                                      });
+                                    }
+                                  },
+                                  child: DottedBorder(
+                                      padding: const EdgeInsets.all(22),
+                                      color: Colors.grey,
+                                      strokeWidth: 1,
+                                      dashPattern: const [8, 8],
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.upload,
+                                            color: path.isEmpty ? Colors.grey : Colors.green,
+                                          ),
+                                          path.isEmpty
+                                              ? const Text(" Upload Company Logo",
+                                                  style: TextStyle(color: Colors.grey, fontSize: 16))
+                                              : const Text(" Uploaded ", style: TextStyle(color: Colors.green, fontSize: 16)),
+                                        ],
+                                      )),
+                                ),
                               ),
                             ),
                             const Padding(
@@ -643,14 +655,14 @@ class PostJob extends StatelessWidget {
                   builder: (controller) => GestureDetector(
                     onTap: () async {
                       while (maxapihit > 1) {
-                        bool reult = await jobPost.postJob(title, location, companyName, pay, jobSummary, knowledge, timePeriod, job, workingPlace, jobType,
-                            companyLogo, availability, payType, path, filename);
+                        bool reult = await jobPost.postJob(title, location, companyName, pay, jobSummary, knowledge, timePeriod,
+                            job, workingPlace, jobType, companyLogo, availability, payType, path, filename);
                         if (reult) {
                           maxapihit--;
-                          controller.pageUpdate(2);
+                          controller.pageUpdate(3);
                           break;
                         } else {
-                       
+                          maxapihit--;
                           // ignore: use_build_context_synchronously
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -658,6 +670,7 @@ class PostJob extends StatelessWidget {
                               behavior: SnackBarBehavior.floating,
                               //  action: SnackBarAction(label: "Copy OTP", onPressed: () => Clipboard.setData(ClipboardData(text: data?.otp?.toString() ?? ""))),
                               content: const Text("Please try again")));
+                          break;
                         }
                       }
                     },
@@ -667,8 +680,10 @@ class PostJob extends StatelessWidget {
                       width: double.maxFinite,
                       padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 50),
                       margin: const EdgeInsets.symmetric(vertical: 00, horizontal: 35),
-                      decoration:
-                          BoxDecoration(color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
+                      decoration: BoxDecoration(
+                          color: const Color.fromRGBO(255, 255, 255, 1),
+                          borderRadius: BorderRadius.circular(8),
+                          gradient: linearGradient),
                       child: const Text(
                         "Upload",
                         style: TextStyle(color: white90),

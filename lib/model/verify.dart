@@ -52,8 +52,7 @@ class UserData {
   String? resume;
   String? companyName;
   String? aboutCompany;
-  int? v;
-  DateTime? updatedAt;
+   DateTime? updatedAt;
 
   UserData({
     this.createdAt,
@@ -71,8 +70,7 @@ class UserData {
     this.resume,
     this.companyName,
     this.aboutCompany,
-    this.v,
-    this.updatedAt,
+     this.updatedAt,
   });
 
   factory UserData.fromJson(String str) => UserData.fromMap(json.decode(str));
@@ -95,8 +93,7 @@ class UserData {
         resume: json["resume"],
         companyName: json["companyName"],
         aboutCompany: json["aboutCompany"],
-        v: json["__v"],
-        updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
+         updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
       );
 
   Map<String, dynamic> toMap() => {
@@ -115,7 +112,6 @@ class UserData {
         "resume": resume,
         "companyName": companyName,
         "aboutCompany": aboutCompany,
-        "__v": v,
-        "updatedAt": updatedAt?.toIso8601String(),
+         "updatedAt": updatedAt?.toIso8601String(),
       };
 }

@@ -3,12 +3,13 @@ import 'package:get/get.dart';
 import 'package:hiring_roof/util/apistring.dart';
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 import '../../model/job.dart';
 
 class StartxController extends GetxController {
-  var client = http.Client();
-  JobModal jobModal = JobModal();
+  static Client client = http.Client();
+  JobModal jobModal = JobModal();   
   List<Job> myjobs = [];
   ScrollController scrollController = ScrollController();
   int page = 1;

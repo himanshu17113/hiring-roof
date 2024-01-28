@@ -1,15 +1,20 @@
 import 'dart:convert';
-
+// ignore: depend_on_referenced_packages
+import 'package:hiring_roof/util/apistring.dart';
+import 'package:http/http.dart' as http;
 import 'package:hiring_roof/model/verify.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../util/constant/const.dart';
 
+late SharedPreferences prefs;
+
 class SharedPref {
-  late final SharedPreferences prefs;
   // Verify verify = Verify();
   init() async {
     prefs = await SharedPreferences.getInstance();
+    await getUser();
+    getuseronline();
   }
 
   // Verify?
@@ -18,21 +23,34 @@ class SharedPref {
     //print(jsonString);
     if (jsonString != null) {
       final jsonMap = jsonDecode(jsonString);
-       //   return
+      //   return
       userModal = Verify.fromJson(jsonMap);
-     }
+    }
 
 //return null;
   }
 
-  saveModel(Verify model) async {
-    prefs = await SharedPreferences.getInstance();
-     String jsonString = jsonEncode(model.toJson());
-     prefs.setString('userRecord', jsonString);
+  saveModel(Verify model) {
+    String jsonString = jsonEncode(model.toJson());
+    prefs.setString('userRecord', jsonString);
   }
-  removeUser()  async {
-    prefs = await SharedPreferences.getInstance();
-   
-    prefs.remove('userRecord' );
+
+  saveModelString(String model) async {
+    prefs.setString('userRecord', model);
+  }
+
+  removeUser() async {
+    prefs.remove('userRecord');
+  }
+
+  getuseronline() async {
+    http.Response response = await http.get(Uri.parse(ApiString.getProfile(userModal.userId!)));
+    if (response.statusCode == 200) {
+      userModal.userData = UserData.fromJson(jsonDecode(response.body)["userRecord"]);
+      saveModel(userModal);
+      return userModal;
+    } else {
+      return null;
+    }
   }
 }

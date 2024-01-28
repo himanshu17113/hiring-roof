@@ -105,66 +105,72 @@ class MyJobAppl extends StatelessWidget {
                         ListView.builder(
                             itemCount: applicationxController.jobApplications!.length + 1,
                             controller: applicationxController.jobApplicationScroll,
-                            itemBuilder: (BuildContext context, int index) => index == applicationxController.jobApplications!.length
-                                ? !applicationxController.endOfjobApplications
-                                    ? const Padding(
-                                        padding: EdgeInsets.all(20),
-                                        child: Center(
-                                          heightFactor: 1,
-                                          widthFactor: 1,
-                                          child: SizedBox(
-                                            height: 35,
-                                            width: 35,
-                                            child: CircularProgressIndicator(
-                                              color: Colors.white,
-                                              strokeWidth: 1.5,
+                            itemBuilder: (BuildContext context, int index) =>
+                                index == applicationxController.jobApplications!.length
+                                    ? !applicationxController.endOfjobApplications
+                                        ? const Padding(
+                                            padding: EdgeInsets.all(20),
+                                            child: Center(
+                                              heightFactor: 1,
+                                              widthFactor: 1,
+                                              child: SizedBox(
+                                                height: 35,
+                                                width: 35,
+                                                child: CircularProgressIndicator(
+                                                  color: Colors.white,
+                                                  strokeWidth: 1.5,
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                        ),
-                                      )
-                                    : const SizedBox()
-                                : JCard(
-                                    application: applicationxController.jobApplications?[index],
-                                    callback: (applicaton) {
-                                      applicationxController.addToShortlist(applicaton, index);
-                                    }
-                                    //   switch (s) {
-                                    //     case "shortlist":
-                                    //       applicationxController.addToShortlist(applicaton);
-                                    //       break;
-                                    //     case "interveiw":
-                                    //       applicationxController.addToInterviewList(applicaton);
-                                    //       break;
-                                    //     default:
-                                    //   }
-                                    // },
-                                    // callback2: (applicaton) {},
-                                    // call: (val) {
-                                    //   applicationxController.addToInterviewList(val);
-                                    // }
-                                    )),
+                                          )
+                                        : const SizedBox()
+                                    : JCard(
+                                        jobApplications: true,
+                                        application: applicationxController.jobApplications?[index],
+                                        callback: (applicaton) {
+                                          applicationxController.addToShortlist(applicaton, index);
+                                        }
+                                        //   switch (s) {
+                                        //     case "shortlist":
+                                        //       applicationxController.addToShortlist(applicaton);
+                                        //       break;
+                                        //     case "interveiw":
+                                        //       applicationxController.addToInterviewList(applicaton);
+                                        //       break;
+                                        //     default:
+                                        //   }
+                                        // },
+                                        // callback2: (applicaton) {},
+                                        // call: (val) {
+                                        //   applicationxController.addToInterviewList(val);
+                                        // }
+                                        )),
                         ListView.builder(
                             itemCount: applicationxController.shortList!.length,
                             controller: applicationxController.shortListScroll,
                             itemBuilder: (BuildContext context, int index) => JCard(
+                                isShortlist: true,
                                 application: applicationxController.shortList?[index],
                                 callback: (applicaton) => applicationxController.addToInterviewList(applicaton, index))),
                         ListView.builder(
                             itemCount: applicationxController.interveiwsList!.length,
                             controller: applicationxController.interveiwScroll,
                             itemBuilder: (BuildContext context, int index) => JCard(
-                                  application: applicationxController.interveiwsList?[index],
-                                )),
+                                isInterveiw: true,
+                                application: applicationxController.interveiwsList?[index],
+                                callback: (applicaton) => applicationxController.addToInterview2List(applicaton, index))),
                         ListView.builder(
                             itemCount: applicationxController.interveiw2List!.length,
                             controller: applicationxController.interveiw2Scroll,
                             itemBuilder: (BuildContext context, int index) => JCard(
-                                  job: applicationxController.interveiw2List?[index].jobId,
-                                )),
+                                isInterveiw2: true,
+                                job: applicationxController.interveiw2List?[index].jobId,
+                                callback: (applicaton) => applicationxController.addToSelected(applicaton, index))),
                         ListView.builder(
                             itemCount: applicationxController.selectedCandidatesList!.length,
                             controller: applicationxController.selectedCandidatesScroll,
                             itemBuilder: (BuildContext context, int index) => JCard(
+                                  isSelected: true,
                                   job: applicationxController.selectedCandidatesList?[index].jobId,
                                 )),
                         ListView.builder(

@@ -88,13 +88,28 @@ class ApplicationxController extends GetxController {
   // }
   addToShortlist(final Application application, final int x) {
     jobApplications!.removeAt(x);
+    application.shortlist = true;
     shortList?.add(application);
     update();
   }
 
   addToInterviewList(Application application, final int x) {
     shortList!.removeAt(x);
+      application.interviews = true;
     interveiwsList?.add(application);
+    update();
+  }
+
+  addToInterview2List(Application application, final int x) {
+    interveiwsList!.removeAt(x);
+    application.interviews2 = true;
+    interveiw2List?.add(application);
+    update();
+  }
+
+  addToSelected(Application application, final int x) {
+    interveiw2List!.removeAt(x);
+    selectedCandidatesList?.add(application);
     update();
   }
 
@@ -112,6 +127,53 @@ class ApplicationxController extends GetxController {
             //   jobApplications = applicationModal!.data!;
             // } else {
             jobApplications?.addAll(applicationModal!.data!);
+            //   }
+            // for (Application application in jobApplications!) {
+            //   if (application.selectedCandidates ?? false) {
+            //     shortList!.add(application);
+            //     interveiw2List!.add(application);
+            //     interveiwsList!.add(application);
+            //     selectedCandidatesList!.add(application);
+            //   } else if (application.interviews2 ?? false) {
+            //     interveiw2List!.add(application);
+            //     interveiwsList!.add(application);
+            //     shortList!.add(application);
+            //   } else if (application.interviews ?? false) {
+            //     interveiwsList!.add(application);
+            //     shortList!.add(application);
+            //   } else if (application.shortlist ?? false) {
+            //     shortList!.add(application);
+            //   }
+            //  }
+            debugPrint(applicationModal?.data?.length.toString() ?? "empty");
+            if ((applicationModal?.data?.length ?? 3) < 4) {
+              endOfjobApplications = true;
+            } else {
+              indexOfjobApplications++;
+            }
+          } else {
+            endOfjobApplications = true;
+          }
+          update();
+        }
+      }
+    }
+  }
+
+  Future<void> getMyPostedApplication() async {
+    debugPrint(userModal.token!);
+    if (!endOfMyPostedJobs) {
+      debugPrint(("${ApiString.getApplication}$indexOfjobApplications"));
+      http.Response response = await client.get(Uri.parse("${ApiString.getpostedjob}$indexOfMyPostedJobs"),
+          headers: {"Authorization": userModal.token!, "Content-Type": "application/json"});
+      if (response.statusCode == 200) {
+        applicationModal = ApplicationModal.fromJson(response.body);
+        if (applicationModal?.data != null) {
+          if (applicationModal!.data!.isNotEmpty) {
+            // if (jobApplications!.isEmpty) {
+            //   jobApplications = applicationModal!.data!;
+            // } else {
+            myPostedJobs?.addAll(applicationModal!.data!);
             //   }
             // for (Application application in jobApplications!) {
             //   if (application.selectedCandidates ?? false) {

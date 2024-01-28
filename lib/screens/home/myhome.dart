@@ -1,6 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hiring_roof/controller/get/jobcontroller.dart';
+import 'package:hiring_roof/screens/Profile/deskbody.dart';
+import 'package:hiring_roof/screens/Profile/mobilebody.dart';
+import 'package:hiring_roof/screens/Profile/profile.dart';
+import 'package:hiring_roof/util/constant/color.dart';
 import 'package:hiring_roof/util/widgets/cards/card.dart';
 import '../../util/constant/const.dart';
 
@@ -9,12 +14,38 @@ class MyHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQueryData = MediaQuery.of(context);
-    screenSize = mediaQueryData.size;
+    screenSize = query!.size;
     phone = screenSize.shortestSide < 400 ? true : false;
     debugPrint("rebuild  ");
     return Scaffold(
         //backgroundColor: black,
+        appBar: AppBar(
+          // flexibleSpace: Column(
+          //   mainAxisAlignment: MainAxisAlignment.end,
+          //   children: [
+          //     TabBar(
+          //       tabs: [...],
+          //     )
+          //   ],
+          // ),
+          actions: [
+            IconButton(onPressed: () {}, icon: const Icon(Icons.notifications)),
+            IconButton(
+                onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Profile(
+                        profileMobileBody: ProfileMobileBody(),
+                        profileDeskBody: ProfileDesk(),
+                      ),
+                    )),
+                icon: CircleAvatar(
+                    backgroundColor: darkestPurple,
+                    backgroundImage: userModal.userData?.profileImage != null && userModal.userData!.profileImage!.isNotEmpty
+                        ? CachedNetworkImageProvider(userModal.userData!.profileImage!)
+                        : null))
+          ],
+        ),
         body: DecoratedBox(
             decoration: const BoxDecoration(
               image: DecorationImage(image: AssetImage("assets/png/Elipse.png"), fit: BoxFit.cover),
@@ -66,26 +97,32 @@ class MyHomeG extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQueryData = MediaQuery.of(context);
-    screenSize = mediaQueryData.size;
+    query = MediaQuery.of(context);
+    screenSize = query!.size;
 
-    final teblet = screenSize.width < 1200 ? true : false;
+    tablet = screenSize.width < 1200 ? true : false;
     debugPrint(screenSize.width.toString());
     return
         // DefaultTabController(
         //   length: 5,
         //  child:
         Scaffold(
-            //    appBar: AppBar(
-            //   flexibleSpace: Column(
-            //     mainAxisAlignment: MainAxisAlignment.end,
-            //     children: [
-            //       TabBar(
-            //         tabs: [...],
-            //       )
-            //     ],
-            //   ),
-            // ),
+            appBar: AppBar(
+              // flexibleSpace: Column(
+              //   mainAxisAlignment: MainAxisAlignment.end,
+              //   children: [
+              //     TabBar(
+              //       tabs: [...],
+              //     )
+              //   ],
+              // ),
+              actions: [
+                IconButton(onPressed: () {}, icon: const Icon(Icons.notifications)),
+                IconButton(
+                    onPressed: () {},
+                    icon: CircleAvatar(backgroundImage: CachedNetworkImageProvider(userModal.userData?.profileImage ?? imgurl)))
+              ],
+            ),
             //backgroundColor: black,
             body: DecoratedBox(
                 decoration: const BoxDecoration(
@@ -100,13 +137,12 @@ class MyHomeG extends StatelessWidget {
                     },
                     //initState: (startxController) {},
                     builder: (jobxController) => GridView.builder(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: teblet ? screenSize.width * .01 : screenSize.width * .02),
+                        padding: EdgeInsets.symmetric(horizontal: tablet ? screenSize.width * .01 : screenSize.width * .02),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
-                            childAspectRatio: 1.4 * screenSize.width * .9 / 900,
-                            crossAxisSpacing: teblet ? screenSize.width * .01 : screenSize.width * .015,
-                            mainAxisSpacing: teblet ? screenSize.width * .01 : screenSize.width * .015),
+                            childAspectRatio: .0014 * screenSize.width,
+                            crossAxisSpacing: tablet ? screenSize.width * .01 : screenSize.width * .0125,
+                            mainAxisSpacing: tablet ? screenSize.width * .01 : screenSize.width * .0125),
                         controller: jobxController.scrollController,
                         itemCount: jobxController.myjobs.length + 1,
                         itemBuilder: (context, index) {

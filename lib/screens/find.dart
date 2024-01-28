@@ -25,6 +25,7 @@ class Find extends StatelessWidget {
         child: GetBuilder<JobxController>(
           autoRemove: true,
           tag: "job",
+          id: "find",
           init: JobxController(),
           initState: (state) {
             state.controller?.scroll();
@@ -58,8 +59,7 @@ class Find extends StatelessWidget {
                             ),
                             TextSpan(
                               text: 'Jobs',
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromRGBO(157, 33, 255, 1)),
+                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromRGBO(157, 33, 255, 1)),
                             ),
                             TextSpan(
                               text: ' For you ',
@@ -78,6 +78,7 @@ class Find extends StatelessWidget {
                       ),
                     ],
                   ),
+
                   bottom: AppBar(
                     toolbarHeight: 100,
                     leadingWidth: 0,
@@ -111,10 +112,11 @@ class Find extends StatelessWidget {
                                       child: Container(
                                         width: 100,
                                         height: 40,
+                                        margin: const EdgeInsets.only(right: 4),
                                         alignment: Alignment.center,
                                         decoration: BoxDecoration(
                                             color: const Color.fromRGBO(255, 255, 255, 1),
-                                            borderRadius: BorderRadius.circular(8),
+                                            borderRadius: BorderRadius.circular(10),
                                             gradient: linearGradient),
                                         child: const Text(
                                           "Apply",
@@ -124,36 +126,42 @@ class Find extends StatelessWidget {
                                     ),
                                   ),
                                   contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 4),
-                                  border: const OutlineInputBorder(borderSide: BorderSide.none))),
+                                  border:
+                                      OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.circular(10)))),
                           SizedBox(
                               height: 50,
                               child: ListView.builder(
-                                shrinkWrap: true,
+                                //   shrinkWrap: true,
+
                                 itemCount: categories.length,
                                 scrollDirection: Axis.horizontal,
-                                itemBuilder: (context, index) => Container(
-                                  //  height: 20,
-                                  margin: const EdgeInsets.fromLTRB(5, 10, 5, 2),
-                                  padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 2),
-                                  alignment: Alignment.center,
-                                  decoration: const ShapeDecoration(
-                                    shape: StadiumBorder(),
-                                    gradient: LinearGradient(
-                                      // begin: Alignment(-0.245, 0.969), // Approximates 97.16 degrees
-                                      // end: Alignment(-0.754, -0.655), // Approximates 236.98 degrees
-                                      // colors: [
-                                      //   Color(0xFF8F00FF),
-                                      //   Color(0xFFFFFFFF),
-                                      // ],
-                                      // stops: [0.0979, 0.23698], // Adjust stops as needed
-                                      colors: [Color.fromRGBO(143, 0, 255, 1), Color.fromRGBO(184, 94, 255, 1)],
-                                      // stops: [0.4, 1],
-                                      //   center: Alignment.bottomLeft,
+                                itemBuilder: (context, index) => GestureDetector(
+                                  onTap: () => jobxController.selecteCategories(index),
+                                  child: Container(
+                                    margin: const EdgeInsets.fromLTRB(5, 10, 5, 2),
+                                    padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 2),
+                                    alignment: Alignment.center,
+                                    decoration: ShapeDecoration(
+                                      shape: const StadiumBorder(),
+                                      gradient: LinearGradient(
+                                        // begin: Alignment(-0.245, 0.969), // Approximates 97.16 degrees
+                                        // end: Alignment(-0.754, -0.655), // Approximates 236.98 degrees
+                                        // colors: [
+                                        //   Color(0xFF8F00FF),
+                                        //   Color(0xFFFFFFFF),
+                                        // ],
+                                        // stops: [0.0979, 0.23698], // Adjust stops as needed
+                                        colors: jobxController.selectedCategories[index]
+                                            ? [const Color.fromRGBO(143, 0, 255, 1), const Color.fromRGBO(184, 94, 255, 1)]
+                                            : [const Color.fromRGBO(33, 33, 33, 0.75), const Color.fromRGBO(50, 50, 50, 0.65)],
+                                        // stops: [0.4, 1],
+                                        //   center: Alignment.bottomLeft,
+                                      ),
                                     ),
-                                  ),
-                                  child: Text(
-                                    categories[index],
-                                    style: const TextStyle(fontSize: 12.5, color: white),
+                                    child: Text(
+                                      categories[index],
+                                      style: const TextStyle(fontSize: 12.5, color: white),
+                                    ),
                                   ),
                                 ),
                               )),

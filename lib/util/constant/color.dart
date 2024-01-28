@@ -10,41 +10,46 @@ const Color white80 = Color.fromRGBO(255, 255, 255, 0.8);
 const Color white90 = Color.fromRGBO(255, 255, 255, 0.9);
 const Color black = Color(0xFF000000);
 const Color black12 = Color(0x30000000);
-Color vsdark = const Color.fromRGBO(35, 39, 46, 1);
+const Color vsdark = Color.fromRGBO(35, 39, 46, 1);
 
-Color vsheaderdark = const Color.fromARGB(255, 30, 34, 39);
+const Color vsheaderdark = Color.fromARGB(255, 30, 34, 39);
 const Color errorColor = Color.fromRGBO(207, 102, 121, 1);
 
-Color purple = const Color.fromRGBO(199, 156, 252, 1);
+const Color purple = Color.fromRGBO(199, 156, 252, 1);
 
-Color lightDark = const Color.fromRGBO(39, 39, 39, 1);
+const Color lightDark = Color.fromRGBO(39, 39, 39, 1);
 
-Color baseDarkBG = const Color.fromRGBO(41, 41, 41, 1);
+const Color baseDarkBG = Color.fromRGBO(41, 41, 41, 1);
 
-Color headerDarkBG = const Color.fromRGBO(45, 45, 45, 1);
+const Color headerDarkBG = Color.fromRGBO(45, 45, 45, 1);
 
-Color lightPurple = const Color.fromRGBO(234, 128, 252, 1);
+const Color lightPurple = Color.fromRGBO(234, 128, 252, 1);
+const Color darkestPurple = Color(0xFF4D3D75);
 
-Color darkPurple = const Color.fromRGBO(187, 134, 252, 1);
+const Color darkPurple = Color.fromRGBO(187, 134, 252, 1);
 
-Color darkGrey = const Color.fromRGBO(18, 18, 18, 1);
+const Color darkGrey = Color.fromRGBO(18, 18, 18, 1);
 
-Color softdarkGrey = const Color.fromRGBO(60, 64, 66, 1);
+const Color softdarkGrey = Color.fromRGBO(60, 64, 66, 1);
 
-Color bluedarkGrey = const Color.fromRGBO(67, 71, 84, 1);
+const Color bluedarkGrey = Color.fromRGBO(67, 71, 84, 1);
 
-Color scaffoldBackgroundColor = const Color(0xFF343541);
+const Color scaffoldBackgroundColor = Color(0xFF343541);
 
-Color cardColor = const Color(0xFF444654);
-Color orchidColor = const Color(0xFFDA70D6);
-Color mediumPurpel = const Color(0xFF9370DB);
-const LinearGradient linearGradient = LinearGradient(
+const Color cardColor = Color(0xFF444654);
+
+const Color orchidColor = Color(0xFFDA70D6);
+
+const mediumPurpel = Color(0xFF9370DB);
+const LinearGradient linearGradient = LinearGradient(begin: Alignment.bottomLeft, end: Alignment.topRight, colors: [
+  Color.fromRGBO(111, 22, 190, 1),
+  Color.fromRGBO(186, 98, 255, 1),
+]);
+const LinearGradient appliedG = LinearGradient(
     begin: Alignment.bottomLeft,
     end: Alignment.topRight,
-    colors: [
-      Color.fromRGBO(111, 22, 190, 1),
-      Color.fromRGBO(186, 98, 255, 1),
-    ]);
+    colors: [Color.fromRGBO(0, 255, 240, 0.1), Color.fromRGBO(0, 255, 240, 0.12)]);
+
 const LinearGradient linearGradienst = LinearGradient(
     transform: GradientRotation(7),
     colors: [

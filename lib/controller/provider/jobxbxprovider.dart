@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:hiring_roof/model/job.dart';
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 import '../../util/apistring.dart';
 
 class StartProvidr extends ChangeNotifier {
-  var client = http.Client();
+  static Client client = http.Client();
   JobModal jobModal = JobModal();
   JobModal get getjobModal => jobModal;
   List<Job> myjobs = [];
@@ -23,7 +24,7 @@ class StartProvidr extends ChangeNotifier {
 //  Future<JobModal?>
   getMyJobs() async {
     debugPrint("api hit");
-    http.Response response = await http.get(
+    http.Response response = await client.get(
       Uri.parse(ApiString.allJobs),
       headers: {"Content-Type": "application/json"},
     );

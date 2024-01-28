@@ -5,6 +5,9 @@ import 'package:hiring_roof/controller/connect/authconnect.dart';
 import 'package:hiring_roof/controller/get/jobcontroller.dart';
 import 'package:hiring_roof/controller/get/startcontroller.dart';
 import 'package:hiring_roof/data/shared_pref.dart';
+import 'package:hiring_roof/screens/Profile/deskbody.dart';
+import 'package:hiring_roof/screens/Profile/mobilebody.dart';
+import 'package:hiring_roof/screens/Profile/profile.dart';
 import 'package:hiring_roof/util/constant/const.dart';
 import 'package:hiring_roof/util/widgets/bottom/bottom.dart';
 import 'package:hiring_roof/util/widgets/bottom/ubottom.dart';
@@ -85,9 +88,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
               onSubmit: (String verificationCode) {
                 verification = verificationCode;
                 if (widget.otp.toString() == verificationCode) {
-                  userProvider
-                      .verifey(widget.phoneNo, widget.otp, widget.isFirstTime, widget.isJobseeker)
-                      .then((response) {
+                  userProvider.verifey(widget.phoneNo, widget.otp, widget.isFirstTime, widget.isJobseeker).then((response) {
                     debugPrint(response.statusCode.toString());
                     if (response.statusCode == 200) {
                       userModal = response.body!;
@@ -96,7 +97,14 @@ class _VerificationScreenState extends State<VerificationScreen> {
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => widget.isJobseeker ? const UNav() : const ReqNav(),
+                            builder: (context) => widget.isFirstTime
+                                ? const Profile(
+                                    profileMobileBody: ProfileMobileBody(),
+                                    profileDeskBody: ProfileDesk(),
+                                  )
+                                : widget.isJobseeker
+                                    ? const UNav()
+                                    : const ReqNav(),
                           ),
                           ((route) => false));
                     }
@@ -119,9 +127,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
               child: GestureDetector(
                 onTap: () {
                   if (widget.otp.toString() == verification) {
-                    userProvider
-                        .verifey(widget.phoneNo, widget.otp, widget.isFirstTime, widget.isJobseeker)
-                        .then((response) {
+                    userProvider.verifey(widget.phoneNo, widget.otp, widget.isFirstTime, widget.isJobseeker).then((response) {
                       debugPrint(response.statusCode.toString());
                       if (response.statusCode == 200) {
                         sharedPref.saveModel(response.body!);
@@ -149,9 +155,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
             CustomButton(
               onPressed: () {
                 if (widget.otp.toString() == verification) {
-                  userProvider
-                      .verifey(widget.phoneNo, widget.otp, widget.isFirstTime, widget.isJobseeker)
-                      .then((response) {
+                  userProvider.verifey(widget.phoneNo, widget.otp, widget.isFirstTime, widget.isJobseeker).then((response) {
                     debugPrint(response.statusCode.toString());
                     if (response.statusCode == 200) {
                       Navigator.popUntil(context, (route) => false);

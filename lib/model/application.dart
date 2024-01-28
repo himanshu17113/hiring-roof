@@ -57,7 +57,7 @@ class Application {
   String? interviews2Time;
   final DateTime? createdAt;
   final DateTime? updatedAt;
-  bool rejected;
+  bool? rejected;
   bool shortlistsubmit;
   bool interveiwlistsubmit;
 
@@ -80,7 +80,7 @@ class Application {
       this.updatedAt,
       this.shortlistsubmit = false,
       this.interveiwlistsubmit = false,
-      this.rejected = false,
+      this.rejected ,// = false,
       this.interveiwselect = false});
 
   factory Application.fromJson(String str) => Application.fromMap(json.decode(str));

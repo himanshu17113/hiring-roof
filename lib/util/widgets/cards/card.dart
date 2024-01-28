@@ -12,8 +12,15 @@ import '../../constant/color.dart';
 
 class JCard extends StatelessWidget {
   final Job? job;
+  final Map<String, bool>? jobMap;
   final Application? application;
   final bool isEmployer;
+  final bool jobApplications;
+  final bool isShortlist;
+  final bool isInterveiw;
+  final bool isInterveiw2;
+  final bool isSelected;
+  final String? aplicant;
   final Function(Application applicaton)? callback;
   JCard({
     super.key,
@@ -21,6 +28,13 @@ class JCard extends StatelessWidget {
     this.application,
     this.callback,
     this.isEmployer = true,
+    this.jobMap,
+    this.jobApplications = false,
+    this.isShortlist = false,
+    this.isInterveiw = false,
+    this.isInterveiw2 = false,
+    this.isSelected = false,
+    this.aplicant,
   });
   static TextStyle smallText = const TextStyle(fontSize: 11.5, color: Color.fromRGBO(153, 153, 153, 1));
   static TextStyle mediumText = const TextStyle(fontSize: 12.5, color: Color.fromRGBO(102, 102, 102, 1));
@@ -89,21 +103,25 @@ class JCard extends StatelessWidget {
                     detail(),
                     skills(),
                     application == null || !isEmployer
-                        ? apply()
+                        ? jobMap == null
+                            ? apply()
+                            : Align(alignment: Alignment.bottomRight, child: myJob(jobMap!))
                         : const Text(
                             "Apply For",
                             style: textStyle,
                           ),
-                    if (application != null) ...[applicationData()]
+                    if (application != null && isEmployer) ...[applicationData()]
                   ],
                 ),
               )
             ],
           ),
-          if (application != null && isEmployer) ...[
-            if ((application!.shortlist ?? false) ||
-                (application!.interviews ?? false) ||
-                (application!.interviews2 ?? false)) ...[progress()],
+          if (application != null && isEmployer && !jobApplications) ...[
+            // if ((application!.shortlist ?? false) ||
+            //     (application!.interviews ?? false) ||
+            //     (application!.interviews2 ?? false)) ...[
+            progress()
+            //],
           ],
           if (application != null && isEmployer) ...[
             if ((((application!.shortlist ?? false) &&
@@ -112,18 +130,7 @@ class JCard extends StatelessWidget {
                     ((application!.interviews2Date!.isEmpty) || (application!.interviews2Time!.isEmpty))) ...[
               (((application!.shortlist ?? false) && application!.shortlistsubmit && !(application!.interviews ?? true)) ||
                       (application!.interviews ?? false) && application!.interveiwlistsubmit)
-                  ? Container(
-                      padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 35),
-                      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 50),
-                      decoration: BoxDecoration(
-                          color: const Color.fromRGBO(255, 255, 255, 1),
-                          borderRadius: BorderRadius.circular(8),
-                          gradient: linearGradient),
-                      child: const Text(
-                        "Submited",
-                        style: TextStyle(color: white70),
-                      ),
-                    )
+                  ? submitted()
                   : scheduleInterveiw()
             ]
           ],
@@ -201,21 +208,27 @@ class JCard extends StatelessWidget {
                       : (application!.interviews2 ?? false)
                           ? const SizedBox()
                           : (application!.interviews ?? false)
-                              ? const SizedBox()
-                              : (application!.shortlist ?? false)
-                                  ? Container(
-                                      alignment: Alignment.center,
-                                      padding: const EdgeInsets.symmetric(vertical: 2.5, horizontal: 20),
-                                      margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                                      decoration: BoxDecoration(
-                                          color: const Color.fromRGBO(255, 255, 255, 1),
-                                          borderRadius: BorderRadius.circular(8),
-                                          gradient: greenGradient),
-                                      child: const Text(
-                                        "Shortlisted",
-                                        style: TextStyle(color: Colors.green),
-                                      ),
+                              ? (application!.interviewsDate != null &&
+                                      application!.interviewsDate != null &&
+                                      application!.interviewsDate!.isNotEmpty)
+                                  ? Row(
+                                      children: [
+                                        const Text(
+                                          "Interview :",
+                                          style: TextStyle(
+                                            fontSize: 12.5,
+                                            color: Color.fromRGBO(160, 160, 160, 1),
+                                          ),
+                                        ),
+                                        Container(
+                                          decoration: const BoxDecoration(gradient: linearGradient),
+                                          child: Text("${application!.interviewsDate},${application!.interviewsTime}"),
+                                        )
+                                      ],
                                     )
+                                  : const SizedBox.shrink()
+                              : (application!.shortlist ?? false)
+                                  ? shortlisted()
                                   : const SizedBox.shrink()
             ]),
           ),
@@ -475,13 +488,11 @@ class JCard extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 50),
               margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 35),
-              decoration: BoxDecoration(
-                  color: const Color.fromRGBO(255, 255, 255, 1),
-                  borderRadius: BorderRadius.circular(8),
-                  gradient: linearGradient),
+              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8), gradient: linearGradient),
               child: Text(
-                job!.applied ? "applied" : "Apply",
-                style: const TextStyle(color: white70),
+                job!.applied ? "Applied" : "Apply",
+                style: const TextStyle(color: white80),
+                // const Color.fromRGBO( 3, 216, 229, 1)),
               ),
             ),
           ),
@@ -534,163 +545,51 @@ class JCard extends StatelessWidget {
                 ],
               ),
             ),
-            if (application != null) ...[
-              !(application?.shortlist ?? false)
-                  ? StatefulBuilder(
-                      builder: (BuildContext context, setState) => application!.rejected
-                          ? Expanded(
-                              flex: 6,
-                              child: Container(
-                                alignment: Alignment.center,
-                                padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 50),
-                                margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 35),
-                                decoration: BoxDecoration(
-                                    color: const Color.fromRGBO(255, 255, 255, 1),
-                                    borderRadius: BorderRadius.circular(8),
-                                    gradient: redGradient),
-                                child: const Text(
-                                  "Not Selected",
-                                  style: TextStyle(color: Colors.red),
-                                ),
+            StatefulBuilder(
+                builder: (BuildContext context, setState) => application!.rejected != null
+                    ? application!.rejected!
+                        ? Expanded(
+                            flex: 6,
+                            child: notSelected(),
+                          )
+                        : Expanded(flex: 5, child: jobApplications ? shortlisted() : selected())
+                    : Expanded(
+                        flex: 6,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            const Spacer(),
+                            Expanded(
+                              flex: 8,
+                              child: GestureDetector(
+                                  onTap: () {
+                                    setState(() => application!.rejected = false);
+                                    DoUpdate.doShortlist(
+                                            application!.id!, jobApplications, isShortlist, isInterveiw, isInterveiw2)
+                                        .whenComplete(() {
+                                      application!.rejected = null;
+                                      callback!(application!);
+                                    });
+                                  },
+                                  child: jobApplications ? shortlist() : select()),
+                            ),
+                            const Spacer(),
+                            Expanded(
+                              flex: 8,
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() => application!.rejected = true);
+                                  DoUpdate.doNotShortlist(application!.id!).whenComplete(() {
+                                    //  application!.rejected = null;
+                                  });
+                                },
+                                child: notSelect(),
                               ),
-                            )
-                          : (application!.shortlist ?? false)
-                              ? Expanded(
-                                  flex: 5,
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 5),
-                                    margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 35),
-                                    decoration: BoxDecoration(
-                                        color: const Color.fromRGBO(255, 255, 255, 1),
-                                        borderRadius: BorderRadius.circular(8),
-                                        gradient: greenGradient),
-                                    child: const Text(
-                                      "Shortlisted",
-                                      style: TextStyle(color: Colors.green),
-                                    ),
-                                  ),
-                                )
-                              : application!.interveiwselect
-                                  ? Expanded(
-                                      flex: 6,
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                        children: [
-                                          const Spacer(),
-                                          Expanded(
-                                            flex: 8,
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                setState(() => application!.interveiwselect = true);
-                                              },
-                                              child: Container(
-                                                alignment: Alignment.center,
-                                                padding: const EdgeInsets.symmetric(
-                                                  vertical: 7.5,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                    color: const Color.fromRGBO(255, 255, 255, 1),
-                                                    borderRadius: BorderRadius.circular(8),
-                                                    gradient: greenGradient),
-                                                child: const Text(
-                                                  "Select",
-                                                  style: TextStyle(color: Colors.green),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          const Spacer(),
-                                          Expanded(
-                                            flex: 8,
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                setState(() => application!.rejected = true);
-                                              },
-                                              child: Container(
-                                                alignment: Alignment.center,
-                                                padding: const EdgeInsets.symmetric(
-                                                  vertical: 7.5,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                    color: const Color.fromRGBO(255, 255, 255, 1),
-                                                    borderRadius: BorderRadius.circular(8),
-                                                    gradient: redGradient),
-                                                child: const Text(
-                                                  "Not Select",
-                                                  style: TextStyle(color: Colors.redAccent),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          const Spacer(),
-                                        ],
-                                      ),
-                                    )
-                                  : Expanded(
-                                      flex: 6,
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                        children: [
-                                          const Spacer(),
-                                          Expanded(
-                                            flex: 8,
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                DoUpdate.doShortlist(application!.id!).whenComplete(() {
-                                                  setState(() => application!.shortlist = true);
-                                                });
-                                                callback!(application!);
-                                              },
-                                              child: Container(
-                                                alignment: Alignment.center,
-                                                padding: const EdgeInsets.symmetric(
-                                                  vertical: 7.5,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                    color: const Color.fromRGBO(255, 255, 255, 1),
-                                                    borderRadius: BorderRadius.circular(8),
-                                                    gradient: greenGradient),
-                                                child: const Text(
-                                                  "Short-list",
-                                                  style: TextStyle(color: Colors.green),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          const Spacer(),
-                                          Expanded(
-                                            flex: 8,
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                DoUpdate.doNotShortlist(application!.id!).whenComplete(() {
-                                                  setState(() => application!.rejected = true);
-                                                });
-                                              },
-                                              child: Container(
-                                                alignment: Alignment.center,
-                                                padding: const EdgeInsets.symmetric(
-                                                  vertical: 7.5,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                    color: const Color.fromRGBO(255, 255, 255, 1),
-                                                    borderRadius: BorderRadius.circular(8),
-                                                    gradient: redGradient),
-                                                child: const Text(
-                                                  "Not Select",
-                                                  style: TextStyle(color: Colors.redAccent),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          const Spacer(),
-                                        ],
-                                      ),
-                                    ))
-                  : const Spacer(
-                      flex: 6,
-                    )
-            ]
+                            ),
+                            const Spacer(),
+                          ],
+                        ),
+                      ))
           ],
         ),
       );
@@ -930,14 +829,14 @@ class JCard extends StatelessWidget {
                       alignment: Alignment.bottomRight,
                       child: GestureDetector(
                         onTap: () {
-                          DoUpdate.doShortlist(application!.id!).whenComplete(() {
-                            setState(() {
-                              // application!.shortlist = false;
-                              callback!(application!);
-                              application!.shortlistsubmit = true;
-                              application!.interviews = true;
-                            });
-                          });
+                          // DoUpdate.doShortlist(application!.id!).whenComplete(() {
+                          //   setState(() {
+                          //     // application!.shortlist = false;
+                          //     callback!(application!);
+                          //     application!.shortlistsubmit = true;
+                          //     application!.interviews = true;
+                          //   });
+                          // });
                         },
                         onSecondaryTap: () {},
                         child: Container(
@@ -961,5 +860,109 @@ class JCard extends StatelessWidget {
         );
       }),
     );
+  }
+
+  Widget shortlisted() => Container(
+        alignment: Alignment.center,
+        padding: const EdgeInsets.symmetric(vertical: 6.5, horizontal: 13),
+        margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 35),
+        decoration: BoxDecoration(
+            color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: greenGradient),
+        child: const Text(
+          "Shortlisted",
+          style: TextStyle(color: Colors.green),
+        ),
+      );
+  Widget notSelect() => Container(
+        alignment: Alignment.center,
+        padding: const EdgeInsets.symmetric(
+          vertical: 7.5,
+        ),
+        decoration: BoxDecoration(
+            color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: redGradient),
+        child: const Text(
+          "Not Select",
+          style: TextStyle(color: Colors.redAccent),
+        ),
+      );
+  Widget notSelected() => Container(
+        alignment: Alignment.center,
+        padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 50),
+        margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 35),
+        decoration: BoxDecoration(
+            color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: redGradient),
+        child: const Text(
+          "Not Selected",
+          style: TextStyle(color: Colors.red),
+        ),
+      );
+  Widget select() => Container(
+        alignment: Alignment.center,
+        padding: const EdgeInsets.symmetric(
+          vertical: 7.5,
+        ),
+        decoration: BoxDecoration(
+            color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: greenGradient),
+        child: const Text(
+          "Select",
+          style: TextStyle(color: Colors.green),
+        ),
+      );
+  Widget selected() => Container(
+        alignment: Alignment.center,
+        padding: const EdgeInsets.symmetric(
+          vertical: 7.5,
+        ),
+        decoration: BoxDecoration(
+            color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: greenGradient),
+        child: const Text(
+          "Selected",
+          style: TextStyle(color: Colors.green),
+        ),
+      );
+  Widget shortlist() => Container(
+        alignment: Alignment.center,
+        padding: const EdgeInsets.symmetric(
+          vertical: 7.5,
+        ),
+        decoration: BoxDecoration(
+            color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: greenGradient),
+        child: const Text(
+          "Short-list",
+          style: TextStyle(color: Colors.green),
+        ),
+      );
+
+  Widget applied() => Container(
+        width: 200,
+        alignment: Alignment.center,
+        padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 10),
+        margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 35),
+        decoration: BoxDecoration(
+            color: const Color.fromRGBO(0, 255, 240, 0.9), borderRadius: BorderRadius.circular(8), gradient: appliedG),
+        child: const Text(
+          "Applied",
+          style: TextStyle(color: Color.fromRGBO(3, 216, 229, 1)),
+        ),
+      );
+  Widget submitted() => Container(
+        padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 35),
+        margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 50),
+        decoration: BoxDecoration(
+            color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
+        child: const Text(
+          "Submited",
+          style: TextStyle(color: white70),
+        ),
+      );
+  Widget myJob(Map<String, bool> map) {
+    switch (map.keys.first) {
+      case "Applied":
+        return map.values.first ? notSelect() : applied();
+      case "Shortlist":
+        return map.values.first ? notSelect() : shortlisted();
+      default:
+        return const SizedBox.shrink();
+    }
   }
 }

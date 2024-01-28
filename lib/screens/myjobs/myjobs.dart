@@ -3,16 +3,17 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hiring_roof/controller/get/jobseeker_application_controller.dart';
 import 'package:hiring_roof/util/constant/color.dart';
+import 'package:hiring_roof/util/constant/const.dart';
 import 'package:hiring_roof/util/widgets/cards/card.dart';
-import 'package:hiring_roof/util/widgets/cards/jcard.dart';
 
 class MyJobs extends StatelessWidget {
-  const MyJobs({super.key});
-
+  final bool isGrid;
+  const MyJobs({super.key, this.isGrid = false});
   @override
   Widget build(BuildContext context) {
     debugPrint("MyJobs -- page created");
-
+    query = MediaQuery.of(context);
+    screenSize = query!.size;
     return DefaultTabController(
         length: 6,
         child: Scaffold(
@@ -75,31 +76,161 @@ class MyJobs extends StatelessWidget {
               image: DecorationImage(image: AssetImage("assets/png/botomElipse.png"), fit: BoxFit.fill),
             ),
             child: GetBuilder<MyJobsxController>(
-              init: MyJobsxController(),
-              initState: (_) {},
-              builder: (control) => TabBarView(
-                children: [
-                  ListView.builder(
-                      itemCount: control.saved?.length,
-                      itemBuilder: (BuildContext context, int index) => JCard(
-                            job: control.saved?[index],
-                            isEmployer: false,
-                          )),
-                  ListView.builder(
-                      itemCount: control.applied?.length,
-                      itemBuilder: (BuildContext context, int index) => JCard(
-                            job: control.applied?[index].jobId,
-                            application: control.applied?[index],
-                            isEmployer: false,
-                          )),
-                  ListView.builder(itemCount: 12, itemBuilder: (BuildContext context, int index) => const CJCard()),
-                  ListView.builder(itemCount: 9, itemBuilder: (BuildContext context, int index) => const CJCard()),
-                  ListView.builder(itemCount: 9, itemBuilder: (BuildContext context, int index) => const CJCard()),
-                  ListView.builder(itemCount: 9, itemBuilder: (BuildContext context, int index) => const CJCard()),
-                ],
-              ),
-            ),
+                init: MyJobsxController(),
+                //  initState: (_) {},
+                builder: (control) => !isGrid ? list(control) : grid(control)),
           ),
         ));
   }
+
+  Widget list(MyJobsxController control) => TabBarView(
+        children: [
+          //saved
+          ListView.builder(
+              itemCount: control.saved?.length,
+              itemBuilder: (BuildContext context, int index) => JCard(
+                    job: control.saved?[index],
+                    isEmployer: false,
+                  )),
+          // applied
+          ListView.builder(
+              itemCount: control.applied?.length,
+              itemBuilder: (BuildContext context, int index) => JCard(
+                    job: control.applied?[index].jobId,
+                    jobMap: {"Applied": control.applied?[index].selectedCandidates ?? false},
+                    // application: control.applied?[index],
+                    isEmployer: false,
+                  )),
+          // shortlist
+          ListView.builder(
+              itemCount: control.shortList?.length,
+              itemBuilder: (BuildContext context, int index) => JCard(
+                    job: control.shortList?[index].jobId,
+                    jobMap: {"Shortlist": control.shortList?[index].shortlist ?? false},
+                    // application: control.applied?[index],
+                    isEmployer: false,
+                  )),
+          // interveiw
+          ListView.builder(
+              itemCount: control.interveiwsList?.length,
+              itemBuilder: (BuildContext context, int index) => JCard(
+                    job: control.interveiwsList?[index].jobId,
+                    jobMap: {"Interveiw": control.interveiwsList?[index].interveiwselect ?? false},
+                    // application: control.applied?[index],
+                    isEmployer: false,
+                  )),
+          // interveiw2
+
+          ListView.builder(
+              itemCount: control.interveiw2List?.length,
+              itemBuilder: (BuildContext context, int index) => JCard(
+                    job: control.interveiw2List?[index].jobId,
+                    jobMap: {"Interveiw2": control.interveiw2List?[index].interviews2 ?? false},
+                    // application: control.applied?[index],
+                    isEmployer: false,
+                  )),
+          // result
+          ListView.builder(
+              itemCount: control.results?.length,
+              itemBuilder: (BuildContext context, int index) => JCard(
+                    job: control.results?[index].jobId,
+                    jobMap: {"Result": control.results?[index].rejected ?? false},
+                    // application: control.applied?[index],
+                    isEmployer: false,
+                  )),
+        ],
+      );
+  Widget grid(MyJobsxController control) => TabBarView(
+        children: [
+          //saved
+          GridView.builder(
+              padding: EdgeInsets.symmetric(horizontal: tablet ? screenSize.width * .01 : screenSize.width * .02),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: tablet ? 0.0015 * screenSize.width : 0.0014 * screenSize.width,
+                  crossAxisSpacing: tablet ? screenSize.width * .01 : screenSize.width * .015,
+                  mainAxisSpacing: tablet ? screenSize.width * .01 : screenSize.width * .015),
+              itemCount: control.saved?.length,
+              itemBuilder: (BuildContext context, int index) => JCard(
+                    job: control.saved?[index],
+                    isEmployer: false,
+                  )),
+          // applied
+          GridView.builder(
+              padding: EdgeInsets.symmetric(horizontal: tablet ? screenSize.width * .01 : screenSize.width * .02),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 1.4 * screenSize.width * .9 / 900,
+                  crossAxisSpacing: tablet ? screenSize.width * .01 : screenSize.width * .015,
+                  mainAxisSpacing: tablet ? screenSize.width * .01 : screenSize.width * .015),
+              itemCount: control.applied?.length,
+              itemBuilder: (BuildContext context, int index) => JCard(
+                    job: control.applied?[index].jobId,
+                    jobMap: {"Applied": control.applied?[index].selectedCandidates ?? false},
+                    // application: control.applied?[index],
+                    isEmployer: false,
+                  )),
+          // shortlist
+          GridView.builder(
+              padding: EdgeInsets.symmetric(horizontal: tablet ? screenSize.width * .01 : screenSize.width * .02),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 1.4 * screenSize.width * .9 / 900,
+                  crossAxisSpacing: tablet ? screenSize.width * .01 : screenSize.width * .015,
+                  mainAxisSpacing: tablet ? screenSize.width * .01 : screenSize.width * .015),
+              itemCount: control.shortList?.length,
+              itemBuilder: (BuildContext context, int index) => JCard(
+                    job: control.shortList?[index].jobId,
+                    jobMap: {"Shortlist": control.shortList?[index].shortlist ?? false},
+                    // application: control.applied?[index],
+                    isEmployer: false,
+                  )),
+          // interveiw
+          GridView.builder(
+              padding: EdgeInsets.symmetric(horizontal: tablet ? screenSize.width * .01 : screenSize.width * .02),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 1.4 * screenSize.width * .9 / 900,
+                  crossAxisSpacing: tablet ? screenSize.width * .01 : screenSize.width * .015,
+                  mainAxisSpacing: tablet ? screenSize.width * .01 : screenSize.width * .015),
+              itemCount: control.interveiwsList?.length,
+              itemBuilder: (BuildContext context, int index) => JCard(
+                    job: control.interveiwsList?[index].jobId,
+                    jobMap: {"Interveiw": control.interveiwsList?[index].interveiwselect ?? false},
+                    // application: control.applied?[index],
+                    isEmployer: false,
+                  )),
+          // interveiw2
+
+          GridView.builder(
+              padding: EdgeInsets.symmetric(horizontal: tablet ? screenSize.width * .01 : screenSize.width * .02),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 1.4 * screenSize.width * .9 / 900,
+                  crossAxisSpacing: tablet ? screenSize.width * .01 : screenSize.width * .015,
+                  mainAxisSpacing: tablet ? screenSize.width * .01 : screenSize.width * .015),
+              itemCount: control.interveiw2List?.length,
+              itemBuilder: (BuildContext context, int index) => JCard(
+                    job: control.interveiw2List?[index].jobId,
+                    jobMap: {"Interveiw2": control.interveiw2List?[index].interviews2 ?? false},
+                    // application: control.applied?[index],
+                    isEmployer: false,
+                  )),
+          // result
+          GridView.builder(
+              padding: EdgeInsets.symmetric(horizontal: tablet ? screenSize.width * .01 : screenSize.width * .02),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 1.4 * screenSize.width * .9 / 900,
+                  crossAxisSpacing: tablet ? screenSize.width * .01 : screenSize.width * .015,
+                  mainAxisSpacing: tablet ? screenSize.width * .01 : screenSize.width * .015),
+              itemCount: control.results?.length,
+              itemBuilder: (BuildContext context, int index) => JCard(
+                    job: control.results?[index].jobId,
+                    jobMap: {"Result": control.results?[index].rejected ?? false},
+                    // application: control.applied?[index],
+                    isEmployer: false,
+                  )),
+        ],
+      );
 }

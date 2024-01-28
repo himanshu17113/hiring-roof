@@ -3,6 +3,9 @@ class ApiString {
   //Auth
   static String signin = "$baseUrl/api/user/login/";
   static String verify = "$baseUrl/api/user/verify/";
+  static String updateProfile(final String id) => "$baseUrl/api/user/update/$id";
+  static String getProfile(final String id) => "$baseUrl/api/user/$id";
+
   //jobs
   static String myJobs = "$baseUrl/api/job/myJobs";
   static String allJobs = "$baseUrl/api/job/all";
@@ -20,6 +23,8 @@ class ApiString {
   static String getinterviewslist = "$baseUrl/api/jobApplication/get-interviews-list/";
   static String getinterviews2list = "$baseUrl/api/jobApplication//get-interviews-2-list/";
   static String getselectedcandidates = "$baseUrl/api/jobApplication/get-selected-candidates/";
+
+  static String getpostedjob = "$baseUrl/api/jobApplication/get/";
   //put
   static String doShortlist = "$baseUrl/api/jobApplication/shortlist/";
   static String doNotSelect = "$baseUrl/api/jobApplication/not-selected/";
@@ -34,7 +39,7 @@ class ApiString {
   static String getSaved = "$baseUrl/api/save/get";
   static String getApplications = "$baseUrl/api/jobApplication/job-seeker/get-applications-list/";
   static String getShortlisted = "$baseUrl/api/jobApplication/job-seeker/get-shortlist/";
-  static String getCandidateinterviews  = "$baseUrl/api/jobApplication/job-seeker/get-interviews-list/";
-  static String get2Candidateinterviews  = "$baseUrl/api/jobApplication/job-seeker/get-interviews-2-list/";
+  static String getCandidateinterviews = "$baseUrl/api/jobApplication/job-seeker/get-interviews-list/";
+  static String get2Candidateinterviews = "$baseUrl/api/jobApplication/job-seeker/get-interviews-2-list/";
   static String getselectedCompany = "$baseUrl/api/jobApplication/job-seeker/get-selected-candidates/";
 }

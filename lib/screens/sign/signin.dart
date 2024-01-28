@@ -125,8 +125,7 @@ class _SiginState extends State<Sigin> with SingleTickerProviderStateMixin {
                 GestureDetector(
                   onTap: () => setState(() => isCandidate = !isCandidate),
                   child: Padding(
-                    padding: EdgeInsets.only(
-                        top: 40, right: 12, bottom: MediaQuery.of(context).viewPadding.top + size.width * .15),
+                    padding: EdgeInsets.only(top: 40, right: 12, bottom: query!.viewPadding.top + size.width * .15),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -274,8 +273,7 @@ class _SiginState extends State<Sigin> with SingleTickerProviderStateMixin {
                                 behavior: SnackBarBehavior.floating,
                                 action: SnackBarAction(
                                     label: "Copy OTP",
-                                    onPressed: () =>
-                                        Clipboard.setData(ClipboardData(text: data?.otp?.toString() ?? ""))),
+                                    onPressed: () => Clipboard.setData(ClipboardData(text: data?.otp?.toString() ?? ""))),
                                 content: Text(data?.otp.toString() ?? "Did not get the Otp try again")))
                             : NotificationService.showNotification(
                                 title: "Hiring Roof Otp",

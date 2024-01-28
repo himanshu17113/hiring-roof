@@ -10,8 +10,13 @@ import '../../../controller/navigation/navcon.dart';
 class UNav extends StatelessWidget {
   const UNav({super.key});
   static const screens = [MyHome(), Find(), MyJobs()];
-  static const screensG = [MyHomeG(), Find(), MyJobs()];
-  static const List<NavigationDestination> destinations = <NavigationDestination>[
+  static const screensG = [
+    MyHomeG(),
+    Find(),
+    MyJobs(
+      isGrid: true,
+    )
+  ];  static const List<NavigationDestination> destinations = <NavigationDestination>[
     NavigationDestination(
       selectedIcon: Icon(Icons.home),
       icon: Icon(Icons.home_outlined),
@@ -28,6 +33,7 @@ class UNav extends StatelessWidget {
       label: 'Saved',
     ),
   ];
+
 //  static GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {

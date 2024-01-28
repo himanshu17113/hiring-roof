@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:hiring_roof/util/apistring.dart';
 import 'package:hiring_roof/util/constant/const.dart';
 // ignore: depend_on_referenced_packages
@@ -17,12 +18,12 @@ class Cardconnect {
   }
 
   static Future<bool> applyJob(String id) async {
-    print("${ApiString.apply}$id");
+    debugPrint("${ApiString.apply}$id");
     final http.Response response = await http.post(
       Uri.parse("${ApiString.apply}$id"),
       headers: {"Authorization": userModal.token!, "Content-Type": "application/json"},
     );
-    print(response.body);
+    debugPrint(response.body.toString());
     if (response.statusCode == 200) {
       return true;
     } else {
