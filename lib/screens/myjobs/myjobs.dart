@@ -1,7 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hiring_roof/controller/get/jobseeker_application_controller.dart';
+import 'package:hiring_roof/screens/Profile/deskbody.dart';
+import 'package:hiring_roof/screens/Profile/mobilebody.dart';
+import 'package:hiring_roof/screens/Profile/profile.dart';
 import 'package:hiring_roof/util/constant/color.dart';
 import 'package:hiring_roof/util/constant/const.dart';
 import 'package:hiring_roof/util/widgets/cards/card.dart';
@@ -27,6 +31,23 @@ class MyJobs extends StatelessWidget {
             toolbarOpacity: 0.1,
             bottomOpacity: 1,
             centerTitle: false,
+            actions: [
+              IconButton(onPressed: () {}, icon: const Icon(Icons.notifications)),
+              IconButton(
+                  onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Profile(
+                          profileMobileBody: ProfileMobileBody(),
+                          profileDeskBody: ProfileDesk(),
+                        ),
+                      )),
+                  icon: CircleAvatar(
+                      backgroundColor: darkestPurple,
+                      backgroundImage: userModal.userData?.profileImage != null && userModal.userData!.profileImage!.isNotEmpty
+                          ? CachedNetworkImageProvider(userModal.userData!.profileImage!)
+                          : null))
+            ],
             title: const Text.rich(
               TextSpan(
                 children: [
@@ -46,7 +67,7 @@ class MyJobs extends StatelessWidget {
               ),
             ),
             titleTextStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-            elevation: 20,
+            elevation: 0.5,
             bottom: const TabBar(
               splashBorderRadius: BorderRadius.all(Radius.circular(33)),
               dividerColor: black,
@@ -134,7 +155,7 @@ class MyJobs extends StatelessWidget {
               itemCount: control.results?.length,
               itemBuilder: (BuildContext context, int index) => JCard(
                     job: control.results?[index].jobId,
-                    jobMap: {"Result": control.results?[index].rejected ?? false},
+                    jobMap: {"Result": control.results?[index].selectedCandidates ?? false},
                     // application: control.applied?[index],
                     isEmployer: false,
                   )),

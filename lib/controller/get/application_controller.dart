@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:hiring_roof/model/application.dart';
+import 'package:hiring_roof/model/job.dart';
 import 'package:hiring_roof/util/apistring.dart';
 import 'package:hiring_roof/util/constant/const.dart';
 import 'package:http/http.dart' as http;
@@ -11,7 +14,7 @@ class ApplicationxController extends GetxController {
 
   ApplicationModal? applicationModal;
   //List of data
-  List<Application>? myPostedJobs = [];
+  List<Job>? myPostedJobs = [];
   List<Application>? jobApplications = [];
   List<Application>? shortList = [];
   List<Application>? interveiwsList = [];
@@ -46,6 +49,7 @@ class ApplicationxController extends GetxController {
     getInterveiws();
     getInterveiws2();
     getCandidates();
+    getMyPostedApplication();
     jobApplicationScroll.addListener(() {
       // if (jobApplicationScroll.) getMyapplication();
       if (jobApplicationScroll.position.pixels == jobApplicationScroll.position.maxScrollExtent &&
@@ -95,7 +99,7 @@ class ApplicationxController extends GetxController {
 
   addToInterviewList(Application application, final int x) {
     shortList!.removeAt(x);
-      application.interviews = true;
+    application.interviews = true;
     interveiwsList?.add(application);
     update();
   }
@@ -109,6 +113,7 @@ class ApplicationxController extends GetxController {
 
   addToSelected(Application application, final int x) {
     interveiw2List!.removeAt(x);
+    application.selectedCandidates = true;
     selectedCandidatesList?.add(application);
     update();
   }
@@ -163,17 +168,17 @@ class ApplicationxController extends GetxController {
   Future<void> getMyPostedApplication() async {
     debugPrint(userModal.token!);
     if (!endOfMyPostedJobs) {
-      debugPrint(("${ApiString.getApplication}$indexOfjobApplications"));
-      http.Response response = await client.get(Uri.parse("${ApiString.getpostedjob}$indexOfMyPostedJobs"),
+      debugPrint(("${ApiString.myJobs}$indexOfjobApplications"));
+      http.Response response = await client.get(Uri.parse("${ApiString.myJobs}$indexOfMyPostedJobs"),
           headers: {"Authorization": userModal.token!, "Content-Type": "application/json"});
       if (response.statusCode == 200) {
-        applicationModal = ApplicationModal.fromJson(response.body);
-        if (applicationModal?.data != null) {
-          if (applicationModal!.data!.isNotEmpty) {
+        JobModal? jobModal = JobModal.fromRawJson(response.body);
+        if (jobModal.jobs != null) {
+          if (jobModal.jobs!.isNotEmpty) {
             // if (jobApplications!.isEmpty) {
             //   jobApplications = applicationModal!.data!;
             // } else {
-            myPostedJobs?.addAll(applicationModal!.data!);
+            myPostedJobs?.addAll(jobModal.jobs!);
             //   }
             // for (Application application in jobApplications!) {
             //   if (application.selectedCandidates ?? false) {

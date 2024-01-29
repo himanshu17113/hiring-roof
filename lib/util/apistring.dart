@@ -7,7 +7,7 @@ class ApiString {
   static String getProfile(final String id) => "$baseUrl/api/user/$id";
 
   //jobs
-  static String myJobs = "$baseUrl/api/job/myJobs";
+  static String myJobs = "$baseUrl/api/job/myJobs/";
   static String allJobs = "$baseUrl/api/job/all";
   static String getJobs = "$baseUrl/api/job/all-after-login";
   //search

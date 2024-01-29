@@ -27,7 +27,9 @@ class JobModal {
         jobCount: json["jobCount"],
         pageCount: json["pageCount"],
         currentPage: json["currentPage"],
-        jobs: json["jobs"] == null ? [] : List<Job>.from(json["jobs"]!.map((x) => Job.fromJson(x))),
+        jobs: json["jobs"] == null ? json["data"] == null
+                ? []
+                : List<Job>.from(json["data"]!.map((x) => Job.fromJson(x))) : List<Job>.from(json["jobs"]!.map((x) => Job.fromJson(x))),
       );
   factory JobModal.fromjsonwithuserId(Map<String, dynamic> json) => JobModal(
         status: json["status"],

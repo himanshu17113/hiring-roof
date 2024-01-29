@@ -102,15 +102,26 @@ class JCard extends StatelessWidget {
                     pops(),
                     detail(),
                     skills(),
-                    application == null || !isEmployer
-                        ? jobMap == null
-                            ? apply()
-                            : Align(alignment: Alignment.bottomRight, child: myJob(jobMap!))
-                        : const Text(
-                            "Apply For",
-                            style: textStyle,
-                          ),
-                    if (application != null && isEmployer) ...[applicationData()]
+                    if (!isSelected) ...[
+                      application == null || !isEmployer
+                          ? jobMap == null
+                              ? !isjobSeeker
+                                  ? const SizedBox(
+                                      height: 20,
+                                    )
+                                  : apply()
+                              : Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    child: myJob(jobMap!),
+                                  ))
+                          : const Text(
+                              "Apply For",
+                              style: textStyle,
+                            ),
+                      if (application != null && isEmployer) ...[applicationData()],
+                    ]
                   ],
                 ),
               )
@@ -123,7 +134,7 @@ class JCard extends StatelessWidget {
             progress()
             //],
           ],
-          if (application != null && isEmployer) ...[
+          if (application != null && isEmployer && !isSelected && !jobApplications) ...[
             if ((((application!.shortlist ?? false) &&
                     ((application!.interviewsDate!.isEmpty) && (application!.interviewsTime!.isEmpty)))) ||
                 (application!.interviews ?? false) &&
@@ -174,14 +185,14 @@ class JCard extends StatelessWidget {
                   children: [
                     Text(
                       application == null
-                          ? (job!.companyName ?? "Loading ...")
+                          ? (job?.companyName ?? "Loading ...")
                           : (application?.jobId?.jobTittle ?? "Loading ..."),
                       style: const TextStyle(
                         fontSize: 15,
                       ),
                     ),
                     Text(
-                      application == null ? (job!.jobTittle ?? "Loading ...") : (application?.applicantId?.name ?? "Loading ..."),
+                      application == null ? (job?.jobTittle ?? "Loading ...") : (application?.applicantId?.name ?? "Loading ..."),
                       style: const TextStyle(
                         fontSize: 18,
                       ),
@@ -887,7 +898,8 @@ class JCard extends StatelessWidget {
       );
   Widget notSelected() => Container(
         alignment: Alignment.center,
-        padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 50),
+        width: 200,
+        padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 30),
         margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 35),
         decoration: BoxDecoration(
             color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: redGradient),
@@ -958,11 +970,16 @@ class JCard extends StatelessWidget {
   Widget myJob(Map<String, bool> map) {
     switch (map.keys.first) {
       case "Applied":
-        return map.values.first ? notSelect() : applied();
+        return map.values.first ? notSelected() : applied();
       case "Shortlist":
-        return map.values.first ? notSelect() : shortlisted();
+        return map.values.first ? notSelected() : shortlisted();
+      //   case "Interveiw":
+      // return map.values.first ? notSelect() : shortlisted();
+
       default:
-        return const SizedBox.shrink();
+        return const SizedBox(
+          height: 20,
+        );
     }
   }
 }

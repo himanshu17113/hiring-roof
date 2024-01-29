@@ -5,7 +5,9 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hiring_roof/controller/get/profile_controller.dart';
- import 'package:hiring_roof/util/constant/color.dart';
+import 'package:hiring_roof/data/shared_pref.dart';
+import 'package:hiring_roof/main.dart';
+import 'package:hiring_roof/util/constant/color.dart';
 import 'package:hiring_roof/util/constant/const.dart';
 import 'package:hiring_roof/util/widgets/bottom/rbottom.dart';
 import 'package:hiring_roof/util/widgets/bottom/ubottom.dart';
@@ -541,6 +543,28 @@ class ProfileMobileBody extends StatelessWidget {
                               style: TextStyle(color: white70),
                             ),
                     )),
+              ),
+              GestureDetector(
+                onTap: () {
+                  SharedPref().removeUser();
+                  Navigator.pushAndRemoveUntil(
+                      context, MaterialPageRoute(builder: (context) => const MyApp()), ((route) => false));
+                },
+                child: Container(
+                  height: 45,
+                  alignment: Alignment.center,
+                  width: double.maxFinite,
+                  padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 50),
+                  margin: EdgeInsets.only(left: 35, right: 35, top: userModal.userType == "jobSeeker" ? 15 : 50),
+                  decoration: BoxDecoration(
+                      color: const Color.fromRGBO(255, 255, 255, 1),
+                      borderRadius: BorderRadius.circular(8),
+                      gradient: redGradient),
+                  child: const Text(
+                    "Log out",
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ),
               )
             ],
           ),

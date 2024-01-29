@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     query = MediaQuery.of(context);
     screenSize = query!.size;
+    isjobSeeker = userModal.userType == "jobSeeker";
     tablet = screenSize.width < 1200 ? true : false;
     debugPrint(userModal.userId);
     return MaterialApp(
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
       theme: MaterialTheme.light(),
       home: userModal.userId == null
           ? const Sigin()
-          : userModal.userType == "jobSeeker"
+          : isjobSeeker
               ? const UNav()
               : const ReqNav(),
     );

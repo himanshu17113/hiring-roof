@@ -41,6 +41,7 @@ class SharedPref {
 
   removeUser() async {
     prefs.remove('userRecord');
+    userModal = Verify();
   }
 
   getuseronline() async {

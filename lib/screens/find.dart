@@ -1,6 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hiring_roof/controller/get/jobcontroller.dart';
+import 'package:hiring_roof/screens/Profile/deskbody.dart';
+import 'package:hiring_roof/screens/Profile/mobilebody.dart';
+import 'package:hiring_roof/screens/Profile/profile.dart';
+import 'package:hiring_roof/util/constant/const.dart';
 import 'package:hiring_roof/util/widgets/cards/card.dart';
 import 'package:hiring_roof/util/constant/color.dart';
 
@@ -17,7 +22,6 @@ class Find extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //   backgroundColor: black,
       body: DecoratedBox(
         decoration: const BoxDecoration(
           image: DecorationImage(image: AssetImage("assets/png/botomElipse.png"), fit: BoxFit.fill),
@@ -36,6 +40,24 @@ class Find extends StatelessWidget {
               slivers: [
                 SliverAppBar(
                   leadingWidth: 0,
+                  actions: [
+                    IconButton(onPressed: () {}, icon: const Icon(Icons.notifications)),
+                    IconButton(
+                        onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Profile(
+                                profileMobileBody: ProfileMobileBody(),
+                                profileDeskBody: ProfileDesk(),
+                              ),
+                            )),
+                        icon: CircleAvatar(
+                            backgroundColor: darkestPurple,
+                            backgroundImage:
+                                userModal.userData?.profileImage != null && userModal.userData!.profileImage!.isNotEmpty
+                                    ? CachedNetworkImageProvider(userModal.userData!.profileImage!)
+                                    : null))
+                  ],
                   leading: const SizedBox.shrink(),
                   //     backgroundColor: const Color.fromARGB(240, 0, 0, 0),
                   floating: true,

@@ -1,7 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:hiring_roof/screens/Profile/deskbody.dart';
+import 'package:hiring_roof/screens/Profile/mobilebody.dart';
+import 'package:hiring_roof/screens/Profile/profile.dart';
 import 'package:hiring_roof/util/constant/color.dart';
+import 'package:hiring_roof/util/constant/const.dart';
 import 'package:hiring_roof/util/widgets/cards/card.dart';
 import '../../controller/get/application_controller.dart';
 
@@ -15,9 +19,30 @@ class MyJobAppl extends StatelessWidget {
       child: Scaffold(
           backgroundColor: black,
           appBar: AppBar(
-            systemOverlayStyle: SystemUiOverlayStyle.dark,
-            shadowColor: Colors.purple.withOpacity(0.15),
-            backgroundColor: black12,
+            actions: [
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.notifications),
+                color: Colors.white,
+              ),
+              IconButton(
+                  onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Profile(
+                          profileMobileBody: ProfileMobileBody(),
+                          profileDeskBody: ProfileDesk(),
+                        ),
+                      )),
+                  icon: CircleAvatar(
+                      backgroundColor: darkestPurple,
+                      backgroundImage: userModal.userData?.profileImage != null && userModal.userData!.profileImage!.isNotEmpty
+                          ? CachedNetworkImageProvider(userModal.userData!.profileImage!)
+                          : null))
+            ],
+            //   systemOverlayStyle: SystemUiOverlayStyle.dark,
+            shadowColor: const Color.fromARGB(10, 155, 39, 176),
+            //    backgroundColor: black12,
             automaticallyImplyLeading: true,
             surfaceTintColor: black12,
             toolbarOpacity: 0.1,
@@ -150,6 +175,7 @@ class MyJobAppl extends StatelessWidget {
                             controller: applicationxController.shortListScroll,
                             itemBuilder: (BuildContext context, int index) => JCard(
                                 isShortlist: true,
+                                isEmployer: true,
                                 application: applicationxController.shortList?[index],
                                 callback: (applicaton) => applicationxController.addToInterviewList(applicaton, index))),
                         ListView.builder(
@@ -164,20 +190,21 @@ class MyJobAppl extends StatelessWidget {
                             controller: applicationxController.interveiw2Scroll,
                             itemBuilder: (BuildContext context, int index) => JCard(
                                 isInterveiw2: true,
-                                job: applicationxController.interveiw2List?[index].jobId,
+                                application: applicationxController.interveiw2List?[index],
                                 callback: (applicaton) => applicationxController.addToSelected(applicaton, index))),
                         ListView.builder(
                             itemCount: applicationxController.selectedCandidatesList!.length,
                             controller: applicationxController.selectedCandidatesScroll,
                             itemBuilder: (BuildContext context, int index) => JCard(
                                   isSelected: true,
-                                  job: applicationxController.selectedCandidatesList?[index].jobId,
+                                  application: applicationxController.selectedCandidatesList?[index],
                                 )),
                         ListView.builder(
                             itemCount: applicationxController.myPostedJobs?.length,
                             controller: applicationxController.myPostedJobsScroll,
                             itemBuilder: (BuildContext context, int index) => JCard(
-                                  job: applicationxController.myPostedJobs?[index].jobId,
+                              
+                                  job: applicationxController.myPostedJobs?[index],
                                 )),
                       ],
                     );
