@@ -79,7 +79,7 @@ class MyJobsxController extends GetxController {
           .get(Uri.parse(ApiString.getsave), headers: {"Authorization": userModal.token!, "Content-Type": "application/json"});
       if (response.statusCode == 200) {
         log(response.body.toString());
-        final JobModal jobModal = JobModal.fromjsonwithuserId(jsonDecode(response.body));
+        final JobModal jobModal = JobModal.fromJson(jsonDecode(response.body));
         if (jobModal.jobs != null) {
           if (jobModal.jobs!.isNotEmpty) {
             saved?.addAll(jobModal.jobs!);

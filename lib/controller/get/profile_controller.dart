@@ -8,14 +8,21 @@ import 'package:hiring_roof/data/shared_pref.dart';
 import 'package:hiring_roof/model/verify.dart';
 import 'package:hiring_roof/util/apistring.dart';
 import 'package:hiring_roof/util/constant/const.dart';
- 
+
 import 'package:http/http.dart';
 
 import 'package:image_picker/image_picker.dart';
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
-
+ 
 class ProfileController extends GetxController {
+  @override
+  void onClose() {
+    disposeTextEditingController();
+    super.onClose();
+  }
+
+  RxString videopath = RxString('');
   // final Verify userModal;
   //  ProfileController(this.userModal);
   static Client client = http.Client();
@@ -24,7 +31,7 @@ class ProfileController extends GetxController {
 
   final TextEditingController name = TextEditingController(text: userModal.userData?.name ?? "");
   final TextEditingController phone = TextEditingController(text: userModal.userData?.phone ?? "");
-  final TextEditingController skill = TextEditingController(text: userModal.userData?.skills ?? "");
+  final TextEditingController skill = TextEditingController(text: userModal.userData?.skills.toString() ?? "");
   final TextEditingController email = TextEditingController(text: userModal.userData?.email ?? "");
   final TextEditingController experience = TextEditingController(text: userModal.userData?.experience ?? "");
   final TextEditingController currentPay = TextEditingController(text: userModal.userData?.currentPay ?? "");
@@ -45,11 +52,48 @@ class ProfileController extends GetxController {
     // .whenComplete(() => update(["profilePic"]));
   }
 
+  disposeTextEditingController() {
+    name.clear();
+
+    phone.clear();
+    skill.clear();
+    email.clear();
+    experience.clear();
+    currentPay.clear();
+    expectedPay.clear();
+    location.clear();
+    companyName.clear();
+    aboutCompany.clear();
+  }
+
   Future<File?> document() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.any);
 
     if (result != null) {
       return File(result.files.single.path!);
+    } else {
+      // User canceled the picker
+    }
+    return null;
+    // .whenComplete(() => update(["profilePic"]));
+  }
+
+  Future<File?> video() async {
+    final FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      return File(result.files.single.path!);
+    } else {
+      // User canceled the picker
+    }
+    return null;
+    // .whenComplete(() => update(["profilePic"]));
+  }
+
+  Future videopathx() async {
+    final result = await ImagePicker().pickVideo(source: ImageSource.gallery);
+    if (result != null) {
+      videopath.value = (result.path);
     } else {
       // User canceled the picker
     }
@@ -79,6 +123,7 @@ class ProfileController extends GetxController {
         await http.MultipartFile.fromPath('profileImage', profilePic.path, filename: profilePic.name));
     request.files.addIf(resumeFile.path.isNotEmpty,
         await http.MultipartFile.fromPath('resume', resumeFile.path, filename: resumeFile.path.split('/').last.split(".").first));
+    await http.MultipartFile.fromPath('videoUrl', videopath.string, filename: videopath.string.split('/').last.split(".").first);
   }
 
   Future<bool> updateProfil() async {
@@ -102,12 +147,23 @@ class ProfileController extends GetxController {
         ));
     request.fields.addAll(payload);
     request.headers.addAll({"Authorization": userModal.token!});
+
     if (profilePic.path.isNotEmpty) {
       request.files.add(await http.MultipartFile.fromPath('profileImage', profilePic.path, filename: profilePic.name));
     }
     if (resumeFile.uri.path.isNotEmpty) {
       request.files.add(await http.MultipartFile.fromPath('resume', resumeFile.path,
           filename: resumeFile.path.split('/').last.split(".").first));
+    }
+    if (videopath.string.isNotEmpty) {
+      debugPrint(videopath.value);
+      request.files.add(await http.MultipartFile.fromPath(
+        'videoUrl',
+        videopath.value,
+        filename: videopath.value.split('/').last.split(".").first,
+      ));
+    } else {
+      debugPrint('no video');
     }
     var multipartResponse = await request.send();
     isUploading.value = false;

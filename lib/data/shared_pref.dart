@@ -1,6 +1,6 @@
 import 'dart:convert';
 // ignore: depend_on_referenced_packages
-import 'package:hiring_roof/util/apistring.dart';
+ import 'package:hiring_roof/util/apistring.dart';
 import 'package:http/http.dart' as http;
 import 'package:hiring_roof/model/verify.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,7 +14,9 @@ class SharedPref {
   init() async {
     prefs = await SharedPreferences.getInstance();
     await getUser();
-    getuseronline();
+    if (userModal.userId != null) {
+      getuseronline();
+    }
   }
 
   // Verify?
@@ -40,8 +42,11 @@ class SharedPref {
   }
 
   removeUser() async {
-    prefs.remove('userRecord');
+    prefs.clear();
+
+    // prefs.remove('userRecord');
     userModal = Verify();
+  //  debugPrint (userModal.phone ?? 'nullinphonone');
   }
 
   getuseronline() async {

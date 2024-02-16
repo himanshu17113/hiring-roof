@@ -17,18 +17,19 @@ class ProfileMobileBody extends StatelessWidget {
   const ProfileMobileBody({super.key});
   static const TextStyle headertextStyle = TextStyle(
     fontSize: 13,
-    color: white,
+    //color: white,
   );
   static const TextStyle inputtextStyle = TextStyle(
     fontSize: 15,
-    color: white,
+    // color: white,
   );
 
-  static ProfileController controller = Get.put(ProfileController());
   static const InputDecoration inputDecoration =
       InputDecoration(contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 4), border: OutlineInputBorder());
   @override
   Widget build(BuildContext context) {
+    final ProfileController controller = Get.put(ProfileController());
+
     return SafeArea(
       child: DecoratedBox(
         decoration: const BoxDecoration(
@@ -348,6 +349,66 @@ class ProfileMobileBody extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            const Text("Add your video ", style: headertextStyle),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10, bottom: 20),
+                              child: InkWell(
+                                onTap: () async => await controller.videopathx(),
+                                child: Obx(() => ColoredBox(
+                                      color: controller.videopath.isEmpty
+                                          ? const Color.fromRGBO(175, 73, 255, 0.08)
+                                          : const Color.fromRGBO(5, 255, 5, 0.08),
+                                      child: DottedBorder(
+                                        padding: const EdgeInsets.all(22),
+                                        color: Colors.grey,
+                                        strokeWidth: 1,
+                                        dashPattern: const [8, 8],
+                                        child: controller.videopath.isEmpty
+                                            ? const Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Icon(
+                                                    Icons.upload_rounded,
+                                                    color: Color.fromRGBO(122, 25, 200, 1),
+                                                  ),
+                                                  Text(" Upload Video",
+                                                      style: TextStyle(color: Color.fromRGBO(122, 25, 200, 1), fontSize: 16)),
+                                                ],
+                                              )
+                                            : const Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Icon(
+                                                    Icons.upload_file_outlined,
+                                                    color: Colors.greenAccent,
+                                                  ),
+                                                  Text(" Uploaded ",
+                                                      style: TextStyle(color: Color.fromRGBO(61, 235, 61, 1), fontSize: 18)),
+                                                ],
+                                              ),
+                                      ),
+                                    )),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Spacer(),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 15),
+                  child: Row(
+                    children: [
+                      const Spacer(),
+                      Expanded(
+                        flex: 32,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
                             const Text("Add your Resume ", style: headertextStyle),
                             const Padding(
                               padding: EdgeInsets.only(top: 8.0),
@@ -546,6 +607,9 @@ class ProfileMobileBody extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
+                  controller.disposeTextEditingController();
+                  controller.dispose();
+                  Get.deleteAll();
                   SharedPref().removeUser();
                   Navigator.pushAndRemoveUntil(
                       context, MaterialPageRoute(builder: (context) => const MyApp()), ((route) => false));

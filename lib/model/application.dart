@@ -80,7 +80,7 @@ class Application {
       this.updatedAt,
       this.shortlistsubmit = false,
       this.interveiwlistsubmit = false,
-      this.rejected ,// = false,
+      this.rejected, // = false,
       this.interveiwselect = false});
 
   factory Application.fromJson(String str) => Application.fromMap(json.decode(str));
@@ -131,7 +131,9 @@ class ApplicantId {
   final String? location;
   final String? currentPay;
   final String? expectationPay;
-  final String? skills;
+  final dynamic
+      // List<dynamic>?
+      skills;
   final String? experience;
   // String? companyName;
   // String? aboutCompany;

@@ -365,18 +365,15 @@ class MaterialTheme {
                 : darkScheme().surfaceContainerHighest.withOpacity(0.8),
             filled: true),
         //   searchBarTheme:   SearchBarThemeData(backgroundColor: Colors.amber),
-        textTheme: const TextTheme().apply(
-          bodyColor: colorScheme.onSurface,
-          displayColor: colorScheme.onSurface,
-        ),
-        scaffoldBackgroundColor: colorScheme.background,
+        textTheme: const TextTheme()
+            .apply(bodyColor: colorScheme.onSurface, displayColor: colorScheme.onSurface, decorationColor: colorScheme.onSurface,),
+        //  f7eef3
+        scaffoldBackgroundColor: isLight ? lightScheme().surfaceContainerHighest : darkScheme().surfaceContainerLowest,
         canvasColor: colorScheme.surface,
         cardTheme: CardTheme(
           // shadowColor: //isLight ?
           //  colorScheme.secondaryContainer.withOpacity(0.4),
-          color: isLight
-              ? lightScheme().surfaceContainer.withOpacity(0.8)
-              : darkScheme().surfaceContainer.withOpacity(0.8),
+          color: isLight ? lightScheme().surfaceContainer.withOpacity(0.7) : darkScheme().surfaceContainer.withOpacity(0.7),
         ),
         //  cardColor: Theme.of(context).colorScheme.secondaryContainer.withOpacity(0.5),
       );

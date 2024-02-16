@@ -49,7 +49,12 @@ const LinearGradient appliedG = LinearGradient(
     begin: Alignment.bottomLeft,
     end: Alignment.topRight,
     colors: [Color.fromRGBO(0, 255, 240, 0.1), Color.fromRGBO(0, 255, 240, 0.12)]);
-
+const checkgrey = Color.fromRGBO(180, 170, 200, 0.3);
+const circle = Color.fromRGBO(143, 0, 255, 0.5);
+const backCircle = Color.fromRGBO(143, 0, 255, 0.15);
+const circlegrey = Color.fromRGBO(126, 126, 126, 0.3);
+const backCirclegrey = Color.fromRGBO(126, 126, 126, 0.15);
+const check = Colors.white;
 const LinearGradient linearGradienst = LinearGradient(
     transform: GradientRotation(7),
     colors: [

@@ -21,7 +21,6 @@ void main() async {
   final SharedPref sharedPref = SharedPref();
   await sharedPref.init();
   //sharedPref.removeUser();
-
   await NotificationService.init();
 
   runApp(const MyApp());
@@ -42,7 +41,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       themeMode: ThemeMode.system,
       darkTheme: MaterialTheme.dark(),
-      theme: MaterialTheme.light(),
+      theme: MaterialTheme.dark(),
       home: userModal.userId == null
           ? const Sigin()
           : isjobSeeker

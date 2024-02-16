@@ -98,6 +98,7 @@ class MyJobs extends StatelessWidget {
             ),
             child: GetBuilder<MyJobsxController>(
                 init: MyJobsxController(),
+                autoRemove: false,
                 //  initState: (_) {},
                 builder: (control) => !isGrid ? list(control) : grid(control)),
           ),
@@ -137,6 +138,8 @@ class MyJobs extends StatelessWidget {
               itemBuilder: (BuildContext context, int index) => JCard(
                     job: control.interveiwsList?[index].jobId,
                     jobMap: {"Interveiw": control.interveiwsList?[index].interveiwselect ?? false},
+                    interviewDate: control.interveiwsList?[index].interviewsDate,
+                    interviewTime: control.interveiwsList?[index].interviewsTime,
                     // application: control.applied?[index],
                     isEmployer: false,
                   )),
@@ -146,6 +149,8 @@ class MyJobs extends StatelessWidget {
               itemCount: control.interveiw2List?.length,
               itemBuilder: (BuildContext context, int index) => JCard(
                     job: control.interveiw2List?[index].jobId,
+                    interviewDate: control.interveiwsList?[index].interviews2Date,
+                    interviewTime: control.interveiwsList?[index].interviews2Time,
                     jobMap: {"Interveiw2": control.interveiw2List?[index].interviews2 ?? false},
                     // application: control.applied?[index],
                     isEmployer: false,

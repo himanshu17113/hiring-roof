@@ -7,8 +7,10 @@ import 'package:hiring_roof/screens/home/myhome.dart';
 import 'package:hiring_roof/screens/myjobs/myjobs.dart';
 import '../../../controller/navigation/navcon.dart';
 
-class UNav extends StatelessWidget {
+class UNav extends StatelessWidget {  
+
   const UNav({super.key});
+
   static const screens = [MyHome(), Find(), MyJobs()];
   static const screensG = [
     MyHomeG(),

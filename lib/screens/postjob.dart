@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
-import 'package:get/state_manager.dart';
+import 'package:get/get.dart';
+import 'package:hiring_roof/controller/get/application_controller.dart';
 import 'package:hiring_roof/controller/navigation/navcon.dart';
 import 'package:hiring_roof/util/constant/color.dart';
 import 'package:hiring_roof/util/constant/const.dart';
@@ -11,6 +12,36 @@ import '../controller/http/post_job.dart';
 
 class PostJob extends StatelessWidget {
   const PostJob({super.key});
+  static Future<List<String?>> pickwindowsImage() async {
+    final ImagePickerPlatform wpicker = ImagePickerPlatform.instance;
+
+    List<XFile>? images = await wpicker.getMedia(options: const MediaOptions(allowMultiple: false));
+    XFile? image = images[0];
+    final List<String?> list = [image.path.toString(), image.name.toString()];
+
+    return list;
+  }
+
+  static const TextStyle headertextStyle = TextStyle(
+    fontSize: 13,
+    color: white,
+  );
+  static const TextStyle inputtextStyle = TextStyle(
+    fontSize: 15,
+    color: white,
+  );
+  static const InputDecoration inputDecoration =
+      InputDecoration(contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 8), border: OutlineInputBorder());
+  static const List<String> workingPlaces = ["wfh", "wfo"];
+  //["Remote", "In Office", "Hybrid"];
+  static const List<String> jobTypes = ["contractual", "part time", "full time", "internship"];
+  // ["contractual", "part time", "Full Time", "internship"];
+  // static final List<String> availabilities = ["immediately", "10d", "15d", "20d", "30d", "60d", "90d"];
+  static const List<String> timePeriodList = ["long term", "short term"];
+  //['Long Term', "short term"];
+  static const List<String> payTypes = ["yearly", "monthly"];
+  static const List<String> serviceType = ['urgent', 'premium'];
+
   Future<List<String?>> pickImage() async {
     XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 25);
     final List<String?> list = [image?.path.toString(), image?.name.toString()];
@@ -47,54 +78,48 @@ class PostJob extends StatelessWidget {
     return null;
   }
 
-  static Future<List<String?>> pickwindowsImage() async {
-    final ImagePickerPlatform wpicker = ImagePickerPlatform.instance;
+  // int maxapihit = 100;
 
-    List<XFile>? images = await wpicker.getMedia(options: const MediaOptions(allowMultiple: false));
-    XFile? image = images[0];
-    final List<String?> list = [image.path.toString(), image.name.toString()];
-
-    return list;
-  }
-
-  static const TextStyle headertextStyle = TextStyle(
-    fontSize: 13,
-    color: white,
-  );
-  static const TextStyle inputtextStyle = TextStyle(
-    fontSize: 15,
-    color: white,
-  );
-  static const InputDecoration inputDecoration =
-      InputDecoration(contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 8), border: OutlineInputBorder());
-  static final List<String> workingPlaces = ["wfh", "wfo"];
-  //["Remote", "In Office", "Hybrid"];
-  static final List<String> jobTypes = ["contractual", "part time", "full time", "internship"];
-  // ["contractual", "part time", "Full Time", "internship"];
-  static final List<String> availabilities = ["immediately", "10d", "15d", "20d", "30d", "60d", "90d"];
-  static final List<String> timePeriodList = ["long term", "short term"];
-  //['Long Term', "short term"];
-  static final List<String> payTypes = ["yearly", "monthly"];
   @override
   Widget build(BuildContext context) {
+    int maxapihit = 3;
     final JobPost jobPost = JobPost();
 
-    int maxapihit = 3;
     String workingPlace = workingPlaces[0];
+
     String title = "";
+
     String location = userModal.userData?.location ?? "";
+
     String companyName = "";
+
     String pay = "";
+
     String payType = payTypes[1];
+
     String path = '';
+
     String jobSummary = "";
+
     String knowledge = "";
+
     String timePeriod = timePeriodList[0];
+
     String job = "";
+
     String jobType = jobTypes[2];
+
     String companyLogo = "";
-    String availability = availabilities[0];
+
+    bool availability = false;
+
     String filename = "";
+
+    String stream = '';
+
+    String experience = '';
+
+    String service = serviceType[0];
     //  debugPrint(userModal.token);
     return Scaffold(
       backgroundColor: const Color(0xFF080808),
@@ -226,6 +251,8 @@ class PostJob extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.only(top: 7, bottom: 20),
                                 child: TextField(
+                                    keyboardType: TextInputType.number,
+                                    textInputAction: TextInputAction.next,
                                     scrollPhysics: const ClampingScrollPhysics(),
                                     scrollPadding: EdgeInsets.zero,
                                     onChanged: (value) => pay = value,
@@ -282,6 +309,109 @@ class PostJob extends StatelessWidget {
                                     onChanged: (value) => knowledge = value,
                                     maxLines: 3,
                                     textAlignVertical: TextAlignVertical.top,
+                                    style: inputtextStyle,
+                                    decoration: inputDecoration),
+                              ),
+                            ],
+                          )),
+                      const Spacer(),
+                    ],
+                  ),
+                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(top: 15),
+                //   child: Row(
+                //     children: [
+                //       const Spacer(),
+                //       Expanded(
+                //           flex: 15,
+                //           child: Column(
+                //             crossAxisAlignment: CrossAxisAlignment.start,
+                //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //             children: [
+                //               const Text("Stream", style: PostJob.headertextStyle),
+                //               Padding(
+                //                 padding: const EdgeInsets.only(top: 7, bottom: 20),
+                //                 child: TextField(
+                //                     maxLines: 1,
+                //                     scrollPhysics: const ClampingScrollPhysics(),
+                //                     scrollPadding: EdgeInsets.zero,
+                //                     onChanged: (value) => jobSummary = value,
+                //                     textAlignVertical: TextAlignVertical.top,
+                //                     style: PostJob.inputtextStyle,
+                //                     decoration: PostJob.inputDecoration),
+                //               ),
+                //             ],
+                //           )),
+                //       const Spacer(
+                //         flex: 2,
+                //       ),
+                //       Expanded(
+                //           flex: 15,
+                //           child: Column(
+                //             crossAxisAlignment: CrossAxisAlignment.start,
+                //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //             children: [
+                //               const Text("Job", style: PostJob.headertextStyle),
+                //               Padding(
+                //                 padding: const EdgeInsets.only(top: 7, bottom: 20),
+                //                 child: TextField(
+                //                     scrollPhysics: const ClampingScrollPhysics(),
+                //                     scrollPadding: EdgeInsets.zero,
+                //                     textAlignVertical: TextAlignVertical.top,
+                //                     onChanged: (value) => job = value,
+                //                     style: PostJob.inputtextStyle,
+                //                     decoration: PostJob.inputDecoration),
+                //               ),
+                //             ],
+                //           )),
+                //       const Spacer(),
+                //     ],
+                //   ),
+                // ),
+
+                Padding(
+                  padding: const EdgeInsets.only(top: 15),
+                  child: Row(
+                    children: [
+                      const Spacer(),
+                      Expanded(
+                          flex: 15,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text("Experience in years", style: headertextStyle),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 7, bottom: 20),
+                                child: TextField(
+                                    scrollPhysics: const ClampingScrollPhysics(),
+                                    scrollPadding: EdgeInsets.zero,
+                                    keyboardType: TextInputType.number,
+                                    textAlignVertical: TextAlignVertical.top,
+                                    onChanged: (value) => experience = value.toString(),
+                                    style: inputtextStyle,
+                                    decoration: inputDecoration),
+                              ),
+                            ],
+                          )),
+                      const Spacer(
+                        flex: 2,
+                      ),
+                      Expanded(
+                          flex: 15,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text("Stream", style: headertextStyle),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 7, bottom: 20),
+                                child: TextField(
+                                    scrollPhysics: const ClampingScrollPhysics(),
+                                    scrollPadding: EdgeInsets.zero,
+                                    textAlignVertical: TextAlignVertical.top,
+                                    onChanged: (value) => stream = value,
                                     style: inputtextStyle,
                                     decoration: inputDecoration),
                               ),
@@ -352,17 +482,45 @@ class PostJob extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("Job", style: headertextStyle),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 7, bottom: 20),
-                                child: TextField(
-                                    scrollPhysics: const ClampingScrollPhysics(),
-                                    scrollPadding: EdgeInsets.zero,
-                                    textAlignVertical: TextAlignVertical.top,
-                                    onChanged: (value) => job = value,
-                                    style: inputtextStyle,
-                                    decoration: inputDecoration),
-                              ),
+                              const Text("Stream", style: headertextStyle),
+                              StatefulBuilder(builder: (BuildContext context, setState) {
+                                return Container(
+                                  height: 45,
+                                  padding: const EdgeInsets.only(left: 15, right: 5),
+                                  margin: const EdgeInsets.only(top: 7, bottom: 20),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    border: Border.all(color: white40),
+                                  ),
+                                  child: DropdownButton(
+                                    dropdownColor: Colors.black87,
+                                    style: const TextStyle(color: white),
+                                    value: service,
+                                    elevation: 1,
+                                    isExpanded: true,
+                                    underline: const SizedBox.shrink(),
+                                    hint: Text(
+                                      serviceType[0],
+                                      style: const TextStyle(color: Colors.grey, fontSize: 15),
+                                    ),
+                                    borderRadius: BorderRadius.circular(10),
+                                    icon: const Icon(Icons.arrow_drop_down),
+                                    items: serviceType.map((String items) {
+                                      return DropdownMenuItem(
+                                        value: items,
+                                        child: Text(
+                                          items,
+                                        ),
+                                      );
+                                    }).toList(),
+                                    onChanged: (String? newValue) {
+                                      setState(() {
+                                        service = newValue!;
+                                      });
+                                    },
+                                  ),
+                                );
+                              }),
                             ],
                           )),
                       const Spacer(),
@@ -487,44 +645,31 @@ class PostJob extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const Text("Availability", style: headertextStyle),
-                              StatefulBuilder(builder: (BuildContext context, setState) {
-                                return Container(
-                                  height: 45,
-                                  padding: const EdgeInsets.only(left: 15, right: 5),
-                                  margin: const EdgeInsets.only(top: 7, bottom: 20),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    border: Border.all(color: white40),
-                                  ),
-                                  child: DropdownButton(
-                                    dropdownColor: Colors.black87,
-                                    style: const TextStyle(color: white),
-                                    value: availability,
-                                    elevation: 1,
-                                    isExpanded: true,
-                                    underline: const SizedBox.shrink(),
-                                    hint: Text(
-                                      availabilities[0],
-                                      style: const TextStyle(color: Colors.grey, fontSize: 15),
-                                    ),
-                                    borderRadius: BorderRadius.circular(10),
-                                    icon: const Icon(Icons.arrow_drop_down),
-                                    items: availabilities.map((String items) {
-                                      return DropdownMenuItem(
-                                        value: items,
-                                        child: Text(
-                                          items,
-                                        ),
-                                      );
-                                    }).toList(),
-                                    onChanged: (String? newValue) {
-                                      setState(() {
-                                        availability = newValue!;
-                                      });
-                                    },
-                                  ),
-                                );
-                              }),
+                              Padding(
+                                  //  height: 45,
+                                  // padding: const EdgeInsets.only(left: 15, right: 5),
+                                  padding: const EdgeInsets.only(top: 7, bottom: 20),
+                                  // decoration: BoxDecoration(
+                                  //   borderRadius: BorderRadius.circular(5),
+                                  // ),
+                                  child: StatefulBuilder(
+                                      builder: (BuildContext context, setState) => CheckboxListTile(
+                                            dense: true,
+                                            contentPadding: const EdgeInsets.only(left: 15, right: 5),
+                                            shape: const OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  //    borderRadius: BorderRadius.circular(5),
+                                                  color: white40),
+                                            ),
+                                            side: const BorderSide(
+                                                //    borderRadius: BorderRadius.circular(5),
+                                                color: white40),
+                                            title: const Text('immediately'),
+                                            value: availability,
+                                            onChanged: (val) {
+                                              setState(() => availability = val!);
+                                            },
+                                          ))),
                             ],
                           )),
                       const Spacer(
@@ -655,10 +800,29 @@ class PostJob extends StatelessWidget {
                   builder: (controller) => GestureDetector(
                     onTap: () async {
                       while (maxapihit > 1) {
-                        bool reult = await jobPost.postJob(title, location, companyName, pay, jobSummary, knowledge, timePeriod,
-                            job, workingPlace, jobType, companyLogo, availability, payType, path, filename);
+                        bool reult = await jobPost.postJob(
+                            title,
+                            location,
+                            companyName,
+                            pay,
+                            jobSummary,
+                            knowledge,
+                            timePeriod,
+                            job,
+                            workingPlace,
+                            jobType,
+                            companyLogo,
+                            availability.toString(),
+                            payType,
+                            path,
+                            filename,
+                            "$experience years",
+                            service,
+                            stream);
                         if (reult) {
                           maxapihit--;
+                          ApplicationxController applicationxController = Get.put(ApplicationxController());
+                          applicationxController.getMyPostedApplication();
                           controller.pageUpdate(3);
                           break;
                         } else {

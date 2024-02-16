@@ -17,7 +17,7 @@ class MyJobAppl extends StatelessWidget {
     return DefaultTabController(
       length: 6,
       child: Scaffold(
-          backgroundColor: black,
+          //  backgroundColor: black,
           appBar: AppBar(
             actions: [
               IconButton(
@@ -41,12 +41,12 @@ class MyJobAppl extends StatelessWidget {
                           : null))
             ],
             //   systemOverlayStyle: SystemUiOverlayStyle.dark,
-            shadowColor: const Color.fromARGB(10, 155, 39, 176),
+            //    shadowColor: const Color.fromARGB(10, 155, 39, 176),
             //    backgroundColor: black12,
-            automaticallyImplyLeading: true,
-            surfaceTintColor: black12,
-            toolbarOpacity: 0.1,
-            bottomOpacity: 1,
+            //     automaticallyImplyLeading: true,
+            //  surfaceTintColor: black12,
+            // toolbarOpacity: 0.1,
+            //      bottomOpacity: 1,
             centerTitle: false,
             title: const Text.rich(
               TextSpan(
@@ -78,7 +78,7 @@ class MyJobAppl extends StatelessWidget {
             elevation: 20,
             bottom: const TabBar(
               splashBorderRadius: BorderRadius.all(Radius.circular(33)),
-              dividerColor: black,
+              //   dividerColor: black,
               labelColor: white,
               isScrollable: true,
               padding: EdgeInsets.symmetric(horizontal: 20),
@@ -203,7 +203,6 @@ class MyJobAppl extends StatelessWidget {
                             itemCount: applicationxController.myPostedJobs?.length,
                             controller: applicationxController.myPostedJobsScroll,
                             itemBuilder: (BuildContext context, int index) => JCard(
-                              
                                   job: applicationxController.myPostedJobs?[index],
                                 )),
                       ],

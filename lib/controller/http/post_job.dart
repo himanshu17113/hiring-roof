@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:get/get_connect/connect.dart';
 import 'package:hiring_roof/util/apistring.dart';
 import 'package:hiring_roof/util/constant/const.dart';
@@ -28,25 +26,45 @@ class JobPost extends GetConnect {
     final String payType,
     final String path,
     final String fileName,
+    final String experience,
+    final String service,
+    final String stream,
     //final File? file
   ) async {
     //debugPrint(statement);(title.toString());
-    Map<String, String> header = {"Authorization": userModal.token!};
+    // final Map<String, String> header = {"Authorization": userModal.token!};
 
-    final FormData formData = FormData({
-      'companyLogo': path.isNotEmpty ? MultipartFile(File(path), filename: fileName) : null,
-      'jobTittle': title,
-      "skills": knowledge,
+    Map<String, String> payload = {
+      "jobTittle": title,
+      "skills": '["$knowledge","$knowledge"]',
       "jobType": workingPlace,
       "workType": jobType,
       "availability": availability,
       "timePeriod": timePeriod,
       "note": jobSummary,
-      "pay": double.tryParse(pay),
+      "pay": double.tryParse(pay).toString(),
       "payType": payType,
       "location": location,
-      "companyName": companyName
-    });
+      "companyName": companyName,
+      'stream': '["$stream" ]',
+      'serviceType': service,
+      'experience': experience
+    };
+    var request = http.MultipartRequest(
+        'PUT',
+        Uri.parse(
+          ApiString.putJob,
+        ));
+
+    request.fields.addAll(payload);
+    request.headers.addAll({"Authorization": userModal.token!, 'Content-Type': 'multipart/form-data'});
+
+    if (path.isNotEmpty) {
+      request.files.add(await http.MultipartFile.fromPath('companyLogo', path, filename: 'logo'));
+    }
+    print(request.fields.toString());
+
+    final multipartResponse = await request.send();
     // Map<String, dynamic> body = {
     //   'jobTittle': title,
     //   "skills": knowledge,
@@ -61,14 +79,16 @@ class JobPost extends GetConnect {
     //   "companyName": companyName
     // };
 
-    var response = await put(ApiString.putJob, formData, headers: header, contentType: "multipart/form-data");
-    print(response.body);
+    // var response = await put(ApiString.putJob, formData, headers: header, contentType: "multipart/form-data");
+    // print(response.body);
     //  var request = client.put('PUT', Uri.parse(ApiString.putJob));
     // request.headers.addAll(header);
     // request.fields.addAll(body);
     // http.Response response = await client.put(Uri.parse(ApiString.putJob), headers: , body: jsonEncode(body));
+    var response = await http.Response.fromStream(multipartResponse);
+    print(response.body);
+
     if (response.statusCode == 200) {
-      //    print(response.body.toString());
       return true;
     } else {
       return false;
