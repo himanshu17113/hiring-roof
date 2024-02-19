@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -6,6 +7,7 @@ import 'package:hiring_roof/controller/get/jobseeker_application_controller.dart
 import 'package:hiring_roof/screens/Profile/deskbody.dart';
 import 'package:hiring_roof/screens/Profile/mobilebody.dart';
 import 'package:hiring_roof/screens/Profile/profile.dart';
+import 'package:hiring_roof/screens/notification.dart';
 import 'package:hiring_roof/util/constant/color.dart';
 import 'package:hiring_roof/util/constant/const.dart';
 import 'package:hiring_roof/util/widgets/cards/card.dart';
@@ -32,7 +34,9 @@ class MyJobs extends StatelessWidget {
             bottomOpacity: 1,
             centerTitle: false,
             actions: [
-              IconButton(onPressed: () {}, icon: const Icon(Icons.notifications)),
+              IconButton(
+                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const NotificationScreen())),
+                  icon: const Icon(Icons.notifications)),
               IconButton(
                   onPressed: () => Navigator.push(
                       context,
@@ -99,6 +103,7 @@ class MyJobs extends StatelessWidget {
             child: GetBuilder<MyJobsxController>(
                 init: MyJobsxController(),
                 autoRemove: false,
+                initState: (state) => state.controller?.getSaved(),
                 //  initState: (_) {},
                 builder: (control) => !isGrid ? list(control) : grid(control)),
           ),
@@ -108,62 +113,81 @@ class MyJobs extends StatelessWidget {
   Widget list(MyJobsxController control) => TabBarView(
         children: [
           //saved
-          ListView.builder(
-              itemCount: control.saved?.length,
-              itemBuilder: (BuildContext context, int index) => JCard(
-                    job: control.saved?[index],
-                    isEmployer: false,
-                  )),
+          RefreshIndicator(
+            onRefresh: () => control.getSaved(clear: true),
+            child:
+                //      control.saved!.isEmpty ? Column(children: [  ],):
+                ListView.builder(
+                    itemCount: control.saved?.length,
+                    itemBuilder: (BuildContext context, int index) => JCard(
+                          job: control.saved?[index],
+                          isEmployer: false,
+                        )),
+          ),
           // applied
-          ListView.builder(
-              itemCount: control.applied?.length,
-              itemBuilder: (BuildContext context, int index) => JCard(
-                    job: control.applied?[index].jobId,
-                    jobMap: {"Applied": control.applied?[index].selectedCandidates ?? false},
-                    // application: control.applied?[index],
-                    isEmployer: false,
-                  )),
+          RefreshIndicator(
+            onRefresh: () => control.getApplied(clear: true),
+            child: ListView.builder(
+                itemCount: control.applied?.length,
+                itemBuilder: (BuildContext context, int index) => JCard(
+                      job: control.applied?[index].jobId,
+                      jobMap: {"Applied": control.applied?[index].selectedCandidates ?? false},
+                      // application: control.applied?[index],
+                      isEmployer: false,
+                    )),
+          ),
           // shortlist
-          ListView.builder(
-              itemCount: control.shortList?.length,
-              itemBuilder: (BuildContext context, int index) => JCard(
-                    job: control.shortList?[index].jobId,
-                    jobMap: {"Shortlist": control.shortList?[index].shortlist ?? false},
-                    // application: control.applied?[index],
-                    isEmployer: false,
-                  )),
+          RefreshIndicator(
+            onRefresh: () => control.getMyShortlist(clear: true),
+            child: ListView.builder(
+                itemCount: control.shortList?.length,
+                itemBuilder: (BuildContext context, int index) => JCard(
+                      job: control.shortList?[index].jobId,
+                      jobMap: {"Shortlist": control.shortList?[index].shortlist ?? false},
+                      // application: control.applied?[index],
+                      isEmployer: false,
+                    )),
+          ),
           // interveiw
-          ListView.builder(
-              itemCount: control.interveiwsList?.length,
-              itemBuilder: (BuildContext context, int index) => JCard(
-                    job: control.interveiwsList?[index].jobId,
-                    jobMap: {"Interveiw": control.interveiwsList?[index].interveiwselect ?? false},
-                    interviewDate: control.interveiwsList?[index].interviewsDate,
-                    interviewTime: control.interveiwsList?[index].interviewsTime,
-                    // application: control.applied?[index],
-                    isEmployer: false,
-                  )),
+          RefreshIndicator(
+            onRefresh: () => control.getInterveiws(clear: true),
+            child: ListView.builder(
+                itemCount: control.interveiwsList?.length,
+                itemBuilder: (BuildContext context, int index) => JCard(
+                      job: control.interveiwsList?[index].jobId,
+                      jobMap: {"Interveiw": control.interveiwsList?[index].interveiwselect ?? false},
+                      interviewDate: control.interveiwsList?[index].interviewsDate,
+                      interviewTime: control.interveiwsList?[index].interviewsTime,
+                      // application: control.applied?[index],
+                      isEmployer: false,
+                    )),
+          ),
           // interveiw2
-
-          ListView.builder(
-              itemCount: control.interveiw2List?.length,
-              itemBuilder: (BuildContext context, int index) => JCard(
-                    job: control.interveiw2List?[index].jobId,
-                    interviewDate: control.interveiwsList?[index].interviews2Date,
-                    interviewTime: control.interveiwsList?[index].interviews2Time,
-                    jobMap: {"Interveiw2": control.interveiw2List?[index].interviews2 ?? false},
-                    // application: control.applied?[index],
-                    isEmployer: false,
-                  )),
+          RefreshIndicator(
+            onRefresh: () => control.getInterveiws2(clear: true),
+            child: ListView.builder(
+                itemCount: control.interveiw2List?.length,
+                itemBuilder: (BuildContext context, int index) => JCard(
+                      job: control.interveiw2List?[index].jobId,
+                      interviewDate: control.interveiwsList?[index].interviews2Date,
+                      interviewTime: control.interveiwsList?[index].interviews2Time,
+                      jobMap: {"Interveiw2": control.interveiw2List?[index].interviews2 ?? false},
+                      // application: control.applied?[index],
+                      isEmployer: false,
+                    )),
+          ),
           // result
-          ListView.builder(
-              itemCount: control.results?.length,
-              itemBuilder: (BuildContext context, int index) => JCard(
-                    job: control.results?[index].jobId,
-                    jobMap: {"Result": control.results?[index].selectedCandidates ?? false},
-                    // application: control.applied?[index],
-                    isEmployer: false,
-                  )),
+          RefreshIndicator(
+            onRefresh: () => control.getResults(clear: true),
+            child: ListView.builder(
+                itemCount: control.results?.length,
+                itemBuilder: (BuildContext context, int index) => JCard(
+                      job: control.results?[index].jobId,
+                      jobMap: {"Result": control.results?[index].selectedCandidates ?? false},
+                      // application: control.applied?[index],
+                      isEmployer: false,
+                    )),
+          ),
         ],
       );
   Widget grid(MyJobsxController control) => TabBarView(

@@ -7,6 +7,8 @@ import 'package:hiring_roof/model/job.dart';
 import 'package:hiring_roof/screens/sign/siginuser.dart';
 import 'package:hiring_roof/util/constant/const.dart';
 import 'package:hiring_roof/util/constant/text.dart';
+import 'package:hiring_roof/util/widgets/cards/skill.dart';
+import 'package:hiring_roof/util/widgets/cards/vidp.dart';
 import 'package:intl/intl.dart';
 import '../../../controller/http/httpjob.dart';
 import '../../constant/color.dart';
@@ -88,12 +90,13 @@ class JCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    theme = Theme.of(context);
     return Card(
         elevation: 0,
         margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Column(children: [
-          header(),
+          header(context),
           Row(
             children: [
               const Spacer(),
@@ -113,7 +116,9 @@ class JCard extends StatelessWidget {
                                   ? const SizedBox(
                                       height: 20,
                                     )
-                                  : apply()
+                                  : job!.isApplied
+                                      ? Align(alignment: AlignmentDirectional.centerEnd, child: applied())
+                                      : apply()
                               : Align(
                                   alignment: Alignment.bottomRight,
                                   child: SizedBox(
@@ -146,7 +151,7 @@ class JCard extends StatelessWidget {
         ]));
   }
 
-  Widget header() => Row(
+  Widget header(BuildContext context) => Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         children: [
@@ -156,28 +161,38 @@ class JCard extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(4),
               child: Center(
-                child: DottedBorder(
-                  strokeWidth: 1.2,
-                  strokeCap: StrokeCap.round,
-                  dashPattern: const [10, 5],
-                  padding: const EdgeInsets.all(5.5),
-                  //stackFit: StackFit.expand,
-                  borderType: BorderType.Circle,
-                  borderPadding: const EdgeInsets.all(2),
-                  color: const Color.fromRGBO(157, 33, 255, 1),
-                  //  radius: const Radius.circular(360),
-                  child: CircleAvatar(
-                    radius: 28,
-                    backgroundImage: CachedNetworkImageProvider(
-                      application == null
-                          ? (job?.companyLogo == null || job!.companyLogo!.isEmpty)
-                              ? url
-                              : (Uri.parse(job!.companyLogo!).isAbsolute ? job!.companyLogo! : url)
-                          : (application!.applicantId?.profileImage == null || application!.applicantId!.profileImage!.isEmpty)
-                              ? url
-                              : ((Uri.parse(application!.applicantId!.profileImage!).isAbsolute
-                                  ? application!.applicantId!.profileImage!
-                                  : url)),
+                child: GestureDetector(
+                  onTap: () => (application?.applicantId?.videoUrl == null ||
+                              (application?.applicantId?.videoUrl?.isEmpty ?? true)) ||
+                          !(Uri.parse(application?.applicantId?.videoUrl ?? "").isAbsolute)
+                      ? null
+                      : Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => VideoPlayerScreen(url: application!.applicantId!.videoUrl!))),
+                  child: DottedBorder(
+                    strokeWidth: 1.2,
+                    strokeCap: StrokeCap.round,
+                    dashPattern: const [10, 5],
+                    padding: const EdgeInsets.all(5.5),
+                    //stackFit: StackFit.expand,
+                    borderType: BorderType.Circle,
+                    borderPadding: const EdgeInsets.all(2),
+                    color: (application?.applicantId?.videoUrl == null || (application?.applicantId?.videoUrl?.isEmpty ?? false))
+                        ? Colors.transparent
+                        : const Color.fromRGBO(157, 33, 255, 1),
+                    //  radius: const Radius.circular(360),
+                    child: CircleAvatar(
+                      radius: 28,
+                      backgroundImage: CachedNetworkImageProvider(
+                        application == null
+                            ? (job?.companyLogo == null || job!.companyLogo!.isEmpty)
+                                ? url
+                                : (Uri.parse(job!.companyLogo!).isAbsolute ? job!.companyLogo! : url)
+                            : (application!.applicantId?.profileImage == null || application!.applicantId!.profileImage!.isEmpty)
+                                ? url
+                                : ((Uri.parse(application!.applicantId!.profileImage!).isAbsolute
+                                    ? application!.applicantId!.profileImage!
+                                    : url)),
+                      ),
                     ),
                   ),
                 ),
@@ -467,17 +482,30 @@ class JCard extends StatelessWidget {
         return Align(
           alignment: Alignment.bottomRight,
           child: GestureDetector(
-            onTap: () => Cardconnect.applyJob(job!.id!)
-                .then((value) => value ? setState(() => job!.applied = !job!.applied) : debugPrint("issue in save job")),
+            onTap: () async {
+              if (!job!.isApplied) {
+                final bool value = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Skill(
+                          skills: const ['dart', 'flutter', 'python']
+                          //job!.skills
+                          ,
+                          id: job!.id!),
+                    ));
+                if (!context.mounted) return;
+                value ? setState(() => job!.isApplied = !job!.isApplied) : debugPrint("issue in apply job");
+              }
+            },
             onDoubleTap: () => Cardconnect.applyJob(job!.id!)
-                .then((value) => value ? setState(() => job!.applied = !job!.applied) : debugPrint("issue in save job")),
+                .then((value) => value ? setState(() => job!.isApplied = !job!.isApplied) : debugPrint("issue in save job")),
             onSecondaryTap: () {},
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 50),
               margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
               decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8), gradient: linearGradient),
               child: Text(
-                job!.applied ? "Applied" : "Apply",
+                job!.isApplied ? "Applied" : "Apply",
                 style: const TextStyle(color: white80),
               ),
             ),
@@ -772,7 +800,10 @@ class JCard extends StatelessWidget {
                           },
                           child: Container(
                             padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 2),
-                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), border: Border.all(width: 1)),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(width: 1, color: theme.colorScheme.onBackground),
+                                color: theme.colorScheme.onInverseSurface),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [

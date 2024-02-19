@@ -102,14 +102,15 @@ class JobxController extends GetxController {
       return null;
     }
   }
-getCategories() async {
- //    http.Response response = 
-     await client.get(
+
+  getCategories() async {
+    //    http.Response response =
+    await client.get(
       Uri.parse(
           "${ApiString.allJobs}?page=$spage&limit=$searchlimit&location=$location&workType=&jobType=&timePeriod=&payType=monthly&pay=&availability=&dateOfPosting=&jobTittle=$jobTittle"),
       headers: {"Authorization": userModal.token ?? token, "Content-Type": "application/json"},
     );
-}
+  }
 
   jobSearch(String? locationx, String? jobTittlex) async {
     isSearching = true;
@@ -119,10 +120,11 @@ getCategories() async {
     }
     location = locationx;
     jobTittle = jobTittlex;
-    debugPrint("${ApiString.allJobs}?page=$spage&limit=$searchlimit&location=$location&jobTittle=$jobTittle");
+    debugPrint("${ApiString.getJobs}?page=$spage&limit=$searchlimit&location=$location&jobTittle=$jobTittle");
     http.Response response = await client.get(
-      Uri.parse(
-          "${ApiString.allJobs}?page=$spage&limit=$searchlimit&location=$location&workType=&jobType=&timePeriod=&payType=monthly&pay=&availability=&dateOfPosting=&jobTittle=$jobTittle"),
+      Uri.parse("${ApiString.getJobs}?page=$spage&limit=$searchlimit&jobTittle=$jobTittle"),
+      //location=$location&workType=&jobType=&timePeriod=&payType=monthly&pay=&availability=&dateOfPosting=&
+
       headers: {"Authorization": userModal.token ?? token, "Content-Type": "application/json"},
     );
 

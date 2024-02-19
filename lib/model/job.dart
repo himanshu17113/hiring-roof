@@ -72,8 +72,8 @@ class Job {
   bool? isSaved;
   final DateTime? createdAt;
   final DateTime? updatedAt;
-  final int? v;
-  bool applied;
+ // final int? v;
+  bool isApplied;
 
   Job(
       {this.id,
@@ -93,8 +93,8 @@ class Job {
       this.isSaved,
       this.createdAt,
       this.updatedAt,
-      this.v,
-      this.applied = false});
+   //   this.v,
+      this.isApplied = false});
 
   factory Job.fromRawJson(String str) => Job.fromJson(json.decode(str));
 
@@ -118,7 +118,8 @@ class Job {
         isSaved: json["isSaved"],
         createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
         updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
-        v: json["__v"],
+      //  v: json["__v"],
+      isApplied: json['isApplied'],
       );
   factory Job.fromJsonbyappli(Map<String, dynamic> json) => Job(
         id: json["_id"],
@@ -156,7 +157,7 @@ class Job {
         "isSaved": isSaved,
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
-        "__v": v,
+      //  "__v": v,
       };
 }
 

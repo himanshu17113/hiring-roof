@@ -437,6 +437,78 @@ class ProfileMobileBody extends StatelessWidget {
                                                     Icons.upload_rounded,
                                                     color: Color.fromRGBO(122, 25, 200, 1),
                                                   ),
+                                                  Text(" Upload Resume ",
+                                                      style: TextStyle(color: Color.fromRGBO(122, 25, 200, 1), fontSize: 16)),
+                                                ],
+                                              )
+                                            : const Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Icon(
+                                                    Icons.upload_file_outlined,
+                                                    color: Colors.greenAccent,
+                                                  ),
+                                                  Text(" Uploaded ",
+                                                      style: TextStyle(color: Color.fromRGBO(61, 235, 61, 1), fontSize: 18)),
+                                                ],
+                                              ),
+                                      ),
+                                    )),
+                              ),
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(top: 7, bottom: 20),
+                              child: Text(
+                                "Mollit in laborum tempor Lorem incididunt irure. Aute eu ex ad sunt. Pariatur sint culpa do incididunt ",
+                                style: TextStyle(color: white, fontSize: 12.5, fontWeight: FontWeight.w300),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Spacer(),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 15),
+                  child: Row(
+                    children: [
+                      const Spacer(),
+                      Expanded(
+                        flex: 32,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text("Add your Cover letter ", style: headertextStyle),
+                            const Padding(
+                              padding: EdgeInsets.only(top: 8.0),
+                              child: Text("Note : Please Upload Your Cover letter without Contacts Detials",
+                                  style: TextStyle(color: Colors.grey, fontSize: 12)),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10, bottom: 20),
+                              child: InkWell(
+                                onTap: () async => controller.letterFile = await controller.document(),
+                                child: Obx(() => ColoredBox(
+                                      color: controller.letterFile.path.isEmpty
+                                          ? const Color.fromRGBO(175, 73, 255, 0.08)
+                                          : const Color.fromRGBO(5, 255, 5, 0.08),
+                                      child: DottedBorder(
+                                        padding: const EdgeInsets.all(22),
+                                        color: Colors.grey,
+                                        strokeWidth: 1,
+                                        dashPattern: const [8, 8],
+                                        child: controller.letterFile.path.isEmpty
+                                            ? const Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Icon(
+                                                    Icons.upload_rounded,
+                                                    color: Color.fromRGBO(122, 25, 200, 1),
+                                                  ),
                                                   Text(" Upload Cover Cv",
                                                       style: TextStyle(color: Color.fromRGBO(122, 25, 200, 1), fontSize: 16)),
                                                 ],
@@ -571,11 +643,12 @@ class ProfileMobileBody extends StatelessWidget {
               ],
               GestureDetector(
                 onTap: () async => await controller.updateProfil().then((value) => value
-                    ? Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => userModal.userType == "jobSeeker" ? const UNav() : const ReqNav()),
-                        ((route) => false))
+                    ? Navigator.pop(context)
+                    // pushAndRemoveUntil(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => userModal.userType == "jobSeeker" ? const UNav() : const ReqNav()),
+                    //     ((route) => false))
                     : null),
                 child: Obx(() => Container(
                       height: 45,

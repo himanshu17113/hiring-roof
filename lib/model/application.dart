@@ -137,45 +137,48 @@ class ApplicantId {
   final String? experience;
   // String? companyName;
   // String? aboutCompany;
-  // int? v;
-  final DateTime? updatedAt;
+  String? videoUrl;
 
-  ApplicantId({
-    this.id,
-    this.userType,
-    this.otp,
-    this.name,
-    this.profileImage,
-    this.location,
-    this.currentPay,
-    this.expectationPay,
-    this.skills,
-    this.experience,
-    // this.companyName,
-    // this.aboutCompany,
-    // this.v,
-    this.updatedAt,
-  });
+  // int? v;
+//  final DateTime? updatedAt;
+
+  ApplicantId(
+      {this.id,
+      this.userType,
+      this.otp,
+      this.name,
+      this.profileImage,
+      this.location,
+      this.currentPay,
+      this.expectationPay,
+      this.skills,
+      this.experience,
+      // this.companyName,
+      // this.aboutCompany,
+      // this.v,
+      //  this.updatedAt,
+      this.videoUrl});
 
   factory ApplicantId.fromJson(String str) => ApplicantId.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
   factory ApplicantId.fromMap(Map<String, dynamic> json) => ApplicantId(
-        id: json["_id"],
-        userType: json["userType"],
-        otp: json["otp"],
-        name: json["name"],
-        profileImage: json["profileImage"],
-        location: json["location"],
-        currentPay: json["currentPay"],
-        expectationPay: json["expectationPay"],
-        skills: json["skills"],
-        experience: json["experience"],
-        // companyName: json["companyName"],
-        // aboutCompany: json["aboutCompany"],
-        // v: json["__v"],
-        updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
+      id: json["_id"],
+      userType: json["userType"],
+      otp: json["otp"],
+      name: json["name"],
+      profileImage: json["profileImage"],
+      location: json["location"],
+      currentPay: json["currentPay"],
+      expectationPay: json["expectationPay"],
+      skills: json["skills"],
+      experience: json["experience"],
+      // companyName: json["companyName"],
+      // aboutCompany: json["aboutCompany"],
+      // v: json["__v"],
+      videoUrl: json['videoUrl']
+      //    updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
       );
 
   Map<String, dynamic> toMap() => {
@@ -192,7 +195,7 @@ class ApplicantId {
         // "companyName": companyName,
         // "aboutCompany": aboutCompany,
         // "__v": v,
-        "updatedAt": updatedAt?.toIso8601String(),
+    //    "updatedAt": updatedAt?.toIso8601String(),
       };
 }
 

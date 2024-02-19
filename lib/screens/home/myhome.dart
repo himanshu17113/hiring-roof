@@ -5,6 +5,7 @@ import 'package:hiring_roof/controller/get/jobcontroller.dart';
 import 'package:hiring_roof/screens/Profile/deskbody.dart';
 import 'package:hiring_roof/screens/Profile/mobilebody.dart';
 import 'package:hiring_roof/screens/Profile/profile.dart';
+import 'package:hiring_roof/screens/notification.dart';
 import 'package:hiring_roof/util/constant/color.dart';
 import 'package:hiring_roof/util/widgets/cards/card.dart';
 import '../../util/constant/const.dart';
@@ -29,7 +30,9 @@ class MyHome extends StatelessWidget {
           //   ],
           // ),
           actions: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.notifications)),
+            IconButton(
+                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const NotificationScreen())),
+                icon: const Icon(Icons.notifications)),
             IconButton(
                 onPressed: () => Navigator.push(
                     context,
@@ -116,9 +119,9 @@ class MyHomeG extends StatelessWidget {
               //     )
               //   ],
               // ),
-              actions: [
-                IconButton(onPressed: () {}, icon: const Icon(Icons.notifications)),
-                IconButton(
+              actions: [          IconButton(
+                    onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const NotificationScreen())),
+                    icon: const Icon(Icons.notifications)),  IconButton(
                     onPressed: () {},
                     icon: CircleAvatar(backgroundImage: CachedNetworkImageProvider(userModal.userData?.profileImage ?? imgurl)))
               ],

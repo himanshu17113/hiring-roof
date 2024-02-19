@@ -10,3 +10,5 @@ const String token =
 Size screenSize = const Size(700, 1570);
 MediaQueryData? query;
 bool tablet = false;
+
+ThemeData theme = ThemeData();

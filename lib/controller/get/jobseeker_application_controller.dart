@@ -72,7 +72,7 @@ class MyJobsxController extends GetxController {
     super.onInit();
   }
 
-  Future<void> getSaved() async {
+  Future<void> getSaved({bool clear = false}) async {
     if (!endOfSaved) {
       debugPrint((ApiString.getsave));
       final http.Response response = await client
@@ -82,6 +82,9 @@ class MyJobsxController extends GetxController {
         final JobModal jobModal = JobModal.fromJson(jsonDecode(response.body));
         if (jobModal.jobs != null) {
           if (jobModal.jobs!.isNotEmpty) {
+            if (clear) {
+              saved?.clear();
+            }
             saved?.addAll(jobModal.jobs!);
             debugPrint(jobModal.jobs!.length.toString());
             indexOfSaved++;
@@ -94,17 +97,25 @@ class MyJobsxController extends GetxController {
     }
   }
 
-  Future<void> getApplied() async {
+  Future<void> getApplied({bool clear = false}) async {
+    if (clear) {
+      applied?.clear();
+      indexOfApplied = 1;
+      endOfApplied = false;
+    }
     if (!endOfApplied) {
       debugPrint(("${ApiString.getApplications}$indexOfApplied"));
       final http.Response response = await client.get(Uri.parse("${ApiString.getApplications}$indexOfApplied"),
           headers: {"Authorization": userModal.token!, "Content-Type": "application/json"});
       if (response.statusCode == 200) {
+        debugPrint("empty");
+
         applicationModal = ApplicationModal.fromJson(response.body);
         if (applicationModal?.data != null) {
           if (applicationModal!.data!.isNotEmpty) {
             applied?.addAll(applicationModal!.data!);
             indexOfApplied++;
+            debugPrint(applicationModal?.data?.length.toString() ?? "empty");
           } else {
             debugPrint(applicationModal?.data?.length.toString() ?? "empty");
 
@@ -116,7 +127,12 @@ class MyJobsxController extends GetxController {
     }
   }
 
-  Future<void> getMyShortlist() async {
+  Future<void> getMyShortlist({bool clear = false}) async {
+    if (clear) {
+      //  shortList?.clear();
+      indexOfShortlist = 1;
+      endOfshortlist = false;
+    }
     if (!endOfshortlist) {
       debugPrint(("${ApiString.getShortlisted}$indexOfShortlist"));
       final http.Response response = await client.get(Uri.parse("${ApiString.getshortlist}$indexOfShortlist"),
@@ -125,6 +141,9 @@ class MyJobsxController extends GetxController {
         applicationModal = ApplicationModal.fromJson(response.body);
         if (applicationModal?.data != null) {
           if (applicationModal!.data!.isNotEmpty) {
+            if (clear) {
+              shortList?.clear();
+            }
             shortList!.addAll(applicationModal!.data!);
             debugPrint(applicationModal?.data?.length.toString() ?? "empty");
           } else {
@@ -136,8 +155,12 @@ class MyJobsxController extends GetxController {
     }
   }
 
-  Future<void> getInterveiws() async {
-    debugPrint(userModal.token!);
+  Future<void> getInterveiws({bool clear = false}) async {
+    if (clear) {
+      //  shortList?.clear();
+      indexOfInterview = 1;
+      endOfInterview = false;
+    }
     if (!endOfInterview) {
       debugPrint(("${ApiString.getCandidateinterviews}$indexOfInterview"));
       final http.Response response = await client.get(Uri.parse("${ApiString.getCandidateinterviews}$indexOfInterview"),
@@ -146,6 +169,9 @@ class MyJobsxController extends GetxController {
         applicationModal = ApplicationModal.fromJson(response.body);
         if (applicationModal?.data != null) {
           if (applicationModal!.data!.isNotEmpty) {
+            if (clear) {
+              interveiwsList?.clear();
+            }
             interveiwsList?.addAll(applicationModal!.data!);
             debugPrint(applicationModal?.data?.length.toString() ?? "empty");
           } else {
@@ -157,8 +183,12 @@ class MyJobsxController extends GetxController {
     }
   }
 
-  Future<void> getInterveiws2() async {
-    debugPrint(userModal.token!);
+  Future<void> getInterveiws2({bool clear = false}) async {
+    if (clear) {
+      //  shortList?.clear();
+      indexOfInterview2 = 1;
+      endOfInterview2 = false;
+    }
     if (!endOfInterview2) {
       final http.Response response = await client.get(Uri.parse("${ApiString.get2Candidateinterviews}$indexOfInterview2"),
           headers: {"Authorization": userModal.token!, "Content-Type": "application/json"});
@@ -166,6 +196,9 @@ class MyJobsxController extends GetxController {
         applicationModal = ApplicationModal.fromJson(response.body);
         if (applicationModal?.data != null) {
           if (applicationModal!.data!.isNotEmpty) {
+            if (clear) {
+              interveiw2List?.clear();
+            }
             interveiw2List?.addAll(applicationModal!.data!);
             debugPrint(applicationModal?.data?.length.toString() ?? "empty");
           } else {
@@ -177,7 +210,12 @@ class MyJobsxController extends GetxController {
     }
   }
 
-  Future<void> getResults() async {
+  Future<void> getResults({bool clear = false}) async {
+    if (clear) {
+      //  shortList?.clear();
+      indexOfResults = 1;
+      endOfResults = false;
+    }
     if (!endOfResults) {
       final http.Response response = await client.get(Uri.parse("${ApiString.getselectedCompany}$indexOfResults"),
           headers: {"Authorization": userModal.token!, "Content-Type": "application/json"});
@@ -185,6 +223,9 @@ class MyJobsxController extends GetxController {
         applicationModal = ApplicationModal.fromJson(response.body);
         if (applicationModal?.data != null) {
           if (applicationModal!.data!.isNotEmpty) {
+            if (clear) {
+              results?.clear();
+            }
             results?.addAll(applicationModal!.data!);
             debugPrint(applicationModal?.data?.length.toString() ?? "empty");
           } else {

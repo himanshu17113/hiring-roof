@@ -46,5 +46,8 @@ class ApiString {
 
 // Notification
   static String getNotification(final String id) => "$baseUrl/api/notification/get/$id";
-  static const String createNotification = "$baseUrl/api/notification/create"; 
+  static const String createNotification = "$baseUrl/api/notification/create";
+  //socket
+  static String notificationHistory(final String id) => "$baseUrl/notificationHistory_$id";
+  static String currentNotification(final String id) => "$baseUrl/notifications_$id";
 }

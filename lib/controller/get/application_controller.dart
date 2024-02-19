@@ -123,6 +123,7 @@ class ApplicationxController extends GetxController {
       http.Response response = await client.get(Uri.parse("${ApiString.getApplication}$indexOfjobApplications"),
           headers: {"Authorization": userModal.token!, "Content-Type": "application/json"});
       if (response.statusCode == 200) {
+     //   print(response.body);
         applicationModal = ApplicationModal.fromJson(response.body);
         if (applicationModal?.data != null) {
           if (applicationModal!.data!.isNotEmpty) {
@@ -213,6 +214,7 @@ class ApplicationxController extends GetxController {
       http.Response response = await client.get(Uri.parse("${ApiString.getshortlist}$indexOfshortlist"),
           headers: {"Authorization": userModal.token!, "Content-Type": "application/json"});
       if (response.statusCode == 200) {
+             print(response.body);
         applicationModal = ApplicationModal.fromJson(response.body);
         if (applicationModal?.data != null) {
           if (applicationModal!.data!.isNotEmpty) {

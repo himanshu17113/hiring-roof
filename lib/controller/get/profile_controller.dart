@@ -14,7 +14,7 @@ import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
- 
+
 class ProfileController extends GetxController {
   @override
   void onClose() {
@@ -28,6 +28,7 @@ class ProfileController extends GetxController {
   static Client client = http.Client();
   Rx<XFile> profilepic = XFile("").obs;
   Rx<File> resumefile = File("").obs;
+  Rx<File> letter = File("").obs;
 
   final TextEditingController name = TextEditingController(text: userModal.userData?.name ?? "");
   final TextEditingController phone = TextEditingController(text: userModal.userData?.phone ?? "");
@@ -37,15 +38,19 @@ class ProfileController extends GetxController {
   final TextEditingController currentPay = TextEditingController(text: userModal.userData?.currentPay ?? "");
   final TextEditingController expectedPay = TextEditingController(text: userModal.userData?.expectationPay ?? "");
   final TextEditingController location = TextEditingController(text: userModal.userData?.location ?? "");
-  final TextEditingController companyName = TextEditingController(text: userModal.userData?.location ?? "");
-  final TextEditingController aboutCompany = TextEditingController(text: userModal.userData?.location ?? "");
+  final TextEditingController companyName = TextEditingController(text: userModal.userData?.companyName ?? "");
+  final TextEditingController aboutCompany = TextEditingController(text: userModal.userData?.aboutCompany ?? "");
 
   // final _obj = ''.obs;
   set profilePic(value) => profilepic.value = value;
   XFile get profilePic => profilepic.value;
-
+//resume
   set resumeFile(value) => resumefile.value = value;
   File get resumeFile => resumefile.value;
+//letter
+  set letterFile(value) => letter.value = value;
+  File get letterFile => letter.value;
+
   RxBool isUploading = RxBool(false);
   Future<XFile?> pickImage() async {
     return await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 25);
@@ -155,6 +160,11 @@ class ProfileController extends GetxController {
       request.files.add(await http.MultipartFile.fromPath('resume', resumeFile.path,
           filename: resumeFile.path.split('/').last.split(".").first));
     }
+    if (letterFile.uri.path.isNotEmpty) {
+      request.files.add(await http.MultipartFile.fromPath('letter', letterFile.path,
+          filename: letterFile.path.split('/').last.split(".").first));
+    }
+
     if (videopath.string.isNotEmpty) {
       debugPrint(videopath.value);
       request.files.add(await http.MultipartFile.fromPath(

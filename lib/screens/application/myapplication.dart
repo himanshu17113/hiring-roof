@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:hiring_roof/screens/Profile/deskbody.dart';
 import 'package:hiring_roof/screens/Profile/mobilebody.dart';
 import 'package:hiring_roof/screens/Profile/profile.dart';
+import 'package:hiring_roof/screens/notification.dart';
 import 'package:hiring_roof/util/constant/color.dart';
 import 'package:hiring_roof/util/constant/const.dart';
 import 'package:hiring_roof/util/widgets/cards/card.dart';
@@ -20,11 +21,9 @@ class MyJobAppl extends StatelessWidget {
           //  backgroundColor: black,
           appBar: AppBar(
             actions: [
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.notifications),
-                color: Colors.white,
-              ),
+             IconButton(
+                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const NotificationScreen())),
+                  icon: const Icon(Icons.notifications)),     
               IconButton(
                   onPressed: () => Navigator.push(
                       context,

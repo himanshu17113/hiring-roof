@@ -9,6 +9,8 @@ import 'package:hiring_roof/util/constant/const.dart';
 import 'package:hiring_roof/util/widgets/cards/card.dart';
 import 'package:hiring_roof/util/constant/color.dart';
 
+import 'notification.dart';
+
 class Find extends StatelessWidget {
   const Find({super.key});
   static TextEditingController textEditingController = TextEditingController();
@@ -41,8 +43,10 @@ class Find extends StatelessWidget {
                 SliverAppBar(
                   leadingWidth: 0,
                   actions: [
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.notifications)),
                     IconButton(
+                        onPressed: () =>
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const NotificationScreen())),
+                        icon: const Icon(Icons.notifications)),                    IconButton(
                         onPressed: () => Navigator.push(
                             context,
                             MaterialPageRoute(
