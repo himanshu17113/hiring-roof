@@ -1,5 +1,7 @@
 class ApiString {
-  static const String baseUrl = "https://hiring-roof-backend.vercel.app";
+  static const String baseUrl = "https://hiringroof.rohandev.xyz";
+  // https://hiring-roof-backend.vercel.app -- previous no use in the appli 
+
   //Auth
   static const String signin = "$baseUrl/api/user/login/";
   static const String verify = "$baseUrl/api/user/verify/";

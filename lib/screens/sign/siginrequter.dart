@@ -223,8 +223,7 @@ class _RecruiterSiginState extends State<RecruiterSigin> with SingleTickerProvid
                                                             isFirstTime: data!.firstTime!,
                                                             otp: data.otp!,
                                                             phoneNo: phoneno!,
-                                                            isJobseeker: false,
-                                                          )));
+                                                           )));
                                             } else {
                                               if (loading.value) {
                                                 loading.value = false;

@@ -37,7 +37,7 @@ class Verify {
 }
 
 class UserData {
- // String? createdAt;
+  // String? createdAt;
   String? id;
   String? phone;
   String? userType;
@@ -54,117 +54,129 @@ class UserData {
   String? companyName;
   String? aboutCompany;
 //  DateTime? updatedAt;
-    String? videoUrl;
-    String? alternativePhone;
-    String? dob;
-    String? gender;
- String? letter;
-  UserData({
-  //  this.createdAt,
-    this.id,
-    this.phone,
-    this.userType,
-    this.name,
-    this.email,
-    this.profileImage,
-    this.location,
-    this.currentPay,
-    this.expectationPay,
-    this.skills,
-    this.experience,
-    this.resume,
-    this.companyName,
-    this.aboutCompany,
-    //this.updatedAt,
+  String? videoUrl;
+  String? alternativePhone;
+  String? dob;
+  String? gender;
+  String? letter;
+  int? profileComplete;
+  bool? isHired;
+  String? companyLogo;
+  UserData(
+      {
+      //  this.createdAt,
+      this.id,
+      this.phone,
+      this.userType,
+      this.name,
+      this.email,
+      this.profileImage,
+      this.location,
+      this.currentPay,
+      this.expectationPay,
+      this.skills,
+      this.experience,
+      this.resume,
+      this.companyName,
+      this.aboutCompany,
+      //this.updatedAt,
       this.videoUrl,
-    this.alternativePhone,
-    this.dob,
-    this.gender,
-    this.letter,
-  });
+      this.alternativePhone,
+      this.dob,
+      this.gender,
+      this.letter,
+      this.companyLogo,
+      this.isHired,
+      this.profileComplete});
 
-  UserData copyWith({
-   // String? createdAt,
-    String? id,
-    String? phone,
-    String? userType,
-  //  dynamic otp,
-    String? name,
-    String? email,
-    String? profileImage,
-    String? location,
-    String? currentPay,
-    String? expectationPay,
-    List<String>? skills,
-    String? experience,
-    String? resume,
-    String? companyName,
-    String? aboutCompany,
-  //  int? v,
-  //  DateTime? updatedAt,
-    String? videoUrl,
-    String? alternativePhone,
-    String? dob,
-    String? gender,
-    String? letter,
-  }) =>
+  UserData copyWith(
+          {
+          // String? createdAt,
+          String? id,
+          String? phone,
+          String? userType,
+          //  dynamic otp,
+          String? name,
+          String? email,
+          String? profileImage,
+          String? location,
+          String? currentPay,
+          String? expectationPay,
+          List<String>? skills,
+          String? experience,
+          String? resume,
+          String? companyName,
+          String? aboutCompany,
+          //  int? v,
+          //  DateTime? updatedAt,
+          String? videoUrl,
+          String? alternativePhone,
+          String? dob,
+          String? gender,
+          String? letter,
+          int? profileComplete,
+          bool? isHired,
+          String? companyLogo}) =>
       UserData(
-     //   createdAt: createdAt ?? this.createdAt,
-        id: id ?? this.id,
-        phone: phone ?? this.phone,
-        userType: userType ?? this.userType,
-     //   otp: otp ?? this.otp,
-        name: name ?? this.name,
-        email: email ?? this.email,
-        profileImage: profileImage ?? this.profileImage,
-        location: location ?? this.location,
-        currentPay: currentPay ?? this.currentPay,
-        expectationPay: expectationPay ?? this.expectationPay,
-        skills: skills ?? this.skills,
-        experience: experience ?? this.experience,
-        resume: resume ?? this.resume,
-        companyName: companyName ?? this.companyName,
-        aboutCompany: aboutCompany ?? this.aboutCompany,
-      //  v: v ?? this.v,
-      //  updatedAt: updatedAt ?? this.updatedAt,
-        videoUrl: videoUrl ?? this.videoUrl,
-        alternativePhone: alternativePhone ?? this.alternativePhone,
-        dob: dob ?? this.dob,
-        gender: gender ?? this.gender,
-        letter: letter ?? this.letter,
-      );
-
+          //   createdAt: createdAt ?? this.createdAt,
+          id: id ?? this.id,
+          phone: phone ?? this.phone,
+          userType: userType ?? this.userType,
+          //   otp: otp ?? this.otp,
+          name: name ?? this.name,
+          email: email ?? this.email,
+          profileImage: profileImage ?? this.profileImage,
+          location: location ?? this.location,
+          currentPay: currentPay ?? this.currentPay,
+          expectationPay: expectationPay ?? this.expectationPay,
+          skills: skills ?? this.skills,
+          experience: experience ?? this.experience,
+          resume: resume ?? this.resume,
+          companyName: companyName ?? this.companyName,
+          aboutCompany: aboutCompany ?? this.aboutCompany,
+          //  v: v ?? this.v,
+          //  updatedAt: updatedAt ?? this.updatedAt,
+          videoUrl: videoUrl ?? this.videoUrl,
+          alternativePhone: alternativePhone ?? this.alternativePhone,
+          dob: dob ?? this.dob,
+          gender: gender ?? this.gender,
+          letter: letter ?? this.letter,
+          profileComplete: profileComplete ?? this.profileComplete,
+          isHired: isHired ?? this.isHired,
+          companyLogo: companyLogo ?? this.companyLogo);
 
   factory UserData.fromJson(String str) => UserData.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
   factory UserData.fromMap(Map<String, dynamic> json) => UserData(
-     //   createdAt: json["createdAt"],
-        id: json["_id"],
-        phone: json["phone"],
-        userType: json["userType"],
-        name: json["name"],
-        email: json["email"],
-        profileImage: json["profileImage"],
-        location: json["location"],
-        currentPay: json["currentPay"],
-        expectationPay: json["expectationPay"],
-        skills: json["skills"],
-        experience: json["experience"],
-        resume: json["resume"],
-        companyName: json["companyName"],
-        aboutCompany: json["aboutCompany"],
-    //    updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
-            videoUrl: json["videoUrl"],
-        alternativePhone: json["alternativePhone"],
-        dob: json["dob"],
-        gender: json["gender"],
-        letter: json["letter"],
-      );
+      //   createdAt: json["createdAt"],
+      id: json["_id"],
+      phone: json["phone"],
+      userType: json["userType"],
+      name: json["name"],
+      email: json["email"],
+      profileImage: json["profileImage"],
+      location: json["location"],
+      currentPay: json["currentPay"],
+      expectationPay: json["expectationPay"],
+      skills: json["skills"],
+      experience: json["experience"],
+      resume: json["resume"],
+      companyName: json["companyName"],
+      aboutCompany: json["aboutCompany"],
+      //    updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
+      videoUrl: json["videoUrl"],
+      alternativePhone: json["alternativePhone"],
+      dob: json["dob"],
+      gender: json["gender"],
+      letter: json["letter"],
+      profileComplete: json["profileComplete"],
+      isHired: json["isHired"],
+      companyLogo: json["companyLogo"]);
 
   Map<String, dynamic> toMap() => {
-      //  "createdAt": createdAt,
+        //  "createdAt": createdAt,
         "_id": id,
         "phone": phone,
         "userType": userType,
@@ -179,10 +191,13 @@ class UserData {
         "resume": resume,
         "companyName": companyName,
         "aboutCompany": aboutCompany,
-      //  "updatedAt": updatedAt?.toIso8601String(),
+        //  "updatedAt": updatedAt?.toIso8601String(),
         "alternativePhone": alternativePhone,
         "dob": dob,
         "gender": gender,
         "letter": letter,
+        "profileComplete": profileComplete,
+        "isHired": isHired,
+        "companyLogo": companyLogo
       };
 }

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hiring_roof/data/shared_pref.dart';
 import 'package:hiring_roof/model/verify.dart';
@@ -29,9 +29,13 @@ class ProfileController extends GetxController {
   Rx<XFile> profilepic = XFile("").obs;
   Rx<File> resumefile = File("").obs;
   Rx<File> letter = File("").obs;
-
+  XFile img = XFile('');
+  String gender = (userModal.userData!.gender!.isNotEmpty ? userModal.userData?.gender : 'Male') ?? 'Male';
+  DateTime? dob = (userModal.userData?.dob != null || userModal.userData!.dob!.isNotEmpty)
+      ? DateTime.tryParse(userModal.userData!.dob!)
+      : null;
   final TextEditingController name = TextEditingController(text: userModal.userData?.name ?? "");
-  final TextEditingController phone = TextEditingController(text: userModal.userData?.phone ?? "");
+  final TextEditingController phone = TextEditingController(text: userModal.userData?.phone?.replaceRange(0, 3, "") ?? "");
   final TextEditingController skill = TextEditingController(text: userModal.userData?.skills.toString() ?? "");
   final TextEditingController email = TextEditingController(text: userModal.userData?.email ?? "");
   final TextEditingController experience = TextEditingController(text: userModal.userData?.experience ?? "");
@@ -40,6 +44,12 @@ class ProfileController extends GetxController {
   final TextEditingController location = TextEditingController(text: userModal.userData?.location ?? "");
   final TextEditingController companyName = TextEditingController(text: userModal.userData?.companyName ?? "");
   final TextEditingController aboutCompany = TextEditingController(text: userModal.userData?.aboutCompany ?? "");
+  final TextEditingController alternativePhone = TextEditingController(
+      text: userModal.userData!.alternativePhone != null
+          ? userModal.userData!.alternativePhone!.isEmpty
+              ? ""
+              : userModal.userData?.alternativePhone?.replaceRange(0, 3, "")
+          : "");
 
   // final _obj = ''.obs;
   set profilePic(value) => profilepic.value = value;
@@ -122,19 +132,24 @@ class ProfileController extends GetxController {
       "companyName": companyName,
       "aboutCompany": aboutCompany,
     };
+    //  payload.addIf(dob != null, 'dob', "${dob!.hour}:${dob!.minute}");
+
     var request = http.MultipartRequest('PUT', Uri.parse(ApiString.updateProfile(userModal.userId!)));
     request.fields.addAll(payload);
     request.files.addIf(profilePic.path.isNotEmpty,
         await http.MultipartFile.fromPath('profileImage', profilePic.path, filename: profilePic.name));
-    request.files.addIf(resumeFile.path.isNotEmpty,
-        await http.MultipartFile.fromPath('resume', resumeFile.path, filename: resumeFile.path.split('/').last.split(".").first));
-    await http.MultipartFile.fromPath('videoUrl', videopath.string, filename: videopath.string.split('/').last.split(".").first);
+    //   request.files.addIf(resumeFile.path.isNotEmpty,
+    //   await http.MultipartFile.fromPath('resume', resumeFile.path, filename: resumeFile.path.split('/').last.split(".").first));
+    // await http.MultipartFile.fromPath('videoUrl', videopath.string, filename: videopath.string.split('/').last.split(".").first);
+    // if (img.path.isNotEmpty) {
+    //   request.files.add(await http.MultipartFile.fromPath('companyLogo', img.path, filename: 'logo'));
+    // }
   }
 
   Future<bool> updateProfil() async {
     isUploading.value = true;
     Map<String, String> payload = {
-      "phone": phone.text,
+      "phone": "+91${phone.text}",
       "name": name.text,
       "email": email.text,
       "location": location.text,
@@ -142,9 +157,13 @@ class ProfileController extends GetxController {
       "expectationPay": expectedPay.text,
       "skills": skill.text,
       "experience": experience.text,
-      "companyName": companyName.text,
-      "aboutCompany": aboutCompany.text,
+      //  "companyName": companyName.text,
+      //  "aboutCompany": aboutCompany.text,
+      'gender': gender,
+      'alternativePhone': "+91${alternativePhone.text}",
     };
+    payload.addIf(dob != null, 'dob', "${dob!.hour}:${dob!.minute}");
+
     var request = http.MultipartRequest(
         'PUT',
         Uri.parse(
@@ -164,6 +183,9 @@ class ProfileController extends GetxController {
       request.files.add(await http.MultipartFile.fromPath('letter', letterFile.path,
           filename: letterFile.path.split('/').last.split(".").first));
     }
+    if (img.path.isNotEmpty) {
+      request.files.add(await http.MultipartFile.fromPath('companyLogo', img.path, filename: 'logo'));
+    }
 
     if (videopath.string.isNotEmpty) {
       debugPrint(videopath.value);
@@ -177,10 +199,10 @@ class ProfileController extends GetxController {
     }
     var multipartResponse = await request.send();
     isUploading.value = false;
+    var res = await http.Response.fromStream(multipartResponse);
+    debugPrint(res.body);
     debugPrint(multipartResponse.statusCode.toString());
     if (multipartResponse.statusCode == 200) {
-      var res = await http.Response.fromStream(multipartResponse);
-      debugPrint(res.body);
       userModal.userData = UserData.fromMap(jsonDecode((res.body))["user"]);
       SharedPref().saveModel(userModal);
 

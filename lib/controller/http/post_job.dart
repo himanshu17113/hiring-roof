@@ -29,6 +29,7 @@ class JobPost extends GetConnect {
     final String experience,
     final String service,
     final String stream,
+    final String vacancy,
     //final File? file
   ) async {
     //debugPrint(statement);(title.toString());
@@ -36,19 +37,20 @@ class JobPost extends GetConnect {
 
     Map<String, String> payload = {
       "jobTittle": title,
-      "skills": '["$knowledge","$knowledge"]',
+      "skills": '["$knowledge"]',
       "jobType": workingPlace,
       "workType": jobType,
       "availability": availability,
       "timePeriod": timePeriod,
       "note": jobSummary,
-      "pay": double.tryParse(pay).toString(),
+      "pay": pay,
       "payType": payType,
       "location": location,
-      "companyName": companyName,
-      'stream': '["$stream" ]',
-      'serviceType': service,
-      'experience': experience
+      "companyName": 'companyName',
+      'stream': '["$stream"]',
+      //    'serviceType': service,
+      'experience': experience,
+      'vacancies': vacancy
     };
     var request = http.MultipartRequest(
         'PUT',
@@ -87,6 +89,7 @@ class JobPost extends GetConnect {
     // http.Response response = await client.put(Uri.parse(ApiString.putJob), headers: , body: jsonEncode(body));
     var response = await http.Response.fromStream(multipartResponse);
     print(response.body);
+    print(response.statusCode.toString());
 
     if (response.statusCode == 200) {
       return true;

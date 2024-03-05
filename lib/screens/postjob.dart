@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:get/get.dart';
@@ -10,7 +13,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:image_picker_platform_interface/image_picker_platform_interface.dart';
 import '../controller/http/post_job.dart';
 
-class PostJob extends StatelessWidget {
+class PostJob extends StatefulWidget {
   const PostJob({super.key});
   static Future<List<String?>> pickwindowsImage() async {
     final ImagePickerPlatform wpicker = ImagePickerPlatform.instance;
@@ -30,18 +33,26 @@ class PostJob extends StatelessWidget {
     fontSize: 15,
     color: white,
   );
-  static const InputDecoration inputDecoration =
-      InputDecoration(contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 8), border: OutlineInputBorder());
+  static const InputDecoration inputDecoration = InputDecoration(
+      contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+      border: OutlineInputBorder(
+        borderSide: BorderSide.none,
+      ));
   static const List<String> workingPlaces = ["wfh", "wfo"];
   //["Remote", "In Office", "Hybrid"];
-  static const List<String> jobTypes = ["contractual", "part time", "full time", "internship"];
+  static const List<String> jobTypes = ["contractual", "part time", "full time", "internship", 'hourly'];
   // ["contractual", "part time", "Full Time", "internship"];
   // static final List<String> availabilities = ["immediately", "10d", "15d", "20d", "30d", "60d", "90d"];
   static const List<String> timePeriodList = ["long term", "short term"];
   //['Long Term', "short term"];
-  static const List<String> payTypes = ["yearly", "monthly"];
+  static const List<String> payTypes = ["yearly", "monthly", "weekly"];
   static const List<String> serviceType = ['urgent', 'premium'];
 
+  @override
+  State<PostJob> createState() => _PostJobState();
+}
+
+class _PostJobState extends State<PostJob> {
   Future<List<String?>> pickImage() async {
     XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 25);
     final List<String?> list = [image?.path.toString(), image?.name.toString()];
@@ -79,47 +90,50 @@ class PostJob extends StatelessWidget {
   }
 
   // int maxapihit = 100;
+  String workingPlace = PostJob.workingPlaces[0];
+
+  String title = "";
+
+  String location = userModal.userData?.location ?? "";
+
+  String companyName = "";
+
+  String pay = "";
+
+  String payType = PostJob.payTypes[1];
+
+  String path = '';
+
+  String jobSummary = "";
+
+  String knowledge = "";
+
+  String timePeriod = PostJob.timePeriodList[0];
+
+  String job = "";
+
+  String jobType = PostJob.jobTypes[2];
+
+  String companyLogo = "";
+
+  bool availability = false;
+
+  String filename = "";
+
+  String stream = '';
+
+  String experience = '';
+
+  String service = PostJob.serviceType[0];
+
+  // int vacancy = 1;
+  String vacancy = '';
 
   @override
   Widget build(BuildContext context) {
-    int maxapihit = 3;
+    int maxapihit = 10;
     final JobPost jobPost = JobPost();
 
-    String workingPlace = workingPlaces[0];
-
-    String title = "";
-
-    String location = userModal.userData?.location ?? "";
-
-    String companyName = "";
-
-    String pay = "";
-
-    String payType = payTypes[1];
-
-    String path = '';
-
-    String jobSummary = "";
-
-    String knowledge = "";
-
-    String timePeriod = timePeriodList[0];
-
-    String job = "";
-
-    String jobType = jobTypes[2];
-
-    String companyLogo = "";
-
-    bool availability = false;
-
-    String filename = "";
-
-    String stream = '';
-
-    String experience = '';
-
-    String service = serviceType[0];
     //  debugPrint(userModal.token);
     return Scaffold(
       backgroundColor: const Color(0xFF080808),
@@ -157,12 +171,12 @@ class PostJob extends StatelessWidget {
                     children: [
                       const Spacer(),
                       Expanded(
-                          flex: 15,
+                          flex: 32,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("Titile of Job", style: headertextStyle),
+                              const Text("Titile of Job", style: PostJob.headertextStyle),
                               Padding(
                                 padding: const EdgeInsets.only(top: 7, bottom: 20),
                                 child: TextField(
@@ -170,21 +184,27 @@ class PostJob extends StatelessWidget {
                                     scrollPadding: const EdgeInsets.only(left: 5),
                                     onChanged: (value) => title = value,
                                     textAlignVertical: TextAlignVertical.top,
-                                    style: inputtextStyle,
-                                    decoration: inputDecoration),
+                                    style: PostJob.inputtextStyle,
+                                    decoration: PostJob.inputDecoration),
                               ),
                             ],
                           )),
-                      const Spacer(
-                        flex: 2,
-                      ),
+                      const Spacer(),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 15),
+                  child: Row(
+                    children: [
+                      const Spacer(),
                       Expanded(
-                          flex: 15,
+                          flex: 32,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("Location", style: headertextStyle),
+                              const Text("Location", style: PostJob.headertextStyle),
                               Padding(
                                 padding: const EdgeInsets.only(top: 7, bottom: 20),
                                 child: TextField(
@@ -204,8 +224,8 @@ class PostJob extends StatelessWidget {
                                     ],
                                     onChanged: (value) => location = value,
                                     textAlignVertical: TextAlignVertical.top,
-                                    style: inputtextStyle,
-                                    decoration: inputDecoration),
+                                    style: PostJob.inputtextStyle,
+                                    decoration: PostJob.inputDecoration),
                               ),
                             ],
                           )),
@@ -213,18 +233,19 @@ class PostJob extends StatelessWidget {
                     ],
                   ),
                 ),
+
                 Padding(
                   padding: const EdgeInsets.only(top: 15),
                   child: Row(
                     children: [
                       const Spacer(),
                       Expanded(
-                          flex: 15,
+                          flex: 32,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("Company Name", style: headertextStyle),
+                              const Text("Company Name", style: PostJob.headertextStyle),
                               Padding(
                                 padding: const EdgeInsets.only(top: 7, bottom: 20),
                                 child: TextField(
@@ -233,21 +254,28 @@ class PostJob extends StatelessWidget {
                                     controller: TextEditingController()..text = userModal.userData?.companyName ?? "",
                                     onChanged: (value) => companyName = value,
                                     textAlignVertical: TextAlignVertical.top,
-                                    style: inputtextStyle,
-                                    decoration: inputDecoration),
+                                    style: PostJob.inputtextStyle,
+                                    decoration: PostJob.inputDecoration),
                               ),
                             ],
                           )),
-                      const Spacer(
-                        flex: 2,
-                      ),
+                      const Spacer(),
+                    ],
+                  ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.only(top: 15),
+                  child: Row(
+                    children: [
+                      const Spacer(),
                       Expanded(
-                          flex: 15,
+                          flex: 32,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("Pay", style: headertextStyle),
+                              const Text("Pay", style: PostJob.headertextStyle),
                               Padding(
                                 padding: const EdgeInsets.only(top: 7, bottom: 20),
                                 child: TextField(
@@ -257,8 +285,39 @@ class PostJob extends StatelessWidget {
                                     scrollPadding: EdgeInsets.zero,
                                     onChanged: (value) => pay = value,
                                     textAlignVertical: TextAlignVertical.top,
-                                    style: inputtextStyle,
-                                    decoration: inputDecoration),
+                                    style: PostJob.inputtextStyle,
+                                    decoration: PostJob.inputDecoration),
+                              ),
+                            ],
+                          )),
+                      const Spacer(),
+                    ],
+                  ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.only(top: 15),
+                  child: Row(
+                    children: [
+                      const Spacer(),
+                      Expanded(
+                          flex: 32,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text("Job Summary", style: PostJob.headertextStyle),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 7, bottom: 20),
+                                child: TextField(
+                                    maxLength: 300,
+                                    maxLines: 3,
+                                    scrollPhysics: const ClampingScrollPhysics(),
+                                    scrollPadding: EdgeInsets.zero,
+                                    onChanged: (value) => jobSummary = value,
+                                    textAlignVertical: TextAlignVertical.top,
+                                    style: PostJob.inputtextStyle,
+                                    decoration: PostJob.inputDecoration),
                               ),
                             ],
                           )),
@@ -267,40 +326,17 @@ class PostJob extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(top: 0),
                   child: Row(
                     children: [
                       const Spacer(),
                       Expanded(
-                          flex: 15,
+                          flex: 32,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("Job Summary", style: headertextStyle),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 7, bottom: 20),
-                                child: TextField(
-                                    maxLines: 3,
-                                    scrollPhysics: const ClampingScrollPhysics(),
-                                    scrollPadding: EdgeInsets.zero,
-                                    onChanged: (value) => jobSummary = value,
-                                    textAlignVertical: TextAlignVertical.top,
-                                    style: inputtextStyle,
-                                    decoration: inputDecoration),
-                              ),
-                            ],
-                          )),
-                      const Spacer(
-                        flex: 2,
-                      ),
-                      Expanded(
-                          flex: 15,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text("Knowledge , Skills and Ablities ", style: headertextStyle),
+                              const Text("Knowledge , Skills and Ablities ", style: PostJob.headertextStyle),
                               Padding(
                                 padding: const EdgeInsets.only(top: 7, bottom: 20),
                                 child: TextField(
@@ -309,8 +345,8 @@ class PostJob extends StatelessWidget {
                                     onChanged: (value) => knowledge = value,
                                     maxLines: 3,
                                     textAlignVertical: TextAlignVertical.top,
-                                    style: inputtextStyle,
-                                    decoration: inputDecoration),
+                                    style: PostJob.inputtextStyle,
+                                    decoration: PostJob.inputDecoration),
                               ),
                             ],
                           )),
@@ -381,7 +417,7 @@ class PostJob extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("Experience in years", style: headertextStyle),
+                              const Text("Experience in years", style: PostJob.headertextStyle),
                               Padding(
                                 padding: const EdgeInsets.only(top: 7, bottom: 20),
                                 child: TextField(
@@ -390,8 +426,8 @@ class PostJob extends StatelessWidget {
                                     keyboardType: TextInputType.number,
                                     textAlignVertical: TextAlignVertical.top,
                                     onChanged: (value) => experience = value.toString(),
-                                    style: inputtextStyle,
-                                    decoration: inputDecoration),
+                                    style: PostJob.inputtextStyle,
+                                    decoration: PostJob.inputDecoration),
                               ),
                             ],
                           )),
@@ -404,7 +440,7 @@ class PostJob extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("Stream", style: headertextStyle),
+                              const Text("Stream", style: PostJob.headertextStyle),
                               Padding(
                                 padding: const EdgeInsets.only(top: 7, bottom: 20),
                                 child: TextField(
@@ -412,8 +448,8 @@ class PostJob extends StatelessWidget {
                                     scrollPadding: EdgeInsets.zero,
                                     textAlignVertical: TextAlignVertical.top,
                                     onChanged: (value) => stream = value,
-                                    style: inputtextStyle,
-                                    decoration: inputDecoration),
+                                    style: PostJob.inputtextStyle,
+                                    decoration: PostJob.inputDecoration),
                               ),
                             ],
                           )),
@@ -432,7 +468,7 @@ class PostJob extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("Time Period", style: headertextStyle),
+                              const Text("Time Period", style: PostJob.headertextStyle),
                               StatefulBuilder(builder: (BuildContext context, setState) {
                                 return Container(
                                   height: 45,
@@ -450,12 +486,12 @@ class PostJob extends StatelessWidget {
                                     isExpanded: true,
                                     underline: const SizedBox.shrink(),
                                     hint: Text(
-                                      timePeriodList[0],
+                                      PostJob.timePeriodList[0],
                                       style: const TextStyle(color: Colors.grey, fontSize: 15),
                                     ),
                                     borderRadius: BorderRadius.circular(10),
                                     icon: const Icon(Icons.arrow_drop_down),
-                                    items: timePeriodList.map((String items) {
+                                    items: PostJob.timePeriodList.map((String items) {
                                       return DropdownMenuItem(
                                         value: items,
                                         child: Text(
@@ -482,7 +518,7 @@ class PostJob extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("Stream", style: headertextStyle),
+                              const Text("Add Tag", style: PostJob.headertextStyle),
                               StatefulBuilder(builder: (BuildContext context, setState) {
                                 return Container(
                                   height: 45,
@@ -500,12 +536,12 @@ class PostJob extends StatelessWidget {
                                     isExpanded: true,
                                     underline: const SizedBox.shrink(),
                                     hint: Text(
-                                      serviceType[0],
+                                      PostJob.serviceType[0],
                                       style: const TextStyle(color: Colors.grey, fontSize: 15),
                                     ),
                                     borderRadius: BorderRadius.circular(10),
                                     icon: const Icon(Icons.arrow_drop_down),
-                                    items: serviceType.map((String items) {
+                                    items: PostJob.serviceType.map((String items) {
                                       return DropdownMenuItem(
                                         value: items,
                                         child: Text(
@@ -538,7 +574,7 @@ class PostJob extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("Working Place", style: headertextStyle),
+                              const Text("Working Place", style: PostJob.headertextStyle),
                               StatefulBuilder(builder: (BuildContext context, setState) {
                                 return Container(
                                   height: 45,
@@ -556,12 +592,12 @@ class PostJob extends StatelessWidget {
                                     isExpanded: true,
                                     underline: const SizedBox.shrink(),
                                     hint: Text(
-                                      workingPlaces[0],
+                                      PostJob.workingPlaces[0],
                                       style: const TextStyle(color: Colors.grey, fontSize: 15),
                                     ),
                                     borderRadius: BorderRadius.circular(10),
                                     icon: const Icon(Icons.arrow_drop_down),
-                                    items: workingPlaces.map((String items) {
+                                    items: PostJob.workingPlaces.map((String items) {
                                       return DropdownMenuItem(
                                         value: items,
                                         child: Text(
@@ -588,7 +624,7 @@ class PostJob extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("Job Type", style: headertextStyle),
+                              const Text("Job Type", style: PostJob.headertextStyle),
                               StatefulBuilder(builder: (BuildContext context, setState) {
                                 return Container(
                                   height: 45,
@@ -606,12 +642,12 @@ class PostJob extends StatelessWidget {
                                     isExpanded: true,
                                     underline: const SizedBox.shrink(),
                                     hint: Text(
-                                      jobTypes[2],
+                                      PostJob.jobTypes[2],
                                       style: const TextStyle(color: Colors.grey, fontSize: 15),
                                     ),
                                     borderRadius: BorderRadius.circular(10),
                                     icon: const Icon(Icons.arrow_drop_down),
-                                    items: jobTypes.map((String items) {
+                                    items: PostJob.jobTypes.map((String items) {
                                       return DropdownMenuItem(
                                         value: items,
                                         child: Text(
@@ -644,7 +680,7 @@ class PostJob extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("Availability", style: headertextStyle),
+                              const Text("Availability", style: PostJob.headertextStyle),
                               Padding(
                                   //  height: 45,
                                   // padding: const EdgeInsets.only(left: 15, right: 5),
@@ -681,7 +717,7 @@ class PostJob extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("Pay Type", style: headertextStyle),
+                              const Text("Pay Type", style: PostJob.headertextStyle),
                               StatefulBuilder(builder: (BuildContext context, setState) {
                                 return Container(
                                   height: 45,
@@ -699,12 +735,12 @@ class PostJob extends StatelessWidget {
                                     isExpanded: true,
                                     underline: const SizedBox.shrink(),
                                     hint: Text(
-                                      payTypes[1],
+                                      PostJob.payTypes[1],
                                       style: const TextStyle(color: Colors.grey, fontSize: 15),
                                     ),
                                     borderRadius: BorderRadius.circular(10),
                                     icon: const Icon(Icons.arrow_drop_down),
-                                    items: payTypes.map((String items) {
+                                    items: PostJob.payTypes.map((String items) {
                                       return DropdownMenuItem(
                                         value: items,
                                         child: Text(
@@ -726,21 +762,76 @@ class PostJob extends StatelessWidget {
                     ],
                   ),
                 ),
+
                 Padding(
                   padding: const EdgeInsets.only(top: 15),
                   child: Row(
                     children: [
                       const Spacer(),
                       Expanded(
-                        flex: 32,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text("Upload Company Logo", style: headertextStyle),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10, bottom: 20),
-                              child: StatefulBuilder(
-                                builder: (BuildContext context, setState) => InkWell(
+                          flex: 32,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text("Vacancy", style: PostJob.headertextStyle),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 7, bottom: 20),
+                                child: TextField(
+                                    scrollPhysics: const ClampingScrollPhysics(),
+                                    scrollPadding: const EdgeInsets.only(left: 5),
+                                    onChanged: (value) => vacancy = value,
+                                    keyboardType: TextInputType.number,
+                                    textAlignVertical: TextAlignVertical.top,
+                                    style: PostJob.inputtextStyle,
+                                    decoration: PostJob.inputDecoration),
+                              ),
+                            ],
+                          )),
+                      const Spacer(),
+                    ],
+                  ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.only(top: 15),
+                  child: StatefulBuilder(
+                    builder: (BuildContext context, setState) => Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Spacer(),
+                        Expanded(
+                          flex: 6,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text("", style: PostJob.headertextStyle),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 60),
+                                child: path.isEmpty
+                                    ? CircleAvatar(
+                                        radius: 28,
+                                        backgroundColor: darkestPurple,
+                                        backgroundImage:
+                                            userModal.userData?.companyLogo != null && userModal.userData!.companyLogo!.isNotEmpty
+                                                ? CachedNetworkImageProvider(userModal.userData!.companyLogo!)
+                                                : null)
+                                    : CircleAvatar(
+                                        radius: 28, backgroundColor: darkestPurple, backgroundImage: FileImage(File(path))),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const Spacer(),
+                        Expanded(
+                          flex: 24,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text("Upload Company Logo", style: PostJob.headertextStyle),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10, bottom: 20),
+                                child: InkWell(
                                   onTap: () async {
                                     if (PlatformInfo.isDesktopOS()) {
                                       List<String?>? l = await onImageButtonPressed(
@@ -779,81 +870,107 @@ class PostJob extends StatelessWidget {
                                       )),
                                 ),
                               ),
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.only(top: 7, bottom: 20),
-                              child: Text(
-                                "Mollit in laborum tempor Lorem incididunt irure. Aute eu ex ad sunt. Pariatur sint culpa do incididunt ",
-                                style: TextStyle(color: white, fontSize: 12.5, fontWeight: FontWeight.w300),
+                              const Padding(
+                                padding: EdgeInsets.only(top: 7, bottom: 20),
+                                child: Text(
+                                  "Mollit in laborum tempor Lorem incididunt irure. Aute eu ex ad sunt. Pariatur sint culpa do incididunt ",
+                                  style: TextStyle(color: white, fontSize: 12.5, fontWeight: FontWeight.w300),
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      const Spacer(),
-                    ],
+                        const Spacer(),
+                      ],
+                    ),
                   ),
                 ),
                 GetBuilder<Controller>(
                   autoRemove: false,
                   init: Controller(),
-                  builder: (controller) => GestureDetector(
-                    onTap: () async {
-                      while (maxapihit > 1) {
-                        bool reult = await jobPost.postJob(
-                            title,
-                            location,
-                            companyName,
-                            pay,
-                            jobSummary,
-                            knowledge,
-                            timePeriod,
-                            job,
-                            workingPlace,
-                            jobType,
-                            companyLogo,
-                            availability.toString(),
-                            payType,
-                            path,
-                            filename,
-                            "$experience years",
-                            service,
-                            stream);
-                        if (reult) {
-                          maxapihit--;
-                          ApplicationxController applicationxController = Get.put(ApplicationxController());
-                          applicationxController.getMyPostedApplication();
-                          controller.pageUpdate(3);
-                          break;
-                        } else {
-                          maxapihit--;
-                          // ignore: use_build_context_synchronously
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                              duration: const Duration(seconds: 10),
-                              behavior: SnackBarBehavior.floating,
-                              //  action: SnackBarAction(label: "Copy OTP", onPressed: () => Clipboard.setData(ClipboardData(text: data?.otp?.toString() ?? ""))),
-                              content: const Text("Please try again")));
-                          break;
+                  builder: (controller) {
+                    ValueNotifier<bool> isPosting = ValueNotifier(false);
+                    return GestureDetector(
+                      onSecondaryTap: () {},
+                      onTap: () async {
+                        isPosting.value = true;
+                        while (maxapihit > 1) {
+                          bool reult = await jobPost.postJob(
+                              title,
+                              location,
+                              companyName,
+                              pay,
+                              jobSummary,
+                              knowledge,
+                              timePeriod,
+                              job,
+                              workingPlace,
+                              jobType,
+                              companyLogo,
+                              availability.toString(),
+                              payType,
+                              path,
+                              filename,
+                              "$experience years",
+                              service,
+                              stream,
+                              vacancy);
+                          if (reult) {
+                            maxapihit--;
+                            debugPrint("job posted");
+                            ApplicationxController applicationxController = Get.put(ApplicationxController());
+                            applicationxController.getMyPostedApplication(clear: true);
+                            controller.pageUpdate(3);
+
+                            break;
+                          } else {
+                            maxapihit--;
+                            // ignore: use_build_context_synchronously
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                duration: const Duration(seconds: 10),
+                                behavior: SnackBarBehavior.floating,
+                                //  action: SnackBarAction(label: "Copy OTP", onPressed: () => Clipboard.setData(ClipboardData(text: data?.otp?.toString() ?? ""))),
+                                content: const Text("Please try again")));
+                            break;
+                          }
                         }
-                      }
-                    },
-                    child: Container(
-                      height: 45,
-                      alignment: Alignment.center,
-                      width: double.maxFinite,
-                      padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 50),
-                      margin: const EdgeInsets.symmetric(vertical: 00, horizontal: 35),
-                      decoration: BoxDecoration(
-                          color: const Color.fromRGBO(255, 255, 255, 1),
-                          borderRadius: BorderRadius.circular(8),
-                          gradient: linearGradient),
-                      child: const Text(
-                        "Upload",
-                        style: TextStyle(color: white90),
+                      },
+                      child: ValueListenableBuilder(
+                        valueListenable: isPosting,
+                        builder: (context, value, child) => Container(
+                          height: 45,
+                          alignment: Alignment.center,
+                          width: double.maxFinite,
+                          padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 50),
+                          margin: const EdgeInsets.symmetric(vertical: 00, horizontal: 35),
+                          decoration: BoxDecoration(
+                              color: const Color.fromRGBO(255, 255, 255, 1),
+                              borderRadius: BorderRadius.circular(8),
+                              gradient: linearGradient),
+                          child: !value
+                              ? const Text(
+                                  "Upload",
+                                  style: TextStyle(color: white90),
+                                )
+                              : const Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SizedBox.square(
+                                        dimension: 25,
+                                        child: CircularProgressIndicator.adaptive(
+                                          strokeWidth: 2,
+                                        )),
+                                    Text(
+                                      "     Uploading...",
+                                      style: TextStyle(color: white90),
+                                    )
+                                  ],
+                                ),
+                        ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
                 ),
               ],
             ),

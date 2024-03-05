@@ -9,10 +9,14 @@ import 'package:hiring_roof/data/shared_pref.dart';
 import 'package:hiring_roof/main.dart';
 import 'package:hiring_roof/util/constant/color.dart';
 import 'package:hiring_roof/util/constant/const.dart';
+import 'package:hiring_roof/util/platformdata.dart';
 import 'package:hiring_roof/util/widgets/bottom/rbottom.dart';
 import 'package:hiring_roof/util/widgets/bottom/ubottom.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:image_picker_platform_interface/image_picker_platform_interface.dart';
+import 'package:intl/intl.dart';
 
+//enum Gender { Male , Female, Other }
 class ProfileMobileBody extends StatelessWidget {
   const ProfileMobileBody({super.key});
   static const TextStyle headertextStyle = TextStyle(
@@ -23,9 +27,45 @@ class ProfileMobileBody extends StatelessWidget {
     fontSize: 15,
     // color: white,
   );
+  Future<XFile> pickImage() async {
+    final XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 25);
+    //  final List<String?> list = [image?.path.toString(), image?.name.toString()];
+    return image!;
+    // return list;
+  }
 
-  static const InputDecoration inputDecoration =
-      InputDecoration(contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 4), border: OutlineInputBorder());
+  static final List<String> gender = ['Male', 'Female', 'Other'];
+//  Future<List<String?>?>
+  onImageButtonPressed(
+    ImageSource source, {
+    required BuildContext context,
+  }) async {
+    final ImagePickerPlatform wpicker = ImagePickerPlatform.instance;
+
+    if (context.mounted) {
+      try {
+        final XFile? image = await wpicker.getImageFromSource(
+          source: source,
+          // options: const ImagePickerOptions(
+          //     // maxWidth: maxWidth,
+          //     // maxHeight: maxHeight,
+          //     // imageQuality: quality,
+          //     ),
+        );
+        //   final List<String?> list = [image?.path.toString(), image?.name.toString()];
+
+        //    return list;
+        return image;
+      } catch (e) {
+        debugPrint(e.toString());
+        return null;
+      }
+    }
+    return null;
+  }
+
+  static const InputDecoration inputDecoration = InputDecoration(
+      contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 4), border: OutlineInputBorder(borderSide: BorderSide.none));
   @override
   Widget build(BuildContext context) {
     final ProfileController controller = Get.put(ProfileController());
@@ -47,7 +87,7 @@ class ProfileMobileBody extends StatelessWidget {
                   children: [
                     const Spacer(),
                     Expanded(
-                      flex: 15,
+                      flex: 32,
                       child: Column(
                         children: [
                           Obx(() => IconButton(
@@ -97,11 +137,17 @@ class ProfileMobileBody extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const Spacer(
-                      flex: 2,
-                    ),
+                    const Spacer(),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 15),
+                child: Row(
+                  children: [
+                    const Spacer(),
                     Expanded(
-                        flex: 15,
+                        flex: 32,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -165,6 +211,38 @@ class ProfileMobileBody extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            const Text("Alternative Phone", style: headertextStyle),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 7, bottom: 20),
+                              child: TextField(
+                                  keyboardType: TextInputType.phone,
+                                  maxLines: 1,
+                                  scrollPhysics: const ClampingScrollPhysics(),
+                                  scrollPadding: EdgeInsets.zero,
+                                  controller: controller.alternativePhone,
+                                  // classController.courseTitleController,
+
+                                  textAlignVertical: TextAlignVertical.top,
+                                  style: inputtextStyle,
+                                  decoration: inputDecoration),
+                            ),
+                          ],
+                        )),
+                    const Spacer(),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: userModal.userType == "jobSeeker" ? 15 : 35),
+                child: Row(
+                  children: [
+                    const Spacer(),
+                    Expanded(
+                        flex: 32,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
                             const Text("Your Email", style: headertextStyle),
                             Padding(
                               padding: const EdgeInsets.only(top: 7, bottom: 20),
@@ -180,6 +258,113 @@ class ProfileMobileBody extends StatelessWidget {
                                   style: inputtextStyle,
                                   decoration: inputDecoration),
                             ),
+                          ],
+                        )),
+                    const Spacer(),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 15),
+                child: Row(
+                  children: [
+                    const Spacer(),
+                    Expanded(
+                        flex: 15,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text("Gender", style: headertextStyle),
+                            StatefulBuilder(builder: (BuildContext context, setState) {
+                              return Container(
+                                height: 45,
+                                padding: const EdgeInsets.only(left: 15, right: 5),
+                                margin: const EdgeInsets.only(top: 7, bottom: 20),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(color: white40),
+                                ),
+                                child: DropdownButton(
+                                    dropdownColor: Colors.black87,
+                                    style: const TextStyle(color: white),
+                                    value: controller.gender,
+                                    elevation: 1,
+                                    isExpanded: true,
+                                    underline: const SizedBox.shrink(),
+                                    hint: Text(
+                                      controller.gender,
+                                      style: const TextStyle(color: Colors.grey, fontSize: 15),
+                                    ),
+                                    borderRadius: BorderRadius.circular(10),
+                                    icon: const Icon(Icons.arrow_drop_down),
+                                    items: gender.map((String items) {
+                                      return DropdownMenuItem(
+                                        value: items,
+                                        child: Text(
+                                          items,
+                                        ),
+                                      );
+                                    }).toList(),
+                                    onChanged: (String? newValue) => setState(() => controller.gender = newValue!)),
+                              );
+                            }),
+                          ],
+                        )),
+                    const Spacer(
+                      flex: 2,
+                    ),
+                    Expanded(
+                        flex: 15,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text("DOB",
+                                style: TextStyle(
+                                  fontSize: 13,
+                                )),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 7, bottom: 20),
+                              child: StatefulBuilder(
+                                  builder: (BuildContext context, setState) => GestureDetector(
+                                        onTap: () async {
+                                          controller.dob = await showDatePicker(
+                                              context: context,
+                                              initialDate: DateTime.now(),
+                                              firstDate: DateTime(2000),
+                                              lastDate: DateTime(2101));
+                                          setState(() {});
+                                          // .whenComplete(() =>
+
+                                          //);
+                                        },
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 2),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(8),
+                                            border: Border.all(width: 1.2, color: theme.colorScheme.outline),
+                                            //   color: theme.colorScheme.onInverseSurface
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                            children: [
+                                              const Spacer(),
+                                              Expanded(
+                                                flex: 4,
+                                                child: Text(
+                                                  controller.dob == null ? " " : DateFormat('yyyy-MM-dd').format(controller.dob!),
+                                                  style: TextStyle(color: theme.colorScheme.onSurfaceVariant),
+                                                ),
+                                              ),
+                                              const Spacer(
+                                                flex: 3,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      )),
+                            )
                           ],
                         )),
                     const Spacer(),
@@ -640,15 +825,83 @@ class ProfileMobileBody extends StatelessWidget {
                     ],
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 15),
+                  child: Row(
+                    children: [
+                      const Spacer(),
+                      Expanded(
+                        flex: 32,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text("Upload Company Logo", style: headertextStyle),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10, bottom: 20),
+                              child: StatefulBuilder(
+                                builder: (BuildContext context, setState) => InkWell(
+                                  onTap: () async {
+                                    if (PlatformInfo.isDesktopOS()) {
+                                      controller.img = await onImageButtonPressed(
+                                        ImageSource.gallery,
+                                        context: context,
+                                      );
+                                    } else {
+                                      controller.img = await pickImage();
+                                    }
+                                    setState(
+                                      () {},
+                                    );
+                                  },
+                                  child: DottedBorder(
+                                      padding: const EdgeInsets.all(22),
+                                      color: Colors.grey,
+                                      strokeWidth: 1,
+                                      dashPattern: const [8, 8],
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.upload,
+                                            color: ((userModal.userData!.companyLogo?.isNotEmpty ?? false) ||
+                                                    controller.img.path.isNotEmpty)
+                                                ? Colors.green
+                                                : Colors.grey,
+                                          ),
+                                          ((userModal.userData!.companyLogo?.isNotEmpty ?? false) ||
+                                                  controller.img.path.isNotEmpty)
+                                              ? const Text(" Uploaded ", style: TextStyle(color: Colors.green, fontSize: 16))
+                                              : const Text(" Upload Company Logo",
+                                                  style: TextStyle(color: Colors.grey, fontSize: 16)),
+                                        ],
+                                      )),
+                                ),
+                              ),
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(top: 7, bottom: 20),
+                              child: Text(
+                                "Mollit in laborum tempor Lorem incididunt irure. Aute eu ex ad sunt. Pariatur sint culpa do incididunt ",
+                                style: TextStyle(color: white, fontSize: 12.5, fontWeight: FontWeight.w300),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Spacer(),
+                    ],
+                  ),
+                ),
               ],
               GestureDetector(
                 onTap: () async => await controller.updateProfil().then((value) => value
-                    ? Navigator.pop(context)
-                    // pushAndRemoveUntil(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => userModal.userType == "jobSeeker" ? const UNav() : const ReqNav()),
-                    //     ((route) => false))
+                    ? Navigator.
+                        //.pop(context)
+                        pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => userModal.userType == "jobSeeker" ? const UNav() : const ReqNav()),
+                            ((route) => false))
                     : null),
                 child: Obx(() => Container(
                       height: 45,

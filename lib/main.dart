@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hiring_roof/data/shared_pref.dart';
+import 'package:hiring_roof/screens/intro/intero_screen.dart';
 import 'package:hiring_roof/screens/sign/signin.dart';
 import 'package:hiring_roof/util/widgets/bottom/rbottom.dart';
 import 'package:hiring_roof/util/widgets/bottom/ubottom.dart';
+
 import 'services/notification_service.dart';
 import 'util/constant/const.dart';
 import 'util/theme.dart';
@@ -33,7 +35,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     query = MediaQuery.of(context);
     screenSize = query!.size;
-    isjobSeeker = userModal.userType == "jobSeeker";
+    // isjobSeeker = userModal.userType == "jobSeeker";
     tablet = screenSize.width < 1200 ? true : false;
     debugPrint(userModal.userId);
     return MaterialApp(
@@ -44,7 +46,7 @@ class MyApp extends StatelessWidget {
       theme: MaterialTheme.dark(),
       home: userModal.userId == null
           ? const Sigin()
-          : isjobSeeker
+          : userModal.userType == "jobSeeker"
               ? const UNav()
               : const ReqNav(),
     );

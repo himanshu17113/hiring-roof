@@ -73,6 +73,10 @@ class MyJobsxController extends GetxController {
   }
 
   Future<void> getSaved({bool clear = false}) async {
+    if (clear) {
+      endOfSaved = false;
+      indexOfSaved = 1;
+    }
     if (!endOfSaved) {
       debugPrint((ApiString.getsave));
       final http.Response response = await client
@@ -235,5 +239,15 @@ class MyJobsxController extends GetxController {
         }
       }
     }
+  }
+
+  refreshAll() {
+    getSaved( clear: true);
+    getApplied(clear: true);
+    getMyShortlist(clear: true);
+    getInterveiws(clear: true);
+    getInterveiws2(clear: true);
+    getResults(clear: true);
+    return true;
   }
 }

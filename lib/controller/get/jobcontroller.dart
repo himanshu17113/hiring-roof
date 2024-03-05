@@ -76,10 +76,12 @@ class JobxController extends GetxController {
 
   scroll() => scrollController.jumpTo(position);
 //  Future<JobModal?>
-  getMyJobs() async {
+  getMyJobs({bool clear = false}) async {
     debugPrint(" job length ${myjobs.length}");
-
-    debugPrint(userModal.token ?? token);
+    if (clear) {
+      page = 1;
+      
+    }
     debugPrint("${ApiString.getJobs}?page=$page&limit=4}");
     http.Response response = await client.get(
       Uri.parse("${ApiString.getJobs}?page=$page&limit=4"),
@@ -90,6 +92,9 @@ class JobxController extends GetxController {
     if (response.statusCode == 200) {
       jobModal = JobModal.fromRawJson(response.body);
       if (jobModal.jobs!.isNotEmpty) {
+        if (clear) {
+          myjobs.clear();
+        }
         myjobs.addAll(jobModal.jobs!);
 
         page++;

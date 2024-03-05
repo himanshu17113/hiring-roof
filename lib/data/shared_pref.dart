@@ -59,4 +59,15 @@ class SharedPref {
       return null;
     }
   }
+    getuseronlinewithid() async {
+    http.Response response = await http.get(Uri.parse(ApiString.getProfile(userModal.userId!)));
+    if (response.statusCode == 200) {
+      userModal.userData = UserData.fromJson(jsonDecode(response.body)["userRecord"]);
+      saveModel(userModal);
+      return userModal;
+    } else {
+      return null;
+    }
+  }
+
 }

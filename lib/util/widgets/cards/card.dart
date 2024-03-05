@@ -23,8 +23,7 @@ class JCard extends StatelessWidget {
   final bool isInterveiw;
   final bool isInterveiw2;
   final bool isSelected;
-  final String? aplicant;
-  final String? interviewDate;
+   final String? interviewDate;
   final String? interviewTime;
 
   final Function(Application applicaton)? callback;
@@ -40,8 +39,7 @@ class JCard extends StatelessWidget {
     this.isInterveiw = false,
     this.isInterveiw2 = false,
     this.isSelected = false,
-    this.aplicant,
-    this.interviewDate,
+     this.interviewDate,
     this.interviewTime,
   });
   static TextStyle smallText = const TextStyle(fontSize: 11.5, color: Color.fromRGBO(153, 153, 153, 1));
@@ -112,7 +110,7 @@ class JCard extends StatelessWidget {
                     if (!isSelected) ...[
                       application == null || !isEmployer
                           ? jobMap == null
-                              ? !isjobSeeker
+                              ? !(userModal.userType == "jobSeeker")
                                   ? const SizedBox(
                                       height: 20,
                                     )
@@ -152,7 +150,7 @@ class JCard extends StatelessWidget {
   }
 
   Widget header(BuildContext context) => Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        //   crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
           const Spacer(),
@@ -201,101 +199,124 @@ class JCard extends StatelessWidget {
           ),
           Expanded(
             flex: 32,
-            child: Row(mainAxisSize: MainAxisSize.max, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 4, left: 5),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      application == null
-                          ? (job?.companyName ?? "Loading ...")
-                          : (application?.jobId?.jobTittle ?? "Loading ..."),
-                      style: const TextStyle(
-                        fontSize: 15,
-                      ),
+            child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //       crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4, left: 5),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          application == null
+                              ? (job?.companyName ?? "Loading ...")
+                              : (application?.jobId?.jobTittle ?? "Loading ..."),
+                          style: const TextStyle(
+                            fontSize: 15,
+                          ),
+                        ),
+                        Text(
+                          application == null
+                              ? (job?.jobTittle ?? "Loading ...")
+                              : (application?.applicantId?.name ?? "Loading ..."),
+                          style: const TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      application == null ? (job?.jobTittle ?? "Loading ...") : (application?.applicantId?.name ?? "Loading ..."),
-                      style: const TextStyle(
-                        fontSize: 18,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              job != null
-                  ? jobMap == null
-                      ? bookMark()
-                      : jobMap!.keys.first == 'Applied'
-                          ? bookMark()
-                          : jobMap!.keys.first == 'Interveiw' || jobMap!.keys.first == 'Interveiw2'
-                              ? (interviewDate != null && interviewDate != null && interviewDate!.isNotEmpty)
-                                  ? Row(
-                                      children: [
-                                        const Text(
-                                          "Interview :",
-                                          style: TextStyle(
-                                            fontSize: 12.5,
-                                            color: Color.fromRGBO(160, 160, 160, 1),
+                  ),
+                  Align(
+                      alignment: Alignment.topRight,
+                      child: job != null
+                          ? jobMap == null
+                              ? bookMark()
+                              : jobMap!.keys.first == 'Applied'
+                                  ? bookMark()
+                                  : jobMap!.keys.first == 'Interveiw' || jobMap!.keys.first == 'Interveiw2'
+                                      ? (interviewDate != null && interviewDate != null && interviewDate!.isNotEmpty)
+                                          ? Align(
+                                              alignment: Alignment.topRight,
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  const Text(
+                                                    "Interview :",
+                                                    style: TextStyle(
+                                                      fontSize: 12.5,
+                                                      color: Color.fromRGBO(160, 160, 160, 1),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    decoration: const BoxDecoration(gradient: linearGradient),
+                                                    child: Text(
+                                                        "${DateFormat('EE').format(DateFormat('yyyy-MM-dd').parse(interviewDate!))},$interviewTime"),
+                                                  )
+                                                ],
+                                              ),
+                                            )
+                                          : const SizedBox.shrink()
+                                      : const SizedBox()
+                          : (isSelected)
+                              ? selected()
+                              : (isInterveiw)
+                                  ? (application!.interviewsDate != null &&
+                                          application!.interviewsDate != null &&
+                                          application!.interviewsDate!.isNotEmpty)
+                                      ? Align(
+                                          alignment: Alignment.topRight,
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              const Text(
+                                                "Interview :",
+                                                style: TextStyle(
+                                                  fontSize: 12.5,
+                                                  color: Color.fromRGBO(160, 160, 160, 1),
+                                                ),
+                                              ),
+                                              Container(
+                                                decoration: const BoxDecoration(gradient: linearGradient),
+                                                child: Text(
+                                                    "${application!.interviewsTime},${DateFormat('EE').format(DateFormat('yyyy-MM-dd').parse(application!.interviewsDate!))}"),
+                                              )
+                                            ],
                                           ),
-                                        ),
-                                        Container(
-                                          decoration: const BoxDecoration(gradient: linearGradient),
-                                          child: Text("$interviewDate,$interviewTime"),
                                         )
-                                      ],
-                                    )
-                                  : const SizedBox.shrink()
-                              : const SizedBox()
-                  : (isSelected)
-                      ? selected()
-                      : (isInterveiw)
-                          ? (application!.interviewsDate != null &&
-                                  application!.interviewsDate != null &&
-                                  application!.interviewsDate!.isNotEmpty)
-                              ? Row(
-                                  children: [
-                                    const Text(
-                                      "Interview :",
-                                      style: TextStyle(
-                                        fontSize: 12.5,
-                                        color: Color.fromRGBO(160, 160, 160, 1),
-                                      ),
-                                    ),
-                                    Container(
-                                      decoration: const BoxDecoration(gradient: linearGradient),
-                                      child: Text("${application!.interviewsDate},${application!.interviewsTime}"),
-                                    )
-                                  ],
-                                )
-                              : const SizedBox.shrink()
-                          : (isInterveiw2)
-                              ? (application!.interviews2Date != null &&
-                                      application!.interviews2Date != null &&
-                                      application!.interviews2Date!.isNotEmpty)
-                                  ? Row(
-                                      children: [
-                                        const Text(
-                                          "Interview2 :",
-                                          style: TextStyle(
-                                            fontSize: 12.5,
-                                            color: Color.fromRGBO(160, 160, 160, 1),
-                                          ),
-                                        ),
-                                        Container(
-                                          decoration: const BoxDecoration(gradient: linearGradient),
-                                          child: Text("${application!.interviews2Date},${application!.interviews2Time}"),
-                                        )
-                                      ],
-                                    )
-                                  : const SizedBox.shrink()
-                              : (application!.shortlist ?? false)
-                                  ? shortlisted()
-                                  : const SizedBox.shrink()
-            ]),
+                                      : const SizedBox.shrink()
+                                  : (isInterveiw2)
+                                      ? (application!.interviews2Date != null &&
+                                              application!.interviews2Date != null &&
+                                              application!.interviews2Date!.isNotEmpty)
+                                          ? Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                const Text(
+                                                  "Interview2 :",
+                                                  style: TextStyle(
+                                                    fontSize: 12.5,
+                                                    color: Color.fromRGBO(160, 160, 160, 1),
+                                                  ),
+                                                ),
+                                                Container(
+                                                  decoration: const BoxDecoration(gradient: linearGradient),
+                                                  child: Text(
+                                                      "${application!.interviews2Time},${DateFormat('EE').format(DateFormat('yyyy-MM-dd').parse(application!.interviews2Date!))}"),
+                                                )
+                                              ],
+                                            )
+                                          : const SizedBox.shrink()
+                                      : (application!.shortlist ?? false)
+                                          ? shortlisted()
+                                          : const SizedBox.shrink())
+                ]),
           ),
           const Spacer(
             flex: 1,
@@ -304,8 +325,7 @@ class JCard extends StatelessWidget {
       );
 
   Widget bookMark() => StatefulBuilder(
-        builder: (BuildContext context, setState) {
-          return Padding(
+      builder: (BuildContext context, setState) => Padding(
             padding: const EdgeInsets.only(left: (double.minPositive)),
             child: GestureDetector(
               onTap: () => userModal.userId == null
@@ -333,9 +353,7 @@ class JCard extends StatelessWidget {
                       ),
               ),
             ),
-          );
-        },
-      );
+          ));
 
   Widget highlights() => Wrap(
         children: [
@@ -789,30 +807,36 @@ class JCard extends StatelessWidget {
                         child: GestureDetector(
                           onTap: () async {
                             timex = await showTimePicker(
-                                    context: context, initialTime: TimeOfDay.now(), initialEntryMode: TimePickerEntryMode.dial)
-                                .whenComplete(() => setState(() {
-                                      if (application!.interviews2 ?? false) {
-                                        application!.interviews2Time = timex.toString();
-                                      } else {
-                                        application!.interviewsTime = timex.toString();
-                                      }
-                                    }));
+                                context: context, initialTime: TimeOfDay.now(), initialEntryMode: TimePickerEntryMode.dial);
+                            // .whenComplete(() =>
+                            setState(() {
+                              //   debugPrint(timex!.format(context).toString());
+                              if (application!.interviews2 ?? false) {
+                                application!.interviews2Time = timex!.format(context).toString();
+                              } else {
+                                application!.interviewsTime = timex!.format(context).toString();
+                              }
+                            });
+                            //);
                           },
                           child: Container(
                             padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 2),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
-                                border: Border.all(width: 1, color: theme.colorScheme.onBackground),
+                                border: Border.all(width: 1.2, color: theme.colorScheme.outline),
                                 color: theme.colorScheme.onInverseSurface),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                const Icon(
-                                  Icons.access_time,
+                                const Spacer(),
+                                Expanded(
+                                  flex: 12,
+                                  child: Text(
+                                    timex == null ? "Time of interview" : timex!.format(context).toString(),
+                                    style: TextStyle(color: theme.colorScheme.onSurfaceVariant),
+                                  ),
                                 ),
-                                Text(
-                                  timex == null ? "Time of interview" : timex!.format(context).toString(),
-                                ),
+                                Expanded(flex: 3, child: Icon(Icons.access_time, color: theme.colorScheme.onSurfaceVariant)),
                               ],
                             ),
                           ),
@@ -820,7 +844,19 @@ class JCard extends StatelessWidget {
                     Align(
                       alignment: Alignment.bottomRight,
                       child: GestureDetector(
-                        onTap: () {},
+                        onTap: () => (application!.interviews2 ?? false)
+                            ? DoUpdate.interveiwSelect(application!.id!, application!.interviews2Date.toString(),
+                                    application!.interviews2Time.toString())
+                                .whenComplete(() {
+                                application!.rejected = null;
+                                callback!(application!);
+                              })
+                            : DoUpdate.interveiwSelect(
+                                    application!.id!, application!.interviewsDate.toString(), timex!.format(context).toString())
+                                .whenComplete(() {
+                                application!.rejected = null;
+                                callback!(application!);
+                              }),
                         onSecondaryTap: () {},
                         child: Container(
                           padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 35),

@@ -79,3 +79,5 @@ const LinearGradient redGradient = LinearGradient(
   // end: Alignment.topRight,
   colors: [Color.fromRGBO(226, 53, 53, 0.2), Color.fromRGBO(226, 53, 53, 0.15)],
 );
+
+//ThemeData? theme;

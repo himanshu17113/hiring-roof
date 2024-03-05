@@ -12,12 +12,20 @@ class UserProvider extends GetConnect {
     timeout: const Duration(seconds: 10),
   );
 
-  Future<Response<Login>> signIn(String phoneno) => post<Login>(ApiString.signin, {"phone": phoneno}, decoder: (obj) => Login.fromMap(obj));
+  Future<Response<Login>> signIn(String phoneno) => post<Login>(ApiString.signin, {"phone": phoneno}, decoder: (obj) {
+        print(obj.toString());
+        return Login.fromMap(obj);
+      });
 
-  Future<Response<Verify>> verifey(String phoneno, int otp, bool isFirstTime, bool isjobseeker) =>
-      put<Verify>(ApiString.verify, {"phone": phoneno, "otp": otp, "userType": isjobseeker ? "jobSeeker" : "company", "firstTime": isFirstTime}, decoder: (obj) {
+  Future<Response<Verify>> verifey(String phoneno, int otp, bool isFirstTime, bool? isjobseeker) => put<Verify>(ApiString.verify, {
+        "phone": phoneno,
+        "otp": otp,
+        "userType": isjobseeker == null ? "":
+         isjobseeker ? "jobSeeker" : "company",
+        "firstTime": isFirstTime
+      }, decoder: (obj) {
         final verify = Verify.fromMap(obj);
-      //  print(verify.userType.toString());
+        print(verify.userType.toString());
         sharedPref.saveModel(verify);
         return verify;
       });

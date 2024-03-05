@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:math' as math;
 import 'package:get/get.dart';
 import 'package:hiring_roof/controller/get/startcontroller.dart';
+import 'package:hiring_roof/data/shared_pref.dart';
 import 'package:hiring_roof/screens/sign/verify.dart';
 import 'package:hiring_roof/util/constant/const.dart';
 import 'package:hiring_roof/util/platformdata.dart';
@@ -68,28 +70,12 @@ class _SiginState extends State<Sigin> with SingleTickerProviderStateMixin {
     margin: EdgeInsets.all(5),
   );
 
-  // static Widget svg = const SvgPicture(
-  //   AssetBytesLoader('assets/svg/welcome.svg.vec'),
-  //   fit: BoxFit.fitWidth,
-  // );
-
-  // Brightness brightness = Brightness.light;
   final UserProvider userProvider = UserProvider();
 
   String? phoneno;
   @override
   Widget build(BuildContext context) {
-    //  final query = MediaQuery.of(context);
     final size = query!.size;
-    // debugPrint("sign in build called");
-    // FlutterView flutterView = View.of(context);
-    // brightness = flutterView.platformDispatcher.platformBrightness;
-    // flutterView.platformDispatcher.onPlatformBrightnessChanged = () {
-    //   setState(() {
-    //     brightness = flutterView.platformDispatcher.platformBrightness;
-    //   });
-    // };
-    // final Size size = flutterView.display.size;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -101,12 +87,15 @@ class _SiginState extends State<Sigin> with SingleTickerProviderStateMixin {
         child: Stack(
           alignment: Alignment.topCenter,
           children: [
-            // brightness.name != "dark"
-            //     ? Padding(
-            //         padding: EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top + 15),
-            //         child: SizedBox(width: size.width * .25, height: size.width * .15, child: svg),
-            //       )
-            //     :
+            Positioned(
+              bottom: 0,
+              left: 0,
+              child: Image.asset(
+                "assets/png/img_vector_2.png",
+                height: size.height * 0.3,
+                fit: BoxFit.fitWidth,
+              ),
+            ),
             AnimatedBuilder(
               animation: _controller,
               builder: (context, child) {
@@ -120,67 +109,55 @@ class _SiginState extends State<Sigin> with SingleTickerProviderStateMixin {
               },
             ),
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                GestureDetector(
-                  onTap: () => setState(() => isCandidate = !isCandidate),
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 40, right: 12, bottom: query!.viewPadding.top + size.width * .15),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        const Icon(Icons.business),
-                        InkWell(child: Text(isCandidate ? "Switch to the employer" : "Switch to the candidate")),
-                      ],
-                    ),
-                  ),
-                ),
-                Text(
-                  isCandidate ? "  Candidate \n  Sign-in/Signup" : "  Recruiter \n  Sign-in/Signup",
-                  style: const TextStyle(fontSize: 28.5, fontWeight: FontWeight.bold),
+                const Text(
+                  "  Recruiter Sign-in\n / Signup",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 28.5, fontWeight: FontWeight.bold),
                 ),
                 const Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Text(
-                    "  you will log in after the verification if you are not registered.",
+                    "Please fill the Phone Number",
                     style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.normal),
                   ),
                 ),
-                // const Center(
-                //   child: Text(
-                //     "                      Please Enter the Phone No.",
-                //     style: TextStyle(fontSize: 16.5, fontWeight: FontWeight.normal),
-                //   ),
-                // ),
-                InternationalPhoneNumberInput(
-                  inputBorder: InputBorder.none,
-                  selectorConfig: const SelectorConfig(trailingSpace: false),
-                  initialValue: PhoneNumber(dialCode: "+91", isoCode: "IN"),
-                  onFieldSubmitted: (value) => (phoneno != null)
-                      ? phoneno!.isNotEmpty
-                          ? userProvider.signIn(phoneno!).then(
-                              (response) {
-                                if (response.status.isOk) {
-                                  final data = response.body;
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 7, 20, 20),
+                  child: InternationalPhoneNumberInput(
+                    //   searchBoxDecoration: const InputDecoration(fillColor: Colors.amber, filled: true, border: OutlineInputBorder()),
+                    autoValidateMode: AutovalidateMode.disabled,
+                    searchBoxDecoration:
+                        const InputDecoration(fillColor: Colors.amber, filled: true, border: OutlineInputBorder()),
+                    inputBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(6), borderSide: BorderSide.none),
+                    selectorConfig: const SelectorConfig(trailingSpace: false),
+                    initialValue: PhoneNumber(dialCode: "+91", isoCode: "IN"),
+                    onFieldSubmitted: (value) => (phoneno != null)
+                        ? phoneno!.isNotEmpty
+                            ? userProvider.signIn(phoneno!).then(
+                                (response) {
+                                  if (response.status.isOk) {
+                                    final data = response.body;
 
-                                  debugPrint(data?.otp.toString() ?? "didnot get");
+                                    debugPrint(data?.otp.toString() ?? "didnot get");
 
-                                  NotificationService.showNotification(
-                                    title: "Hiring Roof Otp",
-                                    body: data?.otp.toString() ?? "bnfkjn",
-                                  );
-                                } else {
-                                  throw Exception('Failed to load data');
-                                }
-                              },
-                            )
-                          : ScaffoldMessenger.of(context).showSnackBar(empty)
-                      : ScaffoldMessenger.of(context).showSnackBar(notCorrect),
-                  onInputChanged: (PhoneNumber value) {
-                    phoneno = value.phoneNumber;
-                    debugPrint(phoneno!.length.toString());
-                  },
+                                    NotificationService.showNotification(
+                                      title: "Hiring Roof Otp",
+                                      body: data?.otp.toString() ?? "bnfkjn",
+                                    );
+                                  } else {
+                                    throw Exception('Failed to load data');
+                                  }
+                                },
+                              )
+                            : ScaffoldMessenger.of(context).showSnackBar(empty)
+                        : ScaffoldMessenger.of(context).showSnackBar(notCorrect),
+                    onInputChanged: (PhoneNumber value) {
+                      phoneno = value.phoneNumber;
+                      debugPrint(phoneno!.length.toString());
+                    },
+                  ),
                 ),
                 InkWell(
                   onTap: () => signin(),
@@ -192,7 +169,7 @@ class _SiginState extends State<Sigin> with SingleTickerProviderStateMixin {
                       autofocus: true,
                       child: ValueListenableBuilder(
                           valueListenable: loading,
-                          builder: (BuildContext context, dynamic value, Widget? child) => Container(
+                          builder: (BuildContext context, bool value, Widget? child) => Container(
                               width: double.maxFinite,
                               alignment: Alignment.center,
                               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 35),
@@ -204,7 +181,7 @@ class _SiginState extends State<Sigin> with SingleTickerProviderStateMixin {
                               child: value
                                   ? const CircularProgressIndicator.adaptive()
                                   : const Text(
-                                      "Join us",
+                                      "Continue",
                                       style: TextStyle(color: white),
                                     ))),
                     ),
@@ -231,21 +208,9 @@ class _SiginState extends State<Sigin> with SingleTickerProviderStateMixin {
                         border: Border.all(color: purple),
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child:
-                          //  isloading
-                          //     ? const CircularProgressIndicator.adaptive():
-
-                          const Text(
+                      child: const Text(
                         " Skip ",
                       )),
-                ),
-                const Spacer(),
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    "  By continuing you agree to Hiring roof's Term & Condition and\n  confirm that you have read Hiring roof's Privacy policy.",
-                    style: TextStyle(fontSize: 14),
-                  ),
                 ),
               ],
             ),
@@ -256,6 +221,9 @@ class _SiginState extends State<Sigin> with SingleTickerProviderStateMixin {
   }
 
   void signin() {
+    if (phoneno!.length < 13) {
+      ScaffoldMessenger.of(context).showSnackBar(phonenotvalid);
+    }
     loading.value = true;
     (phoneno != null)
         ? phoneno!.isNotEmpty
@@ -265,6 +233,7 @@ class _SiginState extends State<Sigin> with SingleTickerProviderStateMixin {
                       userProvider.phoneno = phoneno!;
                       if (response.status.isOk) {
                         final data = response.body;
+
                         debugPrint(data?.otp.toString() ?? "didnot get");
                         PlatformInfo.isDesktopOS()
                             ? ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -285,11 +254,9 @@ class _SiginState extends State<Sigin> with SingleTickerProviderStateMixin {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => VerificationScreen(
-                                      //  isDark: systemOverlayStyle.name == "dark",
                                       isFirstTime: data!.firstTime!,
                                       otp: data.otp!,
                                       phoneNo: phoneno!,
-                                      isJobseeker: isCandidate,
                                     )));
                       } else {
                         if (loading.value) {
@@ -306,6 +273,7 @@ class _SiginState extends State<Sigin> with SingleTickerProviderStateMixin {
                 : ScaffoldMessenger.of(context).showSnackBar(phonenotvalid)
             : ScaffoldMessenger.of(context).showSnackBar(empty)
         : ScaffoldMessenger.of(context).showSnackBar(notCorrect);
+    loading.value = false;
   }
 }
 

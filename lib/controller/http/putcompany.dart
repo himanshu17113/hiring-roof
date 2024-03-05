@@ -64,4 +64,19 @@ class DoUpdate {
       return false;
     }
   }
+
+  static Future<bool> interveiw2Select(String id, String date, String time) async {
+    Map<String, String> body = {"interviews2Date": date, "interviews2Time": time};
+    http.Response response = await http.put(
+      Uri.parse("${ApiString.interview2select}$id"),
+      body: json.encode(body),
+      headers: {"Authorization": userModal.token!, "Content-Type": "application/json"},
+    );
+    // print(response.body.toString());
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
