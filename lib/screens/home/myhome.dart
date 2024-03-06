@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hiring_roof/controller/get/jobcontroller.dart';
 import 'package:hiring_roof/controller/navigation/navcon.dart';
+import 'package:hiring_roof/screens/Filter/filter.dart';
 import 'package:hiring_roof/screens/Profile/deskbody.dart';
 import 'package:hiring_roof/screens/Profile/mobilebody.dart';
 import 'package:hiring_roof/screens/Profile/profile.dart';
@@ -137,7 +138,21 @@ class MyHome extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.end,
                                         children: [
-                                          // row (filter)
+                                          InkWell(
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        filterScreen()),
+                                              );
+                                            },
+                                            child: const Text(
+                                              "                        filter",
+                                              style: TextStyle(
+                                                  fontSize: 14.5, color: white),
+                                            ),
+                                          ),
                                           const Text(
                                             "Good Morning 👋",
                                             style: TextStyle(
