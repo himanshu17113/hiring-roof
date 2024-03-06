@@ -80,7 +80,10 @@ class MyJobsxController extends GetxController {
     if (!endOfSaved) {
       debugPrint((ApiString.getsave));
       final http.Response response = await client
-          .get(Uri.parse(ApiString.getsave), headers: {"Authorization": userModal.token!, "Content-Type": "application/json"});
+          .get(Uri.parse(ApiString.getsave), headers: {
+        "Authorization": userModal.token!,
+        "Content-Type": "application/json"
+      });
       if (response.statusCode == 200) {
         log(response.body.toString());
         final JobModal jobModal = JobModal.fromJson(jsonDecode(response.body));
@@ -102,6 +105,7 @@ class MyJobsxController extends GetxController {
   }
 
   Future<void> getApplied({bool clear = false}) async {
+    print('calling getapplied');
     if (clear) {
       applied?.clear();
       indexOfApplied = 1;
@@ -109,8 +113,12 @@ class MyJobsxController extends GetxController {
     }
     if (!endOfApplied) {
       debugPrint(("${ApiString.getApplications}$indexOfApplied"));
-      final http.Response response = await client.get(Uri.parse("${ApiString.getApplications}$indexOfApplied"),
-          headers: {"Authorization": userModal.token!, "Content-Type": "application/json"});
+      final http.Response response = await client.get(
+          Uri.parse("${ApiString.getApplications}$indexOfApplied"),
+          headers: {
+            "Authorization": userModal.token!,
+            "Content-Type": "application/json"
+          });
       if (response.statusCode == 200) {
         debugPrint("empty");
 
@@ -139,8 +147,12 @@ class MyJobsxController extends GetxController {
     }
     if (!endOfshortlist) {
       debugPrint(("${ApiString.getShortlisted}$indexOfShortlist"));
-      final http.Response response = await client.get(Uri.parse("${ApiString.getshortlist}$indexOfShortlist"),
-          headers: {"Authorization": userModal.token!, "Content-Type": "application/json"});
+      final http.Response response = await client.get(
+          Uri.parse("${ApiString.getshortlist}$indexOfShortlist"),
+          headers: {
+            "Authorization": userModal.token!,
+            "Content-Type": "application/json"
+          });
       if (response.statusCode == 200) {
         applicationModal = ApplicationModal.fromJson(response.body);
         if (applicationModal?.data != null) {
@@ -167,8 +179,12 @@ class MyJobsxController extends GetxController {
     }
     if (!endOfInterview) {
       debugPrint(("${ApiString.getCandidateinterviews}$indexOfInterview"));
-      final http.Response response = await client.get(Uri.parse("${ApiString.getCandidateinterviews}$indexOfInterview"),
-          headers: {"Authorization": userModal.token!, "Content-Type": "application/json"});
+      final http.Response response = await client.get(
+          Uri.parse("${ApiString.getCandidateinterviews}$indexOfInterview"),
+          headers: {
+            "Authorization": userModal.token!,
+            "Content-Type": "application/json"
+          });
       if (response.statusCode == 200) {
         applicationModal = ApplicationModal.fromJson(response.body);
         if (applicationModal?.data != null) {
@@ -194,8 +210,12 @@ class MyJobsxController extends GetxController {
       endOfInterview2 = false;
     }
     if (!endOfInterview2) {
-      final http.Response response = await client.get(Uri.parse("${ApiString.get2Candidateinterviews}$indexOfInterview2"),
-          headers: {"Authorization": userModal.token!, "Content-Type": "application/json"});
+      final http.Response response = await client.get(
+          Uri.parse("${ApiString.get2Candidateinterviews}$indexOfInterview2"),
+          headers: {
+            "Authorization": userModal.token!,
+            "Content-Type": "application/json"
+          });
       if (response.statusCode == 200) {
         applicationModal = ApplicationModal.fromJson(response.body);
         if (applicationModal?.data != null) {
@@ -221,8 +241,12 @@ class MyJobsxController extends GetxController {
       endOfResults = false;
     }
     if (!endOfResults) {
-      final http.Response response = await client.get(Uri.parse("${ApiString.getselectedCompany}$indexOfResults"),
-          headers: {"Authorization": userModal.token!, "Content-Type": "application/json"});
+      final http.Response response = await client.get(
+          Uri.parse("${ApiString.getselectedCompany}$indexOfResults"),
+          headers: {
+            "Authorization": userModal.token!,
+            "Content-Type": "application/json"
+          });
       if (response.statusCode == 200) {
         applicationModal = ApplicationModal.fromJson(response.body);
         if (applicationModal?.data != null) {
@@ -241,13 +265,21 @@ class MyJobsxController extends GetxController {
     }
   }
 
-  refreshAll() {
-    getSaved( clear: true);
-    getApplied(clear: true);
-    getMyShortlist(clear: true);
-    getInterveiws(clear: true);
-    getInterveiws2(clear: true);
-    getResults(clear: true);
-    return true;
+  Future<bool> refreshAll() async {
+    try {
+      await getSaved(clear: true);
+      await getApplied(clear: true);
+      await getMyShortlist(clear: true);
+      await getInterveiws(clear: true);
+      await getInterveiws2(clear: true);
+      await getResults(clear: true);
+
+      // If all operations were successful, return true
+      return true;
+    } catch (error) {
+      // Handle errors and return false
+      print('Error refreshing all sections: $error');
+      return false;
+    }
   }
 }

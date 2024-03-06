@@ -36,13 +36,18 @@ class MyHome extends StatelessWidget {
                       )),
                   icon: CircleAvatar(
                       backgroundColor: darkestPurple,
-                      backgroundImage: userModal.userData?.profileImage != null && userModal.userData!.profileImage!.isNotEmpty
-                          ? CachedNetworkImageProvider(userModal.userData!.profileImage!)
-                          : null)),
+                      backgroundImage:
+                          userModal.userData?.profileImage != null &&
+                                  userModal.userData!.profileImage!.isNotEmpty
+                              ? CachedNetworkImageProvider(
+                                  userModal.userData!.profileImage!)
+                              : null)),
               Column(
                 children: [
-                  Text(userModal.userData?.name ?? "", style: const TextStyle(fontSize: 16, color: white)),
-                  Text(userModal.userData?.skills.toString() ?? "", style: const TextStyle(fontSize: 14, color: white)),
+                  Text(userModal.userData?.name ?? "",
+                      style: const TextStyle(fontSize: 16, color: white)),
+                  Text(userModal.userData?.skills.toString() ?? "",
+                      style: const TextStyle(fontSize: 14, color: white)),
                 ],
               )
             ],
@@ -64,7 +69,10 @@ class MyHome extends StatelessWidget {
                   size: 30,
                 )),
             IconButton(
-                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const NotificationScreen())),
+                onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const NotificationScreen())),
                 icon: const Icon(
                   Icons.notifications_outlined,
                   color: white,
@@ -74,7 +82,9 @@ class MyHome extends StatelessWidget {
         ),
         body: DecoratedBox(
             decoration: const BoxDecoration(
-              image: DecorationImage(image: AssetImage("assets/png/Elipse.png"), fit: BoxFit.cover),
+              image: DecorationImage(
+                  image: AssetImage("assets/png/Elipse.png"),
+                  fit: BoxFit.cover),
             ),
             child: GetBuilder<JobxController>(
                 autoRemove: false,
@@ -87,7 +97,8 @@ class MyHome extends StatelessWidget {
                 builder: (jobxController) => RefreshIndicator(
                       onRefresh: () => jobxController.getMyJobs(clear: true),
                       child: ListView.builder(
-                          padding: EdgeInsets.symmetric(horizontal: phone ? 0 : screenSize.width * 0.02),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: phone ? 0 : screenSize.width * 0.02),
                           controller: jobxController.scrollController,
                           itemCount: jobxController.myjobs.length + 1,
                           itemBuilder: (context, index) {
@@ -95,7 +106,8 @@ class MyHome extends StatelessWidget {
 
                             if (index == jobxController.myjobs.length) {
                               if (jobxController.reachedTheEndofMyjob) {
-                                return const Center(child: Text("sorry No more jobs :("));
+                                return const Center(
+                                    child: Text("sorry No more jobs :("));
                               } else {
                                 return const Padding(
                                   padding: EdgeInsets.all(20),
@@ -116,14 +128,20 @@ class MyHome extends StatelessWidget {
                             } else {
                               return index == 0
                                   ? Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: screenSize.width * 0.05, vertical: 20),
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: screenSize.width * 0.05,
+                                          vertical: 20),
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
                                         children: [
+                                          // row (filter)
                                           const Text(
                                             "Good Morning 👋",
-                                            style: TextStyle(fontSize: 14.5, color: white),
+                                            style: TextStyle(
+                                                fontSize: 14.5, color: white),
                                           ),
                                           const Text.rich(
                                             TextSpan(
@@ -140,8 +158,10 @@ class MyHome extends StatelessWidget {
                                                   text: 'Jobs',
                                                   style: TextStyle(
                                                       fontSize: 20,
-                                                      fontWeight: FontWeight.bold,
-                                                      color: Color.fromRGBO(157, 33, 255, 1)),
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Color.fromRGBO(
+                                                          157, 33, 255, 1)),
                                                 ),
                                                 TextSpan(
                                                   text: ' For you ',
@@ -155,7 +175,8 @@ class MyHome extends StatelessWidget {
                                             ),
                                           ),
                                           Padding(
-                                            padding: const EdgeInsets.only(top: 20),
+                                            padding:
+                                                const EdgeInsets.only(top: 20),
                                             child: Image.asset(
                                               "assets/png/Banner.png",
                                               width: screenSize.width,
@@ -200,17 +221,24 @@ class MyHomeG extends StatelessWidget {
               // ),
               actions: [
                 IconButton(
-                    onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const NotificationScreen())),
+                    onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const NotificationScreen())),
                     icon: const Icon(Icons.notifications)),
                 IconButton(
                     onPressed: () {},
-                    icon: CircleAvatar(backgroundImage: CachedNetworkImageProvider(userModal.userData?.profileImage ?? imgurl)))
+                    icon: CircleAvatar(
+                        backgroundImage: CachedNetworkImageProvider(
+                            userModal.userData?.profileImage ?? imgurl)))
               ],
             ),
             //backgroundColor: black,
             body: DecoratedBox(
                 decoration: const BoxDecoration(
-                  image: DecorationImage(image: AssetImage("assets/png/Elipse.png"), fit: BoxFit.cover),
+                  image: DecorationImage(
+                      image: AssetImage("assets/png/Elipse.png"),
+                      fit: BoxFit.cover),
                 ),
                 child: GetBuilder<JobxController>(
                     autoRemove: false,
@@ -221,18 +249,26 @@ class MyHomeG extends StatelessWidget {
                     },
                     //initState: (startxController) {},
                     builder: (jobxController) => GridView.builder(
-                        padding: EdgeInsets.symmetric(horizontal: tablet ? screenSize.width * .01 : screenSize.width * .02),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: tablet
+                                ? screenSize.width * .01
+                                : screenSize.width * .02),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
                             childAspectRatio: .0014 * screenSize.width,
-                            crossAxisSpacing: tablet ? screenSize.width * .01 : screenSize.width * .0125,
-                            mainAxisSpacing: tablet ? screenSize.width * .01 : screenSize.width * .0125),
+                            crossAxisSpacing: tablet
+                                ? screenSize.width * .01
+                                : screenSize.width * .0125,
+                            mainAxisSpacing: tablet
+                                ? screenSize.width * .01
+                                : screenSize.width * .0125),
                         controller: jobxController.scrollController,
                         itemCount: jobxController.myjobs.length + 1,
                         itemBuilder: (context, index) {
                           if (index == jobxController.myjobs.length) {
                             if (jobxController.reachedTheEndofMyjob) {
-                              return const Center(child: Text("sorry No more jobs :("));
+                              return const Center(
+                                  child: Text("sorry No more jobs :("));
                             } else {
                               return const Padding(
                                 padding: EdgeInsets.all(20),

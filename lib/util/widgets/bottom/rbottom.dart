@@ -13,7 +13,8 @@ class ReqNav extends StatelessWidget {
 
   static const screens = [MyHome(), Find(), PostJob(), MyJobAppl()];
   static const screensG = [MyHomeG(), Find(), PostJob(), MyJobAppl()];
-  static const List<NavigationDestination> destinations = <NavigationDestination>[
+  static const List<NavigationDestination> destinations =
+      <NavigationDestination>[
     NavigationDestination(
       selectedIcon: Icon(Icons.home),
       icon: Icon(Icons.home_outlined),
@@ -38,7 +39,8 @@ class ReqNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.top]);
 
     return GetBuilder<Controller>(
       init: Controller(),
@@ -50,7 +52,8 @@ class ReqNav extends StatelessWidget {
           bodyRatio: 0,
           useDrawer: false,
           smallBreakpoint: const WidthPlatformBreakpoint(end: 900),
-          mediumBreakpoint: const WidthPlatformBreakpoint(begin: 900, end: 1200),
+          mediumBreakpoint:
+              const WidthPlatformBreakpoint(begin: 900, end: 1200),
           largeBreakpoint: const WidthPlatformBreakpoint(begin: 1200),
           drawerBreakpoint: const WidthPlatformBreakpoint(begin: 1200),
           body: (_) => screensG[controller.page],

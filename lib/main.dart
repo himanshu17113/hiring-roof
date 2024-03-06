@@ -5,7 +5,6 @@ import 'package:hiring_roof/screens/intro/intero_screen.dart';
 import 'package:hiring_roof/screens/sign/signin.dart';
 import 'package:hiring_roof/util/widgets/bottom/rbottom.dart';
 import 'package:hiring_roof/util/widgets/bottom/ubottom.dart';
-
 import 'services/notification_service.dart';
 import 'util/constant/const.dart';
 import 'util/theme.dart';
@@ -13,7 +12,9 @@ import 'util/theme.dart';
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
-    return super.createHttpClient(context)..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }
 
