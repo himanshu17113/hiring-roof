@@ -13,16 +13,15 @@ class Home extends StatelessWidget {
   // static StartxController startxController = Get.put(StartxController());
   @override
   Widget build(BuildContext context) {
-  
     final screenSize = query!.size;
     final bool phone = screenSize.shortestSide < 600 ? true : false;
 
     return Scaffold(
       backgroundColor: black,
-      body: DecoratedBox(
-          decoration: const BoxDecoration(
-            image: DecorationImage(image: AssetImage("assets/png/Elipse.png"), fit: BoxFit.cover),
-          ),
+      body: SizedBox(
+          // decoration: const BoxDecoration(
+          //   image: DecorationImage(image: AssetImage("assets/png/Elipse.png"), fit: BoxFit.cover),
+          // ),
           child: GetBuilder<StartxController>(
               tag: "start",
               init: StartxController(),
@@ -53,7 +52,8 @@ class Home extends StatelessWidget {
                             centerTitle: true,
                             background: Container(
                               alignment: Alignment.bottomCenter,
-                              decoration: const BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: AssetImage("assets/png/home.png"))),
+                              decoration: const BoxDecoration(
+                                  image: DecorationImage(fit: BoxFit.cover, image: AssetImage("assets/png/home.png"))),
                               child: Padding(
                                 padding: EdgeInsets.only(
                                   bottom: phone ? screenSize.width / 7 : screenSize.height / 5,
@@ -74,7 +74,9 @@ class Home extends StatelessWidget {
                                         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 35),
                                         margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 10),
                                         decoration: BoxDecoration(
-                                            color: const Color.fromRGBO(255, 255, 255, 1), borderRadius: BorderRadius.circular(8), gradient: linearGradient),
+                                            color: const Color.fromRGBO(255, 255, 255, 1),
+                                            borderRadius: BorderRadius.circular(8),
+                                            gradient: linearGradient),
                                         child: const Text(
                                           "join us",
                                           style: TextStyle(color: white70),
@@ -123,7 +125,8 @@ class Home extends StatelessWidget {
                                       ),
                                       TextSpan(
                                         text: 'Jobs',
-                                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromRGBO(157, 33, 255, 1)),
+                                        style: TextStyle(
+                                            fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromRGBO(157, 33, 255, 1)),
                                       ),
                                       TextSpan(
                                         text: ' For you ',

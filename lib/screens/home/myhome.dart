@@ -21,7 +21,7 @@ class MyHome extends StatelessWidget {
     phone = screenSize.shortestSide < 400 ? true : false;
     debugPrint("rebuild  ");
     return Scaffold(
-        //backgroundColor: black,
+        backgroundColor: black,
         appBar: AppBar(
           title: Row(
             children: [
@@ -72,10 +72,10 @@ class MyHome extends StatelessWidget {
                 )),
           ],
         ),
-        body: DecoratedBox(
-            decoration: const BoxDecoration(
-              image: DecorationImage(image: AssetImage("assets/png/Elipse.png"), fit: BoxFit.cover),
-            ),
+        body: SizedBox(
+            // decoration: const BoxDecoration(
+            //   image: DecorationImage(image: AssetImage("assets/png/Elipse.png"), fit: BoxFit.cover),
+            // ),
             child: GetBuilder<JobxController>(
                 autoRemove: false,
                 tag: "job",
