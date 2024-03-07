@@ -144,7 +144,7 @@ class MyHome extends StatelessWidget {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        filterScreen()),
+                                                        FilterScreen()),
                                               );
                                             },
                                             child: const Text(
