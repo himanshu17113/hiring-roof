@@ -30,37 +30,27 @@ class _LocationPanelState extends State<LocationPanel> {
       children: [
         buildRow('Near me', NearmeBorderColor, () {
           setState(() {
-            NearmeBorderColor = (NearmeBorderColor == Colors.white)
-                ? Colors.purple
-                : Colors.white;
+            NearmeBorderColor = (NearmeBorderColor == Colors.white) ? Colors.purple : Colors.white;
           });
         }),
         buildRow('Remote job', RemotejobBorderColor, () {
           setState(() {
-            RemotejobBorderColor = (RemotejobBorderColor == Colors.white)
-                ? Colors.purple
-                : Colors.white;
+            RemotejobBorderColor = (RemotejobBorderColor == Colors.white) ? Colors.purple : Colors.white;
           });
         }),
         buildRow('Within 15 km', Within15kmBorderColor, () {
           setState(() {
-            Within15kmBorderColor = (Within15kmBorderColor == Colors.white)
-                ? Colors.purple
-                : Colors.white;
+            Within15kmBorderColor = (Within15kmBorderColor == Colors.white) ? Colors.purple : Colors.white;
           });
         }),
         buildRow('Within 30 km', Within30kmBorderColor, () {
           setState(() {
-            Within15kmBorderColor = (Within15kmBorderColor == Colors.white)
-                ? Colors.purple
-                : Colors.white;
+            Within30kmBorderColor = (Within30kmBorderColor == Colors.white) ? Colors.purple : Colors.white;
           });
         }),
         buildRow('Within 50 km', Within50kmBorderColor, () {
           setState(() {
-            Within30kmBorderColor = (Within30kmBorderColor == Colors.white)
-                ? Colors.purple
-                : Colors.white;
+            Within50kmBorderColor = (Within50kmBorderColor == Colors.white) ? Colors.purple : Colors.white;
           });
         }),
       ],

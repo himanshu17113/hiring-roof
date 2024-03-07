@@ -8,9 +8,14 @@ class SalaryPanel extends StatefulWidget {
 }
 
 class _SalaryPanelState extends State<SalaryPanel> {
-  Color hourlyBorderColor = Colors.white;
-  Color monthlyBorderColor = Colors.white;
-  Color yearlyBorderColor = Colors.white;
+  Color AnyBorderColor = Colors.white;
+  Color ThirtyBorderColor = Colors.white;
+  Color FiftyBorderColor = Colors.white;
+  Color EightyBorderColor = Colors.white;
+  Color HundredBorderColor = Colors.white;
+  Color hourlyBorderColor = const Color.fromARGB(43, 158, 158, 158);
+  Color monthlyBorderColor = const Color.fromARGB(43, 158, 158, 158);
+  Color yearlyBorderColor = const Color.fromARGB(43, 158, 158, 158);
 
   @override
   Widget build(BuildContext context) {
@@ -25,35 +30,85 @@ class _SalaryPanelState extends State<SalaryPanel> {
         ),
       ),
       children: [
-        StackItem('Hourly', hourlyBorderColor),
-        StackItem('Monthly', monthlyBorderColor),
-        StackItem('Yearly', yearlyBorderColor),
+        //StackItem('Hourly', monthlyBorderColor),
+        //StackItem('Monthly', hourlyBorderColor),
+        //StackItem('Yearly', yearlyBorderColor),
+        Stack(
+          children: [
+            StackItem('Hourly', hourlyBorderColor, () {
+              setState(() {
+                hourlyBorderColor =
+                    (hourlyBorderColor == Color.fromARGB(43, 158, 158, 158)) ? Colors.purple : Color.fromARGB(43, 158, 158, 158);
+              });
+            }, position: 0),
+            StackItem('Monthly', monthlyBorderColor, () {
+              setState(() {
+                monthlyBorderColor = (monthlyBorderColor == const Color.fromARGB(43, 158, 158, 158))
+                    ? Colors.purple
+                    : const Color.fromARGB(43, 158, 158, 158);
+              });
+            }, position: 68),
+            StackItem('Yearly', yearlyBorderColor, () {
+              setState(() {
+                yearlyBorderColor = (yearlyBorderColor == const Color.fromARGB(43, 158, 158, 158))
+                    ? Colors.purple
+                    : const Color.fromARGB(43, 158, 158, 158);
+              });
+            }, position: 136),
+          ],
+        ),
+
         const SizedBox(
           height: 16,
         ),
-        buildRow('Any', Colors.white),
-        buildRow('> 30000k', Colors.white),
-        buildRow('> 50000k', Colors.white),
-        buildRow('> 80000k', Colors.white),
-        buildRow('> 100000k', Colors.white),
+
+        buildRow('Any', AnyBorderColor, () {
+          setState(() {
+            AnyBorderColor = (AnyBorderColor == Colors.white) ? Colors.purple : Colors.white;
+          });
+        }),
+        buildRow('> 30000k', ThirtyBorderColor, () {
+          setState(() {
+            ThirtyBorderColor = (ThirtyBorderColor == Colors.white) ? Colors.purple : Colors.white;
+          });
+        }),
+        buildRow('> 50000k', FiftyBorderColor, () {
+          setState(() {
+            FiftyBorderColor = (FiftyBorderColor == Colors.white) ? Colors.purple : Colors.white;
+          });
+        }),
+        buildRow('> 80000k', EightyBorderColor, () {
+          setState(() {
+            EightyBorderColor = (EightyBorderColor == Colors.white) ? Colors.purple : Colors.white;
+          });
+        }),
+        buildRow('> 100000k', HundredBorderColor, () {
+          setState(() {
+            HundredBorderColor = (HundredBorderColor == Colors.white) ? Colors.purple : Colors.white;
+          });
+        }),
       ],
     );
   }
 
-  Widget buildRow(String text, Color borderColor) {
+  Widget buildRow(String text, Color borderColor, VoidCallback onTap) {
     return Container(
       margin: const EdgeInsets.fromLTRB(0, 0, 30, 8),
       width: double.infinity,
       child: Row(
         children: [
-          Container(
-            margin: const EdgeInsets.fromLTRB(12, 0, 8, 0),
-            width: 16,
-            height: 16,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: borderColor),
-              color: Colors.white,
+          InkWell(
+            enableFeedback: false,
+            onTap: onTap,
+            child: Container(
+              margin: const EdgeInsets.fromLTRB(12, 0, 8, 0),
+              width: 16,
+              height: 16,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: borderColor, width: 6),
+                color: Colors.white,
+              ),
             ),
           ),
           Text(
@@ -73,9 +128,11 @@ class _SalaryPanelState extends State<SalaryPanel> {
 
 class StackItem extends StatelessWidget {
   final String title;
-  final Color borderColor;
+  final Color BorderColor;
+  final VoidCallback onTap;
+  final double position;
 
-  StackItem(this.title, this.borderColor);
+  StackItem(this.title, this.BorderColor, this.onTap, {required this.position});
 
   @override
   Widget build(BuildContext context) {
@@ -84,21 +141,18 @@ class StackItem extends StatelessWidget {
       width: double.infinity,
       height: 36,
       child: Stack(
+        //alignment: Alignment.,
         children: [
           Positioned(
-            left: 0,
+            left: position,
             top: 0,
             child: GestureDetector(
-              onTap: () {
-                // Update the parent's state when tapped
-                (context as Element).markNeedsBuild();
-                // Handle other logic if needed
-              },
+              onTap: onTap,
               child: Container(
                 width: 68,
                 height: 36,
                 decoration: BoxDecoration(
-                  border: Border.all(color: Color(0x19ffffff)),
+                  border: Border.all(color: BorderColor, width: 4),
                   color: const Color(0x0cffffff), //black
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(2),
