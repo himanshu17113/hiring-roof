@@ -8,12 +8,12 @@ class LocationPanel extends StatefulWidget {
 }
 
 class _LocationPanelState extends State<LocationPanel> {
-  Color NearmeBorderColor = Colors.white;
-  Color RemotejobBorderColor = Colors.white;
-  Color ExactlocationBorderColor = Colors.white;
-  Color Within15kmBorderColor = Colors.white;
-  Color Within30kmBorderColor = Colors.white;
-  Color Within50kmBorderColor = Colors.white;
+  Color nearmeBorderColor = Colors.white;
+  Color remotejobBorderColor = Colors.white;
+  Color exactlocationBorderColor = Colors.white;
+  Color within15kmBorderColor = Colors.white;
+  Color within30kmBorderColor = Colors.white;
+  Color within50kmBorderColor = Colors.white;
 
   @override
   Widget build(BuildContext context) {
@@ -28,29 +28,34 @@ class _LocationPanelState extends State<LocationPanel> {
         ),
       ),
       children: [
-        buildRow('Near me', NearmeBorderColor, () {
+        buildRow('Near me', nearmeBorderColor, () {
           setState(() {
-            NearmeBorderColor = (NearmeBorderColor == Colors.white) ? Colors.purple : Colors.white;
+            resetColors();
+            nearmeBorderColor = (nearmeBorderColor == Colors.white) ? Colors.purple : Colors.white;
           });
         }),
-        buildRow('Remote job', RemotejobBorderColor, () {
+        buildRow('Exact location', exactlocationBorderColor, () {
           setState(() {
-            RemotejobBorderColor = (RemotejobBorderColor == Colors.white) ? Colors.purple : Colors.white;
+            resetColors();
+            exactlocationBorderColor = (exactlocationBorderColor == Colors.white) ? Colors.purple : Colors.white;
           });
         }),
-        buildRow('Within 15 km', Within15kmBorderColor, () {
+        buildRow('Within 15 km', within15kmBorderColor, () {
           setState(() {
-            Within15kmBorderColor = (Within15kmBorderColor == Colors.white) ? Colors.purple : Colors.white;
+            resetColors();
+            within15kmBorderColor = (within15kmBorderColor == Colors.white) ? Colors.purple : Colors.white;
           });
         }),
-        buildRow('Within 30 km', Within30kmBorderColor, () {
+        buildRow('Within 30 km', within30kmBorderColor, () {
           setState(() {
-            Within30kmBorderColor = (Within30kmBorderColor == Colors.white) ? Colors.purple : Colors.white;
+            resetColors();
+            within30kmBorderColor = (within30kmBorderColor == Colors.white) ? Colors.purple : Colors.white;
           });
         }),
-        buildRow('Within 50 km', Within50kmBorderColor, () {
+        buildRow('Within 50 km', within50kmBorderColor, () {
           setState(() {
-            Within50kmBorderColor = (Within50kmBorderColor == Colors.white) ? Colors.purple : Colors.white;
+            resetColors();
+            within50kmBorderColor = (within50kmBorderColor == Colors.white) ? Colors.purple : Colors.white;
           });
         }),
       ],
@@ -90,7 +95,20 @@ class _LocationPanelState extends State<LocationPanel> {
       ),
     );
   }
+
+  void resetColors() {
+    setState(() {
+      nearmeBorderColor = Colors.white;
+      remotejobBorderColor = Colors.white;
+      exactlocationBorderColor = Colors.white;
+      within15kmBorderColor = Colors.white;
+      within30kmBorderColor = Colors.white;
+      within50kmBorderColor = Colors.white;
+    });
+  }
 }
+
+
 
 /*
 import 'package:flutter/material.dart';

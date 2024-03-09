@@ -1,15 +1,45 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:hiring_roof/screens/home/ContactUs/cntctUs_model.dart';
 import 'package:hiring_roof/screens/postjob.dart';
 import 'package:hiring_roof/util/constant/color.dart';
 import 'package:hiring_roof/util/constant/const.dart';
+import 'package:http/http.dart' as http;
 
 class ContactUs extends StatelessWidget {
+  static const String apiUrl = 'https://hiringroof.rohandev.xyz/api/contact/create';
   const ContactUs({super.key});
   static const InputDecoration inputDecoration = InputDecoration(
       contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
       border: OutlineInputBorder(
           //  borderSide: BorderSide.none,
           ));
+  Future<void> sendContactRequest(String name, String email, String message) async {
+    try {
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        body: {
+          'name': name,
+          'email': email,
+          'message': message,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        final ContactModel contactModel = ContactModel.fromJson(responseData);
+        print('Status: ${contactModel.status}');
+        print('Message: ${contactModel.msg}');
+        print('Data Name: ${contactModel.data.name}');
+      } else {
+        print('Error: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -142,7 +172,15 @@ class ContactUs extends StatelessWidget {
                             color: const Color.fromRGBO(255, 255, 255, 1),
                             borderRadius: BorderRadius.circular(8),
                             gradient: linearGradient),
-                        child: const Text("Send"),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            String name = '';
+                            String email = '';
+                            String message = '';
+                            sendContactRequest(name, email, message);
+                          },
+                          child: const Text("Send"),
+                        ),
                       )
                     ],
                   ),

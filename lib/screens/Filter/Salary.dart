@@ -37,12 +37,14 @@ class _SalaryPanelState extends State<SalaryPanel> {
           children: [
             StackItem('Hourly', hourlyBorderColor, () {
               setState(() {
+                resetColors2();
                 hourlyBorderColor =
                     (hourlyBorderColor == Color.fromARGB(43, 158, 158, 158)) ? Colors.purple : Color.fromARGB(43, 158, 158, 158);
               });
             }, position: 0),
             StackItem('Monthly', monthlyBorderColor, () {
               setState(() {
+                resetColors2();
                 monthlyBorderColor = (monthlyBorderColor == const Color.fromARGB(43, 158, 158, 158))
                     ? Colors.purple
                     : const Color.fromARGB(43, 158, 158, 158);
@@ -50,6 +52,7 @@ class _SalaryPanelState extends State<SalaryPanel> {
             }, position: 68),
             StackItem('Yearly', yearlyBorderColor, () {
               setState(() {
+                resetColors2();
                 yearlyBorderColor = (yearlyBorderColor == const Color.fromARGB(43, 158, 158, 158))
                     ? Colors.purple
                     : const Color.fromARGB(43, 158, 158, 158);
@@ -64,26 +67,31 @@ class _SalaryPanelState extends State<SalaryPanel> {
 
         buildRow('Any', AnyBorderColor, () {
           setState(() {
+            resetColors1();
             AnyBorderColor = (AnyBorderColor == Colors.white) ? Colors.purple : Colors.white;
           });
         }),
         buildRow('> 30000k', ThirtyBorderColor, () {
           setState(() {
+            resetColors1();
             ThirtyBorderColor = (ThirtyBorderColor == Colors.white) ? Colors.purple : Colors.white;
           });
         }),
         buildRow('> 50000k', FiftyBorderColor, () {
           setState(() {
+            resetColors1();
             FiftyBorderColor = (FiftyBorderColor == Colors.white) ? Colors.purple : Colors.white;
           });
         }),
         buildRow('> 80000k', EightyBorderColor, () {
           setState(() {
+            resetColors1();
             EightyBorderColor = (EightyBorderColor == Colors.white) ? Colors.purple : Colors.white;
           });
         }),
         buildRow('> 100000k', HundredBorderColor, () {
           setState(() {
+            resetColors1();
             HundredBorderColor = (HundredBorderColor == Colors.white) ? Colors.purple : Colors.white;
           });
         }),
@@ -123,6 +131,24 @@ class _SalaryPanelState extends State<SalaryPanel> {
         ],
       ),
     );
+  }
+
+  void resetColors1() {
+    setState(() {
+      AnyBorderColor = Colors.white;
+      ThirtyBorderColor = Colors.white;
+      FiftyBorderColor = Colors.white;
+      EightyBorderColor = Colors.white;
+      HundredBorderColor = Colors.white;
+    });
+  }
+
+  void resetColors2() {
+    setState(() {
+      hourlyBorderColor = const Color.fromARGB(43, 158, 158, 158);
+      monthlyBorderColor = const Color.fromARGB(43, 158, 158, 158);
+      yearlyBorderColor = const Color.fromARGB(43, 158, 158, 158);
+    });
   }
 }
 

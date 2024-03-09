@@ -8,9 +8,9 @@ class WrkExpPanel extends StatefulWidget {
 }
 
 class _WrkExpPanelState extends State<WrkExpPanel> {
-  Color AnyExperienceBorderColor = Colors.white;
-  Color InternshipBorderColor = Colors.white;
-  Color WorkRemotelyBorderColor = Colors.white;
+  Color anyExperienceBorderColor = Colors.white;
+  Color internshipBorderColor = Colors.white;
+  Color workRemotelyBorderColor = Colors.white;
 
   @override
   Widget build(BuildContext context) {
@@ -25,26 +25,22 @@ class _WrkExpPanelState extends State<WrkExpPanel> {
         ),
       ),
       children: [
-        buildRow('All time', AnyExperienceBorderColor, () {
+        buildRow('All time', anyExperienceBorderColor, () {
           setState(() {
-            AnyExperienceBorderColor =
-                (AnyExperienceBorderColor == Colors.white)
-                    ? Colors.purple
-                    : Colors.white;
+            resetColors();
+            anyExperienceBorderColor = (anyExperienceBorderColor == Colors.white) ? Colors.purple : Colors.white;
           });
         }),
-        buildRow('Last 24 hours', InternshipBorderColor, () {
+        buildRow('Last 24 hours', internshipBorderColor, () {
           setState(() {
-            InternshipBorderColor = (InternshipBorderColor == Colors.white)
-                ? Colors.purple
-                : Colors.white;
+            resetColors();
+            internshipBorderColor = (internshipBorderColor == Colors.white) ? Colors.purple : Colors.white;
           });
         }),
-        buildRow('Last 3 days', WorkRemotelyBorderColor, () {
+        buildRow('Last 3 days', workRemotelyBorderColor, () {
           setState(() {
-            WorkRemotelyBorderColor = (WorkRemotelyBorderColor == Colors.white)
-                ? Colors.purple
-                : Colors.white;
+            resetColors();
+            workRemotelyBorderColor = (workRemotelyBorderColor == Colors.white) ? Colors.purple : Colors.white;
           });
         }),
       ],
@@ -83,6 +79,14 @@ class _WrkExpPanelState extends State<WrkExpPanel> {
         ],
       ),
     );
+  }
+
+  void resetColors() {
+    setState(() {
+      anyExperienceBorderColor = Colors.white;
+      internshipBorderColor = Colors.white;
+      workRemotelyBorderColor = Colors.white;
+    });
   }
 }
 
