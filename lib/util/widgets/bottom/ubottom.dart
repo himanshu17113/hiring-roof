@@ -6,9 +6,9 @@ import 'package:hiring_roof/screens/find.dart';
 import 'package:hiring_roof/screens/home/myhome.dart';
 import 'package:hiring_roof/screens/myjobs/myjobs.dart';
 import '../../../controller/navigation/navcon.dart';
+import 'package:hiring_roof/controller/get/jobseeker_application_controller.dart';
 
-class UNav extends StatelessWidget {  
-
+class UNav extends StatelessWidget {
   const UNav({super.key});
 
   static const screens = [MyHome(), Find(), MyJobs()];
@@ -18,7 +18,9 @@ class UNav extends StatelessWidget {
     MyJobs(
       isGrid: true,
     )
-  ];  static const List<NavigationDestination> destinations = <NavigationDestination>[
+  ];
+  static const List<NavigationDestination> destinations =
+      <NavigationDestination>[
     NavigationDestination(
       selectedIcon: Icon(Icons.home),
       icon: Icon(Icons.home_outlined),
@@ -39,18 +41,35 @@ class UNav extends StatelessWidget {
 //  static GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.top]);
     return GetBuilder<Controller>(
       init: Controller(),
       builder: (controller) {
         debugPrint("real - shit");
         return AdaptiveScaffold(
           selectedIndex: controller.page,
-          onSelectedIndexChange: (newIndex) => controller.pageUpdate(newIndex),
+          onSelectedIndexChange: (newIndex) async {
+            controller.pageUpdate(newIndex);
+
+            if (newIndex == 2) {
+              bool success = await MyJobsxController().refreshAll();
+              if (success) {
+                // The API calls were successful
+                // Print a success message to the console
+                print('All sections refreshed successfully!');
+              } else {
+                // Failed to refresh all sections
+                // Print an error message to the console
+                print('Failed to refresh all sections!');
+              }
+            }
+          },
           bodyRatio: 0,
           useDrawer: false,
           smallBreakpoint: const WidthPlatformBreakpoint(end: 900),
-          mediumBreakpoint: const WidthPlatformBreakpoint(begin: 900, end: 1200),
+          mediumBreakpoint:
+              const WidthPlatformBreakpoint(begin: 900, end: 1200),
           largeBreakpoint: const WidthPlatformBreakpoint(begin: 1200),
           drawerBreakpoint: const WidthPlatformBreakpoint(begin: 1200),
           body: (_) => screensG[controller.page],

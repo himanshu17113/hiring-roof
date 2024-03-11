@@ -17,7 +17,8 @@ class JobModal {
     this.jobs,
   });
 
-  factory JobModal.fromRawJson(String str) => JobModal.fromJson(json.decode(str));
+  factory JobModal.fromRawJson(String str) =>
+      JobModal.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
@@ -39,7 +40,9 @@ class JobModal {
         jobCount: json["jobCount"],
         pageCount: json["pageCount"],
         currentPage: json["currentPage"],
-        jobs: json["data"] == null ? [] : List<Job>.from(json["data"]!.map((x) => Job.fromJsonbyappli(x))),
+        jobs: json["data"] == null
+            ? []
+            : List<Job>.from(json["data"]!.map((x) => Job.fromJsonbyappli(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -48,7 +51,9 @@ class JobModal {
         "jobCount": jobCount,
         "pageCount": pageCount,
         "currentPage": currentPage,
-        "jobs": jobs == null ? [] : List<dynamic>.from(jobs!.map((x) => x.toJson())),
+        "jobs": jobs == null
+            ? []
+            : List<dynamic>.from(jobs!.map((x) => x.toJson())),
       };
 }
 
@@ -72,7 +77,7 @@ class Job {
   bool? isSaved;
   final DateTime? createdAt;
   final DateTime? updatedAt;
- // final int? v;
+  // final int? v;
   bool isApplied;
 
   Job(
@@ -93,7 +98,7 @@ class Job {
       this.isSaved,
       this.createdAt,
       this.updatedAt,
-   //   this.v,
+      //   this.v,
       this.isApplied = false});
 
   factory Job.fromRawJson(String str) => Job.fromJson(json.decode(str));
@@ -116,10 +121,14 @@ class Job {
         companyName: json["companyName"],
         companyLogo: json["companyLogo"],
         isSaved: json["isSaved"],
-        createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
-        updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
-      //  v: json["__v"],
-      isApplied: json['isApplied'],
+        createdAt: json["createdAt"] == null
+            ? null
+            : DateTime.parse(json["createdAt"]),
+        updatedAt: json["updatedAt"] == null
+            ? null
+            : DateTime.parse(json["updatedAt"]),
+        //  v: json["__v"],
+        isApplied: json['isApplied'],
       );
   factory Job.fromJsonbyappli(Map<String, dynamic> json) => Job(
         id: json["_id"],
@@ -137,7 +146,9 @@ class Job {
         companyName: json["companyName"],
         companyLogo: json["companyLogo"],
         isSaved: json["isSaved"],
-        createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
+        createdAt: json["createdAt"] == null
+            ? null
+            : DateTime.parse(json["createdAt"]),
       );
   Map<String, dynamic> toJson() => {
         "_id": id,
@@ -157,7 +168,7 @@ class Job {
         "isSaved": isSaved,
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
-      //  "__v": v,
+        //  "__v": v,
       };
 }
 
