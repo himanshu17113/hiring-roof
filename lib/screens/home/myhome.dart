@@ -22,7 +22,7 @@ class MyHome extends StatelessWidget {
     phone = screenSize.shortestSide < 400 ? true : false;
     debugPrint("rebuild  ");
     return Scaffold(
-        //backgroundColor: black,
+        backgroundColor: black,
         appBar: AppBar(
           title: Row(
             children: [

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hiring_roof/data/shared_pref.dart';
 import 'package:hiring_roof/screens/sign/signin.dart';
+import 'package:hiring_roof/screens/support.dart';
 import 'package:hiring_roof/util/widgets/bottom/rbottom.dart';
 import 'package:hiring_roof/util/widgets/bottom/ubottom.dart';
 import 'services/notification_service.dart';
@@ -44,11 +45,13 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       darkTheme: MaterialTheme.dark(),
       theme: MaterialTheme.dark(),
-      home: userModal.userId == null
-          ? const Sigin()
-          : userModal.userType == "jobSeeker"
-              ? const UNav()
-              : const ReqNav(),
+      home:
+          //const Help()
+          userModal.userId == null
+              ? const Sigin()
+              : userModal.userType == "jobSeeker"
+                  ? const UNav()
+                  : const ReqNav(),
     );
   }
 }

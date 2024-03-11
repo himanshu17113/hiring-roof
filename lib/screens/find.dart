@@ -124,41 +124,71 @@ class Find extends StatelessWidget {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          TextField(
-                              controller: textEditingController,
-                              style: inputtextStyle,
-                              decoration: InputDecoration(
-                                  suffixIconConstraints:
-                                      const BoxConstraints(minWidth: 80, maxHeight: 40, maxWidth: 100, minHeight: 40),
-                                  helperStyle: inputtextStyle,
-                                  hintStyle: inputtextStyle,
-                                  //    filled: true,
-                                  //  fillColor: const Color.fromARGB(240, 20, 20, 20),
-                                  hintText: 'What position are you looking for ?',
-                                  prefixIcon: const Icon(Icons.search),
-                                  suffixIcon: InkWell(
+                          SizedBox(
+                            height: 50,
+                            width: double.maxFinite,
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex: 10,
+                                  child: TextField(
+                                      controller: textEditingController,
+                                      style: inputtextStyle,
+                                      decoration: InputDecoration(
+                                          // suffixIconConstraints:
+                                          //     const BoxConstraints(minWidth: 80, maxHeight: 40, maxWidth: 100, minHeight: 40),
+                                          helperStyle: inputtextStyle,
+                                          hintStyle: inputtextStyle,
+                                          //    filled: true,
+                                          //  fillColor: const Color.fromARGB(240, 20, 20, 20),
+                                          hintText: 'What position are you looking for ?',
+                                          prefixIcon: const Icon(Icons.search),
+                                          contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 4),
+                                          border: OutlineInputBorder(
+                                              borderSide: BorderSide.none, borderRadius: BorderRadius.circular(10)))),
+                                ),
+                                const Spacer(),
+                                Expanded(
+                                  flex: 6,
+                                  child: TextField(
+                                      controller: textEditingController,
+                                      style: inputtextStyle,
+                                      decoration: InputDecoration(
+                                          // suffixIconConstraints:
+                                          //     const BoxConstraints(minWidth: 80, maxHeight: 40, maxWidth: 100, minHeight: 40),
+                                          helperStyle: inputtextStyle,
+                                          hintStyle: inputtextStyle,
+                                          //    filled: true,
+                                          //  fillColor: const Color.fromARGB(240, 20, 20, 20),
+                                          hintText: 'Search',
+                                          prefixIcon: const Icon(Icons.location_city),
+                                          contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 4),
+                                          border: OutlineInputBorder(
+                                              borderSide: BorderSide.none, borderRadius: BorderRadius.circular(10)))),
+                                ),
+                                const Spacer(),
+                                Expanded(
+                                  flex: 2,
+                                  child: InkWell(
                                     onTap: () => jobxController.jobSearch("", textEditingController.text),
                                     child: Align(
                                       alignment: Alignment.centerRight,
                                       child: Container(
-                                        width: 100,
-                                        height: 40,
-                                        margin: const EdgeInsets.only(right: 4),
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                            color: const Color.fromRGBO(255, 255, 255, 1),
-                                            borderRadius: BorderRadius.circular(10),
-                                            gradient: linearGradient),
-                                        child: const Text(
-                                          "Search",
-                                          style: inputtextStyle,
-                                        ),
-                                      ),
+                                          width: 100,
+                                          height: 40,
+                                          margin: const EdgeInsets.only(right: 4),
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                              color: const Color.fromRGBO(255, 255, 255, 1),
+                                              borderRadius: BorderRadius.circular(10),
+                                              gradient: linearGradient),
+                                          child: const Icon(Icons.search)),
                                     ),
                                   ),
-                                  contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 4),
-                                  border:
-                                      OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.circular(10)))),
+                                ),
+                              ],
+                            ),
+                          ),
                           const Text("Find job By Stream",
                               style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 16)),
                           SizedBox(

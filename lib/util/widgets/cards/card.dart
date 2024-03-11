@@ -23,7 +23,7 @@ class JCard extends StatelessWidget {
   final bool isInterveiw;
   final bool isInterveiw2;
   final bool isSelected;
-   final String? interviewDate;
+  final String? interviewDate;
   final String? interviewTime;
 
   final Function(Application applicaton)? callback;
@@ -39,7 +39,7 @@ class JCard extends StatelessWidget {
     this.isInterveiw = false,
     this.isInterveiw2 = false,
     this.isSelected = false,
-     this.interviewDate,
+    this.interviewDate,
     this.interviewTime,
   });
   static TextStyle smallText = const TextStyle(fontSize: 11.5, color: Color.fromRGBO(153, 153, 153, 1));
@@ -91,15 +91,17 @@ class JCard extends StatelessWidget {
     theme = Theme.of(context);
     return Card(
         elevation: 0,
-        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        color: const Color.fromRGBO(11, 11, 11, 1),
+        //  color: Colors.black12,
+        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: Column(children: [
           header(context),
           Row(
             children: [
               const Spacer(),
               Expanded(
-                flex: 9,
+                flex: 45,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -131,7 +133,8 @@ class JCard extends StatelessWidget {
                     ]
                   ],
                 ),
-              )
+              ),
+              //   const Spacer(),
             ],
           ),
           if (application != null && isEmployer && !jobApplications) ...[progress()],
@@ -153,11 +156,11 @@ class JCard extends StatelessWidget {
         //   crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-          const Spacer(),
+          //const Spacer(),
           Expanded(
             flex: 6,
             child: Padding(
-              padding: const EdgeInsets.all(4),
+              padding: const EdgeInsets.fromLTRB(0, 0, 4, 4),
               child: Center(
                 child: GestureDetector(
                   onTap: () => (application?.applicantId?.videoUrl == null ||
@@ -173,7 +176,7 @@ class JCard extends StatelessWidget {
                     padding: const EdgeInsets.all(5.5),
                     //stackFit: StackFit.expand,
                     borderType: BorderType.Circle,
-                    borderPadding: const EdgeInsets.all(2),
+                    borderPadding: const EdgeInsets.all(1),
                     color: (application?.applicantId?.videoUrl == null || (application?.applicantId?.videoUrl?.isEmpty ?? false))
                         ? Colors.transparent
                         : const Color.fromRGBO(157, 33, 255, 1),
@@ -205,7 +208,7 @@ class JCard extends StatelessWidget {
                 //       crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 4, left: 5),
+                    padding: const EdgeInsets.only(top: 0, left: 5),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
@@ -213,18 +216,16 @@ class JCard extends StatelessWidget {
                       children: [
                         Text(
                           application == null
-                              ? (job?.companyName ?? "Loading ...")
+                              ? (job?.companyName![0] ?? "Loading ...")
                               : (application?.jobId?.jobTittle ?? "Loading ..."),
-                          style: const TextStyle(
-                            fontSize: 15,
-                          ),
+                          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                         Text(
                           application == null
                               ? (job?.jobTittle ?? "Loading ...")
                               : (application?.applicantId?.name ?? "Loading ..."),
                           style: const TextStyle(
-                            fontSize: 18,
+                            fontSize: 16,
                           ),
                         ),
                       ],
