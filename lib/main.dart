@@ -1,8 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hiring_roof/data/shared_pref.dart';
-import 'package:hiring_roof/screens/contactus.dart';
-import 'package:hiring_roof/screens/intro/intero_screen.dart';
 import 'package:hiring_roof/screens/sign/signin.dart';
 import 'package:hiring_roof/screens/support.dart';
 import 'package:hiring_roof/util/widgets/bottom/rbottom.dart';

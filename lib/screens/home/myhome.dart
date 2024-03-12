@@ -73,10 +73,10 @@ class MyHome extends StatelessWidget {
                 )),
           ],
         ),
-        body: SizedBox(
-            // decoration: const BoxDecoration(
-            //   image: DecorationImage(image: AssetImage("assets/png/Elipse.png"), fit: BoxFit.cover),
-            // ),
+        body: DecoratedBox(
+            decoration: const BoxDecoration(
+              image: DecorationImage(image: AssetImage("assets/png/Elipse.png"), fit: BoxFit.cover),
+            ),
             child: GetBuilder<JobxController>(
                 autoRemove: false,
                 tag: "job",
