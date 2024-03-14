@@ -58,7 +58,7 @@ class JCard extends StatelessWidget {
     fontSize: 15,
     color: white,
   );
-  static const double iconSize = 16;
+  static const double iconSize = 15;
   static const InputDecoration inputDecoration =
       InputDecoration(contentPadding: EdgeInsets.symmetric(vertical: 6, horizontal: 10), border: OutlineInputBorder());
 
@@ -80,7 +80,7 @@ class JCard extends StatelessWidget {
   }
 
   String getInitials(String? text) {
-    return (text == null || text.isEmpty) ? "" : text.split(' ').map((s) => s[0]).join(' ');
+    return (text == null || text.isEmpty) ? "" : text.toUpperCase().split(' ').map((s) => s[0]).join(' ');
   }
 
   money(int number) {
@@ -223,7 +223,7 @@ class JCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 0, left: 5),
+                    padding: const EdgeInsets.only(top: 5, left: 5),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
@@ -233,7 +233,7 @@ class JCard extends StatelessWidget {
                           application == null
                               ? (getInitials(job?.companyName))
                               : (application?.jobId?.jobTittle ?? "Loading ..."),
-                          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
                         ),
                         Text(
                           application == null
@@ -381,7 +381,7 @@ class JCard extends StatelessWidget {
             application == null ? (job?.timePeriod ?? "Loading...") : (application?.jobId?.timePeriod ?? "Loading..."),
           ),
           iconText(
-            Icons.attach_money,
+            Icons.currency_rupee_sharp,
             money(
               application == null ? (job!.pay ?? 30000) : (application?.jobId?.pay ?? 1000),
             ),
@@ -994,7 +994,7 @@ class JCard extends StatelessWidget {
       Row(mainAxisSize: MainAxisSize.min, children: [
         if (!isFirst) ...[
           const Padding(
-            padding: EdgeInsets.all(5),
+            padding: EdgeInsets.all(4),
             child: Icon(
               Icons.radio_button_checked,
               size: 2,

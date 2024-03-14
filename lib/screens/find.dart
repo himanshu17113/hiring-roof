@@ -16,7 +16,9 @@ import 'notification.dart';
 
 class Find extends StatelessWidget {
   const Find({super.key});
-  static TextEditingController textEditingController = TextEditingController();
+  static TextEditingController searchEditingController = TextEditingController();
+  static TextEditingController locationEditingController = TextEditingController();
+
   static const TextStyle inputtextStyle = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w400,
@@ -100,147 +102,73 @@ class Find extends StatelessWidget {
                     ),
                   ),
                   bottom: AppBar(
-                    toolbarHeight: 50 + screenSize.width * .45,
+                    backgroundColor: Colors.black,
+                    toolbarHeight: 60,
                     leadingWidth: 0,
                     titleSpacing: 10,
                     leading: const SizedBox.shrink(),
-                    title: SizedBox(
-                      width: double.infinity,
-                      height: 48 + screenSize.width * .45,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          SizedBox(
-                            height: 42.5,
-                            width: double.maxFinite,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 30,
-                                  child: TextField(
-                                      controller: textEditingController,
-                                      style: inputtextStyle,
-                                      decoration: InputDecoration(
-                                          prefixIconConstraints: const BoxConstraints(minWidth: 25, maxHeight: 45),
-                                          helperStyle: inputtextStyle,
-                                          hintStyle: hinttextStyle,
-                                          hintText: 'Search Your Jobs Here',
-                                          prefixIcon: const Icon(
-                                            Icons.search,
-                                            grade: 1,
-                                            size: 22,
-                                          ),
-                                          contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 4),
-                                          border: OutlineInputBorder(
-                                              borderSide: BorderSide.none, borderRadius: BorderRadius.circular(10)))),
-                                ),
-                                const Spacer(),
-                                Expanded(
-                                  flex: 25,
-                                  child: TextField(
-                                      controller: textEditingController,
-                                      style: inputtextStyle,
-                                      decoration: InputDecoration(
-                                          prefixIconConstraints: const BoxConstraints(minWidth: 25, maxHeight: 45),
-                                          helperStyle: inputtextStyle,
-                                          hintStyle: hinttextStyle,
-                                          hintText: 'Search by Location',
-                                          prefixIcon: const Icon(
-                                            Icons.pin_drop_outlined,
-                                            size: 20,
-                                          ),
-                                          contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 4),
-                                          border: OutlineInputBorder(
-                                              borderSide: BorderSide.none, borderRadius: BorderRadius.circular(10)))),
-                                ),
-                                InkWell(
-                                  onTap: () => jobxController.jobSearch("", textEditingController.text),
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Container(
-                                        width: 42.5,
-                                        height: 42.5,
-                                        margin: const EdgeInsets.only(left: 7.5),
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                            color: const Color.fromRGBO(255, 255, 255, 1),
-                                            borderRadius: BorderRadius.circular(10),
-                                            gradient: linearGradient),
-                                        child: const Icon(Icons.search)),
+                    title: Row(
+                      children: [
+                        Expanded(
+                          flex: 30,
+                          child: TextField(
+                              controller: searchEditingController,
+                              style: inputtextStyle,
+                              decoration: InputDecoration(
+                                  prefixIconConstraints: const BoxConstraints(minWidth: 25, maxHeight: 45),
+                                  helperStyle: inputtextStyle,
+                                  hintStyle: hinttextStyle,
+                                  hintText: 'Search Your Jobs Here',
+                                  prefixIcon: const Icon(
+                                    Icons.search,
+                                    grade: 1,
+                                    size: 22,
                                   ),
-                                ),
-                              ],
-                            ),
+                                  contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 4),
+                                  border:
+                                      OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.circular(10)))),
+                        ),
+                        const Spacer(),
+                        Expanded(
+                          flex: 25,
+                          child: TextField(
+                              controller: locationEditingController,
+                              style: inputtextStyle,
+                              decoration: InputDecoration(
+                                  prefixIconConstraints: const BoxConstraints(minWidth: 25, maxHeight: 45),
+                                  helperStyle: inputtextStyle,
+                                  hintStyle: hinttextStyle,
+                                  hintText: 'Search by Location',
+                                  prefixIcon: const Icon(
+                                    Icons.pin_drop_outlined,
+                                    size: 20,
+                                  ),
+                                  contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 4),
+                                  border:
+                                      OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.circular(10)))),
+                        ),
+                        InkWell(
+                          onTap: () => jobxController.jobSearch("", searchEditingController.text),
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Container(
+                                width: 42.5,
+                                height: 42.5,
+                                margin: const EdgeInsets.only(left: 7.5),
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    color: const Color.fromRGBO(255, 255, 255, 1),
+                                    borderRadius: BorderRadius.circular(10),
+                                    gradient: linearGradient),
+                                child: const Icon(Icons.search)),
                           ),
-                          const Text("Find job By Stream",
-                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 16)),
-                          SizedBox(
-                            height: screenSize.width * .33,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  alignment: Alignment.bottomCenter,
-                                  height: screenSize.width * .33,
-                                  width: screenSize.width * .3,
-                                  padding: const EdgeInsets.only(left: 10, bottom: 10, right: 5),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      image: const DecorationImage(image: AssetImage('assets/png/arts.png'), fit: BoxFit.cover)),
-                                  child: Text('Arts jobs',
-                                      maxLines: 2,
-                                      style: GoogleFonts.notoSerifDisplay(
-                                        fontSize: 19,
-                                        fontWeight: FontWeight.w500,
-                                      )),
-                                ),
-                                Container(
-                                  height: screenSize.width * .33,
-                                  width: screenSize.width * .3,
-                                  alignment: Alignment.bottomCenter,
-                                  padding: const EdgeInsets.only(left: 10, bottom: 10, right: 5),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      image:
-                                          const DecorationImage(image: AssetImage('assets/png/commerce.png'), fit: BoxFit.cover)),
-                                  child: Text(
-                                    'Commerce Jobs',
-                                    maxLines: 2,
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.notoSerifDisplay(
-                                      fontSize: 19,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  alignment: Alignment.bottomCenter,
-                                  height: screenSize.width * .33,
-                                  width: screenSize.width * .3,
-                                  padding: const EdgeInsets.only(left: 10, bottom: 10, right: 5),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      image:
-                                          const DecorationImage(image: AssetImage('assets/png/science.png'), fit: BoxFit.cover)),
-                                  child: Text('Science jobs',
-                                      maxLines: 2,
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.notoSerifDisplay(
-                                        fontSize: 19,
-                                        fontWeight: FontWeight.w500,
-                                      )),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
                 SliverList.builder(
+                  
                     itemCount: jobxController.searchjobs.length + 1,
                     itemBuilder: (context, index) {
                       if (jobxController.searchjobs.isEmpty) {

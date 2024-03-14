@@ -72,6 +72,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               // ),
               child: GetBuilder<StartxController>(
                   tag: "start",
+                  // id: "home",
+                  // assignId: true,
                   init: StartxController(),
                   //initState: (startxController) {},
                   builder: (startxController) => CustomScrollView(

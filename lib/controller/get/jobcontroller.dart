@@ -61,14 +61,20 @@ class JobxController extends GetxController {
       position = scrollController.position.pixels;
       if (scrollController.position.pixels == scrollController.position.maxScrollExtent && !reachedTheEndofMyjob
           // &&  userModal.userType == "jobSeeker"
-          ) getMyJobs();
+          ) {
+        getMyJobs();
+      }
     });
     searchscrollController.addListener(() {
       //  position = scrollController.position.pixels;
-      if (searchscrollController.position.pixels == searchscrollController.position.maxScrollExtent &&
-          !reachedTheEndofsearch &&
-          !isSearching) {
-        getmoreSearchedjob();
+      if (searchscrollController.position.pixels == searchscrollController.position.maxScrollExtent) {
+        if (jobTittle != null) {
+          if (!reachedTheEndofsearch && !isSearching) {
+            getmoreSearchedjob();
+          }
+        } else {
+          getMyJobs();
+        }
       }
     });
     super.onInit();
@@ -99,10 +105,10 @@ class JobxController extends GetxController {
         myjobs.addAll(jobModal.jobs!);
         searchjobs.addAll(jobModal.jobs!);
         page++;
-        update();
+        update(["find", "home"]);
       } else {
         reachedTheEndofMyjob = true;
-        update();
+        update(["find", "home"]);
       }
     } else {
       return null;
