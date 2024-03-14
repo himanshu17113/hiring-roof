@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'dart:math' as math;
 import 'package:get/get.dart';
 import 'package:hiring_roof/controller/get/startcontroller.dart';
@@ -33,12 +34,21 @@ class _SiginState extends State<Sigin> with SingleTickerProviderStateMixin {
     super.initState();
     Get.put<StartxController>(StartxController(), tag: "start", permanent: true);
     _controller = AnimationController(
-      value: 0.0,
-      duration: const Duration(seconds: 25),
-      upperBound: 1,
-      lowerBound: -1,
-      vsync: this,
-    )..repeat();
+        value: 0.0,
+        duration: const Duration(seconds: 23),
+        upperBound: 3,
+        lowerBound: -3,
+        vsync: this,
+        animationBehavior: AnimationBehavior.preserve)
+      ..repeat();
+    // controller = AnimationController(
+    //     value: 0,
+    //     duration: const Duration(seconds: 2),
+    //     upperBound: 10,
+    //     lowerBound: -10,
+    //     vsync: this,
+    //     animationBehavior: AnimationBehavior.preserve)
+    //   ..repeat();
   }
 
   @override
@@ -88,25 +98,44 @@ class _SiginState extends State<Sigin> with SingleTickerProviderStateMixin {
           alignment: Alignment.topCenter,
           children: [
             Positioned(
-              bottom: 0,
-              left: 0,
-              child: Image.asset(
-                "assets/png/img_vector_2.png",
-                height: size.height * 0.3,
-                fit: BoxFit.fitWidth,
+              top: -180,
+              right: -180,
+              child: RotationTransition(
+                turns: const AlwaysStoppedAnimation(45 / 360),
+                child: AnimatedBuilder(
+                  animation: _controller,
+                  builder: (context, child) {
+                    return ClipPath(
+                      clipper: DrawClip(_controller.value * 1.2),
+                      child: Container(
+                        width: 500,
+                        height: 500,
+                        decoration: const BoxDecoration(gradient: linearGradient),
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
-            AnimatedBuilder(
-              animation: _controller,
-              builder: (context, child) {
-                return ClipPath(
-                  clipper: DrawClip(_controller.value),
-                  child: Container(
-                    height: PlatformInfo.isAppOS() ? size.height * 0.2 : 200,
-                    decoration: const BoxDecoration(gradient: linearGradient),
-                  ),
-                );
-              },
+            Positioned(
+              bottom: -160,
+              left: -160,
+              child: RotationTransition(
+                turns: const AlwaysStoppedAnimation(225 / 360),
+                child: AnimatedBuilder(
+                  animation: _controller,
+                  builder: (context, child) {
+                    return ClipPath(
+                      clipper: DrawClip(_controller.value),
+                      child: Container(
+                        width: 400,
+                        height: 400,
+                        decoration: const BoxDecoration(gradient: linearGradient),
+                      ),
+                    );
+                  },
+                ),
+              ),
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -123,40 +152,14 @@ class _SiginState extends State<Sigin> with SingleTickerProviderStateMixin {
                     style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.normal),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 7, 20, 20),
-                  child: InternationalPhoneNumberInput(
-                    //   searchBoxDecoration: const InputDecoration(fillColor: Colors.amber, filled: true, border: OutlineInputBorder()),
-                    autoValidateMode: AutovalidateMode.disabled,
-                    searchBoxDecoration:
-                        const InputDecoration(fillColor: Colors.amber, filled: true, border: OutlineInputBorder()),
-                    inputBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(6), borderSide: BorderSide.none),
-                    selectorConfig: const SelectorConfig(trailingSpace: false),
-                    initialValue: PhoneNumber(dialCode: "+91", isoCode: "IN"),
-                    onFieldSubmitted: (value) => (phoneno != null)
-                        ? phoneno!.isNotEmpty
-                            ? userProvider.signIn(phoneno!).then(
-                                (response) {
-                                  if (response.status.isOk) {
-                                    final data = response.body;
-
-                                    debugPrint(data?.otp.toString() ?? "didnot get");
-
-                                    NotificationService.showNotification(
-                                      title: "Hiring Roof Otp",
-                                      body: data?.otp.toString() ?? "bnfkjn",
-                                    );
-                                  } else {
-                                    throw Exception('Failed to load data');
-                                  }
-                                },
-                              )
-                            : ScaffoldMessenger.of(context).showSnackBar(empty)
-                        : ScaffoldMessenger.of(context).showSnackBar(notCorrect),
-                    onInputChanged: (PhoneNumber value) {
-                      phoneno = value.phoneNumber;
-                      debugPrint(phoneno!.length.toString());
-                    },
+                SizedBox(
+                  width: size.width * 0.8,
+                  child: TextField(
+                    onChanged: (value) => phoneno = value,
+                    decoration: const InputDecoration(
+                      hintText: 'Phone Number',
+                    ),
+                    keyboardType: TextInputType.phone,
                   ),
                 ),
                 InkWell(
@@ -221,13 +224,13 @@ class _SiginState extends State<Sigin> with SingleTickerProviderStateMixin {
   }
 
   void signin() {
-    if (phoneno!.length < 13) {
+    if (phoneno!.length != 10) {
       ScaffoldMessenger.of(context).showSnackBar(phonenotvalid);
     }
     loading.value = true;
     (phoneno != null)
         ? phoneno!.isNotEmpty
-            ? phoneno!.length == 13
+            ? phoneno!.length == 10
                 ? userProvider.signIn(phoneno!).then(
                     (response) {
                       userProvider.phoneno = phoneno!;

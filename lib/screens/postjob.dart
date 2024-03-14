@@ -142,18 +142,23 @@ class _PostJobState extends State<PostJob> {
         shadowColor: const Color(0xFF000000),
         elevation: 20,
         backgroundColor: const Color(0xFF000000),
-        title: const Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Post a job",
-              style: TextStyle(color: white, fontSize: 20, fontWeight: FontWeight.w800),
-            ),
-            Text(
-              "Mollit in laborum tempor Lorem incididunt irure. Aute eu ex ad sunt.",
-              style: TextStyle(color: white, fontSize: 11, fontWeight: FontWeight.w400),
-            )
-          ],
+        title: const Text.rich(
+          TextSpan(
+            children: [
+              TextSpan(
+                text: 'Post',
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color.fromRGBO(157, 33, 255, 1)),
+              ),
+              TextSpan(
+                text: ' Job',
+                style: TextStyle(
+                  fontSize: 21,
+                  fontWeight: FontWeight.bold,
+                  color: white,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       body: SafeArea(
@@ -166,7 +171,7 @@ class _PostJobState extends State<PostJob> {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(top: 10),
                   child: Row(
                     children: [
                       const Spacer(),
@@ -194,7 +199,7 @@ class _PostJobState extends State<PostJob> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(top: 10),
                   child: Row(
                     children: [
                       const Spacer(),
@@ -235,7 +240,7 @@ class _PostJobState extends State<PostJob> {
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(top: 10),
                   child: Row(
                     children: [
                       const Spacer(),
@@ -265,7 +270,7 @@ class _PostJobState extends State<PostJob> {
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(top: 10),
                   child: Row(
                     children: [
                       const Spacer(),
@@ -296,7 +301,7 @@ class _PostJobState extends State<PostJob> {
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(top: 10),
                   child: Row(
                     children: [
                       const Spacer(),
@@ -355,7 +360,7 @@ class _PostJobState extends State<PostJob> {
                   ),
                 ),
                 // Padding(
-                //   padding: const EdgeInsets.only(top: 15),
+                //   padding: const EdgeInsets.only(top: 10),
                 //   child: Row(
                 //     children: [
                 //       const Spacer(),
@@ -407,7 +412,7 @@ class _PostJobState extends State<PostJob> {
                 // ),
 
                 Padding(
-                  padding: const EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(top: 10),
                   child: Row(
                     children: [
                       const Spacer(),
@@ -458,7 +463,7 @@ class _PostJobState extends State<PostJob> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(top: 10),
                   child: Row(
                     children: [
                       const Spacer(),
@@ -564,7 +569,7 @@ class _PostJobState extends State<PostJob> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(top: 10),
                   child: Row(
                     children: [
                       const Spacer(),
@@ -670,7 +675,7 @@ class _PostJobState extends State<PostJob> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(top: 10),
                   child: Row(
                     children: [
                       const Spacer(),
@@ -764,7 +769,7 @@ class _PostJobState extends State<PostJob> {
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(top: 10),
                   child: Row(
                     children: [
                       const Spacer(),
@@ -794,7 +799,7 @@ class _PostJobState extends State<PostJob> {
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(top: 10),
                   child: StatefulBuilder(
                     builder: (BuildContext context, setState) => Row(
                       crossAxisAlignment: CrossAxisAlignment.center,

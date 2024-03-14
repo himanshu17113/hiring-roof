@@ -74,15 +74,13 @@ class _InteroScreenState extends State<InteroScreen> {
             child: Stack(
               children: [
                 PageView.builder(
-                    onPageChanged: (value) =>
-                        // value == 2
-                        //     ? Navigator.push(
-                        //         context,
-                        //         MaterialPageRoute(
-                        //           builder: (context) => const Sigin(),
-                        //         ))
-                        //     :
-                        setState(() => index = value),
+                    onPageChanged: (value) => value == 2
+                        ? Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Sigin(),
+                            ))
+                        : setState(() => index = value),
                     itemCount: 3,
                     itemBuilder: (context, index) => mock[index]),
                 Align(

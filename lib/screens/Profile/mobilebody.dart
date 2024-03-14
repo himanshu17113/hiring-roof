@@ -64,8 +64,6 @@ class ProfileMobileBody extends StatelessWidget {
     return null;
   }
 
-  static const InputDecoration inputDecoration = InputDecoration(
-      contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 4), border: OutlineInputBorder(borderSide: BorderSide.none));
   @override
   Widget build(BuildContext context) {
     final ProfileController controller = Get.put(ProfileController());
@@ -82,7 +80,7 @@ class ProfileMobileBody extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 15),
+                padding: const EdgeInsets.only(top: 5),
                 child: Row(
                   children: [
                     const Spacer(),
@@ -142,7 +140,7 @@ class ProfileMobileBody extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 15),
+                padding: const EdgeInsets.only(top: 5),
                 child: Row(
                   children: [
                     const Spacer(),
@@ -154,21 +152,21 @@ class ProfileMobileBody extends StatelessWidget {
                           children: [
                             const Text("Your Name", style: headertextStyle),
                             Padding(
-                              padding: const EdgeInsets.only(top: 7, bottom: 20),
+                              padding: const EdgeInsets.only(top: 7, bottom: 10),
                               child: TextField(
-                                  scrollPhysics: const ClampingScrollPhysics(),
-                                  scrollPadding: EdgeInsets.zero,
-                                  controller: controller.name,
-                                  keyboardType: TextInputType.name,
-                                  // classController.courseTitleController,
-                                  //  textAlign: TextAlign.center,
-                                  textAlignVertical: TextAlignVertical.top,
-                                  //cursorHeight: 20,
-                                  style: inputtextStyle,
-                                  // strutStyle: StrutStyle(height: 1
-                                  //     //    , fontSize: 28
-                                  //     ),
-                                  decoration: inputDecoration),
+                                scrollPhysics: const ClampingScrollPhysics(),
+                                scrollPadding: EdgeInsets.zero,
+                                controller: controller.name,
+                                keyboardType: TextInputType.name,
+                                // classController.courseTitleController,
+                                //  textAlign: TextAlign.center,
+                                textAlignVertical: TextAlignVertical.top,
+                                //cursorHeight: 20,
+                                style: inputtextStyle,
+                                // strutStyle: StrutStyle(height: 1
+                                //     //    , fontSize: 28
+                                //     ),
+                              ),
                             ),
                           ],
                         )),
@@ -177,7 +175,7 @@ class ProfileMobileBody extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: userModal.userType == "jobSeeker" ? 15 : 35),
+                padding: const EdgeInsets.only(top: 10),
                 child: Row(
                   children: [
                     const Spacer(),
@@ -189,16 +187,16 @@ class ProfileMobileBody extends StatelessWidget {
                           children: [
                             const Text("Phone Number", style: headertextStyle),
                             Padding(
-                              padding: const EdgeInsets.only(top: 7, bottom: 20),
+                              padding: const EdgeInsets.only(top: 7, bottom: 10),
                               child: TextField(
-                                  scrollPhysics: const ClampingScrollPhysics(),
-                                  scrollPadding: EdgeInsets.zero,
-                                  keyboardType: TextInputType.phone,
-                                  controller: controller.phone,
-                                  // classController.courseTitleController,
-                                  textAlignVertical: TextAlignVertical.top,
-                                  style: inputtextStyle,
-                                  decoration: inputDecoration),
+                                scrollPhysics: const ClampingScrollPhysics(),
+                                scrollPadding: EdgeInsets.zero,
+                                keyboardType: TextInputType.phone,
+                                controller: controller.phone,
+                                // classController.courseTitleController,
+                                textAlignVertical: TextAlignVertical.top,
+                                style: inputtextStyle,
+                              ),
                             ),
                           ],
                         )),
@@ -213,18 +211,18 @@ class ProfileMobileBody extends StatelessWidget {
                           children: [
                             const Text("Alternative Phone", style: headertextStyle),
                             Padding(
-                              padding: const EdgeInsets.only(top: 7, bottom: 20),
+                              padding: const EdgeInsets.only(top: 7, bottom: 10),
                               child: TextField(
-                                  keyboardType: TextInputType.phone,
-                                  maxLines: 1,
-                                  scrollPhysics: const ClampingScrollPhysics(),
-                                  scrollPadding: EdgeInsets.zero,
-                                  controller: controller.alternativePhone,
-                                  // classController.courseTitleController,
+                                keyboardType: TextInputType.phone,
+                                maxLines: 1,
+                                scrollPhysics: const ClampingScrollPhysics(),
+                                scrollPadding: EdgeInsets.zero,
+                                controller: controller.alternativePhone,
+                                // classController.courseTitleController,
 
-                                  textAlignVertical: TextAlignVertical.top,
-                                  style: inputtextStyle,
-                                  decoration: inputDecoration),
+                                textAlignVertical: TextAlignVertical.top,
+                                style: inputtextStyle,
+                              ),
                             ),
                           ],
                         )),
@@ -233,7 +231,7 @@ class ProfileMobileBody extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: userModal.userType == "jobSeeker" ? 15 : 35),
+                padding: const EdgeInsets.only(top: 10),
                 child: Row(
                   children: [
                     const Spacer(),
@@ -245,18 +243,18 @@ class ProfileMobileBody extends StatelessWidget {
                           children: [
                             const Text("Your Email", style: headertextStyle),
                             Padding(
-                              padding: const EdgeInsets.only(top: 7, bottom: 20),
+                              padding: const EdgeInsets.only(top: 7, bottom: 10),
                               child: TextField(
-                                  keyboardType: TextInputType.emailAddress,
-                                  maxLines: 1,
-                                  scrollPhysics: const ClampingScrollPhysics(),
-                                  scrollPadding: EdgeInsets.zero,
-                                  controller: controller.email,
-                                  // classController.courseTitleController,
+                                keyboardType: TextInputType.emailAddress,
+                                maxLines: 1,
+                                scrollPhysics: const ClampingScrollPhysics(),
+                                scrollPadding: EdgeInsets.zero,
+                                controller: controller.email,
+                                // classController.courseTitleController,
 
-                                  textAlignVertical: TextAlignVertical.top,
-                                  style: inputtextStyle,
-                                  decoration: inputDecoration),
+                                textAlignVertical: TextAlignVertical.top,
+                                style: inputtextStyle,
+                              ),
                             ),
                           ],
                         )),
@@ -265,7 +263,7 @@ class ProfileMobileBody extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 15),
+                padding: const EdgeInsets.only(top: 10),
                 child: Row(
                   children: [
                     const Spacer(),
@@ -325,7 +323,7 @@ class ProfileMobileBody extends StatelessWidget {
                                   fontSize: 13,
                                 )),
                             Padding(
-                              padding: const EdgeInsets.only(top: 7, bottom: 20),
+                              padding: const EdgeInsets.only(top: 7, bottom: 10),
                               child: StatefulBuilder(
                                   builder: (BuildContext context, setState) => GestureDetector(
                                         onTap: () async {
@@ -373,7 +371,7 @@ class ProfileMobileBody extends StatelessWidget {
               ),
               if (userModal.userType == "jobSeeker") ...[
                 Padding(
-                  padding: const EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(top: 10),
                   child: Row(
                     children: [
                       const Spacer(),
@@ -385,22 +383,22 @@ class ProfileMobileBody extends StatelessWidget {
                             children: [
                               const Text("Your Skills", style: headertextStyle),
                               Padding(
-                                padding: const EdgeInsets.only(top: 7, bottom: 20),
+                                padding: const EdgeInsets.only(top: 7, bottom: 10),
                                 child: TextField(
-                                    scrollPhysics: const ClampingScrollPhysics(),
-                                    scrollPadding: EdgeInsets.zero,
-                                    keyboardType: TextInputType.text,
-                                    maxLines: 3,
-                                    controller: controller.skill,
-                                    // classController.courseTitleController,
-                                    //  textAlign: TextAlign.center,
-                                    textAlignVertical: TextAlignVertical.top,
-                                    //cursorHeight: 20,
-                                    style: inputtextStyle,
-                                    // strutStyle: StrutStyle(height: 1
-                                    //     //    , fontSize: 28
-                                    //     ),
-                                    decoration: inputDecoration),
+                                  scrollPhysics: const ClampingScrollPhysics(),
+                                  scrollPadding: EdgeInsets.zero,
+                                  keyboardType: TextInputType.text,
+                                  maxLines: 3,
+                                  controller: controller.skill,
+                                  // classController.courseTitleController,
+                                  //  textAlign: TextAlign.center,
+                                  textAlignVertical: TextAlignVertical.top,
+                                  //cursorHeight: 20,
+                                  style: inputtextStyle,
+                                  // strutStyle: StrutStyle(height: 1
+                                  //     //    , fontSize: 28
+                                  //     ),
+                                ),
                               ),
                             ],
                           )),
@@ -415,19 +413,19 @@ class ProfileMobileBody extends StatelessWidget {
                             children: [
                               const Text("Experience ", style: headertextStyle),
                               Padding(
-                                padding: const EdgeInsets.only(top: 7, bottom: 20),
+                                padding: const EdgeInsets.only(top: 7, bottom: 10),
                                 child: TextField(
-                                    scrollPhysics: const ClampingScrollPhysics(),
-                                    scrollPadding: EdgeInsets.zero,
-                                    maxLines: 3,
-                                    textAlignVertical: TextAlignVertical.top,
-                                    controller: controller.experience,
-                                    //cursorHeight: 20,
-                                    style: inputtextStyle,
-                                    // strutStyle: StrutStyle(height: 1
-                                    //     //    , fontSize: 28
-                                    //     ),
-                                    decoration: inputDecoration),
+                                  scrollPhysics: const ClampingScrollPhysics(),
+                                  scrollPadding: EdgeInsets.zero,
+                                  maxLines: 3,
+                                  textAlignVertical: TextAlignVertical.top,
+                                  controller: controller.experience,
+                                  //cursorHeight: 20,
+                                  style: inputtextStyle,
+                                  // strutStyle: StrutStyle(height: 1
+                                  //     //    , fontSize: 28
+                                  //     ),
+                                ),
                               ),
                             ],
                           )),
@@ -436,7 +434,7 @@ class ProfileMobileBody extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(top: 5),
                   child: Row(
                     children: [
                       const Spacer(),
@@ -448,16 +446,16 @@ class ProfileMobileBody extends StatelessWidget {
                             children: [
                               const Text("Current Pay", style: headertextStyle),
                               Padding(
-                                padding: const EdgeInsets.only(top: 7, bottom: 20),
+                                padding: const EdgeInsets.only(top: 7, bottom: 10),
                                 child: TextField(
-                                    scrollPhysics: const ClampingScrollPhysics(),
-                                    scrollPadding: EdgeInsets.zero,
-                                    controller: controller.currentPay,
-                                    // classController.courseTitleController,
+                                  scrollPhysics: const ClampingScrollPhysics(),
+                                  scrollPadding: EdgeInsets.zero,
+                                  controller: controller.currentPay,
+                                  // classController.courseTitleController,
 
-                                    textAlignVertical: TextAlignVertical.top,
-                                    style: inputtextStyle,
-                                    decoration: inputDecoration),
+                                  textAlignVertical: TextAlignVertical.top,
+                                  style: inputtextStyle,
+                                ),
                               ),
                             ],
                           )),
@@ -472,20 +470,20 @@ class ProfileMobileBody extends StatelessWidget {
                             children: [
                               const Text("Expectation pay", style: headertextStyle),
                               Padding(
-                                padding: const EdgeInsets.only(top: 7, bottom: 20),
+                                padding: const EdgeInsets.only(top: 7, bottom: 10),
                                 child: TextField(
-                                    scrollPhysics: const ClampingScrollPhysics(),
-                                    scrollPadding: EdgeInsets.zero,
-                                    controller: controller.expectedPay,
-                                    // classController.courseTitleController,
-                                    //  textAlign: TextAlign.center,
-                                    textAlignVertical: TextAlignVertical.top,
-                                    //cursorHeight: 20,
-                                    style: inputtextStyle,
-                                    // strutStyle: StrutStyle(height: 1
-                                    //     //    , fontSize: 28
-                                    //     ),
-                                    decoration: inputDecoration),
+                                  scrollPhysics: const ClampingScrollPhysics(),
+                                  scrollPadding: EdgeInsets.zero,
+                                  controller: controller.expectedPay,
+                                  // classController.courseTitleController,
+                                  //  textAlign: TextAlign.center,
+                                  textAlignVertical: TextAlignVertical.top,
+                                  //cursorHeight: 20,
+                                  style: inputtextStyle,
+                                  // strutStyle: StrutStyle(height: 1
+                                  //     //    , fontSize: 28
+                                  //     ),
+                                ),
                               ),
                             ],
                           )),
@@ -494,7 +492,7 @@ class ProfileMobileBody extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(top: 5),
                   child: Row(
                     children: [
                       const Spacer(),
@@ -506,17 +504,17 @@ class ProfileMobileBody extends StatelessWidget {
                             children: [
                               const Text("Your Location", style: headertextStyle),
                               Padding(
-                                padding: const EdgeInsets.only(top: 7, bottom: 20),
+                                padding: const EdgeInsets.only(top: 7, bottom: 10),
                                 child: TextField(
-                                    keyboardType: TextInputType.streetAddress,
-                                    scrollPhysics: const ClampingScrollPhysics(),
-                                    scrollPadding: EdgeInsets.zero,
-                                    controller: controller.location,
-                                    // classController.courseTitleController,
+                                  keyboardType: TextInputType.streetAddress,
+                                  scrollPhysics: const ClampingScrollPhysics(),
+                                  scrollPadding: EdgeInsets.zero,
+                                  controller: controller.location,
+                                  // classController.courseTitleController,
 
-                                    textAlignVertical: TextAlignVertical.top,
-                                    style: inputtextStyle,
-                                    decoration: inputDecoration),
+                                  textAlignVertical: TextAlignVertical.top,
+                                  style: inputtextStyle,
+                                ),
                               ),
                             ],
                           )),
@@ -525,7 +523,7 @@ class ProfileMobileBody extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(top: 5),
                   child: Row(
                     children: [
                       const Spacer(),
@@ -536,7 +534,7 @@ class ProfileMobileBody extends StatelessWidget {
                           children: [
                             const Text("Add your video ", style: headertextStyle),
                             Padding(
-                              padding: const EdgeInsets.only(top: 10, bottom: 20),
+                              padding: const EdgeInsets.only(top: 5, bottom: 20),
                               child: InkWell(
                                 onTap: () async => await controller.videopathx(),
                                 child: Obx(() => ColoredBox(
@@ -585,7 +583,7 @@ class ProfileMobileBody extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(top: 5),
                   child: Row(
                     children: [
                       const Spacer(),
@@ -601,7 +599,7 @@ class ProfileMobileBody extends StatelessWidget {
                                   style: TextStyle(color: Colors.grey, fontSize: 12)),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(top: 10, bottom: 20),
+                              padding: const EdgeInsets.only(top: 5, bottom: 20),
                               child: InkWell(
                                 onTap: () async => controller.resumeFile = await controller.document(),
                                 child: Obx(() => ColoredBox(
@@ -657,7 +655,7 @@ class ProfileMobileBody extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(top: 5),
                   child: Row(
                     children: [
                       const Spacer(),
@@ -673,7 +671,7 @@ class ProfileMobileBody extends StatelessWidget {
                                   style: TextStyle(color: Colors.grey, fontSize: 12)),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(top: 10, bottom: 20),
+                              padding: const EdgeInsets.only(top: 5, bottom: 20),
                               child: InkWell(
                                 onTap: () async => controller.letterFile = await controller.document(),
                                 child: Obx(() => ColoredBox(
@@ -731,7 +729,7 @@ class ProfileMobileBody extends StatelessWidget {
               ],
               if (userModal.userType != "jobSeeker") ...[
                 Padding(
-                  padding: EdgeInsets.only(top: userModal.userType == "jobSeeker" ? 15 : 35),
+                  padding: const EdgeInsets.only(top: 10),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -744,22 +742,22 @@ class ProfileMobileBody extends StatelessWidget {
                             children: [
                               const Text("Company Name", style: headertextStyle),
                               Padding(
-                                padding: const EdgeInsets.only(top: 7, bottom: 20),
+                                padding: const EdgeInsets.only(top: 7, bottom: 10),
                                 child: TextField(
-                                    scrollPhysics: const ClampingScrollPhysics(),
-                                    scrollPadding: EdgeInsets.zero,
-                                    keyboardType: TextInputType.text,
-                                    maxLines: 1,
-                                    controller: controller.companyName,
-                                    // classController.courseTitleController,
-                                    //  textAlign: TextAlign.center,
-                                    textAlignVertical: TextAlignVertical.top,
-                                    //cursorHeight: 20,
-                                    style: inputtextStyle,
-                                    // strutStyle: StrutStyle(height: 1
-                                    //     //    , fontSize: 28
-                                    //     ),
-                                    decoration: inputDecoration),
+                                  scrollPhysics: const ClampingScrollPhysics(),
+                                  scrollPadding: EdgeInsets.zero,
+                                  keyboardType: TextInputType.text,
+                                  maxLines: 1,
+                                  controller: controller.companyName,
+                                  // classController.courseTitleController,
+                                  //  textAlign: TextAlign.center,
+                                  textAlignVertical: TextAlignVertical.top,
+                                  //cursorHeight: 20,
+                                  style: inputtextStyle,
+                                  // strutStyle: StrutStyle(height: 1
+                                  //     //    , fontSize: 28
+                                  //     ),
+                                ),
                               ),
                             ],
                           )),
@@ -774,17 +772,17 @@ class ProfileMobileBody extends StatelessWidget {
                             children: [
                               const Text("Your Location", style: headertextStyle),
                               Padding(
-                                padding: const EdgeInsets.only(top: 7, bottom: 20),
+                                padding: const EdgeInsets.only(top: 7, bottom: 10),
                                 child: TextField(
-                                    keyboardType: TextInputType.streetAddress,
-                                    scrollPhysics: const ClampingScrollPhysics(),
-                                    scrollPadding: EdgeInsets.zero,
-                                    controller: controller.location,
-                                    // classController.courseTitleController,
+                                  keyboardType: TextInputType.streetAddress,
+                                  scrollPhysics: const ClampingScrollPhysics(),
+                                  scrollPadding: EdgeInsets.zero,
+                                  controller: controller.location,
+                                  // classController.courseTitleController,
 
-                                    textAlignVertical: TextAlignVertical.top,
-                                    style: inputtextStyle,
-                                    decoration: inputDecoration),
+                                  textAlignVertical: TextAlignVertical.top,
+                                  style: inputtextStyle,
+                                ),
                               ),
                             ],
                           )),
@@ -793,7 +791,7 @@ class ProfileMobileBody extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: userModal.userType == "jobSeeker" ? 15 : 35),
+                  padding: const EdgeInsets.only(top: 10),
                   child: Row(
                     children: [
                       const Spacer(),
@@ -805,19 +803,19 @@ class ProfileMobileBody extends StatelessWidget {
                             children: [
                               const Text("About Company", style: headertextStyle),
                               Padding(
-                                padding: const EdgeInsets.only(top: 7, bottom: 20),
+                                padding: const EdgeInsets.only(top: 7, bottom: 10),
                                 child: TextField(
-                                    scrollPhysics: const ClampingScrollPhysics(),
-                                    scrollPadding: EdgeInsets.zero,
-                                    maxLines: 3,
-                                    textAlignVertical: TextAlignVertical.top,
-                                    controller: controller.aboutCompany,
-                                    //cursorHeight: 20,
-                                    style: inputtextStyle,
-                                    // strutStyle: StrutStyle(height: 1
-                                    //     //    , fontSize: 28
-                                    //     ),
-                                    decoration: inputDecoration),
+                                  scrollPhysics: const ClampingScrollPhysics(),
+                                  scrollPadding: EdgeInsets.zero,
+                                  maxLines: 3,
+                                  textAlignVertical: TextAlignVertical.top,
+                                  controller: controller.aboutCompany,
+                                  //cursorHeight: 20,
+                                  style: inputtextStyle,
+                                  // strutStyle: StrutStyle(height: 1
+                                  //     //    , fontSize: 28
+                                  //     ),
+                                ),
                               ),
                             ],
                           )),
@@ -826,7 +824,7 @@ class ProfileMobileBody extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(top: 5),
                   child: Row(
                     children: [
                       const Spacer(),
@@ -837,7 +835,7 @@ class ProfileMobileBody extends StatelessWidget {
                           children: [
                             const Text("Upload Company Logo", style: headertextStyle),
                             Padding(
-                              padding: const EdgeInsets.only(top: 10, bottom: 20),
+                              padding: const EdgeInsets.only(top: 5, bottom: 20),
                               child: StatefulBuilder(
                                 builder: (BuildContext context, setState) => InkWell(
                                   onTap: () async {

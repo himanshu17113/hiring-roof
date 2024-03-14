@@ -69,6 +69,7 @@ class _VerificationScreenState extends State<VerificationScreen> with SingleTick
 
     final textTheme = Theme.of(context).textTheme.apply(displayColor: Theme.of(context).colorScheme.onSurface);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         alignment: Alignment.topCenter,
         children: [
@@ -99,17 +100,18 @@ class _VerificationScreenState extends State<VerificationScreen> with SingleTick
             children: [
               const Text(
                 "Enter OTP",
-                style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
+                style: TextStyle(fontSize: 34, fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 16),
               const Text(
                 "Please Enter 6 digit OTP For \nVerification",
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 17),
+                style: TextStyle(fontSize: 15, color: white90),
               ),
               Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: OtpTextField(
+                      fieldWidth: 45,
                       fillColor: const Color.fromRGBO(255, 255, 255, 0.05),
                       filled: true,
                       numberOfFields: numberOfFields,
@@ -211,7 +213,8 @@ class _VerificationScreenState extends State<VerificationScreen> with SingleTick
                             ((route) => false));
                       }
                     }
-                  })
+                  }),
+              const SizedBox(height: 50)
             ],
           ),
         ],

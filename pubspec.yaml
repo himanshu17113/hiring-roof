@@ -59,6 +59,8 @@ dependencies:
   flutter_slidable: ^3.0.1
   chips_input: ^0.1.0
   smooth_page_indicator: ^1.1.0
+  google_fonts: ^6.2.0
+  gradient_borders: ^1.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

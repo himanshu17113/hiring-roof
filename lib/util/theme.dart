@@ -359,17 +359,25 @@ class MaterialTheme {
         useMaterial3: true,
         brightness: colorScheme.brightness,
         colorScheme: colorScheme,
-        inputDecorationTheme: InputDecorationTheme(
-            fillColor: isLight
-                ? lightScheme().surfaceContainerHighest.withOpacity(0.8)
-                : darkScheme().surfaceContainerHighest.withOpacity(0.8),
+        inputDecorationTheme: const InputDecorationTheme(
+            fillColor: Color.fromRGBO(255, 255, 255, 0.06),
+            contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            border: OutlineInputBorder(borderSide: BorderSide.none),
+            focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Color(0xFFBB64FF))),
+            // fillColor: isLight
+            //     ? lightScheme().surfaceContainerHighest.withOpacity(0.8)
+            //     : darkScheme().surfaceContainerHighest.withOpacity(0.8),
             filled: true),
         //   searchBarTheme:   SearchBarThemeData(backgroundColor: Colors.amber),
-        textTheme: const TextTheme()
-            .apply(bodyColor: colorScheme.onSurface, displayColor: colorScheme.onSurface, decorationColor: colorScheme.onSurface,),
+        textTheme: const TextTheme().apply(
+          bodyColor: colorScheme.onSurface,
+          displayColor: colorScheme.onSurface,
+          decorationColor: colorScheme.onSurface,
+        ),
         //  f7eef3
         scaffoldBackgroundColor: isLight ? lightScheme().surfaceContainerHighest : darkScheme().surfaceContainerLowest,
         canvasColor: colorScheme.surface,
+
         cardTheme: CardTheme(
           // shadowColor: //isLight ?
           //  colorScheme.secondaryContainer.withOpacity(0.4),

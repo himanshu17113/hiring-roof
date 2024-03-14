@@ -1,6 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
+import 'package:gradient_borders/gradient_borders.dart';
 import 'package:hiring_roof/controller/http/putcompany.dart';
 import 'package:hiring_roof/model/application.dart';
 import 'package:hiring_roof/model/job.dart';
@@ -75,6 +79,10 @@ class JCard extends StatelessWidget {
     }
   }
 
+  String getInitials(String? text) {
+    return (text == null || text.isEmpty) ? "" : text.split(' ').map((s) => s[0]).join(' ');
+  }
+
   money(int number) {
     if (number >= 1000) {
       double result = number / 1000.0;
@@ -89,12 +97,19 @@ class JCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     theme = Theme.of(context);
-    return Card(
-        elevation: 0,
-        color: const Color.fromRGBO(11, 11, 11, 1),
-        //  color: Colors.black12,
+    return Container(
         margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        decoration: BoxDecoration(
+            image: const DecorationImage(
+              alignment: Alignment.topRight,
+              image: AssetImage("assets/png/side.png"),
+            ),
+            border: const GradientBoxBorder(
+              gradient: LinearGradient(colors: [Color.fromRGBO(161, 76, 229, 1), Color.fromRGBO(89, 42, 127, 0)]),
+              width: 2,
+            ),
+            color: const Color.fromRGBO(11, 11, 11, 0.6),
+            borderRadius: BorderRadius.circular(10)),
         child: Column(children: [
           header(context),
           Row(
@@ -153,14 +168,14 @@ class JCard extends StatelessWidget {
   }
 
   Widget header(BuildContext context) => Row(
-        //   crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
           //const Spacer(),
           Expanded(
             flex: 6,
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 4, 4),
+              padding: const EdgeInsets.fromLTRB(4, 0, 4, 4),
               child: Center(
                 child: GestureDetector(
                   onTap: () => (application?.applicantId?.videoUrl == null ||
@@ -205,7 +220,7 @@ class JCard extends StatelessWidget {
             child: Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //       crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(top: 0, left: 5),
@@ -216,7 +231,7 @@ class JCard extends StatelessWidget {
                       children: [
                         Text(
                           application == null
-                              ? (job?.companyName![0] ?? "Loading ...")
+                              ? (getInitials(job?.companyName))
                               : (application?.jobId?.jobTittle ?? "Loading ..."),
                           style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                         ),
@@ -231,8 +246,8 @@ class JCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Align(
-                      alignment: Alignment.topRight,
+                  Padding(
+                      padding: const EdgeInsets.only(top: 5),
                       child: job != null
                           ? jobMap == null
                               ? bookMark()
@@ -346,11 +361,11 @@ class JCard extends StatelessWidget {
                 child: (job!.isSaved ?? false)
                     ? const Icon(
                         Icons.bookmark,
-                        color: Color.fromRGBO(153, 153, 153, 1),
+                        color: Colors.white,
                       )
                     : const Icon(
                         Icons.bookmark_outline,
-                        color: Color.fromRGBO(153, 153, 153, 1),
+                        color: Colors.white,
                       ),
               ),
             ),
