@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 import 'package:hiring_roof/util/constant/color.dart';
 
 class Profile extends StatelessWidget {
@@ -21,27 +21,32 @@ class Profile extends StatelessWidget {
   );
   @override
   Widget build(BuildContext context) {
- 
     return Scaffold(
-      // backgroundColor: const Color(0xFF080808),
+      backgroundColor: const Color(0xFF080808),
       appBar: AppBar(
-        //  surfaceTintColor: const Color(0xFF000000),
-        //   shadowColor: const Color(0xFF000000),
-        elevation: 20,
-        //   backgroundColor: const Color(0xFF000000),
+        surfaceTintColor: const Color(0xFF080808),
+        //shadowColor: const Color(0xFF080808),
+        //elevation: 20,
+        backgroundColor: const Color(0xFF000000),
         title: const Text.rich(
           TextSpan(
             children: [
               TextSpan(
                 text: 'My',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromRGBO(157, 33, 255, 1)),
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w900,
+                  color: Color.fromRGBO(144, 0, 255, 1),
+                  fontFamily: 'JosefinSans',
+                ),
               ),
               TextSpan(
                 text: ' Profile ',
                 style: TextStyle(
                   fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w700,
                   color: white,
+                  fontFamily: 'DMSans',
                 ),
               ),
             ],

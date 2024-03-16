@@ -69,7 +69,6 @@ class ProfileController extends GetxController {
 
   disposeTextEditingController() {
     name.clear();
-
     phone.clear();
     skill.clear();
     email.clear();
