@@ -1,9 +1,12 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:hiring_roof/controller/get/profile_controller.dart';
 import 'package:hiring_roof/data/shared_pref.dart';
 import 'package:hiring_roof/main.dart';
@@ -90,44 +93,111 @@ class ProfileMobileBody extends StatelessWidget {
                         children: [
                           Obx(() => IconButton(
                               alignment: Alignment.center,
-                              onPressed: () async => controller.profilePic = await controller.pickImage(),
-                              icon: Stack(
-                                children: [
-                                  controller.profilePic.path.isEmpty
-                                      ? CircleAvatar(
-                                          backgroundImage: (userModal.userData?.profileImage != null &&
-                                                  userModal.userData!.profileImage!.isNotEmpty)
-                                              ? CachedNetworkImageProvider(userModal.userData!.profileImage!)
-                                              : null,
-                                          maxRadius: 45,
-                                        )
-                                      : CircleAvatar(
-                                          backgroundImage: FileImage(File(controller.profilePic.path)),
-                                          maxRadius: 45,
+                              onPressed: () async => showGeneralDialog(
+                                    barrierDismissible: true,
+                                    barrierLabel: '',
+                                    barrierColor: Colors.black38,
+                                    transitionDuration: const Duration(milliseconds: 400),
+                                    pageBuilder: (ctx, anim1, anim2) => Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        controller.profilePic.path.isEmpty
+                                            ? CircleAvatar(
+                                                backgroundImage: (userModal.userData?.profileImage != null &&
+                                                        userModal.userData!.profileImage!.isNotEmpty)
+                                                    ? CachedNetworkImageProvider(userModal.userData!.profileImage!)
+                                                    : null,
+                                                maxRadius: 130,
+                                                //   radius: ,
+                                              )
+                                            : CircleAvatar(
+                                                backgroundImage: FileImage(File(controller.profilePic.path)),
+                                                maxRadius: 130,
+                                              ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(top: 40, bottom: 10),
+                                          child: TextButton(
+                                              onPressed: () {},
+                                              style: const ButtonStyle(
+                                                  backgroundColor: MaterialStatePropertyAll(Colors.white12),
+                                                  textStyle: MaterialStatePropertyAll(TextStyle(color: Colors.white))),
+                                              child: const Text(
+                                                '        Change Profile Picture       ',
+                                                style: TextStyle(color: Colors.white, letterSpacing: 1.02),
+                                              )),
                                         ),
-                                  Positioned(
-                                      top: 60,
-                                      left: 60,
-                                      child: CircleAvatar(
-                                          radius: 13.5,
-                                          backgroundColor: black,
-                                          child: Obx(() => controller.profilePic.path.isEmpty
-                                              ? const Icon(
-                                                  Icons.camera_alt_outlined,
-                                                  color: Colors.grey,
-                                                  size: 15,
-                                                )
-                                              : IconButton(
-                                                  alignment: Alignment.center,
-                                                  onPressed: () async => controller.profilePic = XFile(""),
-                                                  icon: const Icon(
-                                                    Icons.remove,
-                                                    color: Colors.grey,
-                                                    size: 15,
-                                                  ),
-                                                ))))
-                                ],
-                              ))),
+                                        TextButton(
+                                            onPressed: () {},
+                                            style: const ButtonStyle(
+                                                backgroundColor: MaterialStatePropertyAll(Colors.white12),
+                                                textStyle: MaterialStatePropertyAll(TextStyle(color: Colors.white))),
+                                            child: const Text(
+                                              '        Remove Profile Picture        ',
+                                              style: TextStyle(color: Colors.white, letterSpacing: 1.02),
+                                            )),
+                                      ],
+                                    ),
+                                    
+                                    transitionBuilder: (ctx, anim1, anim2, child) => BackdropFilter(
+                                      filter: ImageFilter.blur(sigmaX: 4 * anim1.value, sigmaY: 4 * anim1.value),
+                                      child: FadeTransition(
+                                        opacity: anim1,
+                                        child: child,
+                                      ),
+                                    ),
+                                    context: context,
+                                  ),
+                              //controller.profilePic = await controller.pickImage(),
+                              icon:
+                                  //  Stack(
+                                  //   children: [
+                                  Container(
+                                padding: const EdgeInsets.all(4),
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: GradientBoxBorder(
+                                    gradient:
+                                        LinearGradient(colors: [Color.fromRGBO(143, 0, 255, 1), Color.fromRGBO(56, 121, 233, 1)]),
+                                    width: 2,
+                                  ),
+                                ),
+                                child: controller.profilePic.path.isEmpty
+                                    ? CircleAvatar(
+                                        backgroundImage: (userModal.userData?.profileImage != null &&
+                                                userModal.userData!.profileImage!.isNotEmpty)
+                                            ? CachedNetworkImageProvider(userModal.userData!.profileImage!)
+                                            : null,
+                                        maxRadius: 60,
+                                      )
+                                    : CircleAvatar(
+                                        backgroundImage: FileImage(File(controller.profilePic.path)),
+                                        maxRadius: 60,
+                                      ),
+                              )
+                              // Positioned(
+                              //     top: 60,
+                              //     left: 60,
+                              //     child: CircleAvatar(
+                              //         radius: 13.5,
+                              //         backgroundColor: black,
+                              //         child: Obx(() => controller.profilePic.path.isEmpty
+                              //             ? const Icon(
+                              //                 Icons.camera_alt_outlined,
+                              //                 color: Colors.grey,
+                              //                 size: 15,
+                              //               )
+                              //             : IconButton(
+                              //                 alignment: Alignment.center,
+                              //                 onPressed: () async => controller.profilePic = XFile(""),
+                              //                 icon: const Icon(
+                              //                   Icons.remove,
+                              //                   color: Colors.grey,
+                              //                   size: 15,
+                              //                 ),
+                              //               ))))
+                              //   ],
+                              // )
+                              )),
                           const Padding(
                             padding: EdgeInsets.only(top: 8.0),
                             child: Text("Profile Picture", style: TextStyle(color: Colors.grey, fontSize: 12)),

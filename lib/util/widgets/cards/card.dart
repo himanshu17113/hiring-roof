@@ -98,7 +98,7 @@ class JCard extends StatelessWidget {
   Widget build(BuildContext context) {
     theme = Theme.of(context);
     return Container(
-        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
         decoration: BoxDecoration(
             image: const DecorationImage(
               alignment: Alignment.topRight,

@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:hiring_roof/util/constant/color.dart";
 
 class MaterialTheme {
   static MaterialScheme lightScheme() {
@@ -357,7 +358,19 @@ class MaterialTheme {
 
   static ThemeData theme(ColorScheme colorScheme, bool isLight) => ThemeData(
         useMaterial3: true,
+       
         brightness: colorScheme.brightness,
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          backgroundColor: black,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+        ),
+    
+        navigationBarTheme: const NavigationBarThemeData(
+            indicatorShape: InputBorder.none,
+            indicatorColor: Colors.transparent,
+            backgroundColor: black,
+            labelBehavior: NavigationDestinationLabelBehavior.alwaysHide),
         colorScheme: colorScheme,
         inputDecorationTheme: const InputDecorationTheme(
             fillColor: Color.fromRGBO(255, 255, 255, 0.06),
