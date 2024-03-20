@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hiring_roof/controller/get/jobcontroller.dart';
 import 'package:hiring_roof/screens/Profile/deskbody.dart';
 import 'package:hiring_roof/screens/Profile/mobilebody.dart';
@@ -15,12 +16,16 @@ import 'notification.dart';
 
 class Find extends StatelessWidget {
   const Find({super.key});
-  static TextEditingController textEditingController = TextEditingController();
+  static TextEditingController searchEditingController = TextEditingController();
+  static TextEditingController locationEditingController = TextEditingController();
+
   static const TextStyle inputtextStyle = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w400,
     color: white,
   );
+  static const TextStyle hinttextStyle =
+      TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: white90, textBaseline: TextBaseline.alphabetic);
   static List<String> categories = ["Graphics", "3d Artists", "Animation", "Web Designing", "UI&UX Jobs"];
 
   @override
@@ -67,347 +72,103 @@ class Find extends StatelessWidget {
                                     : null))
                   ],
                   leading: const SizedBox.shrink(),
-                  //     backgroundColor: const Color.fromARGB(240, 0, 0, 0),
+                  backgroundColor: Colors.black,
                   floating: true,
                   pinned: true,
                   snap: false,
                   centerTitle: false,
-                  title: const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text.rich(
+                  title: const Text.rich(
+                    TextSpan(
+                      children: [
                         TextSpan(
-                          children: [
-                            TextSpan(
-                              text: 'Newest ',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                //    color: white,
-                              ),
-                            ),
-                            TextSpan(
-                              text: 'Jobs',
-                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromRGBO(157, 33, 255, 1)),
-                            ),
-                            TextSpan(
-                              text: ' For you ',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                //     color: white,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Text(
-                        "Get the fastest application so that your name is above other application",
-                        style: TextStyle(fontSize: 10.5, color: white70),
-                      ),
-                    ],
-                  ),
-
-                  bottom: AppBar(
-                    toolbarHeight: 50 + screenSize.width * .45,
-                    leadingWidth: 0,
-                    leading: const SizedBox.shrink(),
-                    // forceMaterialTransparency: true,
-                    //   backgroundColor: const Color.fromARGB(255, 0, 0, 0),
-                    title: SizedBox(
-                      width: double.infinity,
-                      height: 48 + screenSize.width * .45,
-                      //  color: const Color.fromARGB(240, 0, 0, 0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          SizedBox(
-                            height: 50,
-                            width: double.maxFinite,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 10,
-                                  child: TextField(
-                                      controller: textEditingController,
-                                      style: inputtextStyle,
-                                      decoration: InputDecoration(
-                                          // suffixIconConstraints:
-                                          //     const BoxConstraints(minWidth: 80, maxHeight: 40, maxWidth: 100, minHeight: 40),
-                                          helperStyle: inputtextStyle,
-                                          hintStyle: inputtextStyle,
-                                          //    filled: true,
-                                          //  fillColor: const Color.fromARGB(240, 20, 20, 20),
-                                          hintText: 'What position are you looking for ?',
-                                          prefixIcon: const Icon(Icons.search),
-                                          contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 4),
-                                          border: OutlineInputBorder(
-                                              borderSide: BorderSide.none, borderRadius: BorderRadius.circular(10)))),
-                                ),
-                                const Spacer(),
-                                Expanded(
-                                  flex: 6,
-                                  child: TextField(
-                                      controller: textEditingController,
-                                      style: inputtextStyle,
-                                      decoration: InputDecoration(
-                                          // suffixIconConstraints:
-                                          //     const BoxConstraints(minWidth: 80, maxHeight: 40, maxWidth: 100, minHeight: 40),
-                                          helperStyle: inputtextStyle,
-                                          hintStyle: inputtextStyle,
-                                          //    filled: true,
-                                          //  fillColor: const Color.fromARGB(240, 20, 20, 20),
-                                          hintText: 'Search',
-                                          prefixIcon: const Icon(Icons.location_city),
-                                          contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 4),
-                                          border: OutlineInputBorder(
-                                              borderSide: BorderSide.none, borderRadius: BorderRadius.circular(10)))),
-                                ),
-                                const Spacer(),
-                                Expanded(
-                                  flex: 2,
-                                  child: InkWell(
-                                    onTap: () => jobxController.jobSearch("", textEditingController.text),
-                                    child: Align(
-                                      alignment: Alignment.centerRight,
-                                      child: Container(
-                                          width: 100,
-                                          height: 40,
-                                          margin: const EdgeInsets.only(right: 4),
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                              color: const Color.fromRGBO(255, 255, 255, 1),
-                                              borderRadius: BorderRadius.circular(10),
-                                              gradient: linearGradient),
-                                          child: const Icon(Icons.search)),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                          text: 'Find your ',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
                           ),
-                          const Text("Find job By Stream",
-                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 16)),
-                          SizedBox(
-                            height: screenSize.width * .33,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  height: screenSize.width * .33,
-                                  width: screenSize.width * .3,
-                                  padding: const EdgeInsets.only(left: 10, bottom: 10, right: 5),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      image: const DecorationImage(image: AssetImage('assets/png/arts.png'), fit: BoxFit.cover)),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      const Text(
-                                        'Arts jobs',
-                                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 14),
-                                      ),
-                                      const Padding(
-                                        padding: EdgeInsets.symmetric(vertical: 5),
-                                        child: Text(
-                                          'Mollit in laborum tempor Lorem incididunt irure. Aute eu ex ad sunt.',
-                                          softWrap: true,
-                                          maxLines: 5,
-                                          style: TextStyle(color: Colors.white70, fontSize: 8),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 25,
-                                        child: OutlinedButton(
-                                          style: OutlinedButton.styleFrom(
-                                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3.6)),
-                                              padding: const EdgeInsets.only(
-                                                left: 8,
-                                                right: 8,
-                                              )),
-                                          onPressed: () {},
-                                          child: const Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Text('Explore jobs ',
-                                                  style: TextStyle(
-                                                      color: Color.fromARGB(200, 255, 255, 255),
-                                                      fontSize: 8,
-                                                      fontWeight: FontWeight.w400)),
-                                              Icon(
-                                                Icons.arrow_forward,
-                                                color: Colors.white70,
-                                                size: 10,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      )
-                                    ],
+                        ),
+                        TextSpan(
+                          text: 'new Job',
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromRGBO(157, 33, 255, 1)),
+                        ),
+                        TextSpan(
+                          text: ' today ',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  bottom: AppBar(
+                    backgroundColor: Colors.black,
+                    toolbarHeight: 60,
+                    leadingWidth: 0,
+                    titleSpacing: 10,
+                    leading: const SizedBox.shrink(),
+                    title: Row(
+                      children: [
+                        Expanded(
+                          flex: 30,
+                          child: TextField(
+                              controller: searchEditingController,
+                              style: inputtextStyle,
+                              decoration: InputDecoration(
+                                  prefixIconConstraints: const BoxConstraints(minWidth: 25, maxHeight: 45),
+                                  helperStyle: inputtextStyle,
+                                  hintStyle: hinttextStyle,
+                                  hintText: 'Search Your Jobs Here',
+                                  prefixIcon: const Icon(
+                                    Icons.search,
+                                    grade: 1,
+                                    size: 22,
                                   ),
-                                ),
-                                Container(
-                                  height: screenSize.width * .33,
-                                  width: screenSize.width * .3,
-                                  padding: const EdgeInsets.only(left: 10, bottom: 10, right: 5),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      image:
-                                          const DecorationImage(image: AssetImage('assets/png/commerce.png'), fit: BoxFit.cover)),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      const Text(
-                                        'Commerce jobs',
-                                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 14),
-                                      ),
-                                      const Padding(
-                                        padding: EdgeInsets.symmetric(vertical: 5),
-                                        child: Text(
-                                          'Mollit in laborum tempor Lorem incididunt irure. Aute eu ex ad sunt.',
-                                          softWrap: true,
-                                          maxLines: 5,
-                                          style: TextStyle(color: Colors.white70, fontSize: 8),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 25,
-                                        child: OutlinedButton(
-                                          style: OutlinedButton.styleFrom(
-                                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3.6)),
-                                              padding: const EdgeInsets.only(
-                                                left: 8,
-                                                right: 8,
-                                              )),
-                                          onPressed: () {},
-                                          child: const Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Text('Explore jobs ',
-                                                  style: TextStyle(
-                                                      color: Color.fromARGB(200, 255, 255, 255),
-                                                      fontSize: 8,
-                                                      fontWeight: FontWeight.w400)),
-                                              Icon(
-                                                Icons.arrow_forward,
-                                                color: Colors.white70,
-                                                size: 10,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      )
-                                    ],
+                                  contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 4),
+                                  border:
+                                      OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.circular(10)))),
+                        ),
+                        const Spacer(),
+                        Expanded(
+                          flex: 25,
+                          child: TextField(
+                              controller: locationEditingController,
+                              style: inputtextStyle,
+                              decoration: InputDecoration(
+                                  prefixIconConstraints: const BoxConstraints(minWidth: 25, maxHeight: 45),
+                                  helperStyle: inputtextStyle,
+                                  hintStyle: hinttextStyle,
+                                  hintText: 'Search by Location',
+                                  prefixIcon: const Icon(
+                                    Icons.pin_drop_outlined,
+                                    size: 20,
                                   ),
-                                ),
-                                Container(
-                                  height: screenSize.width * .33,
-                                  width: screenSize.width * .3,
-                                  padding: const EdgeInsets.only(left: 10, bottom: 10, right: 5),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      image:
-                                          const DecorationImage(image: AssetImage('assets/png/science.png'), fit: BoxFit.cover)),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      const Text(
-                                        'Science jobs',
-                                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 14),
-                                      ),
-                                      const Padding(
-                                        padding: EdgeInsets.symmetric(vertical: 5),
-                                        child: Text(
-                                          'Mollit in laborum tempor Lorem incididunt irure. Aute eu ex ad sunt.',
-                                          softWrap: true,
-                                          maxLines: 5,
-                                          style: TextStyle(color: Colors.white70, fontSize: 8),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 25,
-                                        child: OutlinedButton(
-                                          style: OutlinedButton.styleFrom(
-                                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3.6)),
-                                              padding: const EdgeInsets.only(
-                                                left: 8,
-                                                right: 8,
-                                              )),
-                                          onPressed: () {},
-                                          child: const Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Text('Explore jobs ',
-                                                  style: TextStyle(
-                                                      color: Color.fromARGB(200, 255, 255, 255),
-                                                      fontSize: 8,
-                                                      fontWeight: FontWeight.w400)),
-                                              Icon(
-                                                Icons.arrow_forward,
-                                                color: Colors.white70,
-                                                size: 10,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          )
-                          // SizedBox(
-                          //     height: 50,
-                          //     child: ListView.builder(
-                          //       //   shrinkWrap: true,
-
-                          //       itemCount: categories.length,
-                          //       scrollDirection: Axis.horizontal,
-                          //       itemBuilder: (context, index) => GestureDetector(
-                          //         onTap: () => jobxController.selecteCategories(index),
-                          //         child: Container(
-                          //           margin: const EdgeInsets.fromLTRB(5, 10, 5, 2),
-                          //           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 2),
-                          //           alignment: Alignment.center,
-                          //           decoration: ShapeDecoration(
-                          //             shape: const StadiumBorder(),
-                          //             gradient: LinearGradient(
-                          //               // begin: Alignment(-0.245, 0.969), // Approximates 97.16 degrees
-                          //               // end: Alignment(-0.754, -0.655), // Approximates 236.98 degrees
-                          //               // colors: [
-                          //               //   Color(0xFF8F00FF),
-                          //               //   Color(0xFFFFFFFF),
-                          //               // ],
-                          //               // stops: [0.0979, 0.23698], // Adjust stops as needed
-                          //               colors: jobxController.selectedCategories[index]
-                          //                   ? [const Color.fromRGBO(143, 0, 255, 1), const Color.fromRGBO(184, 94, 255, 1)]
-                          //                   : [const Color.fromRGBO(33, 33, 33, 0.75), const Color.fromRGBO(50, 50, 50, 0.65)],
-                          //               // stops: [0.4, 1],
-                          //               //   center: Alignment.bottomLeft,
-                          //             ),
-                          //           ),
-                          //           child: Text(
-                          //             categories[index],
-                          //             style: const TextStyle(fontSize: 12.5, color: white),
-                          //           ),
-                          //         ),
-                          //       ),
-                          //     )),
-
-                          // const Spacer()
-                        ],
-                      ),
+                                  contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 4),
+                                  border:
+                                      OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.circular(10)))),
+                        ),
+                        InkWell(
+                          onTap: () => jobxController.jobSearch("", searchEditingController.text),
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Container(
+                                width: 42.5,
+                                height: 42.5,
+                                margin: const EdgeInsets.only(left: 7.5),
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    color: const Color.fromRGBO(255, 255, 255, 1),
+                                    borderRadius: BorderRadius.circular(10),
+                                    gradient: linearGradient),
+                                child: const Icon(Icons.search)),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
                 SliverList.builder(
+                  
                     itemCount: jobxController.searchjobs.length + 1,
                     itemBuilder: (context, index) {
                       if (jobxController.searchjobs.isEmpty) {

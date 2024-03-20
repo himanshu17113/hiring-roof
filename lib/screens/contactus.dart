@@ -43,24 +43,24 @@ class ContactUs extends StatelessWidget {
                   decoration: BoxDecoration(color: const Color.fromRGBO(18, 18, 18, 1), borderRadius: BorderRadius.circular(8)),
                   child: Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 15),
                         child: Row(
                           children: [
-                            const Spacer(),
+                            Spacer(),
                             Expanded(
                                 flex: 32,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    const Text("Name", style: PostJob.headertextStyle),
+                                    Text("Name", style: PostJob.headertextStyle),
                                     Padding(
-                                      padding: const EdgeInsets.only(top: 7, bottom: 20),
+                                      padding: EdgeInsets.only(top: 7, bottom: 20),
                                       child: TextField(
-                                          scrollPhysics: const ClampingScrollPhysics(),
+                                          scrollPhysics: ClampingScrollPhysics(),
                                           scrollPadding: EdgeInsets.zero,
-                                       //   controller: TextEditingController()..text = userModal.userData?.companyName ?? "",
+                                          //   controller: TextEditingController()..text = userModal.userData?.companyName ?? "",
                                           //    onChanged: (value) => companyName = value,
                                           textAlignVertical: TextAlignVertical.top,
                                           style: PostJob.inputtextStyle,
@@ -68,7 +68,7 @@ class ContactUs extends StatelessWidget {
                                     ),
                                   ],
                                 )),
-                            const Spacer(),
+                            Spacer(),
                           ],
                         ),
                       ),

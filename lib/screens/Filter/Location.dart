@@ -8,12 +8,12 @@ class LocationPanel extends StatefulWidget {
 }
 
 class _LocationPanelState extends State<LocationPanel> {
-  Color NearmeBorderColor = Colors.white;
-  Color RemotejobBorderColor = Colors.white;
-  Color ExactlocationBorderColor = Colors.white;
-  Color Within15kmBorderColor = Colors.white;
-  Color Within30kmBorderColor = Colors.white;
-  Color Within50kmBorderColor = Colors.white;
+  Color nearmeBorderColor = Colors.white;
+  Color remotejobBorderColor = Colors.white;
+  Color exactlocationBorderColor = Colors.white;
+  Color within15kmBorderColor = Colors.white;
+  Color within30kmBorderColor = Colors.white;
+  Color within50kmBorderColor = Colors.white;
 
   @override
   Widget build(BuildContext context) {
@@ -28,39 +28,34 @@ class _LocationPanelState extends State<LocationPanel> {
         ),
       ),
       children: [
-        buildRow('Near me', NearmeBorderColor, () {
+        buildRow('Near me', nearmeBorderColor, () {
           setState(() {
-            NearmeBorderColor = (NearmeBorderColor == Colors.white)
-                ? Colors.purple
-                : Colors.white;
+            resetColors();
+            nearmeBorderColor = (nearmeBorderColor == Colors.white) ? Colors.purple : Colors.white;
           });
         }),
-        buildRow('Remote job', RemotejobBorderColor, () {
+        buildRow('Exact location', exactlocationBorderColor, () {
           setState(() {
-            RemotejobBorderColor = (RemotejobBorderColor == Colors.white)
-                ? Colors.purple
-                : Colors.white;
+            resetColors();
+            exactlocationBorderColor = (exactlocationBorderColor == Colors.white) ? Colors.purple : Colors.white;
           });
         }),
-        buildRow('Within 15 km', Within15kmBorderColor, () {
+        buildRow('Within 15 km', within15kmBorderColor, () {
           setState(() {
-            Within15kmBorderColor = (Within15kmBorderColor == Colors.white)
-                ? Colors.purple
-                : Colors.white;
+            resetColors();
+            within15kmBorderColor = (within15kmBorderColor == Colors.white) ? Colors.purple : Colors.white;
           });
         }),
-        buildRow('Within 30 km', Within30kmBorderColor, () {
+        buildRow('Within 30 km', within30kmBorderColor, () {
           setState(() {
-            Within15kmBorderColor = (Within15kmBorderColor == Colors.white)
-                ? Colors.purple
-                : Colors.white;
+            resetColors();
+            within30kmBorderColor = (within30kmBorderColor == Colors.white) ? Colors.purple : Colors.white;
           });
         }),
-        buildRow('Within 50 km', Within50kmBorderColor, () {
+        buildRow('Within 50 km', within50kmBorderColor, () {
           setState(() {
-            Within30kmBorderColor = (Within30kmBorderColor == Colors.white)
-                ? Colors.purple
-                : Colors.white;
+            resetColors();
+            within50kmBorderColor = (within50kmBorderColor == Colors.white) ? Colors.purple : Colors.white;
           });
         }),
       ],
@@ -100,185 +95,15 @@ class _LocationPanelState extends State<LocationPanel> {
       ),
     );
   }
-}
 
-/*
-import 'package:flutter/material.dart';
-import 'package:hiring_roof/util/constant/color.dart';
-
-class LocationPanel extends StatefulWidget {
-  const LocationPanel({super.key});
-
-  @override
-  _LocationPanelState createState() => _LocationPanelState();
-}
-
-class _LocationPanelState extends State<LocationPanel> {
-  @override
-  Widget build(BuildContext context) {
-    return ExpansionTile(
-      title: const Text(
-        'Location',
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.w500,
-          height: 2,
-          color: white,
-        ),
-      ),
-      children: [
-        Container(
-          margin: const EdgeInsets.fromLTRB(0, 0, 30, 8),
-          width: double.infinity,
-          child: Row(children: [
-            Container(
-              margin: const EdgeInsets.fromLTRB(12, 0, 8, 0),
-              width: 16,
-              height: 16,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: white),
-                color: white,
-              ),
-            ),
-            const Text(
-              'Near me',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                height: 1.5,
-                color: white,
-              ),
-            ),
-          ]),
-        ),
-        Container(
-          margin: const EdgeInsets.fromLTRB(0, 0, 30, 8),
-          width: double.infinity,
-          child: Row(children: [
-            Container(
-              margin: const EdgeInsets.fromLTRB(12, 0, 8, 0),
-              width: 16,
-              height: 16,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: white),
-                color: white,
-              ),
-            ),
-            const Text(
-              'Remote job',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                height: 1.5,
-                color: white,
-              ),
-            ),
-          ]),
-        ),
-        Container(
-          margin: const EdgeInsets.fromLTRB(0, 0, 30, 8),
-          width: double.infinity,
-          child: Row(children: [
-            Container(
-              margin: const EdgeInsets.fromLTRB(12, 0, 8, 0),
-              width: 16,
-              height: 16,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: white),
-                color: white,
-              ),
-            ),
-            const Text(
-              'Exact locaation',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                height: 1.5,
-                color: white,
-              ),
-            ),
-          ]),
-        ),
-        Container(
-          margin: const EdgeInsets.fromLTRB(0, 0, 30, 8),
-          width: double.infinity,
-          child: Row(children: [
-            Container(
-              margin: const EdgeInsets.fromLTRB(12, 0, 8, 0),
-              width: 16,
-              height: 16,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: white),
-                color: white,
-              ),
-            ),
-            const Text(
-              'Within 15 Km',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                height: 1.5,
-                color: white,
-              ),
-            ),
-          ]),
-        ),
-        Container(
-          margin: const EdgeInsets.fromLTRB(0, 0, 30, 8),
-          width: double.infinity,
-          child: Row(children: [
-            Container(
-              margin: EdgeInsets.fromLTRB(12, 0, 8, 0),
-              width: 16,
-              height: 16,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: white),
-                color: white,
-              ),
-            ),
-            const Text(
-              'Within 30 km',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                height: 1.5,
-                color: white,
-              ),
-            ),
-          ]),
-        ),
-        Container(
-          margin: const EdgeInsets.fromLTRB(0, 0, 30, 8),
-          width: double.infinity,
-          child: Row(children: [
-            Container(
-              margin: EdgeInsets.fromLTRB(12, 0, 8, 0),
-              width: 16,
-              height: 16,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: white),
-                color: white,
-              ),
-            ),
-            const Text(
-              'Within 50 km',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                height: 1.5,
-                color: white,
-              ),
-            ),
-          ]),
-        ),
-      ],
-    );
+  void resetColors() {
+    setState(() {
+      nearmeBorderColor = Colors.white;
+      remotejobBorderColor = Colors.white;
+      exactlocationBorderColor = Colors.white;
+      within15kmBorderColor = Colors.white;
+      within30kmBorderColor = Colors.white;
+      within50kmBorderColor = Colors.white;
+    });
   }
 }
-*/

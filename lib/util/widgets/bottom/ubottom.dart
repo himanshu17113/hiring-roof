@@ -19,30 +19,34 @@ class UNav extends StatelessWidget {
       isGrid: true,
     )
   ];
-  static const List<NavigationDestination> destinations =
-      <NavigationDestination>[
+  static List<NavigationDestination> destinations = <NavigationDestination>[
+    
     NavigationDestination(
-      selectedIcon: Icon(Icons.home),
-      icon: Icon(Icons.home_outlined),
-      label: 'home',
+      selectedIcon: Image.asset('assets/png/homeColour.png'), //Icon(Icons.home),
+      icon: Image.asset('assets/png/homeIcon.png'),
+      label: '',
     ),
     NavigationDestination(
-      selectedIcon: Icon(Icons.search),
-      icon: Icon(Icons.search_outlined),
-      label: 'Search',
+      selectedIcon: Image.asset('assets/png/searchColor.png'),
+      icon: Image.asset('assets/png/SearchIcon.png'),
+      label: '',
     ),
     NavigationDestination(
-      selectedIcon: Icon(Icons.bookmark),
-      icon: Icon(Icons.bookmark_border),
-      label: 'Saved',
+      selectedIcon: Image.asset('assets/png/savedColor.png'),
+      icon: Image.asset('assets/png/savedIcon.png'),
+      label: '',
     ),
+    //NavigationDestination(
+    //  selectedIcon: Image.asset('assets/png/profileColor.png'),
+    //  icon: Image.asset('assets/png/profileIcon.png'),
+    //  label: '',
+    //),
   ];
 
 //  static GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-        overlays: [SystemUiOverlay.top]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
     return GetBuilder<Controller>(
       init: Controller(),
       builder: (controller) {
@@ -68,8 +72,7 @@ class UNav extends StatelessWidget {
           bodyRatio: 0,
           useDrawer: false,
           smallBreakpoint: const WidthPlatformBreakpoint(end: 900),
-          mediumBreakpoint:
-              const WidthPlatformBreakpoint(begin: 900, end: 1200),
+          mediumBreakpoint: const WidthPlatformBreakpoint(begin: 900, end: 1200),
           largeBreakpoint: const WidthPlatformBreakpoint(begin: 1200),
           drawerBreakpoint: const WidthPlatformBreakpoint(begin: 1200),
           body: (_) => screensG[controller.page],

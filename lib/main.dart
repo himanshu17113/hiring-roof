@@ -1,11 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hiring_roof/data/shared_pref.dart';
-import 'package:hiring_roof/screens/sign/signin.dart';
-import 'package:hiring_roof/screens/support.dart';
+import 'package:hiring_roof/screens/intro/intero_screen.dart';
 import 'package:hiring_roof/util/widgets/bottom/rbottom.dart';
 import 'package:hiring_roof/util/widgets/bottom/ubottom.dart';
-import 'services/notification_service.dart';
+ import 'services/notification_service.dart';
 import 'util/constant/const.dart';
 import 'util/theme.dart';
 
@@ -45,9 +44,9 @@ class MyApp extends StatelessWidget {
       darkTheme: MaterialTheme.dark(),
       theme: MaterialTheme.dark(),
       home:
-          //const Help()
+          //const ContactUs()
           userModal.userId == null
-              ? const Sigin()
+              ? const InteroScreen()
               : userModal.userType == "jobSeeker"
                   ? const UNav()
                   : const ReqNav(),

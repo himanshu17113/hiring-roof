@@ -156,13 +156,14 @@ class ProfileController extends GetxController {
       "expectationPay": expectedPay.text,
       "skills": skill.text,
       "experience": experience.text,
-      //  "companyName": companyName.text,
-      //  "aboutCompany": aboutCompany.text,
+       "companyName": companyName.text,
+       "aboutCompany": aboutCompany.text,
       'gender': gender,
       'alternativePhone': "+91${alternativePhone.text}",
     };
-    payload.addIf(dob != null, 'dob', "${dob!.hour}:${dob!.minute}");
-
+    if (dob != null) {
+      payload.addIf(dob != null, 'dob', "${dob!.hour}:${dob!.minute}");
+    }
     var request = http.MultipartRequest(
         'PUT',
         Uri.parse(

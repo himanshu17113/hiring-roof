@@ -17,8 +17,7 @@ class FilterScreen extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(8),
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height -
-                MediaQuery.of(context).padding.top,
+            height: MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top,
             decoration: BoxDecoration(
               border: Border.all(color: black),
             ),
@@ -47,11 +46,7 @@ class YourFilterContent extends StatelessWidget {
               //width: double.infinity,
               child: const Text(
                 'Filters',
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: white,
-                    height: 2),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: white, height: 2),
               ),
             ),
             const LocationPanel(),
