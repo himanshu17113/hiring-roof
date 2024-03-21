@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter_svg/svg.dart";
 import "package:hiring_roof/screens/popscren/jobsucc.dart";
+import "package:hiring_roof/screens/popscren/purchase.dart";
 
 class SliderScreen extends StatefulWidget {
   const SliderScreen({super.key});
@@ -111,23 +112,23 @@ class _SliderScreenState extends State<SliderScreen> {
                 style: dmsanstextStyle,
               ),
             ),
-            ListTile(
-              leading: SvgPicture.asset(
-                'hiring-roof/assets/svg/logout.svg',
-                width: 24,
-                height: 24,
-              ),
-              title: const Text(
-                'popuptest',
-                style: dmsanstextStyle,
-              ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => JobSuccessDialog()),
-                );
-              },
-            ),
+            // ListTile(
+            //   leading: SvgPicture.asset(
+            //     'hiring-roof/assets/svg/logout.svg',
+            //     width: 24,
+            //     height: 24,
+            //   ),
+            //   title: const Text(
+            //     'popuptest',
+            //     style: dmsanstextStyle,
+            //   ),
+            //   onTap: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(builder: (context) => JobSuccessDialog()),
+            //     );
+            //   },
+            // ),
           ],
         ),
       ),
