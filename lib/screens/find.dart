@@ -359,10 +359,10 @@ class Find extends StatelessWidget {
                                       )
                                     ],
                                   ),
-                                )
+                                ),
                               ],
                             ),
-                          )
+                          ),
                           // SizedBox(
                           //     height: 50,
                           //     child: ListView.builder(
