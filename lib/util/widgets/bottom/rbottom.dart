@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:get/get.dart';
 import 'package:hiring_roof/controller/navigation/navcon.dart';
-import 'package:hiring_roof/screens/find.dart';
+import 'package:hiring_roof/screens/explore/find.dart';
 import 'package:hiring_roof/screens/application/myapplication.dart';
 import 'package:hiring_roof/screens/home/myhome.dart';
 import 'package:hiring_roof/screens/postjob.dart';

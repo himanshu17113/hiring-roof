@@ -5,6 +5,7 @@ import 'dart:math' as math;
 import 'package:flutter_svg/svg.dart';
 import 'package:hiring_roof/screens/sign/siginuser.dart';
 import 'package:hiring_roof/screens/sign/verify.dart';
+import 'package:hiring_roof/util/constant/const.dart';
 import 'package:hiring_roof/util/platformdata.dart';
 // ignore: depend_on_referenced_packages
 import 'package:vector_graphics/vector_graphics.dart';
@@ -85,7 +86,7 @@ class _RecruiterSiginState extends State<RecruiterSigin> with SingleTickerProvid
         brightness = flutterView.platformDispatcher.platformBrightness;
       });
     };
-    final Size size = flutterView.display.size;
+     screenSize = flutterView.display.size;
 
     return Theme(
       data: brightness.name == "dark" ? ThemeData.dark() : ThemeData.light(),
@@ -102,7 +103,7 @@ class _RecruiterSiginState extends State<RecruiterSigin> with SingleTickerProvid
                 brightness.name != "dark"
                     ? Padding(
                         padding: const EdgeInsets.only(top: 30),
-                        child: SizedBox(width: size.width * .25, height: size.width * .15, child: svg),
+                        child: SizedBox(width: screenSize.width * .25, height: screenSize.width * .15, child: svg),
                       )
                     : AnimatedBuilder(
                         animation: _controller,
@@ -110,7 +111,7 @@ class _RecruiterSiginState extends State<RecruiterSigin> with SingleTickerProvid
                           return ClipPath(
                             clipper: DrawClip(_controller.value),
                             child: Container(
-                              height: PlatformInfo.isAppOS() ? size.height * 0.07 : 200,
+                              height: PlatformInfo.isAppOS() ? screenSize.height * 0.07 : 200,
                               decoration: const BoxDecoration(gradient: linearGradient),
                             ),
                           );
@@ -127,7 +128,7 @@ class _RecruiterSiginState extends State<RecruiterSigin> with SingleTickerProvid
                           ),
                           ((route) => false)),
                       child: Padding(
-                        padding: EdgeInsets.only(top: 10, right: 12, bottom: size.height * 0.07),
+                        padding: EdgeInsets.only(top: 10, right: 12, bottom: screenSize.height * 0.07),
                         child: const Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.end,

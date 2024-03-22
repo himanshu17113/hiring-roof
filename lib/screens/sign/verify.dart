@@ -65,7 +65,7 @@ class _VerificationScreenState extends State<VerificationScreen> with SingleTick
 
   @override
   Widget build(BuildContext context) {
-    final size = query!.size;
+      screenSize = query!.size;
 
     final textTheme = Theme.of(context).textTheme.apply(displayColor: Theme.of(context).colorScheme.onSurface);
     return Scaffold(
@@ -78,7 +78,7 @@ class _VerificationScreenState extends State<VerificationScreen> with SingleTick
             left: 0,
             child: Image.asset(
               "assets/png/img_vector_2.png",
-              height: size.height * 0.3,
+              height: screenSize.height * 0.3,
               fit: BoxFit.fitWidth,
             ),
           ),
@@ -88,7 +88,7 @@ class _VerificationScreenState extends State<VerificationScreen> with SingleTick
               return ClipPath(
                 clipper: DrawClip(_controller.value),
                 child: Container(
-                  height: PlatformInfo.isAppOS() ? size.height * 0.2 : 200,
+                  height: PlatformInfo.isAppOS() ? screenSize.height * 0.2 : 200,
                   decoration: const BoxDecoration(gradient: linearGradient),
                 ),
               );

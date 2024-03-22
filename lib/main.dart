@@ -4,7 +4,7 @@ import 'package:hiring_roof/data/shared_pref.dart';
 import 'package:hiring_roof/screens/intro/intero_screen.dart';
 import 'package:hiring_roof/util/widgets/bottom/rbottom.dart';
 import 'package:hiring_roof/util/widgets/bottom/ubottom.dart';
- import 'services/notification_service.dart';
+import 'services/notification_service.dart';
 import 'util/constant/const.dart';
 import 'util/theme.dart';
 
@@ -14,7 +14,6 @@ class MyHttpOverrides extends HttpOverrides {
     return super.createHttpClient(context)..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
   }
 }
-//changedincopyofmain will push into this main/////
 
 void main() async {
   HttpOverrides.global = MyHttpOverrides();
@@ -41,6 +40,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       themeMode: ThemeMode.system,
+      
       darkTheme: MaterialTheme.dark(),
       theme: MaterialTheme.dark(),
       home:

@@ -11,19 +11,17 @@ import 'package:hiring_roof/util/widgets/bottom/ubottom.dart';
 import 'package:hiring_roof/controller/connect/authconnect.dart';
 import 'package:hiring_roof/util/constant/color.dart';
 
-import 'whichrequter.dart';
-
-class SeekerorCompany extends StatefulWidget {
+class WhichReq extends StatefulWidget {
   final bool isFirtTime;
   final int otp;
   final String phoneNo;
-  const SeekerorCompany({super.key, required this.isFirtTime, required this.otp, required this.phoneNo});
+  const WhichReq({super.key, required this.isFirtTime, required this.otp, required this.phoneNo});
 
   @override
-  State<SeekerorCompany> createState() => _SeekerorCompanyState();
+  State<WhichReq> createState() => _WhichReqState();
 }
 
-class _SeekerorCompanyState extends State<SeekerorCompany> with SingleTickerProviderStateMixin {
+class _WhichReqState extends State<WhichReq> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   ValueNotifier<bool> loading = ValueNotifier(false);
   bool isloading = false;
@@ -90,19 +88,34 @@ class _SeekerorCompanyState extends State<SeekerorCompany> with SingleTickerProv
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  "What are you looking \nfor?",
+                  "Which recruiter \nare you?",
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 28.5, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
                 ),
                 InkWell(
-                    onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => WhichReq(
-                                  isFirtTime: widget.isFirtTime,
-                                  otp: widget.otp,
-                                  phoneNo: widget.phoneNo,
-                                ))),
+                    onTap: () {
+                      userProvider
+                          .verifey(widget.phoneNo, widget.otp, widget.isFirtTime, false, isIndividual: true)
+                          .then((response) {
+                        debugPrint(response.statusCode.toString());
+                        if (response.statusCode == 200) {
+                          userModal = response.body!;
+                          Get.delete<StartxController>(tag: "start", force: true);
+ 
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => widget.isFirtTime
+                                    ? const Profile(
+                                        profileMobileBody: ProfileMobileBody(),
+                                        profileDeskBody: ProfileDesk(),
+                                      )
+                                    : const UNav(),
+                              ),
+                              ((route) => false));
+                        }
+                      });
+                    },
                     child: Container(
                         width: double.maxFinite,
                         alignment: Alignment.center,
@@ -113,12 +126,14 @@ class _SeekerorCompanyState extends State<SeekerorCompany> with SingleTickerProv
                             borderRadius: BorderRadius.circular(8),
                             gradient: linearGradient),
                         child: const Text(
-                          "Looking For Candidates",
+                          "Individual Recruiter",
                           style: TextStyle(color: white),
                         ))),
                 InkWell(
                   onTap: () {
-                    userProvider.verifey(widget.phoneNo, widget.otp, widget.isFirtTime, true,).then((response) {
+                    userProvider
+                        .verifey(widget.phoneNo, widget.otp, widget.isFirtTime, false, isIndividual: false)
+                        .then((response) {
                       debugPrint(response.statusCode.toString());
                       if (response.statusCode == 200) {
                         userModal = response.body!;
@@ -149,7 +164,7 @@ class _SeekerorCompanyState extends State<SeekerorCompany> with SingleTickerProv
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: const Text(
-                        " Looking For job ",
+                        " Company Recruiter ",
                       )),
                 ),
               ],

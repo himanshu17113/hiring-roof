@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:hiring_roof/screens/find.dart';
+import 'package:hiring_roof/screens/explore/find.dart';
 import 'package:hiring_roof/screens/home/home.dart';
 import 'package:hiring_roof/screens/postjob.dart';
 import '../../../controller/navigation/navcon.dart';

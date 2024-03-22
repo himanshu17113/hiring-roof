@@ -35,7 +35,11 @@ class ProfileController extends GetxController {
       ? DateTime.tryParse(userModal.userData!.dob!)
       : null;
   final TextEditingController name = TextEditingController(text: userModal.userData?.name ?? "");
-  final TextEditingController phone = TextEditingController(text: userModal.userData?.phone?.replaceRange(0, 3, "") ?? "");
+  final TextEditingController phone = TextEditingController(
+      text: userModal.userData?.phone
+          //?.replaceRange(0, 3, "")
+          ??
+          "");
   final TextEditingController skill = TextEditingController(text: userModal.userData?.skills.toString() ?? "");
   final TextEditingController email = TextEditingController(text: userModal.userData?.email ?? "");
   final TextEditingController experience = TextEditingController(text: userModal.userData?.experience ?? "");
@@ -64,6 +68,13 @@ class ProfileController extends GetxController {
   RxBool isUploading = RxBool(false);
   Future<XFile?> pickImage() async {
     return await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 25);
+    // .whenComplete(() => update(["profilePic"]));
+  }
+
+  Future<XFile?> pickVideo() async {
+    return await ImagePicker().pickVideo(
+      source: ImageSource.gallery,
+    );
     // .whenComplete(() => update(["profilePic"]));
   }
 
@@ -157,8 +168,8 @@ class ProfileController extends GetxController {
       "expectationPay": expectedPay.text,
       "skills": skill.text,
       "experience": experience.text,
-       "companyName": companyName.text,
-       "aboutCompany": aboutCompany.text,
+      "companyName": companyName.text,
+      "aboutCompany": aboutCompany.text,
       'gender': gender,
       'alternativePhone': "+91${alternativePhone.text}",
     };
@@ -205,6 +216,64 @@ class ProfileController extends GetxController {
     debugPrint(multipartResponse.statusCode.toString());
     if (multipartResponse.statusCode == 200) {
       userModal.userData = UserData.fromMap(jsonDecode((res.body))["user"]);
+      SharedPref().saveModel(userModal);
+
+      return true;
+    } else {
+      return false;
+    }
+
+    // Get.offAll(
+    //   () => userModal.userType == "jobSeeker" ? const UNav() : const ReqNav(),
+    // );
+  }
+
+  Future<bool> removeProfilePic() async {
+    isUploading.value = true;
+
+    var request = http.MultipartRequest(
+        'PUT',
+        Uri.parse(
+          ApiString.updateProfile(userModal.userId!),
+        ));
+    request.headers.addAll({"Authorization": userModal.token!});
+
+    // request.files.(await http.MultipartFile.fromPath('profileImage', "", filename:  ''));
+
+    var multipartResponse = await request.send();
+    isUploading.value = false;
+    var res = await http.Response.fromStream(multipartResponse);
+    debugPrint(res.body);
+    debugPrint(multipartResponse.statusCode.toString());
+    if (multipartResponse.statusCode == 200) {
+      userModal.userData = UserData.fromMap(jsonDecode((res.body))["user"]);
+      SharedPref().saveModel(userModal);
+
+      return true;
+    } else {
+      return false;
+    }
+
+    // Get.offAll(
+    //   () => userModal.userType == "jobSeeker" ? const UNav() : const ReqNav(),
+    // );
+  }
+
+  Future<bool> removePic() async {
+    isUploading.value = true;
+    Map<String, String?> payload = {'profileImage': null};
+
+    final response = await http.put(
+        Uri.parse(
+          ApiString.updateProfile(userModal.userId!),
+        ),
+        headers: {"Authorization": userModal.token!},
+        body: json.encode(payload));
+
+    isUploading.value = false;
+    debugPrint(response.statusCode.toString());
+    if (response.statusCode == 200) {
+      userModal.userData = UserData.fromMap(jsonDecode((response.body))["user"]);
       SharedPref().saveModel(userModal);
 
       return true;

@@ -3,8 +3,12 @@ import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+
 import 'package:get/get.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:hiring_roof/controller/get/profile_controller.dart';
@@ -15,6 +19,7 @@ import 'package:hiring_roof/util/constant/const.dart';
 import 'package:hiring_roof/util/platformdata.dart';
 import 'package:hiring_roof/util/widgets/bottom/rbottom.dart';
 import 'package:hiring_roof/util/widgets/bottom/ubottom.dart';
+import 'package:hiring_roof/util/widgets/cards/profilevid.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_picker_platform_interface/image_picker_platform_interface.dart';
 import 'package:intl/intl.dart';
@@ -93,60 +98,7 @@ class ProfileMobileBody extends StatelessWidget {
                         children: [
                           Obx(() => IconButton(
                               alignment: Alignment.center,
-                              onPressed: () async => showGeneralDialog(
-                                    barrierDismissible: true,
-                                    barrierLabel: '',
-                                    barrierColor: Colors.black38,
-                                    transitionDuration: const Duration(milliseconds: 400),
-                                    pageBuilder: (ctx, anim1, anim2) => Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        controller.profilePic.path.isEmpty
-                                            ? CircleAvatar(
-                                                backgroundImage: (userModal.userData?.profileImage != null &&
-                                                        userModal.userData!.profileImage!.isNotEmpty)
-                                                    ? CachedNetworkImageProvider(userModal.userData!.profileImage!)
-                                                    : null,
-                                                maxRadius: 130,
-                                                //   radius: ,
-                                              )
-                                            : CircleAvatar(
-                                                backgroundImage: FileImage(File(controller.profilePic.path)),
-                                                maxRadius: 130,
-                                              ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(top: 40, bottom: 10),
-                                          child: TextButton(
-                                              onPressed: () {},
-                                              style: const ButtonStyle(
-                                                  backgroundColor: MaterialStatePropertyAll(Colors.white12),
-                                                  textStyle: MaterialStatePropertyAll(TextStyle(color: Colors.white))),
-                                              child: const Text(
-                                                '        Change Profile Picture       ',
-                                                style: TextStyle(color: Colors.white, letterSpacing: 1.02),
-                                              )),
-                                        ),
-                                        TextButton(
-                                            onPressed: () {},
-                                            style: const ButtonStyle(
-                                                backgroundColor: MaterialStatePropertyAll(Colors.white12),
-                                                textStyle: MaterialStatePropertyAll(TextStyle(color: Colors.white))),
-                                            child: const Text(
-                                              '        Remove Profile Picture        ',
-                                              style: TextStyle(color: Colors.white, letterSpacing: 1.02),
-                                            )),
-                                      ],
-                                    ),
-                                    
-                                    transitionBuilder: (ctx, anim1, anim2, child) => BackdropFilter(
-                                      filter: ImageFilter.blur(sigmaX: 4 * anim1.value, sigmaY: 4 * anim1.value),
-                                      child: FadeTransition(
-                                        opacity: anim1,
-                                        child: child,
-                                      ),
-                                    ),
-                                    context: context,
-                                  ),
+                              onPressed: () async => bottom(context, controller),
                               //controller.profilePic = await controller.pickImage(),
                               icon:
                                   //  Stack(
@@ -1031,3 +983,164 @@ class ProfileMobileBody extends StatelessWidget {
     );
   }
 }
+
+bottom(BuildContext ctxt, ProfileController controller) => showModalBottomSheet(
+    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+    context: ctxt,
+    builder: (contxt) => SizedBox(
+          width: screenSize.width,
+          height: screenSize.height * 0.18,
+          child: Padding(
+            padding: EdgeInsets.only(left: screenSize.width * 0.12),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextButton(
+                  onPressed: () => Navigator.maybePop(ctxt).then(
+                    (value) => showGeneralDialog(
+                      barrierDismissible: true,
+                      barrierLabel: '',
+                      barrierColor: Colors.black38,
+                      transitionDuration: const Duration(milliseconds: 400),
+                      pageBuilder: (ctx, anim1, anim2) => Obx(
+                        () => Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            controller.profilePic.path.isEmpty
+                                ? (userModal.userData?.profileImage != null && userModal.userData!.profileImage!.isNotEmpty)
+                                    ? CircleAvatar(
+                                        backgroundImage: CachedNetworkImageProvider(userModal.userData!.profileImage!),
+                                        maxRadius: 130,
+                                        //   radius: ,
+                                      )
+                                    : const CircleAvatar(
+                                        backgroundImage: AssetImage('assets/png/nodp.png'),
+                                        maxRadius: 130,
+                                        //   radius: ,
+                                      )
+                                : CircleAvatar(
+                                    backgroundImage: FileImage(File(controller.profilePic.path)),
+                                    maxRadius: 130,
+                                  ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 40, bottom: 10),
+                              child: TextButton(
+                                  onPressed: () async => controller.profilePic = await controller.pickImage(),
+                                  style: const ButtonStyle(
+                                      backgroundColor: MaterialStatePropertyAll(Colors.white12),
+                                      textStyle: MaterialStatePropertyAll(TextStyle(color: Colors.white))),
+                                  child: const Text(
+                                    '        Change Profile Picture       ',
+                                    style: TextStyle(color: Colors.white, letterSpacing: 1.02),
+                                  )),
+                            ),
+                            if ((userModal.userData?.profileImage != null &&
+                                userModal.userData!.profileImage!.isNotEmpty &&
+                                userModal.userData!.profileImage != pic)) ...[
+                              TextButton(
+                                  onPressed: () => controller.removeProfilePic(),
+                                  style: const ButtonStyle(
+                                      backgroundColor: MaterialStatePropertyAll(Colors.white12),
+                                      textStyle: MaterialStatePropertyAll(TextStyle(color: Colors.white))),
+                                  child: const Text(
+                                    '        Remove Profile Picture        ',
+                                    style: TextStyle(color: Colors.white, letterSpacing: 1.02),
+                                  )),
+                            ]
+                          ],
+                        ),
+                      ),
+                      transitionBuilder: (ctx, anim1, anim2, child) => BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 4 * anim1.value, sigmaY: 4 * anim1.value),
+                        child: FadeTransition(
+                          opacity: anim1,
+                          child: child,
+                        ),
+                      ),
+                      context: ctxt,
+                    ),
+                  ),
+                  child: const Text(
+                    'view profile picture',
+                    style: TextStyle(fontSize: 16, color: Color(0xffe6e0e9)),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.maybePop(ctxt).then(
+                    (value) => showGeneralDialog(
+                      barrierDismissible: true,
+                      barrierLabel: '',
+                      barrierColor: Colors.black38,
+                      transitionDuration: const Duration(milliseconds: 400),
+                      pageBuilder: (ctx, anim1, anim2) =>
+                          (userModal.userData!.videoUrl == null || userModal.userData!.videoUrl!.isEmpty)
+                              ? Padding(
+                                  padding: const EdgeInsets.fromLTRB(20, 60, 20, 40),
+                                  child: Material(
+                                    borderRadius: const BorderRadius.all(Radius.circular(20)),
+                                    color: const Color(0xff0f0d13),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Align(
+                                            alignment: Alignment.topRight,
+                                            child: IconButton(
+                                                alignment: Alignment.centerRight,
+                                                onPressed: () => Navigator.maybePop(ctxt),
+                                                icon: const Icon(Icons.arrow_back_ios_new_outlined)),
+                                          ),
+                                          const Spacer(
+                                            flex: 10,
+                                          ),
+                                          Image.asset("assets/png/no_vid.png"),
+                                          const Spacer(),
+                                          const Text(
+                                            "No Intro video",
+                                            style: TextStyle(fontSize: 24),
+                                          ),
+                                          const Spacer(flex: 3),
+                                          TextButton(
+                                              onPressed: () async => controller.profilePic = await controller.pickVideo(),
+                                              style: const ButtonStyle(
+                                                  backgroundColor: MaterialStatePropertyAll(Colors.white12),
+                                                  textStyle: MaterialStatePropertyAll(TextStyle(color: Colors.white))),
+                                              child: const Text(
+                                                '        Upload Intro video       ',
+                                                style: TextStyle(color: Colors.white, letterSpacing: 1.02),
+                                              )),
+                                          const Spacer(
+                                            flex: 10,
+                                          ),
+                                          // const Icon(
+                                          //   Icons.videocam_off_outlined,
+                                          //   size: 120,
+                                          // ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : const VideoPlayerScreen(url: 'url'),
+                      transitionBuilder: (ctx, anim1, anim2, child) => BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 4 * anim1.value, sigmaY: 4 * anim1.value),
+                        child: FadeTransition(
+                          opacity: anim1,
+                          child: child,
+                        ),
+                      ),
+                      context: ctxt,
+                    ),
+                  ),
+                  child: const Text(
+                    'view intro video',
+                    style: TextStyle(fontSize: 16, color: Color(0xffe6e0e9)),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ));

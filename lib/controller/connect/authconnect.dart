@@ -17,11 +17,11 @@ class UserProvider extends GetConnect {
         return Login.fromMap(obj);
       });
 
-  Future<Response<Verify>> verifey(String phoneno, int otp, bool isFirstTime, bool? isjobseeker) => put<Verify>(ApiString.verify, {
+  Future<Response<Verify>> verifey(String phoneno, int otp, bool isFirstTime, bool? isjobseeker,{ bool? isIndividual}) => put<Verify>(ApiString.verify, {
         "phone": phoneno,
         "otp": otp,
         "userType": isjobseeker == null ? "":
-         isjobseeker ? "jobSeeker" : "company",
+         isjobseeker ? "jobSeeker" : isIndividual == null ? "company" :isIndividual  ?'individualRecruiter' : "companyRecruiter",
         "firstTime": isFirstTime
       }, decoder: (obj) {
         final verify = Verify.fromMap(obj);

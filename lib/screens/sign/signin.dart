@@ -85,7 +85,7 @@ class _SiginState extends State<Sigin> with SingleTickerProviderStateMixin {
   String? phoneno;
   @override
   Widget build(BuildContext context) {
-    final size = query!.size;
+      screenSize = query!.size;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -153,7 +153,7 @@ class _SiginState extends State<Sigin> with SingleTickerProviderStateMixin {
                   ),
                 ),
                 SizedBox(
-                  width: size.width * 0.8,
+                  width: screenSize.width * 0.8,
                   child: TextField(
                     onChanged: (value) => phoneno = value,
                     decoration: const InputDecoration(

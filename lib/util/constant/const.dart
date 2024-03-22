@@ -10,5 +10,6 @@ const String token =
 Size screenSize = const Size(700, 1570);
 MediaQueryData? query;
 bool tablet = false;
-
+const String pic =
+    "https://firebasestorage.googleapis.com/v0/b/hiring-roof.appspot.com/o/Avtar.png?alt=media&token=68a5c776-86fc-4303-bfcb-abb3653aa387";
 ThemeData theme = ThemeData();
