@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:hiring_roof/controller/get/profile_controller.dart';
 
 import 'package:hiring_roof/util/constant/const.dart';

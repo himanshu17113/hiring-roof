@@ -203,12 +203,12 @@ class ProfileController extends GetxController {
       request.files.add(await http.MultipartFile.fromPath('companyLogo', img.path, filename: 'logo'));
     }
 
-    if (videopath.string.isNotEmpty) {
-      debugPrint(videopath.value);
+    if (profileVid.path.isNotEmpty) {
+      debugPrint(profileVid.path);
       request.files.add(await http.MultipartFile.fromPath(
         'videoUrl',
-        videopath.value,
-        filename: videopath.value.split('/').last.split(".").first,
+        profileVid.path,
+        filename: profileVid.path..split('/').last.split(".").first,
       ));
     } else {
       debugPrint('no video');

@@ -45,6 +45,10 @@ const LinearGradient linearGradient = LinearGradient(begin: Alignment.bottomLeft
   Color.fromRGBO(111, 22, 190, 1),
   Color.fromRGBO(186, 98, 255, 1),
 ]);
+const LinearGradient dlinearGradient = LinearGradient(begin: Alignment.bottomLeft, end: Alignment.topRight, colors: [
+  Color.fromRGBO(111, 22, 190, 0.51),
+  Color.fromRGBO(186, 98, 255, 0.51),
+]);
 const LinearGradient appliedG = LinearGradient(
     begin: Alignment.bottomLeft,
     end: Alignment.topRight,

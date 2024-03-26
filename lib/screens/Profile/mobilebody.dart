@@ -219,7 +219,7 @@ class ProfileMobileBody extends StatelessWidget {
                           ],
                         )),
                     const Spacer(
-                      flex: 2,
+                      flex: 1,
                     ),
                     Expanded(
                         flex: 15,
@@ -283,6 +283,7 @@ class ProfileMobileBody extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Spacer(),
                     Expanded(

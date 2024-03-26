@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:hiring_roof/screens/Filter/DateOfPosting.dart';
 import 'package:hiring_roof/screens/Filter/Location.dart';
 import 'package:hiring_roof/screens/Filter/Salary.dart';
@@ -34,27 +35,31 @@ class YourFilterContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              margin: const EdgeInsets.fromLTRB(12, 0, 0, 12),
-              //width: double.infinity,
-              child: const Text(
-                'Filters',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: white, height: 2),
+    return const Drawer(
+      backgroundColor: Color.fromRGBO(17, 17, 17, 1),
+      // width: double.infinity,
+      // height: double.infinity,
+      child: SafeArea(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.only(top: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.fromLTRB(12, 0, 0, 12),
+                //width: double.infinity,
+                child: Text(
+                  'Filters',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: white, height: 2),
+                ),
               ),
-            ),
-            const LocationPanel(),
-            const SalaryPanel(),
-            const DateFilterPanel(),
-            const WrkExpPanel(),
-            const EmplpoymentTypePanel(),
-          ],
+              LocationPanel(),
+              SalaryPanel(),
+              DateFilterPanel(),
+              WrkExpPanel(),
+              EmplpoymentTypePanel(),
+            ],
+          ),
         ),
       ),
     );

@@ -1,7 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hiring_roof/controller/get/jobcontroller.dart';
@@ -13,6 +11,7 @@ import 'package:hiring_roof/util/constant/const.dart';
 import 'package:hiring_roof/util/widgets/cards/card.dart';
 import 'package:hiring_roof/util/constant/color.dart';
 
+import '../Filter/filter.dart';
 import '../notification.dart';
 
 class Find extends StatelessWidget {
@@ -34,6 +33,10 @@ class Find extends StatelessWidget {
     query = MediaQuery.of(context);
     screenSize = query!.size;
     return Scaffold(
+      drawerEnableOpenDragGesture: true,
+      endDrawerEnableOpenDragGesture: true,
+      drawerEdgeDragWidth: 200,
+      endDrawer: const YourFilterContent(),
       body: DecoratedBox(
         decoration: const BoxDecoration(
           image: DecorationImage(image: AssetImage("assets/png/botomElipse.png"), fit: BoxFit.fill),
@@ -51,6 +54,8 @@ class Find extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               slivers: [
                 SliverAppBar(
+                  automaticallyImplyLeading: false, // this will hide Drawer hamburger icon
+
                   leadingWidth: 0,
                   actions: [
                     IconButton(
@@ -104,6 +109,8 @@ class Find extends StatelessWidget {
                     ),
                   ),
                   bottom: AppBar(
+                    automaticallyImplyLeading: false, // this will hide Drawer hamburger icon
+
                     backgroundColor: Colors.black,
                     toolbarHeight: 60,
                     leadingWidth: 0,
@@ -171,6 +178,7 @@ class Find extends StatelessWidget {
                         ),
                       ],
                     ),
+                    actions: const [SizedBox.shrink()],
                   ),
                 ),
                 SliverList.builder(
