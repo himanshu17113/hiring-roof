@@ -27,6 +27,7 @@ class ProfileController extends GetxController {
   //  ProfileController(this.userModal);
   static Client client = http.Client();
   Rx<XFile> profilepic = XFile("").obs;
+  Rx<XFile> profilevid = XFile("").obs;
   Rx<File> resumefile = File("").obs;
   Rx<File> letter = File("").obs;
   XFile img = XFile('');
@@ -54,6 +55,9 @@ class ProfileController extends GetxController {
               ? ""
               : userModal.userData?.alternativePhone?.replaceRange(0, 3, "")
           : "");
+
+  set profileVid(value) => profilevid.value = value;
+  XFile get profileVid => profilevid.value;
 
   // final _obj = ''.obs;
   set profilePic(value) => profilepic.value = value;

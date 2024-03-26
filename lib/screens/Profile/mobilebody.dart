@@ -3,11 +3,7 @@ import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_border/dotted_border.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
@@ -119,11 +115,11 @@ class ProfileMobileBody extends StatelessWidget {
                                                 userModal.userData!.profileImage!.isNotEmpty)
                                             ? CachedNetworkImageProvider(userModal.userData!.profileImage!)
                                             : null,
-                                        maxRadius: 60,
+                                        maxRadius: 70,
                                       )
                                     : CircleAvatar(
                                         backgroundImage: FileImage(File(controller.profilePic.path)),
-                                        maxRadius: 60,
+                                        maxRadius: 70,
                                       ),
                               )
                               // Positioned(
@@ -151,7 +147,7 @@ class ProfileMobileBody extends StatelessWidget {
                               // )
                               )),
                           const Padding(
-                            padding: EdgeInsets.only(top: 8.0),
+                            padding: EdgeInsets.only(top: 4),
                             child: Text("Profile Picture", style: TextStyle(color: Colors.grey, fontSize: 12)),
                           )
                         ],
@@ -1074,8 +1070,14 @@ bottom(BuildContext ctxt, ProfileController controller) => showModalBottomSheet(
                       barrierLabel: '',
                       barrierColor: Colors.black38,
                       transitionDuration: const Duration(milliseconds: 400),
-                      pageBuilder: (ctx, anim1, anim2) =>
-                          (userModal.userData!.videoUrl == null || userModal.userData!.videoUrl!.isEmpty)
+                      pageBuilder: (ctx, anim1, anim2) => Obx(() => controller.profileVid.path.isNotEmpty
+                          ? VideoPlayerScreen(
+                              file: File(
+                                controller.profileVid.path,
+                              ),
+                              controller: controller,
+                            )
+                          : (userModal.userData!.videoUrl == null || userModal.userData!.videoUrl!.isEmpty)
                               ? Padding(
                                   padding: const EdgeInsets.fromLTRB(20, 60, 20, 40),
                                   child: Material(
@@ -1104,13 +1106,13 @@ bottom(BuildContext ctxt, ProfileController controller) => showModalBottomSheet(
                                           ),
                                           const Spacer(flex: 3),
                                           TextButton(
-                                              onPressed: () async => controller.profilePic = await controller.pickVideo(),
+                                              onPressed: () async => controller.profileVid = await controller.pickVideo(),
                                               style: const ButtonStyle(
                                                   backgroundColor: MaterialStatePropertyAll(Colors.white12),
                                                   textStyle: MaterialStatePropertyAll(TextStyle(color: Colors.white))),
                                               child: const Text(
                                                 '        Upload Intro video       ',
-                                                style: TextStyle(color: Colors.white, letterSpacing: 1.02),
+                                                style: TextStyle(color: Colors.white, letterSpacing: 0.5),
                                               )),
                                           const Spacer(
                                             flex: 10,
@@ -1124,7 +1126,7 @@ bottom(BuildContext ctxt, ProfileController controller) => showModalBottomSheet(
                                     ),
                                   ),
                                 )
-                              : const VideoPlayerScreen(url: 'url'),
+                              : const VideoPlayerScreen(url: 'url')),
                       transitionBuilder: (ctx, anim1, anim2, child) => BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: 4 * anim1.value, sigmaY: 4 * anim1.value),
                         child: FadeTransition(

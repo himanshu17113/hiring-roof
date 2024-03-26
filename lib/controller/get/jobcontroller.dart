@@ -17,7 +17,7 @@ class JobxController extends GetxController {
   bool reachedTheEndofsearch = false;
   bool isSearching = false;
   final int searchlimit = 5;
-  RxMap<String, Job> streamjob = RxMap();
+  RxMap<String, List<Job>> streamjob = RxMap();
 
   //  List<int> filter = [];
   //  Map<String, bool> categories = {
@@ -194,22 +194,25 @@ class JobxController extends GetxController {
     isSearching = false;
   }
 
-  getstream(String? stream) async {
- 
-    debugPrint("${ApiString.search}?page=$spage&limit=$searchlimit&location=$location&jobTittle=$jobTittle");
+  getstream(String stream, int spage, {bool? isfirst = false}) async {
+    debugPrint(
+        "${ApiString.allJobs}?page=$spage&stream=$stream&limit=11&location=&workType=&jobType=&timePeriod=&payType=&pay=&availability=&dateOfPosting=&jobTittle=");
     http.Response response = await client.get(
       Uri.parse(
-          "${ApiString.allJobs}?page=$spage&stream=$stream&limit=$searchlimit&location=$location&workType=&jobType=&timePeriod=&payType=&pay=&availability=&dateOfPosting=&jobTittle="),
+          "${ApiString.allJobs}?page=$spage&stream=$stream&limit=11&location=&workType=&jobType=&timePeriod=&payType=&pay=&availability=&dateOfPosting=&jobTittle="),
       headers: {"Authorization": userModal.token ?? token, "Content-Type": "application/json"},
     );
 
     if (response.statusCode == 200) {
       jobModal = JobModal.fromRawJson(response.body);
-     
+      if (isfirst!) {
+        streamjob[stream]?.clear();
+      }
+      streamjob.containsKey(stream) ? streamjob[stream]?.addAll(jobModal.jobs!) : streamjob.assign(stream, jobModal.jobs!);
+      streamjob.refresh();
     } else {
       debugPrint("issue in getmoreSearchedjob statuscode ${response.statusCode.toString()} msg ${response.body.toString()}");
     }
-    isSearching = false;
   }
 
   saveJob(String id) async {

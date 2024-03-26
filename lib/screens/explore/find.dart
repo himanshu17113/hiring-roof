@@ -213,41 +213,55 @@ class Find extends StatelessWidget {
                                           )),
                                     ),
                                   ),
-                                  Container(
-                                    height: screenSize.width * .33,
-                                    width: screenSize.width * .3,
-                                    alignment: Alignment.bottomCenter,
-                                    padding: const EdgeInsets.only(left: 10, bottom: 10, right: 5),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        image: const DecorationImage(
-                                            image: AssetImage('assets/png/commerce.png'), fit: BoxFit.cover)),
-                                    child: Text(
-                                      'Commerce Jobs',
-                                      maxLines: 2,
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.notoSerifDisplay(
-                                        fontSize: 19,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    alignment: Alignment.bottomCenter,
-                                    height: screenSize.width * .33,
-                                    width: screenSize.width * .3,
-                                    padding: const EdgeInsets.only(left: 10, bottom: 10, right: 5),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        image: const DecorationImage(
-                                            image: AssetImage('assets/png/science.png'), fit: BoxFit.cover)),
-                                    child: Text('Science jobs',
+                                  GestureDetector(
+                                    onTap: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => const Stream(title: "Commerce"),
+                                        )),
+                                    child: Container(
+                                      height: screenSize.width * .33,
+                                      width: screenSize.width * .3,
+                                      alignment: Alignment.bottomCenter,
+                                      padding: const EdgeInsets.only(left: 10, bottom: 10, right: 5),
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(20),
+                                          image: const DecorationImage(
+                                              image: AssetImage('assets/png/commerce.png'), fit: BoxFit.cover)),
+                                      child: Text(
+                                        'Commerce Jobs',
                                         maxLines: 2,
                                         textAlign: TextAlign.center,
                                         style: GoogleFonts.notoSerifDisplay(
                                           fontSize: 19,
                                           fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => const Stream(title: "Science"),
                                         )),
+                                    child: Container(
+                                      alignment: Alignment.bottomCenter,
+                                      height: screenSize.width * .33,
+                                      width: screenSize.width * .3,
+                                      padding: const EdgeInsets.only(left: 10, bottom: 10, right: 5),
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(20),
+                                          image: const DecorationImage(
+                                              image: AssetImage('assets/png/science.png'), fit: BoxFit.cover)),
+                                      child: Text('Science jobs',
+                                          maxLines: 2,
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.notoSerifDisplay(
+                                            fontSize: 19,
+                                            fontWeight: FontWeight.w500,
+                                          )),
+                                    ),
                                   )
                                 ],
                               ),
